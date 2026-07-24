@@ -149,6 +149,31 @@ Order TBD; probably:
 - `expo-app-icon` / theming presets.
 - List on [reactnative.directory](https://reactnative.directory/).
 
+### Deferred: migrate release workflow to Trusted Publishing (OIDC)
+
+**Deadline:** before January 2027. **Recommended window:** October–November 2026.
+
+npm is deprecating bypass-2FA tokens for automated publishing (see the [announcement](https://github.blog/changelog/2026-07-08-npm-install-time-security-and-gat-bypass2fa-deprecation/)):
+
+- Early August 2026 — such tokens lose account-management capabilities.
+- January 2027 — such tokens can no longer publish at all.
+
+Our current setup uses `NPM_TOKEN` (Granular Access Token, "read and write / all packages", bypasses 2FA) stored as a repo secret. It works today and will keep working until the January cutoff, but we should migrate.
+
+Migration plan (~30 minutes when the time comes):
+
+1. On [npmjs.com](https://www.npmjs.com/package/ui-kraken/access), configure `ui-kraken` for **Trusted Publishing** pointing at:
+   - Repository: `saldeclas-team/ui-kit`
+   - Workflow: `.github/workflows/release.yml`
+   - Environment: (none)
+2. In `release.yml`:
+   - Remove the `NPM_TOKEN` env var from the changesets/action step.
+   - Add `--provenance` to the publish command (`pnpm publish --provenance` or wire it via changesets config).
+   - The `id-token: write` permission is already declared, no change there.
+3. Delete the `NPM_TOKEN` secret from the repo settings.
+
+Bonus: provenance shows up as a verified badge on the npm package page ("Published from …repo…/…commit…") — free credibility signal.
+
 ---
 
 ## 5. How to keep this doc alive
