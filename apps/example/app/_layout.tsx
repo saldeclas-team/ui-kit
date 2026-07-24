@@ -1,8 +1,6 @@
 import { Stack } from "expo-router";
 import { useColorScheme } from "react-native";
-import { TamaguiProvider } from "tamagui";
-
-import { tamaguiConfig } from "../tamagui.config";
+import { KrakenProvider } from "ui-kraken";
 
 const STORYBOOK_ENABLED = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === "true";
 
@@ -17,10 +15,7 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <TamaguiProvider
-      config={tamaguiConfig}
-      defaultTheme={colorScheme === "dark" ? "dark" : "light"}
-    >
+    <KrakenProvider defaultTheme={colorScheme === "dark" ? "dark" : "light"}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Protected guard={STORYBOOK_ENABLED}>
           <Stack.Screen name="(storybook)/index" />
@@ -28,6 +23,6 @@ export default function RootLayout() {
 
         <Stack.Screen name="(pages)/index" />
       </Stack>
-    </TamaguiProvider>
+    </KrakenProvider>
   );
 }
