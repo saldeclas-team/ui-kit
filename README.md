@@ -1,6 +1,7 @@
 # ui-kraken
 
 [![npm version](https://img.shields.io/npm/v/ui-kraken?color=cb3837&logo=npm)](https://www.npmjs.com/package/ui-kraken)
+[![Live Storybook](https://img.shields.io/badge/Storybook-live-ff4785?logo=storybook&logoColor=white)](https://main--6a63d07d1946f494a4c93ad3.chromatic.com/)
 [![CI](https://github.com/saldeclas-team/ui-kit/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/saldeclas-team/ui-kit/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/saldeclas-team/ui-kit/branch/main/graph/badge.svg?flag=ui-kraken)](https://codecov.io/gh/saldeclas-team/ui-kit)
 [![Chromatic](https://img.shields.io/badge/Chromatic-visual%20tests-ff4785?logo=storybook&logoColor=white)](https://www.chromatic.com/library?appId=6a63d07d1946f494a4c93ad3)
@@ -9,6 +10,10 @@
 React Native / Expo component library built with [Tamagui](https://tamagui.dev/).
 
 > Status: **pre-alpha** — the `0.1.0` release is the scaffold with no components yet. See [`docs/PLAN.md`](./docs/PLAN.md) for roadmap and open decisions.
+
+## Preview
+
+📖 **[Live Storybook →](https://main--6a63d07d1946f494a4c93ad3.chromatic.com/)** — every component, every variant, live from the latest `main`. Updates automatically on every merge, no login required.
 
 ## Install
 
@@ -40,7 +45,9 @@ ui-kit/
 corepack enable pnpm
 pnpm install
 pnpm --filter @ui-kraken/example start                                 # run the example app
-pnpm --filter @ui-kraken/example storybook:ios                         # run Storybook on-device
+pnpm --filter @ui-kraken/example web                                   # same app in the browser (react-native-web)
+pnpm --filter @ui-kraken/example storybook:ios                         # run Storybook on-device (iOS simulator)
+pnpm --filter @ui-kraken/example storybook:web                         # run Storybook Web at localhost:6006 (same stories as on-device)
 ```
 
 ## Contributing
