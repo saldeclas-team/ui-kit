@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useColorScheme } from "react-native";
-import { PortalProvider, TamaguiProvider } from "tamagui";
+import { TamaguiProvider } from "tamagui";
 
 import {
   DEFAULT_DARK_KRAKEN_TOKENS,
@@ -12,6 +12,11 @@ import {
 import { KrakenContext } from "./kraken-provider-context";
 import type { KrakenProviderProps } from "./kraken-provider-types";
 
+// NOTE: Tamagui v2's `TamaguiProvider` already mounts a `PortalProvider` with
+// a root host internally. Adding our own wrapper produces a "Nested
+// PortalProvider with shouldAddRootHost" warning and can cause hydration
+// mismatches. Consumers who need a portal can still use `<Portal>` from
+// `tamagui` — the root host from TamaguiProvider is sufficient.
 export function KrakenProvider({
   children,
   tokens,
@@ -47,9 +52,7 @@ export function KrakenProvider({
 
   return (
     <TamaguiProvider config={contextValue.tamaguiConfig} defaultTheme={contextValue.activeTheme}>
-      <PortalProvider shouldAddRootHost>
-        <KrakenContext.Provider value={contextValue}>{children}</KrakenContext.Provider>
-      </PortalProvider>
+      <KrakenContext.Provider value={contextValue}>{children}</KrakenContext.Provider>
     </TamaguiProvider>
   );
 }
