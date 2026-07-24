@@ -43,8 +43,8 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
       tone={tone}
       size={size}
       disabled={isInactive}
-      backgroundColor={backgroundOverride(tone, buttonColors?.background)}
-      borderColor={borderOverride(tone, buttonColors?.border)}
+      backgroundColor={buttonColors?.background}
+      borderColor={buttonColors?.border}
       borderRadius={resolvedBorderRadius}
       accessibilityRole="button"
       accessibilityState={{ disabled: isInactive, busy: Boolean(loading) }}
@@ -73,26 +73,6 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
     </StyledButton>
   );
 });
-
-/**
- * `outline` and `ghost` have no background token — passing `undefined`
- * preserves the styled variant's transparent default. For solid tones, `undefined`
- * also falls back to the styled variant's theme token.
- */
-function backgroundOverride(tone: ButtonTone, override: string | undefined): string | undefined {
-  if (tone === "outline" || tone === "ghost") return override;
-  return override;
-}
-
-/**
- * Only `outline` renders a border in the styled variants, so `border` on other
- * tones is a no-op. We still forward when set so a consumer explicitly asking
- * for a border on, say, a primary button gets it (Tamagui's default `borderWidth: 0`
- * would still hide it, but the intent is preserved).
- */
-function borderOverride(_tone: ButtonTone, override: string | undefined): string | undefined {
-  return override;
-}
 
 /**
  * Resolve the `radius` prop to a value the styled `borderRadius` prop accepts.

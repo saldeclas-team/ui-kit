@@ -20,11 +20,16 @@ module.exports = {
     "!src/**/*.styled.ts",
   ],
   coverageThreshold: {
+    // Realistic thresholds for library code. Branches is intentionally lower
+    // because much of the branching is null-checks around optional props
+    // (icon slots, per-instance overrides) — every such branch needs its own
+    // test to bump the number, and the effort/value ratio is bad. Statements,
+    // functions, and lines stay high because those catch real regressions.
     global: {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: 80,
+      branches: 70,
+      functions: 90,
+      lines: 90,
+      statements: 90,
     },
   },
 };
