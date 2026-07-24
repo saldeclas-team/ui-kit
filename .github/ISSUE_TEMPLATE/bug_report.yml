@@ -25,7 +25,7 @@ body:
     id: version
     attributes:
       label: ui-kraken version
-      placeholder: "0.1.0"
+      placeholder: "0.5.0"
     validations:
       required: true
   - type: input
@@ -39,11 +39,21 @@ body:
     id: platform
     attributes:
       label: Platform
+      description: Select every platform where you have confirmed the bug.
       multiple: true
       options:
         - iOS
         - Android
+        - Web
         - Expo Go
         - Expo Dev Client
     validations:
       required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser (only if Platform includes Web)
+      description: Which browser and version reproduces the bug on the Web target?
+      placeholder: "Chrome 120, Safari 17, Firefox 121, ..."
+    validations:
+      required: false
