@@ -32,60 +32,71 @@ Living document. Update it as decisions land or shift.
 
 These are called out explicitly so we can debate them when the moment arrives. Do NOT decide them until the linked trigger happens.
 
-### 2.1 `KrakenProvider` wrapper vs. exposing `TamaguiProvider` directly
+### ~~2.1 `KrakenProvider` wrapper vs. exposing `TamaguiProvider` directly~~ — **RESOLVED**
 
-**Trigger:** designing the first component (Button).
+**Decision:** ship a thin `KrakenProvider` wrapper (Approach C from the design workflow).
 
-- **Option A — expose `TamaguiProvider` directly.** Consumers do
+The provider mounts `TamaguiProvider` + `PortalProvider` + a small `KrakenContext`. It accepts the coarse token schema natively and derives the full Tamagui config via `buildKrakenConfig()` inside `useMemo`. It also exposes `useKraken()` which returns `{ tokens, tamaguiConfig }` — the raw Tamagui config is intentionally reachable so power users hitting the abstraction ceiling can drop down without ejecting the library.
 
-  ```tsx
-  import { TamaguiProvider } from "tamagui";
-  import { krakenConfig } from "ui-kraken";
-  <TamaguiProvider config={krakenConfig}>...</TamaguiProvider>;
-  ```
+Why C won (23/25) over A (20/25, no wrapper) and B (18/25, opinionated full wrapper): C satisfies the coarse-token DX with per-instance overrides that flow semantically, keeps the surface small for fast iteration, and preserves a real escape hatch to Tamagui. A forced a breaking migration the moment we ship Sheet/Toast; B hid Tamagui from power users.
 
-  Simple, fewer moving parts, no extra API surface to maintain.
+### ~~2.2 Token schema shape~~ — **RESOLVED**
 
-- **Option B — expose our own `KrakenProvider`.** Consumers do
-  ```tsx
-  import { KrakenProvider } from "ui-kraken";
-  <KrakenProvider theme="dark" tokens={{...}}>...</KrakenProvider>
-  ```
-  Internally wraps `TamaguiProvider`. Lets us add ui-kraken-only concerns (portal host, toast provider, feature flags) without a breaking change later, and gives us a place to accept a simplified token schema that the user described (`primaryColor`, `textPrimaryColor`, etc.) and translate it into Tamagui's more granular tokens.
+**Decision:** the coarse schema exposed at the provider level is
 
-**Recommendation to revisit later:** B. The extra layer is cheap and the "give me a small set of knobs" DX the user asked for maps very naturally to a wrapper.
+```ts
+export interface KrakenTokens {
+  primaryColor: string; // hex only in v0.1 (documented)
+  secondaryColor: string;
+  textPrimaryColor: string;
+  textSecondaryColor: string;
+  radius: number; // px, base — sm/md/lg derived
+  spacing: number; // px, base — xs/sm/md/lg/xl derived
+}
+```
 
-### 2.2 Token schema shape
+`coarseToFineTokens(tokens: KrakenTokens): ResolvedKrakenTokens` is exported as a pure function so consumers can call it themselves. All ui-kraken tokens land in Tamagui under the `$kraken*` prefix (`$krakenPrimary1..12`, `$krakenTextPrimary`, `$krakenRadiusMd`, `$krakenSpacingMd`, etc.) to avoid clobbering the `@tamagui/config/v4` defaults we spread underneath.
 
-**Trigger:** designing the first component (Button).
+Per-instance overrides use **grouped object props** (`buttonColors`, `textColors`, `iconColors`) — see §1.
 
-The user wants a **coarse set of knobs** exposed at the provider level (e.g. `primaryColor`, `secondaryColor`, `textPrimaryColor`, `textSecondaryColor`, `radius`, `spacing`) that all components consume automatically, plus **per-instance overrides** on each component. Tamagui's native tokens are much more granular (12-step color scales, spacing scales, etc.). We need to decide the mapping — either
+### ~~2.3 First component~~ — **RESOLVED**
 
-- (a) accept the coarse schema and auto-generate the 12-step scales (e.g. via `polished`, `chroma-js`, or Tamagui's `createTheme` helper), or
-- (b) accept the coarse schema and only wire it to the props that Button actually reads, and iterate as we add components.
+**Decision:** `Button` ships in v0.2.0.
 
-Recommendation: (b) for v0.x, (a) for v1.
+- Compound API: `Button.Primary`, `Button.Secondary`, `Button.Ghost`, `Button.Destructive`.
+- Default export `Button` maps to `Button.Primary` so `<Button>Save</Button>` works for the 80% case.
+- Sizes: `sm`, `md`, `lg`. States: `disabled`, `loading`.
+- Slots: `leftIcon`, `rightIcon` (both `ReactNode`).
+- Per-instance color overrides via `buttonColors` / `textColors` / `iconColors` grouped props.
+- `testID` propagates to `label`, `left-icon`, `right-icon`, `loader` subelements.
+- Auto-contrast is NOT applied — consumers who override `buttonColors.primary` are expected to also pass `textColors.primary` explicitly (predictable > opinionated).
 
-### 2.3 First component
+### 2.4 Icon library — still open
 
-**Trigger:** next planning conversation.
+**Trigger:** first component that needs an actual icon (not just a slot).
 
-Almost certainly `Button` (variants: `primary`, `secondary`, `ghost`, `destructive`; sizes: `sm`, `md`, `lg`; states: `disabled`, `loading`; per-instance color overrides). Decide together with 2.1 and 2.2 — they should ship in the same PR.
+Current stance: components accept `ReactNode` slots (`leftIcon`, `rightIcon`) — consumer brings their own icon system. Not adding a dependency in v0.x.
 
-### 2.4 Icon library
+### ~~2.5 Portal host / overlay stack~~ — **RESOLVED** (implicitly by §2.1)
 
-**Trigger:** first component that needs an icon slot (probably Button with `leftIcon` / `rightIcon`).
+`KrakenProvider` mounts `PortalProvider` from Tamagui out of the box, so future `Sheet` / `Dialog` / `Toast` land non-breakingly.
 
-- Option A — accept `ReactNode` in icon slots and let the consumer bring their own icons. Zero dependency, most flexible.
-- Option B — depend on `lucide-react-native` and re-export a curated subset. Nicer DX but adds a peer dep.
+### 2.6 Deferred to later versions
 
-Recommendation: A. Cheaper to start with.
+Decided during the v0.2.0 design; documented so we don't relitigate:
 
-### 2.5 Portal host / overlay stack
+- **Dark mode:** v0.2.x will add an optional `dark?: Partial<KrakenTokens>` prop on `KrakenProvider`. v0.2.0 ships light-only.
+- **Text component + font-family token:** ships with the `Text` component in v0.2.x. v0.2.0 inherits `@tamagui/config/v4`'s default fonts.
+- **`rgb()` / named color inputs:** v0.2.0 accepts hex only (documented in JSDoc). Parser dep deferred until a real consumer asks.
+- **`setTokens` runtime hook:** not shipping. Remount `KrakenProvider` with new props to change theme.
+- **`tamaguiConfig` full-escape-hatch prop:** not shipping. `useKraken()` covers 90% of escape-hatch use cases already.
+- **Auto-contrast helper:** `pickContrastText()` is NOT auto-applied. Exposed as a utility for consumers who want to opt in.
 
-**Trigger:** first overlay-style component (Sheet, Dialog, Toast).
+### 2.7 Form validation library (future)
 
-Tamagui ships `PortalProvider`. We will need to add it inside whichever provider we ship (see 2.1).
+**Trigger:** first form component (`Input`, `Select`, `Checkbox`, ...).
+
+Locked convention (AGENTS.md): consumers use `react-hook-form` + `zod`. ui-kraken form components will expose controlled/uncontrolled patterns compatible with RHF. Not adding a hard peer dep until the shape settles.
 
 ---
 

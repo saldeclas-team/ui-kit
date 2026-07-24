@@ -20,6 +20,8 @@ const nodeGlobals = {
   setImmediate: "readonly",
 };
 
+// Repo-wide rules enforced across every workspace. See AGENTS.md for the
+// prose version and the reasoning behind each rule.
 export default [
   {
     ignores: [
@@ -66,7 +68,75 @@ export default [
       ],
       // React Native commonly requires image assets via require().
       "@typescript-eslint/no-require-imports": "off",
-      "@typescript-eslint/no-explicit-any": "warn",
+      // AGENTS.md rule: NEVER `any`. Use `unknown` + narrowing or generics.
+      "@typescript-eslint/no-explicit-any": "error",
+      // AGENTS.md rule: NEVER `export default`. Named exports only.
+      // Overridden below for Expo Router route files.
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "ExportDefaultDeclaration",
+          message:
+            "Default exports are banned in this repo — use named exports. Expo Router route files under apps/example/app/** are the only allowed exception.",
+        },
+        {
+          selector: "ExportAllDeclaration",
+          message:
+            "`export *` is banned in barrels — list every symbol explicitly so the API surface stays precise.",
+        },
+      ],
+      // AGENTS.md rule: no console.log — warn/error are OK.
+      "no-console": ["error", { allow: ["warn", "error"] }],
+      // AGENTS.md rule: type-only imports must use `import type`.
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        { prefer: "type-imports", fixStyle: "separate-type-imports" },
+      ],
+    },
+  },
+  {
+    // Library code (packages/ui-kraken/src/**): also block `StyleSheet` from
+    // react-native so nobody bypasses Tamagui styling.
+    files: ["packages/ui-kraken/src/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "react-native",
+              importNames: ["StyleSheet"],
+              message:
+                "ui-kraken components must style via Tamagui `styled()` — StyleSheet.create() is banned. See .agents/skills/creating-component-tamagui/SKILL.md §6.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    // Files that MUST use `export default` because the tool that reads them
+    // does not accept named exports:
+    //   - apps/example/app/**  — Expo Router route components
+    //   - **/.rnstorybook/**   — Storybook config / decorators / entry
+    //   - **/*.config.ts       — tool configs (tsup.config.ts, jest, etc.)
+    //   - **/*.stories.tsx     — Storybook meta object
+    files: [
+      "apps/example/app/**/*.{ts,tsx}",
+      "**/.rnstorybook/**/*.{ts,tsx}",
+      "**/*.config.ts",
+      "**/*.stories.tsx",
+    ],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        // The `export *` ban still applies here.
+        {
+          selector: "ExportAllDeclaration",
+          message:
+            "`export *` is banned in barrels — list every symbol explicitly so the API surface stays precise.",
+        },
+      ],
     },
   },
   {
@@ -80,6 +150,9 @@ export default [
     },
     rules: {
       "@typescript-eslint/no-require-imports": "off",
+      // Config files legitimately use `module.exports = ...` and shell scripts.
+      "no-restricted-syntax": "off",
+      "no-console": "off",
     },
   },
   {
