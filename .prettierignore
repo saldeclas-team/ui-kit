@@ -1,0 +1,11 @@
+node_modules
+dist
+build
+coverage
+.expo
+.turbo
+storybook-static
+pnpm-lock.yaml
+.changeset
+android
+ios

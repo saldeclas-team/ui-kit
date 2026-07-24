@@ -1,0 +1,86 @@
+{
+  "name": "ui-kraken",
+  "version": "0.0.0",
+  "description": "Highly customizable React Native / Expo component library powered by Tamagui.",
+  "keywords": [
+    "react-native",
+    "expo",
+    "ui-kit",
+    "components",
+    "tamagui",
+    "ui-kraken"
+  ],
+  "license": "MIT",
+  "author": "saldeclas-team",
+  "homepage": "https://github.com/saldeclas-team/ui-kit#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saldeclas-team/ui-kit.git",
+    "directory": "packages/ui-kraken"
+  },
+  "bugs": {
+    "url": "https://github.com/saldeclas-team/ui-kit/issues"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "react-native": "./src/index.ts",
+  "source": "./src/index.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "!src/**/*.test.*",
+    "!src/**/*.stories.*",
+    "!__tests__"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"__tests__/**/*.{ts,tsx}\" --max-warnings=0",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-native": ">=0.74.0",
+    "react-native-reanimated": ">=3.6.0",
+    "tamagui": ">=1.100.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native-reanimated": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "@testing-library/react-native": "^14.0.1",
+    "@types/jest": "^29.5.14",
+    "@types/react": "~19.2.2",
+    "jest": "^29.7.0",
+    "jest-expo": "~57.0.0",
+    "react": "19.2.3",
+    "react-native": "0.86.0",
+    "react-native-reanimated": "^4.5.3",
+    "react-test-renderer": "19.2.3",
+    "tamagui": "^2.5.1",
+    "tsup": "^8.5.1",
+    "typescript": "~6.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

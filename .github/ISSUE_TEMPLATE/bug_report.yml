@@ -1,0 +1,49 @@
+name: Bug report
+description: Report something that is broken in ui-kraken.
+title: "bug: "
+labels: ["bug", "triage"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, including what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Steps to reproduce, or a link to a minimal Expo Snack / repo.
+      placeholder: |
+        1. `pnpm add ui-kraken`
+        2. Render `<Button variant="primary" />`
+        3. See ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: ui-kraken version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: expo
+    attributes:
+      label: Expo SDK version
+      placeholder: "57"
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      multiple: true
+      options:
+        - iOS
+        - Android
+        - Expo Go
+        - Expo Dev Client
+    validations:
+      required: true

@@ -1,0 +1,26 @@
+packages:
+  - "packages/*"
+  - "apps/*"
+
+# Expo / Metro needs a flat node_modules layout. Without this, Metro cannot
+# resolve the many @tamagui/* and @storybook/* subpackages that Tamagui and
+# Storybook re-export from their entry points.
+# NOTE: in pnpm 11 this setting moved out of .npmrc into pnpm-workspace.yaml.
+nodeLinker: hoisted
+
+# Auto-install peer deps so contributors do not have to run `pnpm install`
+# twice when Storybook / Tamagui add new peers.
+autoInstallPeers: true
+
+# The React Native peer-dep graph is noisy; do not fail install on mismatches.
+strictPeerDependencies: false
+
+# Approve postinstall scripts for known-trusted dependencies.
+allowBuilds:
+  "@swc/core": true
+  esbuild: true
+  expo: true
+  expo-modules-core: true
+  husky: true
+  react-native-worklets: true
+  unrs-resolver: true

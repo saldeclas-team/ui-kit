@@ -1,0 +1,7 @@
+# Every file requires an owner review by default.
+* @saldeclas-team
+
+# Release-critical config: lock down further if / when needed.
+/.github/workflows/ @saldeclas-team
+/.changeset/ @saldeclas-team
+/packages/ui-kraken/package.json @saldeclas-team
