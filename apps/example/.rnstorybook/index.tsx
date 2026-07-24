@@ -1,10 +1,15 @@
-// `view` is a wrapper exposed by @storybook/react-native v10 — call
-// `view.getStorybookUI(...)` to obtain the mountable component.
-//
-// `storybook.requires` is auto-generated at Metro startup by the
-// `withStorybook` wrapper (see `metro.config.js`).
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { view } from "./storybook.requires";
 
-const StorybookUIRoot = view.getStorybookUI({});
+// Storybook remembers the last opened story between reloads via the storage
+// hook. Without it, every reload snaps back to the first story — annoying
+// during iterative UI work.
+const StorybookUIRoot = view.getStorybookUI({
+  storage: {
+    getItem: AsyncStorage.getItem,
+    setItem: AsyncStorage.setItem,
+  },
+});
 
 export default StorybookUIRoot;

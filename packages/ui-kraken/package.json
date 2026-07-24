@@ -1,17 +1,30 @@
 {
   "name": "ui-kraken",
   "version": "0.1.0",
-  "description": "Highly customizable React Native / Expo component library powered by Tamagui.",
+  "description": "Fully customizable React Native / Expo component library. Ships a KrakenProvider, a coarse token schema, and a compound Button (Primary / Secondary / Ghost / Destructive) with per-instance color overrides — all powered by Tamagui.",
   "keywords": [
     "react-native",
     "expo",
+    "ui",
     "ui-kit",
     "components",
+    "component-library",
     "tamagui",
+    "design-system",
+    "ios",
+    "android",
+    "typescript",
+    "button",
+    "provider",
+    "theme",
+    "tokens",
     "ui-kraken"
   ],
   "license": "MIT",
-  "author": "saldeclas-team",
+  "author": {
+    "name": "saldeclas-team",
+    "url": "https://github.com/saldeclas-team"
+  },
   "homepage": "https://github.com/saldeclas-team/ui-kit#readme",
   "repository": {
     "type": "git",
@@ -42,9 +55,13 @@
     "dist",
     "src",
     "!src/**/*.test.*",
+    "!src/**/*.spec.*",
     "!src/**/*.stories.*",
     "!__tests__"
   ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -53,8 +70,9 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --coverage",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" \"__tests__/**/*.{ts,tsx}\" --max-warnings=0",
-    "clean": "rm -rf dist"
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --max-warnings=0",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "pnpm build"
   },
   "peerDependencies": {
     "react": ">=18.2.0",
@@ -82,6 +100,7 @@
     "typescript": "~6.0.3"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

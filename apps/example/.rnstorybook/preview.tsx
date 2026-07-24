@@ -1,13 +1,12 @@
 import type { Preview } from "@storybook/react-native";
-import { TamaguiProvider } from "tamagui";
-import { tamaguiConfig } from "../tamagui.config";
+import { KrakenProvider } from "ui-kraken";
 
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <TamaguiProvider config={tamaguiConfig} defaultTheme="light">
+      <KrakenProvider defaultTheme="light">
         <Story />
-      </TamaguiProvider>
+      </KrakenProvider>
     ),
   ],
   parameters: {
