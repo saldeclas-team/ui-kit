@@ -1,55 +1,55 @@
 import { Text, View, styled } from "tamagui";
 
 export const StyledButton = styled(View, {
-  name: "KrakenButton",
+  name: "UIKitButton",
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "center",
-  gap: "$krakenSpacingSm",
+  gap: "$uiSpacingSm",
   minHeight: 48,
-  borderRadius: "$krakenRadiusMd",
-  paddingHorizontal: "$krakenSpacingMd",
+  borderRadius: "$uiRadiusMd",
+  paddingHorizontal: "$uiSpacingMd",
   pressStyle: { scale: 0.98, opacity: 0.9 },
 
   variants: {
     tone: {
       primary: {
-        backgroundColor: "$krakenButtonPrimaryBackground",
+        backgroundColor: "$uiButtonPrimaryBackground",
         borderWidth: 0,
       },
       secondary: {
-        backgroundColor: "$krakenButtonSecondaryBackground",
+        backgroundColor: "$uiButtonSecondaryBackground",
         borderWidth: 0,
       },
       outline: {
         backgroundColor: "transparent",
         borderWidth: 1,
-        borderColor: "$krakenButtonOutlineBorder",
+        borderColor: "$uiButtonOutlineBorder",
       },
       ghost: {
         backgroundColor: "transparent",
         borderWidth: 0,
       },
       destructive: {
-        backgroundColor: "$krakenButtonDestructiveBackground",
+        backgroundColor: "$uiButtonDestructiveBackground",
         borderWidth: 0,
       },
     },
     size: {
       sm: {
         minHeight: 36,
-        paddingHorizontal: "$krakenSpacingSm",
-        borderRadius: "$krakenRadiusSm",
+        paddingHorizontal: "$uiSpacingSm",
+        borderRadius: "$uiRadiusSm",
       },
       md: {
         minHeight: 48,
-        paddingHorizontal: "$krakenSpacingMd",
-        borderRadius: "$krakenRadiusMd",
+        paddingHorizontal: "$uiSpacingMd",
+        borderRadius: "$uiRadiusMd",
       },
       lg: {
         minHeight: 56,
-        paddingHorizontal: "$krakenSpacingLg",
-        borderRadius: "$krakenRadiusLg",
+        paddingHorizontal: "$uiSpacingLg",
+        borderRadius: "$uiRadiusLg",
       },
     },
     disabled: {
@@ -60,7 +60,7 @@ export const StyledButton = styled(View, {
     },
     // NOTE: elevation lives in Button.tsx (theme-aware runtime). Keeping it
     // out of the styled variant means there is exactly ONE place to change
-    // shadow values, and it can react to `useKraken().activeTheme` — which
+    // shadow values, and it can react to `useUIKit().activeTheme` — which
     // static styled() variants cannot.
   } as const,
 
@@ -71,16 +71,16 @@ export const StyledButton = styled(View, {
 });
 
 export const StyledButtonLabel = styled(Text, {
-  name: "KrakenButtonLabel",
+  name: "UIKitButtonLabel",
   fontWeight: "600",
 
   variants: {
     tone: {
-      primary: { color: "$krakenButtonPrimaryLabel" },
-      secondary: { color: "$krakenButtonSecondaryLabel" },
-      outline: { color: "$krakenButtonOutlineLabel" },
-      ghost: { color: "$krakenButtonGhostLabel" },
-      destructive: { color: "$krakenButtonDestructiveLabel" },
+      primary: { color: "$uiButtonPrimaryLabel" },
+      secondary: { color: "$uiButtonSecondaryLabel" },
+      outline: { color: "$uiButtonOutlineLabel" },
+      ghost: { color: "$uiButtonGhostLabel" },
+      destructive: { color: "$uiButtonDestructiveLabel" },
     },
     size: {
       sm: { fontSize: 13 },

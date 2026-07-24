@@ -29,7 +29,7 @@ export interface TextProps extends Omit<GetProps<typeof StyledText>, "children" 
   /** HTML-familiar type-scale variant. Drives fontSize + lineHeight + fontWeight. */
   variant?: TextVariant;
   /**
-   * Text color. Either a slot name from KrakenTextColors (resolves to a theme
+   * Text color. Either a slot name from TextColors (resolves to a theme
    * token) OR a raw color string (hex / rgb / rgba) applied as-is. Defaults
    * to `"primary"`.
    */
@@ -72,7 +72,7 @@ Notable props that "just work" without being in the interface (documented in the
 | `Text.Overline`            | `"overline"`    |       10 |         16 |        500 | `textTransform: "uppercase"`, `letterSpacing: 0.5` | Section eyebrows, category badges    |
 | `Text.Label`               | `"label"`       |       14 |         20 |        500 | —                                                  | Form labels, chip text               |
 
-`fontFamily` inherits from `@tamagui/config/v4` for v0.3. Font-family customization at the token layer is deferred (comes with a `fonts` block on `KrakenTokens` later).
+`fontFamily` inherits from `@tamagui/config/v4` for v0.3. Font-family customization at the token layer is deferred (comes with a `fonts` block on `Tokens` later).
 
 ### Color set (14 slots)
 
@@ -136,10 +136,10 @@ import { Text as RNText } from "react-native"; // rare
 
 ## Token schema additions
 
-Added a new `textColors` block to `KrakenTokens` — non-breaking (optional, defaults ship).
+Added a new `textColors` block to `Tokens` — non-breaking (optional, defaults ship).
 
 ```ts
-export interface KrakenTextColors {
+export interface TextColors {
   primary: string;
   secondary: string;
   tertiary: string;
@@ -156,9 +156,9 @@ export interface KrakenTextColors {
   onDanger: string;
 }
 
-export interface KrakenTokens {
-  buttonColors: KrakenButtonColors;
-  textColors: KrakenTextColors; // new in v0.3
+export interface Tokens {
+  buttonColors: ButtonColors;
+  textColors: TextColors; // new in v0.3
   radius: number;
   spacing: number;
 }
@@ -167,7 +167,7 @@ export interface KrakenTokens {
 ### Default light
 
 ```ts
-export const DEFAULT_LIGHT_TEXT_COLORS: KrakenTextColors = {
+export const DEFAULT_LIGHT_TEXT_COLORS: TextColors = {
   primary: "#0B0B0F", // near-black
   secondary: "#5B6472", // gray-600
   tertiary: "#9CA3AF", // gray-400
@@ -188,7 +188,7 @@ export const DEFAULT_LIGHT_TEXT_COLORS: KrakenTextColors = {
 ### Default dark
 
 ```ts
-export const DEFAULT_DARK_TEXT_COLORS: KrakenTextColors = {
+export const DEFAULT_DARK_TEXT_COLORS: TextColors = {
   primary: "#F5F5F7", // near-white
   secondary: "#9CA3AF", // gray-400
   tertiary: "#6B7280", // gray-500
@@ -206,30 +206,30 @@ export const DEFAULT_DARK_TEXT_COLORS: KrakenTextColors = {
 };
 ```
 
-Both default blocks are wired into `DEFAULT_KRAKEN_TOKENS` and `DEFAULT_DARK_KRAKEN_TOKENS`.
+Both default blocks are wired into `DEFAULT_TOKENS` and `DEFAULT_DARK_TOKENS`.
 
 ### Tamagui token flattening
 
-`buildKrakenConfig` flattens `textColors` to `$krakenText{PascalCase}`:
+`buildConfig` flattens `textColors` to `$uiText{PascalCase}`:
 
 ```
-$krakenTextPrimary
-$krakenTextSecondary
-$krakenTextTertiary
-$krakenTextDisabled
-$krakenTextInverse
-$krakenTextInteractive
-$krakenTextSuccess
-$krakenTextWarning
-$krakenTextDanger
-$krakenTextInfo
-$krakenTextOnPrimary
-$krakenTextOnSecondary
-$krakenTextOnSuccess
-$krakenTextOnDanger
+$uiTextPrimary
+$uiTextSecondary
+$uiTextTertiary
+$uiTextDisabled
+$uiTextInverse
+$uiTextInteractive
+$uiTextSuccess
+$uiTextWarning
+$uiTextDanger
+$uiTextInfo
+$uiTextOnPrimary
+$uiTextOnSecondary
+$uiTextOnSuccess
+$uiTextOnDanger
 ```
 
-These join the existing `$krakenButton*` and `$krakenRadius*` / `$krakenSpacing*` tokens under both `light` and `dark` themes.
+These join the existing `$uiButton*` and `$uiRadius*` / `$uiSpacing*` tokens under both `light` and `dark` themes.
 
 ## File structure (per the ui-kraken component skill)
 
@@ -251,17 +251,17 @@ Barrel updates:
 
 Tokens layer changes:
 
-- `kraken-tokens-types.ts` — added `KrakenTextColors` + slot into `KrakenTokens`
-- `kraken-tokens-derive.ts` — added `DEFAULT_LIGHT_TEXT_COLORS`, `DEFAULT_DARK_TEXT_COLORS`, added `textColors` to `DEFAULT_KRAKEN_TOKENS` + `DEFAULT_DARK_KRAKEN_TOKENS`, added `mergeTextColors` + `coarseToFineTokens` update to pass `textColors` through
-- `kraken-tokens.ts` — extended `buildKrakenConfig` to flatten `textColors` and inject into `light` + `dark` themes
+- `kraken-tokens-types.ts` — added `TextColors` + slot into `Tokens`
+- `kraken-tokens-derive.ts` — added `DEFAULT_LIGHT_TEXT_COLORS`, `DEFAULT_DARK_TEXT_COLORS`, added `textColors` to `DEFAULT_TOKENS` + `DEFAULT_DARK_TOKENS`, added `mergeTextColors` + `coarseToFineTokens` update to pass `textColors` through
+- `kraken-tokens.ts` — extended `buildConfig` to flatten `textColors` and inject into `light` + `dark` themes
 - `tokens/index.ts` — exported new symbols
 - `kraken-tokens.spec.ts` — added tests for `mergeTextColors`, defaults presence, dark != light
 
 Provider changes:
 
-- `kraken-provider-types.ts` — extended `KrakenTokensInput` with `textColors?: Partial<KrakenTextColors>`
+- `kraken-provider-types.ts` — extended `TokensInput` with `textColors?: Partial<TextColors>`
 - `kraken-provider.tsx` — merged textColors overrides same way as buttonColors
-- `kraken-provider.spec.tsx` — added a test that reads a text-color override through `useKraken()`
+- `kraken-provider.spec.tsx` — added a test that reads a text-color override through `useUIKit()`
 
 Example app changes:
 
@@ -284,9 +284,9 @@ Mocks `./text.styled` and `../../provider/use-kraken` the same way Button does s
 9. RN Text props flow through (onPress + numberOfLines + textAlign + accessibilityLabel).
 10. All 13 compound shortcuts set the correct variant.
 
-Provider spec added two tests: full textColors overrides land on `useKraken().tokens.textColors`, and a partial override keeps every unmodified slot on its default.
+Provider spec added two tests: full textColors overrides land on `useUIKit().tokens.textColors`, and a partial override keeps every unmodified slot on its default.
 
-Tokens spec added two: `mergeTextColors` respects base + partial overrides, dark defaults are different from light defaults, and defaults expose every `KrakenTextColors` slot.
+Tokens spec added two: `mergeTextColors` respects base + partial overrides, dark defaults are different from light defaults, and defaults expose every `TextColors` slot.
 
 Total: 56 tests passing after ship (up from 44).
 
@@ -321,7 +321,7 @@ Catalog home flips the Text row from `status: "planned"` → `status: "shipped"`
 
 ## Non-goals (explicitly deferred)
 
-- **Font family customization** — v0.3 inherits `@tamagui/config/v4` fonts wholesale. Once we add `fonts` to `KrakenTokens` we'll let consumers swap font families per role (heading / body / mono).
+- **Font family customization** — v0.3 inherits `@tamagui/config/v4` fonts wholesale. Once we add `fonts` to `Tokens` we'll let consumers swap font families per role (heading / body / mono).
 - **Weight overrides beyond `intensity="strong"`** — no arbitrary `weight={700}` prop yet. If a specific variant needs a heavier weight, we bake it into the variant itself.
 - **Responsive variants** — no per-media-query variant switching. Consumer wraps in Tamagui `useMedia()` if they need it.
 - **Rich text / markdown parsing** — Text is a leaf, not a parser. Nesting `<Text>` inside `<Text>` for inline color changes is supported (RN `Text` nests natively).
@@ -332,7 +332,7 @@ Catalog home flips the Text row from `status: "planned"` → `status: "shipped"`
 
 Executed in this order on branch `feat/text`:
 
-1. Extended the token layer (types + defaults + merge helper + buildKrakenConfig flatten + tests).
+1. Extended the token layer (types + defaults + merge helper + buildConfig flatten + tests).
 2. Extended the provider (accept `textColors` in input + merge + tests).
 3. Implemented the `Text` component (styled + types + tsx + compound + spec + stories + README).
 4. Wired into public barrels (`components/index.ts`, `src/index.ts`).
@@ -340,13 +340,13 @@ Executed in this order on branch `feat/text`:
 6. Verified: `pnpm typecheck && pnpm lint && pnpm test && pnpm build` — all green, 56 tests.
 7. Added a changeset for the `0.3.0` minor bump.
 8. Landed as 4 atomic commits:
-   - `feat(tokens): add textColors block to KrakenTokens (14 slots)`
-   - `feat(provider): accept textColors overrides in KrakenTokensInput`
+   - `feat(tokens): add textColors block to Tokens (14 slots)`
+   - `feat(provider): accept textColors overrides in TokensInput`
    - `feat(text): ship the Text primitive (13 variants, 14 color slots, intensity, compound API)`
    - `docs(example): add Text demo screen and flip catalog row to shipped`
 
 ## How to extend
 
 - **New variant** — add an entry to `variants.variant` in `text.styled.ts`, add the type to `TextVariant` in `text-types.ts`, add the compound shortcut in `text.tsx` (register in `Object.assign` map), add a row to the README table, and — if `intensity="strong"` should behave — add an entry to `STRONG_WEIGHT_FOR_VARIANT`.
-- **New color slot** — add to `KrakenTextColors` in `kraken-tokens-types.ts`, add defaults to both `DEFAULT_LIGHT_TEXT_COLORS` and `DEFAULT_DARK_TEXT_COLORS` in `kraken-tokens-derive.ts`, verify it flattens correctly through `flattenTextColors` (no change needed if it's a plain string slot), and update the README color-slot section.
-- **Font family** — when adding a `fonts` block to `KrakenTokens`, plumb it into `buildKrakenConfig` under `tokens.font` and reference from `text.styled.ts` variants as `fontFamily: "$krakenFont{Role}"`.
+- **New color slot** — add to `TextColors` in `kraken-tokens-types.ts`, add defaults to both `DEFAULT_LIGHT_TEXT_COLORS` and `DEFAULT_DARK_TEXT_COLORS` in `kraken-tokens-derive.ts`, verify it flattens correctly through `flattenTextColors` (no change needed if it's a plain string slot), and update the README color-slot section.
+- **Font family** — when adding a `fonts` block to `Tokens`, plumb it into `buildConfig` under `tokens.font` and reference from `text.styled.ts` variants as `fontFamily: "$krakenFont{Role}"`.

@@ -4,7 +4,7 @@ import { Text } from "react-native";
 // Tamagui pulls ESM-only entry points that Jest cannot transform. The provider
 // only uses TamaguiProvider + PortalProvider as wrappers, so a pass-through
 // mock keeps the test hermetic and fast. createTamagui / createTokens also
-// need stubs because buildKrakenConfig calls them during useMemo.
+// need stubs because buildConfig calls them during useMemo.
 jest.mock("tamagui", () => ({
   TamaguiProvider: ({ children }: { children: React.ReactNode }) => children,
   PortalProvider: ({ children }: { children: React.ReactNode }) => children,
@@ -18,11 +18,11 @@ jest.mock("@tamagui/config/v4", () => ({
   },
 }));
 
-import { KrakenProvider } from "./kraken-provider";
-import { useKraken } from "./use-kraken";
+import { KrakenProvider } from "./provider";
+import { useUIKit } from "./use-ui-kit";
 
 function ReadPrimary() {
-  const { activeTheme, tokens } = useKraken();
+  const { activeTheme, tokens } = useUIKit();
   return (
     <>
       <Text testID="active-theme">{activeTheme}</Text>
@@ -41,7 +41,7 @@ describe("KrakenProvider", () => {
     expect(screen.getByTestId("child")).toBeTruthy();
   });
 
-  it("exposes the default light primary background through useKraken", async () => {
+  it("exposes the default light primary background through useUIKit", async () => {
     await render(
       <KrakenProvider>
         <ReadPrimary />
@@ -52,7 +52,7 @@ describe("KrakenProvider", () => {
     expect(screen.getByTestId("primary-bg").props.children).toBe("#2563EB");
   });
 
-  it("exposes partial token overrides through useKraken", async () => {
+  it("exposes partial token overrides through useUIKit", async () => {
     await render(
       <KrakenProvider tokens={{ buttonColors: { primary: { background: "#FF6B00" } } }}>
         <ReadPrimary />
@@ -84,9 +84,9 @@ describe("KrakenProvider", () => {
     expect(screen.getByTestId("primary-bg").props.children).toBe("#111827");
   });
 
-  it("exposes textColors overrides through useKraken", async () => {
+  it("exposes textColors overrides through useUIKit", async () => {
     function ReadTextPrimary() {
-      const { tokens } = useKraken();
+      const { tokens } = useUIKit();
       return <Text testID="text-primary">{tokens.textColors.primary}</Text>;
     }
 
@@ -100,7 +100,7 @@ describe("KrakenProvider", () => {
 
   it("keeps unmodified textColors slots from the defaults on partial override", async () => {
     function ReadTextSecondary() {
-      const { tokens } = useKraken();
+      const { tokens } = useUIKit();
       return <Text testID="text-secondary">{tokens.textColors.secondary}</Text>;
     }
 

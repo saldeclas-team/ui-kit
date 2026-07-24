@@ -6,8 +6,8 @@ import { Text as TamaguiText, styled } from "tamagui";
  * so the same component can accept either kind of input.
  */
 export const StyledText = styled(TamaguiText, {
-  name: "KrakenText",
-  color: "$krakenTextPrimary",
+  name: "UIKitText",
+  color: "$uiTextPrimary",
 
   variants: {
     variant: {

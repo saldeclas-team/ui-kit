@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import type { ComponentRef } from "react";
 
-import { useKraken } from "../../provider/use-kraken";
+import { useUIKit } from "../../provider/use-ui-kit";
 import { StyledText } from "./text.styled";
 import type { TextColor, TextIntensity, TextProps, TextVariant } from "./text-types";
 
@@ -25,7 +25,7 @@ const BaseText = forwardRef<TextRef, TextProps>(function BaseText(
   { children, variant = "body2", color = "primary", intensity = "normal", ...rest },
   ref
 ) {
-  const { tokens } = useKraken();
+  const { tokens } = useUIKit();
   const resolvedColor = resolveColor(color, tokens.textColors);
   const opacity = intensity === "subtle" ? 0.65 : 1;
   const weightBump = intensity === "strong" ? STRONG_WEIGHT_FOR_VARIANT[variant] : undefined;
@@ -45,7 +45,7 @@ const BaseText = forwardRef<TextRef, TextProps>(function BaseText(
 });
 
 /**
- * If `color` matches one of the KrakenTextColors slot names, look it up in
+ * If `color` matches one of the TextColors slot names, look it up in
  * the resolved theme tokens. Otherwise treat it as a raw color string (hex,
  * rgb, rgba, named color) and pass it straight through to the RN Text.
  */

@@ -25,7 +25,7 @@ packages/ui-kraken/src/provider/
 ├── kraken-provider.tsx           # the provider component
 ├── kraken-provider-context.tsx   # createContext + the Context type
 ├── use-kraken.ts                 # hook returning the context (throws when out of tree)
-├── kraken-provider-types.ts      # KrakenProviderProps, KrakenContextValue
+├── kraken-provider-types.ts      # ProviderProps, ContextValue
 ├── kraken-provider.spec.tsx      # unit tests (RTL v14)
 ├── use-kraken.spec.ts            # unit tests for the hook
 └── index.ts                      # explicit named exports (no `export *`)
@@ -48,7 +48,7 @@ packages/ui-kraken/src/providers/
 
 - **Folder and every file inside share the kebab-case provider name** so grep stays useful.
 - **Providers do not contain visual components.** A provider that needs to render UI (a portal host, a toast surface) delegates to a component from `packages/ui-kraken/src/components/`.
-- **Providers do not own the token schema.** They accept tokens as a prop and forward them to whatever consumer needs them (`buildKrakenConfig`, `TamaguiProvider`). The schema itself lives in `packages/ui-kraken/src/tokens/`.
+- **Providers do not own the token schema.** They accept tokens as a prop and forward them to whatever consumer needs them (`buildConfig`, `TamaguiProvider`). The schema itself lives in `packages/ui-kraken/src/tokens/`.
 
 ## 2. The file split
 
@@ -59,11 +59,11 @@ Holds the `React.createContext` call and its typed value. Separated from the pro
 ```tsx
 // packages/ui-kraken/src/provider/kraken-provider-context.tsx
 import { createContext } from "react";
-import type { KrakenContextValue } from "./kraken-provider-types";
+import type { ContextValue } from "./provider-types";
 
-// `null` sentinel lets `useKraken` throw a clear error when called outside the
+// `null` sentinel lets `useUIKit` throw a clear error when called outside the
 // provider tree. Never provide a default value — it would silently hide the bug.
-export const KrakenContext = createContext<KrakenContextValue | null>(null);
+export const UIKitContext = createContext<ContextValue | null>(null);
 ```
 
 ### `<name>-provider-types.ts`
@@ -73,18 +73,18 @@ Types only. No values. No `React.FC`.
 ```ts
 // packages/ui-kraken/src/provider/kraken-provider-types.ts
 import type { ReactNode } from "react";
-import type { KrakenTokens, ResolvedKrakenTokens } from "../tokens/kraken-tokens-types";
-import type { KrakenConfig } from "../tokens/kraken-tokens";
+import type { Tokens, ResolvedTokens } from "../tokens/tokens-types";
+import type { Config } from "../tokens/tokens";
 
-export interface KrakenProviderProps {
+export interface ProviderProps {
   children: ReactNode;
-  tokens?: Partial<KrakenTokens>;
+  tokens?: Partial<Tokens>;
   defaultTheme?: "light" | "dark";
 }
 
-export interface KrakenContextValue {
-  tokens: ResolvedKrakenTokens;
-  tamaguiConfig: KrakenConfig;
+export interface ContextValue {
+  tokens: ResolvedTokens;
+  tamaguiConfig: Config;
 }
 ```
 
@@ -97,27 +97,23 @@ Wires the props → context value → children. **Keep it under ~60 lines.** If 
 import { useMemo } from "react";
 import { PortalProvider, TamaguiProvider } from "tamagui";
 
-import {
-  DEFAULT_KRAKEN_TOKENS,
-  buildKrakenConfig,
-  coarseToFineTokens,
-} from "../tokens/kraken-tokens";
-import { KrakenContext } from "./kraken-provider-context";
-import type { KrakenProviderProps } from "./kraken-provider-types";
+import { DEFAULT_TOKENS, buildConfig, coarseToFineTokens } from "../tokens/tokens";
+import { UIKitContext } from "./provider-context";
+import type { ProviderProps } from "./provider-types";
 
-export function KrakenProvider({ children, tokens, defaultTheme = "light" }: KrakenProviderProps) {
+export function KrakenProvider({ children, tokens, defaultTheme = "light" }: ProviderProps) {
   const contextValue = useMemo(() => {
-    const merged = { ...DEFAULT_KRAKEN_TOKENS, ...tokens };
+    const merged = { ...DEFAULT_TOKENS, ...tokens };
     return {
       tokens: coarseToFineTokens(merged),
-      tamaguiConfig: buildKrakenConfig(merged),
+      tamaguiConfig: buildConfig(merged),
     };
   }, [tokens]);
 
   return (
     <TamaguiProvider config={contextValue.tamaguiConfig} defaultTheme={defaultTheme}>
       <PortalProvider shouldAddRootHost>
-        <KrakenContext.Provider value={contextValue}>{children}</KrakenContext.Provider>
+        <UIKitContext.Provider value={contextValue}>{children}</UIKitContext.Provider>
       </PortalProvider>
     </TamaguiProvider>
   );
@@ -138,14 +134,14 @@ Every provider ships with a `use*` hook. It throws a helpful error when used out
 // packages/ui-kraken/src/provider/use-kraken.ts
 import { useContext } from "react";
 
-import { KrakenContext } from "./kraken-provider-context";
-import type { KrakenContextValue } from "./kraken-provider-types";
+import { UIKitContext } from "./provider-context";
+import type { ContextValue } from "./provider-types";
 
-export function useKraken(): KrakenContextValue {
-  const value = useContext(KrakenContext);
+export function useUIKit(): ContextValue {
+  const value = useContext(UIKitContext);
   if (value === null) {
     throw new Error(
-      "useKraken must be called inside <KrakenProvider>. Wrap your app root with KrakenProvider before rendering ui-kraken components."
+      "useUIKit must be called inside <KrakenProvider>. Wrap your app root with KrakenProvider before rendering ui-kraken components."
     );
   }
   return value;
@@ -157,7 +153,7 @@ export function useKraken(): KrakenContextValue {
 Cover three things minimum:
 
 1. Provider mounts children.
-2. `useKraken()` throws with a clear message when called outside the provider.
+2. `useUIKit()` throws with a clear message when called outside the provider.
 3. Passing new `tokens` to the provider rebuilds the context value (verified via a stable/unstable reference assertion or by rendering a child that reads a specific override).
 
 In v14 `render()` returns a `Promise` — always `await` it, then read queries from the `screen` global.
@@ -169,7 +165,7 @@ import { Text } from "react-native";
 
 // Tamagui pulls ESM-only entry points Jest cannot transform; a pass-through
 // mock keeps the test hermetic and fast. Stub `createTamagui` / `createTokens`
-// too because `buildKrakenConfig` calls them inside the useMemo.
+// too because `buildConfig` calls them inside the useMemo.
 jest.mock("tamagui", () => ({
   TamaguiProvider: ({ children }: { children: React.ReactNode }) => children,
   PortalProvider: ({ children }: { children: React.ReactNode }) => children,
@@ -180,11 +176,11 @@ jest.mock("@tamagui/config/v4", () => ({
   defaultConfig: { tokens: { color: {}, radius: {}, space: {}, size: {} } },
 }));
 
-import { KrakenProvider } from "./kraken-provider";
-import { useKraken } from "./use-kraken";
+import { KrakenProvider } from "./provider";
+import { useUIKit } from "./use-ui-kit";
 
 function ReadPrimary() {
-  const { tokens } = useKraken();
+  const { tokens } = useUIKit();
   return <Text testID="primary">{tokens.color.primary9}</Text>;
 }
 
@@ -198,7 +194,7 @@ describe("KrakenProvider", () => {
     expect(screen.getByTestId("child")).toBeTruthy();
   });
 
-  it("exposes overridden tokens through useKraken", async () => {
+  it("exposes overridden tokens through useUIKit", async () => {
     await render(
       <KrakenProvider tokens={{ primaryColor: "#FF6B00" }}>
         <ReadPrimary />
@@ -214,14 +210,14 @@ describe("KrakenProvider", () => {
 import { render } from "@testing-library/react-native";
 import { Text } from "react-native";
 
-import { useKraken } from "./use-kraken";
+import { useUIKit } from "./use-ui-kit";
 
 function UseKrakenOrThrow() {
-  const value = useKraken();
+  const value = useUIKit();
   return <Text>{value.tokens.color.primary9}</Text>;
 }
 
-describe("useKraken", () => {
+describe("useUIKit", () => {
   it("throws a helpful error when called outside a KrakenProvider", async () => {
     const spy = jest.spyOn(console, "error").mockImplementation(() => undefined);
     await expect(render(<UseKrakenOrThrow />)).rejects.toThrow(/inside <KrakenProvider>/);
@@ -234,23 +230,23 @@ describe("useKraken", () => {
 
 ```ts
 // packages/ui-kraken/src/provider/index.ts
-export { KrakenProvider } from "./kraken-provider";
-export { useKraken } from "./use-kraken";
-export type { KrakenProviderProps, KrakenContextValue } from "./kraken-provider-types";
+export { KrakenProvider } from "./provider";
+export { useUIKit } from "./use-ui-kit";
+export type { ProviderProps, ContextValue } from "./provider-types";
 ```
 
 Then re-export from the public barrel `packages/ui-kraken/src/index.ts` — also explicit.
 
 ## 3. Escape-hatch contract
 
-The provider's public hook (`useKraken`) intentionally exposes the raw `tamaguiConfig`. This is the escape hatch for consumers who need to drop down to Tamagui APIs directly:
+The provider's public hook (`useUIKit`) intentionally exposes the raw `tamaguiConfig`. This is the escape hatch for consumers who need to drop down to Tamagui APIs directly:
 
 ```tsx
-import { useKraken } from "ui-kraken";
+import { useUIKit } from "ui-kraken";
 import { createTokens, Theme } from "tamagui";
 
 function AdvancedUsage() {
-  const { tamaguiConfig } = useKraken();
+  const { tamaguiConfig } = useUIKit();
   // build a custom sub-theme, override at the Theme boundary, etc.
   return <Theme name="dark">...</Theme>;
 }

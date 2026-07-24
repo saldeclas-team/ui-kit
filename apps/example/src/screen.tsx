@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { useKraken } from "ui-kraken";
+import { useUIKit } from "ui-kraken";
 
 export interface ScreenProps {
   children: ReactNode;
@@ -15,7 +15,7 @@ export interface ScreenProps {
  * NOT part of ui-kraken itself.
  */
 export function Screen({ children, title, subtitle }: ScreenProps) {
-  const { activeTheme } = useKraken();
+  const { activeTheme } = useUIKit();
   const isDark = activeTheme === "dark";
   const backgroundColor = isDark ? "#000000" : "#FFFFFF";
   const titleColor = isDark ? "#FFFFFF" : "#0B0B0F";

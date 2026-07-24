@@ -56,7 +56,7 @@ import { KrakenProvider } from "ui-kraken";
 
 Each variant fills only the slots it needs — `outline` uses `border` (not `background`); `ghost` uses `label` only (no background, no border).
 
-If you don't pass anything, ui-kraken ships sensible defaults (`DEFAULT_KRAKEN_TOKENS` and `DEFAULT_DARK_KRAKEN_TOKENS`).
+If you don't pass anything, ui-kraken ships sensible defaults (`DEFAULT_TOKENS` and `DEFAULT_DARK_TOKENS`).
 
 ## Usage
 

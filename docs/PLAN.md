@@ -36,7 +36,7 @@ These are called out explicitly so we can debate them when the moment arrives. D
 
 **Decision:** ship a thin `KrakenProvider` wrapper (Approach C from the design workflow).
 
-The provider mounts `TamaguiProvider` + `PortalProvider` + a small `KrakenContext`. It accepts the coarse token schema natively and derives the full Tamagui config via `buildKrakenConfig()` inside `useMemo`. It also exposes `useKraken()` which returns `{ tokens, tamaguiConfig }` — the raw Tamagui config is intentionally reachable so power users hitting the abstraction ceiling can drop down without ejecting the library.
+The provider mounts `TamaguiProvider` + `PortalProvider` + a small `UIKitContext`. It accepts the coarse token schema natively and derives the full Tamagui config via `buildConfig()` inside `useMemo`. It also exposes `useUIKit()` which returns `{ tokens, tamaguiConfig }` — the raw Tamagui config is intentionally reachable so power users hitting the abstraction ceiling can drop down without ejecting the library.
 
 Why C won (23/25) over A (20/25, no wrapper) and B (18/25, opinionated full wrapper): C satisfies the coarse-token DX with per-instance overrides that flow semantically, keeps the surface small for fast iteration, and preserves a real escape hatch to Tamagui. A forced a breaking migration the moment we ship Sheet/Toast; B hid Tamagui from power users.
 
@@ -45,33 +45,33 @@ Why C won (23/25) over A (20/25, no wrapper) and B (18/25, opinionated full wrap
 **Decision:** tokens are **per-component**, not global. The concept of a single `primaryColor: string` was abandoned — different components have different color surfaces and should be tuned independently.
 
 ```ts
-export interface KrakenButtonVariantColors {
+export interface ButtonVariantColors {
   background?: string; // filled by primary / secondary / destructive
   label: string;
   border?: string; // filled by outline
 }
 
-export interface KrakenButtonColors {
-  primary: KrakenButtonVariantColors;
-  secondary: KrakenButtonVariantColors;
-  outline: KrakenButtonVariantColors;
-  ghost: KrakenButtonVariantColors;
-  destructive: KrakenButtonVariantColors;
+export interface ButtonColors {
+  primary: ButtonVariantColors;
+  secondary: ButtonVariantColors;
+  outline: ButtonVariantColors;
+  ghost: ButtonVariantColors;
+  destructive: ButtonVariantColors;
 }
 
-export interface KrakenTokens {
-  buttonColors: KrakenButtonColors;
+export interface Tokens {
+  buttonColors: ButtonColors;
   // Future minors add textColors, cardColors, inputColors — same pattern.
   radius: number;
   spacing: number;
 }
 ```
 
-`coarseToFineTokens(tokens: KrakenTokens): ResolvedKrakenTokens` is exported as a pure function. Tamagui tokens land as `$krakenButtonPrimaryBackground`, `$krakenButtonPrimaryLabel`, `$krakenButtonOutlineBorder`, etc. — flat naming, one token per slot.
+`coarseToFineTokens(tokens: Tokens): ResolvedTokens` is exported as a pure function. Tamagui tokens land as `$uiButtonPrimaryBackground`, `$uiButtonPrimaryLabel`, `$uiButtonOutlineBorder`, etc. — flat naming, one token per slot.
 
 Per-instance overrides on the component reuse the same shape but scoped to the variant already selected (see AGENTS.md).
 
-Defaults ship for both themes: `DEFAULT_KRAKEN_TOKENS` (light) and `DEFAULT_DARK_KRAKEN_TOKENS` (dark). Consumers who don't override anything get a working Blue-600 palette out of the box.
+Defaults ship for both themes: `DEFAULT_TOKENS` (light) and `DEFAULT_DARK_TOKENS` (dark). Consumers who don't override anything get a working Blue-600 palette out of the box.
 
 ### ~~2.3 First component~~ — **RESOLVED (revised 2026-07-24)**
 
@@ -80,7 +80,7 @@ Defaults ship for both themes: `DEFAULT_KRAKEN_TOKENS` (light) and `DEFAULT_DARK
 - Compound API: `Button.Primary`, `Button.Secondary`, `Button.Outline`, `Button.Ghost`, `Button.Destructive`. `outline` has a border, `ghost` is text-only (no background, no border).
 - Default export `Button` maps to `Button.Primary` so `<Button>Save</Button>` works for the 80% case.
 - Sizes: `sm`, `md`, `lg`. States: `disabled`, `loading` — both apply `opacity: 0.45`; no separate color slot.
-- Radius: prop `radius?: number | "none" | "sm" | "md" | "lg" | "pill"` — number is raw px, preset name maps to the theme scale (`$krakenRadius{Sm|Md|Lg}`), `"pill"` is 9999.
+- Radius: prop `radius?: number | "none" | "sm" | "md" | "lg" | "pill"` — number is raw px, preset name maps to the theme scale (`$uiRadius{Sm|Md|Lg}`), `"pill"` is 9999.
 - Slots: `leftIcon`, `rightIcon` (both `ReactNode`).
 - Per-instance color override: `buttonColors?: Partial<{ background?, label, border? }>` — variant is implicit (`Button.Primary` already picked the variant).
 - `testID` propagates to `label`, `left-icon`, `right-icon`, `loader` subelements.
@@ -99,11 +99,11 @@ Current stance: components accept `ReactNode` slots (`leftIcon`, `rightIcon`) �
 
 Decided during the v0.2.0 design; documented so we don't relitigate:
 
-- ~~**Dark mode:** v0.2.x will add an optional `dark?: Partial<KrakenTokens>` prop on `KrakenProvider`.~~ **Landed in v0.2.0.** `KrakenProvider` accepts `dark?: KrakenTokensInput` and `defaultTheme: "light" | "dark" | "system"`. Ships `DEFAULT_DARK_KRAKEN_TOKENS`.
+- ~~**Dark mode:** v0.2.x will add an optional `dark?: Partial<Tokens>` prop on `KrakenProvider`.~~ **Landed in v0.2.0.** `KrakenProvider` accepts `dark?: TokensInput` and `defaultTheme: "light" | "dark" | "system"`. Ships `DEFAULT_DARK_TOKENS`.
 - **Text component + font-family token:** ships with the `Text` component in v0.2.x. v0.2.0 inherits `@tamagui/config/v4`'s default fonts.
 - **`rgb()` / named color inputs:** v0.2.0 accepts hex only (documented in JSDoc). Parser dep deferred until a real consumer asks.
 - **`setTokens` runtime hook:** not shipping. Remount `KrakenProvider` with new props to change theme.
-- **`tamaguiConfig` full-escape-hatch prop:** not shipping. `useKraken()` covers 90% of escape-hatch use cases already.
+- **`tamaguiConfig` full-escape-hatch prop:** not shipping. `useUIKit()` covers 90% of escape-hatch use cases already.
 - **Auto-contrast helper:** `pickContrastText()` is NOT auto-applied. Exposed as a utility for consumers who want to opt in.
 
 ### 2.7 Form validation library (future)

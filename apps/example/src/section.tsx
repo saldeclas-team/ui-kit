@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useKraken } from "ui-kraken";
+import { useUIKit } from "ui-kraken";
 
 export interface SectionProps {
   title: string;
@@ -12,7 +12,7 @@ export interface SectionProps {
  * heading color so labels stay readable in both light and dark. App-only.
  */
 export function Section({ title, children }: SectionProps) {
-  const { activeTheme } = useKraken();
+  const { activeTheme } = useUIKit();
   const color = activeTheme === "dark" ? "#F5F5F7" : "#0B0B0F";
 
   return (

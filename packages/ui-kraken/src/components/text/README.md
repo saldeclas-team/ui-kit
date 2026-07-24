@@ -17,12 +17,12 @@ import { Text as RNText } from "react-native"; // rare
 
 ## Props
 
-| Prop        | Type                               | Default     | Description                                                                                                                    |
-| ----------- | ---------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `children`  | `ReactNode`                        | —           | Text content. Can nest other `<Text>` for inline color changes (RN native).                                                    |
-| `variant`   | `TextVariant`                      | `"body2"`   | Type-scale variant. See table below.                                                                                           |
-| `color`     | `TextColor \| string`              | `"primary"` | Slot name from `KrakenTextColors` OR a raw color string (`#RRGGBB`, `rgb(...)`, named color). Slot resolves via `useKraken()`. |
-| `intensity` | `"subtle" \| "normal" \| "strong"` | `"normal"`  | `subtle` sets opacity 0.65; `strong` bumps fontWeight one step (400→600, 500→700; already 700+ stays).                         |
+| Prop        | Type                               | Default     | Description                                                                                                             |
+| ----------- | ---------------------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `children`  | `ReactNode`                        | —           | Text content. Can nest other `<Text>` for inline color changes (RN native).                                             |
+| `variant`   | `TextVariant`                      | `"body2"`   | Type-scale variant. See table below.                                                                                    |
+| `color`     | `TextColor \| string`              | `"primary"` | Slot name from `TextColors` OR a raw color string (`#RRGGBB`, `rgb(...)`, named color). Slot resolves via `useUIKit()`. |
+| `intensity` | `"subtle" \| "normal" \| "strong"` | `"normal"`  | `subtle` sets opacity 0.65; `strong` bumps fontWeight one step (400→600, 500→700; already 700+ stays).                  |
 
 Every RN Text prop and every Tamagui style prop flows through the `...rest` spread — see "Notable props that just work" below.
 

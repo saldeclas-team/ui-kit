@@ -1,7 +1,7 @@
 export { Button } from "./button";
 export type {
   ButtonProps,
-  ButtonColorsInput,
+  ButtonVariantColorsInput,
   ButtonTone,
   ButtonSize,
   ButtonRadius,
