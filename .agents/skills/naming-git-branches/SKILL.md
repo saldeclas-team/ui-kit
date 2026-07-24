@@ -109,6 +109,15 @@ If the branch will bundle unrelated work (rare — prefer separate branches), na
 
 ---
 
+## Lifecycle after merge
+
+- **The remote branch is auto-deleted by GitHub on merge.** The repo has `Settings → Pull Requests → "Automatically delete head branches"` enabled. When a PR merges, the corresponding branch on `origin` disappears immediately. This matches industry practice (React, Next.js, Storybook, Chakra, Radix, MUI all do this) — keeps `gh pr list` / branch dropdowns focused on active work, and the PR page (title, body, review, files-changed) is preserved forever regardless.
+- **The local branch survives** on the contributor's machine — GitHub only deletes remote. After merge, contributors run `git branch -d <branch-name>` locally to keep their machine tidy. `-d` (safe delete) refuses to delete if the branch has unmerged commits; if you know the work IS merged (via the PR you just merged), you can also `git fetch --prune` to drop the stale remote-tracking ref.
+- **Do NOT recreate a deleted branch to add "one more commit"** — that's an anti-pattern. The PR is closed and the branch is gone. Open a fresh branch off `main` (per the "Where to branch FROM" section above) with a new name and a new PR.
+- **Pinned issues / long-lived tracking branches** — if for some reason a specific branch must survive post-merge (e.g. a release-support branch like `release/v1`), configure GitHub to exclude it. Currently we have none.
+
+---
+
 ## Related conventions
 
 - **Commit messages** — the branch name and the commit `type(scope):` line should agree. If the branch is `feat/text-primitive-13-variants`, the first commit typically is `feat(text): ...` or `feat(tokens): ...` (scope narrows per commit).
