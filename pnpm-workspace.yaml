@@ -15,6 +15,38 @@ autoInstallPeers: true
 # The React Native peer-dep graph is noisy; do not fail install on mismatches.
 strictPeerDependencies: false
 
+# Supply-chain policy: reject any lockfile entry for a package published
+# less than N minutes ago. Protects against yank-and-run attacks where
+# malicious versions get published + quickly removed before wide
+# detection. Setting is explicit so pnpm version bumps do not silently
+# lower our security posture.
+#
+# Industry references for `minimumReleaseAge`:
+#   - pnpm 11 default:              ~10 hours (600 min)
+#   - Renovate default:             3 days (4320 min)
+#   - socket.dev recommend:         48-72h (2880-4320 min)
+#   - Chainguard (security vendor): 7 days (10080 min)
+#
+# **Ramping up progressively** — we are NOT at 7d yet because the
+# current lockfile has recent Storybook Web + Chromatic + Vite install
+# packages (2026-07-24) with transitive deps still <72h old. Jumping
+# straight to 7d would break `pnpm install --frozen-lockfile` in CI.
+#
+# Roadmap:
+#   1. NOW (2026-07-24): `1440` (24h)   — modest improvement over
+#      pnpm's default, still permits the current lockfile.
+#   2. After 2026-08-01: bump to `4320` (3d — Renovate default). All
+#      Storybook Web / Chromatic install-time packages will have
+#      aged past 3 days by then.
+#   3. After 2026-08-08 (or the next Expo SDK migration event,
+#      whichever is later): bump to `10080` (7d — Chainguard-level).
+#      Final target for a library shipping to consumer apps.
+#
+# To temporarily allow a specific package (e.g. one we vetted
+# manually), use `minimumReleaseAgeExclude: [<package-name>]`. Avoid;
+# always document why in the commit message + AGENTS.md.
+minimumReleaseAge: 1440
+
 # Approve postinstall scripts for known-trusted dependencies.
 allowBuilds:
   "@swc/core": true
