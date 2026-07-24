@@ -8,6 +8,7 @@ Task-specific skills (each has single responsibility — do not mix them):
 
 - [`.agents/skills/creating-component-tamagui/SKILL.md`](./.agents/skills/creating-component-tamagui/SKILL.md) — building a visual/interactive component under `packages/ui-kraken/src/components/`.
 - [`.agents/skills/creating-provider-tamagui/SKILL.md`](./.agents/skills/creating-provider-tamagui/SKILL.md) — building a React context provider under `packages/ui-kraken/src/provider/`.
+- [`.agents/skills/naming-git-branches/SKILL.md`](./.agents/skills/naming-git-branches/SKILL.md) — naming a new git branch so its intent is legible from `gh pr list` alone.
 
 ---
 
@@ -171,6 +172,14 @@ Every field is optional. Missing slots inherit from the theme. Fallback order at
 - `useCallback` on functions passed to memoized children or into effect deps.
 - Only add `React.memo` after profiling shows a real re-render problem.
 
+### Branches
+
+- Format: `<type>/<scope>-<short-verb-phrase>` (all kebab-case, lowercase, ASCII).
+- `<type>` matches the Conventional Commit types below.
+- `<scope>` matches the future commit scope (`button`, `text`, `tokens`, `provider`, `example`, `ci`, `release`, `deps`, …).
+- `<short-verb-phrase>` describes the change, not the trigger. Aim for 20–50 chars total.
+- A reviewer scanning `gh pr list` should understand the intent without clicking. See the [`naming-git-branches`](./.agents/skills/naming-git-branches/SKILL.md) skill for the full rulebook, good/bad examples, and edge cases (releases, reverts, exploration).
+
 ### Commits
 
 - Conventional Commits (enforced by commitlint on the `commit-msg` hook).
@@ -181,16 +190,21 @@ Every field is optional. Missing slots inherit from the theme. Fallback order at
 
 - Only the user pushes. Automated tooling never runs `git push` — commit locally and report the SHA + suggested push command instead.
 
+### PR descriptions
+
+- Every PR follows [`.github/PULL_REQUEST_TEMPLATE.md`](./.github/PULL_REQUEST_TEMPLATE.md). Fill Summary / Changes / Screenshots (or drop with a note) / Test plan, and complete the Standards checklist — uncheck items with a one-line justification instead of deleting rows.
+
 ---
 
 ## Quick reference — where different things live
 
-| I need to build…                                                  | Read this skill                                                                      | Files land in                                                                          |
-| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
-| A visual/interactive component (Button, Card, Input)              | [`creating-component-tamagui`](./.agents/skills/creating-component-tamagui/SKILL.md) | `packages/ui-kraken/src/components/<name>/`                                            |
-| A React context / provider (KrakenProvider, future ToastProvider) | [`creating-provider-tamagui`](./.agents/skills/creating-provider-tamagui/SKILL.md)   | `packages/ui-kraken/src/provider/` (or `providers/<name>/` once we have more than one) |
-| A token schema / theme value                                      | (skill TBD)                                                                          | `packages/ui-kraken/src/tokens/`                                                       |
-| A standalone hook                                                 | (skill TBD)                                                                          | co-located with its consumer, or `packages/ui-kraken/src/hooks/` for shared ones       |
+| I need to…                                                              | Read this skill                                                                      | Files land in                                                                          |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| Build a visual/interactive component (Button, Card, Input)              | [`creating-component-tamagui`](./.agents/skills/creating-component-tamagui/SKILL.md) | `packages/ui-kraken/src/components/<name>/`                                            |
+| Build a React context / provider (KrakenProvider, future ToastProvider) | [`creating-provider-tamagui`](./.agents/skills/creating-provider-tamagui/SKILL.md)   | `packages/ui-kraken/src/provider/` (or `providers/<name>/` once we have more than one) |
+| Name a new git branch                                                   | [`naming-git-branches`](./.agents/skills/naming-git-branches/SKILL.md)               | n/a (git only)                                                                         |
+| Build a token schema / theme value                                      | (skill TBD)                                                                          | `packages/ui-kraken/src/tokens/`                                                       |
+| Build a standalone hook                                                 | (skill TBD)                                                                          | co-located with its consumer, or `packages/ui-kraken/src/hooks/` for shared ones       |
 
 Every skill enforces this same file layout for its domain:
 
