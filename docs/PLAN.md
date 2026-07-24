@@ -206,3 +206,12 @@ Bonus: provenance shows up as a verified badge on the npm package page ("Publish
 - Any PR that changes a locked decision (§1) must update it here in the same PR.
 - Any PR that resolves an open decision (§2) moves it up to §1 and links back to the PR.
 - Every completed roadmap item (§4) becomes a link to its release notes on the [changelog](../packages/ui-kraken/CHANGELOG.md).
+
+## 6. Per-component design records
+
+Every shipped component gets a design record in `docs/` capturing **what we built, how, and why** — including rejected alternatives, so a new contributor can understand the reasoning without archaeology.
+
+- [`BUTTON-PLAN.md`](./BUTTON-PLAN.md) — Button (v0.2.0) — 5 tones, per-instance color overrides, elevation with dark-mode border swap, compound API.
+- [`TYPOGRAPHY-PLAN.md`](./TYPOGRAPHY-PLAN.md) — Text (v0.3.0) — 13 HTML-familiar variants, 14 semantic color slots, intensity modulator, `color` accepts slot name or raw hex/rgb.
+
+**Convention when shipping a new component:** create `docs/{COMPONENT}-PLAN.md` in the same branch as the implementation, following the same shape (Overview → API → Token schema → File structure → Testing → Storybook → Example → Non-goals → How it shipped → How to extend). The component-level README stays focused on **usage**; the PLAN doc stays focused on **rationale and decisions**.
