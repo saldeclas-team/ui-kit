@@ -102,6 +102,8 @@ Elevation (shadows):
 <Button.Primary elevation="lg">Raised</Button.Primary>
 ```
 
+**Dark-mode note**: black shadows are invisible against a dark surface. When `activeTheme === "dark"` and `elevation !== "none"`, Button automatically renders a translucent-white border (opacity scales with the level) as a substitute — a pattern lifted from Linear / Notion / Vercel. The swap is skipped for `outline` / `ghost` tones (they own their border) and yields to any explicit `buttonColors.border` override.
+
 Loading / disabled:
 
 ```tsx

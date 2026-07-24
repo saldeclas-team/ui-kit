@@ -2,8 +2,9 @@ import { forwardRef } from "react";
 import type { ComponentRef } from "react";
 import { ActivityIndicator, View } from "react-native";
 
+import { useKraken } from "../../provider/use-kraken";
 import { StyledButton, StyledButtonLabel } from "./button.styled";
-import type { ButtonProps, ButtonRadius, ButtonTone } from "./button-types";
+import type { ButtonElevation, ButtonProps, ButtonRadius, ButtonTone } from "./button-types";
 
 type ButtonRef = ComponentRef<typeof StyledButton>;
 
@@ -36,6 +37,7 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
   const rootId = testID ?? "button";
   const isInactive = Boolean(disabled) || Boolean(loading);
   const resolvedBorderRadius = resolveRadius(radius);
+  const darkBorder = useDarkElevationBorder(tone, elevation, buttonColors?.border);
 
   return (
     <StyledButton
@@ -46,7 +48,8 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
       elevation={elevation}
       disabled={isInactive}
       backgroundColor={buttonColors?.background}
-      borderColor={buttonColors?.border}
+      borderColor={buttonColors?.border ?? darkBorder?.color}
+      borderWidth={darkBorder?.width}
       borderRadius={resolvedBorderRadius}
       accessibilityRole="button"
       accessibilityState={{ disabled: isInactive, busy: Boolean(loading) }}
@@ -75,6 +78,33 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
     </StyledButton>
   );
 });
+
+/**
+ * Dark-mode elevation swap. Black shadows are invisible on a dark surface, so
+ * on dark tones we render a subtle translucent-white border whose opacity
+ * scales with the elevation level. `outline` and `ghost` already control their
+ * own border, and any per-instance `buttonColors.border` override wins over
+ * this — we only apply the visual when we know we would otherwise render an
+ * invisible shadow.
+ */
+function useDarkElevationBorder(
+  tone: ButtonTone,
+  elevation: ButtonElevation,
+  overrideBorder: string | undefined
+): { color: string; width: number } | undefined {
+  const { activeTheme } = useKraken();
+  if (activeTheme !== "dark") return undefined;
+  if (elevation === "none") return undefined;
+  if (tone === "outline" || tone === "ghost") return undefined;
+  if (overrideBorder != null) return undefined;
+  return { color: DARK_ELEVATION_BORDER[elevation], width: 1 };
+}
+
+const DARK_ELEVATION_BORDER: Record<Exclude<ButtonElevation, "none">, string> = {
+  sm: "rgba(255,255,255,0.05)",
+  md: "rgba(255,255,255,0.10)",
+  lg: "rgba(255,255,255,0.15)",
+};
 
 /**
  * Resolve the `radius` prop to a value the styled `borderRadius` prop accepts.

@@ -17,6 +17,14 @@ jest.mock("./button.styled", () => {
   return { StyledButton, StyledButtonLabel };
 });
 
+// Mock useKraken so Button can run without a KrakenProvider wrapper in tests.
+// The dark-elevation border path is exercised separately in `dark-elevation`
+// tests below by re-mocking the return value.
+const mockUseKraken = jest.fn(() => ({ activeTheme: "light" as const }));
+jest.mock("../../provider/use-kraken", () => ({
+  useKraken: () => mockUseKraken(),
+}));
+
 import { Button } from "./button";
 
 describe("Button", () => {
@@ -180,5 +188,75 @@ describe("Button", () => {
     expect(screen.getByTestId("sm").props.elevation).toBe("sm");
     expect(screen.getByTestId("md").props.elevation).toBe("md");
     expect(screen.getByTestId("lg").props.elevation).toBe("lg");
+  });
+
+  describe("dark mode elevation swap", () => {
+    beforeEach(() => {
+      mockUseKraken.mockReturnValue({ activeTheme: "dark" as const });
+    });
+
+    afterEach(() => {
+      mockUseKraken.mockReturnValue({ activeTheme: "light" as const });
+    });
+
+    it("applies a translucent-white border on solid tones when elevation is set", async () => {
+      await render(
+        <Button testID="btn" elevation="md">
+          Raised
+        </Button>
+      );
+
+      expect(screen.getByTestId("btn").props.borderColor).toBe("rgba(255,255,255,0.10)");
+      expect(screen.getByTestId("btn").props.borderWidth).toBe(1);
+    });
+
+    it("scales the border opacity with the elevation level", async () => {
+      await render(
+        <>
+          <Button testID="sm" elevation="sm">
+            sm
+          </Button>
+          <Button testID="lg" elevation="lg">
+            lg
+          </Button>
+        </>
+      );
+
+      expect(screen.getByTestId("sm").props.borderColor).toBe("rgba(255,255,255,0.05)");
+      expect(screen.getByTestId("lg").props.borderColor).toBe("rgba(255,255,255,0.15)");
+    });
+
+    it("skips the dark-border swap for outline / ghost tones", async () => {
+      await render(
+        <>
+          <Button.Outline testID="outline" elevation="md">
+            O
+          </Button.Outline>
+          <Button.Ghost testID="ghost" elevation="md">
+            G
+          </Button.Ghost>
+        </>
+      );
+
+      expect(screen.getByTestId("outline").props.borderColor).toBeUndefined();
+      expect(screen.getByTestId("ghost").props.borderColor).toBeUndefined();
+    });
+
+    it("respects a per-instance border override over the dark-border swap", async () => {
+      await render(
+        <Button testID="btn" elevation="md" buttonColors={{ border: "#FF0000" }}>
+          Custom
+        </Button>
+      );
+
+      expect(screen.getByTestId("btn").props.borderColor).toBe("#FF0000");
+    });
+
+    it("does nothing when elevation is 'none'", async () => {
+      await render(<Button testID="btn">Flat</Button>);
+
+      expect(screen.getByTestId("btn").props.borderColor).toBeUndefined();
+      expect(screen.getByTestId("btn").props.borderWidth).toBeUndefined();
+    });
   });
 });
