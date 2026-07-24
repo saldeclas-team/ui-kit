@@ -60,14 +60,40 @@ Every segment is **kebab-case**, lowercase, ASCII only. No underscores, no camel
 
 ---
 
+## Where to branch FROM
+
+**Every new branch is cut from a freshly-pulled `main`. Always. No exceptions during normal work.**
+
+Not from another feature branch, not from a branch that's already open in a PR, not from a stale local copy of `main`. Even if you're mid-work on branch A and need to peel off a quick unrelated branch B: stash the work on A, checkout main, pull, cut B from that clean main. Then when you're done with B, come back to A.
+
+Why: branching off another feature branch creates fragile dependency chains (branch B's PR can't merge until branch A's PR merges first, and if A gets reworked, B has to be rebased). It also confuses `gh pr list` and the release-notes changelog — reviewers can't tell which changes belong to which PR. The maintainer flagged this as a hard rule on 2026-07-24 after an incident where a doc branch got cut from an in-flight feature branch instead of main.
+
+**Concrete order for any new branch:**
+
+```bash
+# Any pending work? Stash it before switching away.
+git status
+git stash                                 # if the tree is dirty
+
+# Cut from a freshly-pulled main.
+git checkout main
+git pull --ff-only
+
+# Now branch.
+git checkout -b <type>/<scope>-<short-verb-phrase>
+```
+
+The single exception is a series of stacked PRs the maintainer has explicitly asked for (very rare — the normal flow is one PR at a time, merge, then start the next). Even then, confirm with the maintainer before stacking.
+
 ## Checklist before you `git checkout -b`
 
-1. Pick the type — is this a `feat` (new user-visible thing), `fix` (bug), `refactor` (no behavior change), `chore` (tooling / infra), or one of the others?
-2. Name the scope — which component, package, or area does this touch? Match the future commit scope. If the change spans two, pick the primary one (Text component + provider changes → `feat/text-primitive-...`, not `feat/text-and-provider`).
-3. Draft the short verb phrase — describe the change, not the trigger. "add" / "update" / "make" are usually filler; drop them.
-4. Read it aloud. Would a reviewer scanning `gh pr list` understand what's inside without clicking?
-5. Length check — is it 20–50 characters? Shorter than 20 → almost always too vague. Longer than 50 → trim adjectives.
-6. Kebab-case check — all lowercase, dashes only, no underscores, no dots, no accents.
+1. **From main?** Run `git status` (tree clean or stash), then `git checkout main && git pull --ff-only` before the `checkout -b`. See "Where to branch FROM" above — this is non-negotiable.
+2. Pick the type — is this a `feat` (new user-visible thing), `fix` (bug), `refactor` (no behavior change), `chore` (tooling / infra), or one of the others?
+3. Name the scope — which component, package, or area does this touch? Match the future commit scope. If the change spans two, pick the primary one (Text component + provider changes → `feat/text-primitive-...`, not `feat/text-and-provider`).
+4. Draft the short verb phrase — describe the change, not the trigger. "add" / "update" / "make" are usually filler; drop them.
+5. Read it aloud. Would a reviewer scanning `gh pr list` understand what's inside without clicking?
+6. Length check — is it 20–50 characters? Shorter than 20 → almost always too vague. Longer than 50 → trim adjectives.
+7. Kebab-case check — all lowercase, dashes only, no underscores, no dots, no accents.
 
 If the branch will bundle unrelated work (rare — prefer separate branches), name it after the primary deliverable and mention the secondary work in the PR body.
 
