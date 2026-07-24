@@ -123,6 +123,25 @@ export const RadiusCustomNumber: Story = {
   render: (args) => <Button.Primary {...args}>radius=24</Button.Primary>,
 };
 
+export const ElevationLevels: Story = {
+  render: (args) => (
+    <YStack gap="$4">
+      <Button.Primary {...args} elevation="none">
+        elevation=none
+      </Button.Primary>
+      <Button.Primary {...args} elevation="sm">
+        elevation=sm
+      </Button.Primary>
+      <Button.Primary {...args} elevation="md">
+        elevation=md
+      </Button.Primary>
+      <Button.Primary {...args} elevation="lg">
+        elevation=lg
+      </Button.Primary>
+    </YStack>
+  ),
+};
+
 export const DarkTheme: Story = {
   render: (args) => (
     <Theme name="dark">

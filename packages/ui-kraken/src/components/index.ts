@@ -5,4 +5,5 @@ export type {
   ButtonTone,
   ButtonSize,
   ButtonRadius,
+  ButtonElevation,
 } from "./button";

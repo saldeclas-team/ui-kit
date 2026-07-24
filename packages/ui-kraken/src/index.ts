@@ -44,4 +44,5 @@ export type {
   ButtonTone,
   ButtonSize,
   ButtonRadius,
+  ButtonElevation,
 } from "./components";

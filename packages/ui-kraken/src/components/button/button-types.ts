@@ -24,6 +24,15 @@ export type ButtonSize = "sm" | "md" | "lg";
 export type ButtonRadius = number | "none" | "sm" | "md" | "lg" | "pill";
 
 /**
+ * Shadow / elevation preset. Values are hardcoded in v0.2 — no theme knob.
+ * `"none"` is the default (flat). `"sm"` / `"md"` / `"lg"` map to progressively
+ * stronger shadows. On iOS this uses `shadow*` style props; on Android it uses
+ * `elevation`. `outline` and `ghost` tones render shadows against a transparent
+ * background, which iOS clips — set `elevation` on solid tones for best results.
+ */
+export type ButtonElevation = "none" | "sm" | "md" | "lg";
+
+/**
  * Per-instance color override. Same shape as `KrakenButtonVariantColors` at
  * the provider level, but partial — missing fields fall through to the theme
  * palette for the current variant. The variant itself is implicit because you
@@ -49,6 +58,12 @@ export interface ButtonProps extends Omit<StyledButtonProps, "children" | "size"
    * omitted, the radius is derived from `size` (each size has a default).
    */
   radius?: ButtonRadius;
+  /**
+   * Shadow / elevation level. Defaults to `"none"` (flat). `"sm"` / `"md"` /
+   * `"lg"` apply progressively stronger shadows. Values are shipped defaults;
+   * no theme customization in v0.2.
+   */
+  elevation?: ButtonElevation;
   /** Disables press interaction and dims the surface (opacity 0.45). */
   disabled?: boolean;
   /** Replaces the left icon with a loading spinner and disables interaction. */

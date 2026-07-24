@@ -93,6 +93,15 @@ Radius presets and pill / custom shapes:
 <Button.Primary radius={24}>Custom 24px</Button.Primary>
 ```
 
+Elevation (shadows):
+
+```tsx
+<Button.Primary elevation="none">Flat</Button.Primary>
+<Button.Primary elevation="sm">Subtle lift</Button.Primary>
+<Button.Primary elevation="md">Card-like</Button.Primary>
+<Button.Primary elevation="lg">Raised</Button.Primary>
+```
+
 Loading / disabled:
 
 ```tsx

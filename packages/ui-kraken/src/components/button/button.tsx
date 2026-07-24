@@ -22,6 +22,7 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
     tone = "primary",
     size = "md",
     radius,
+    elevation = "none",
     disabled,
     loading,
     leftIcon,
@@ -42,6 +43,7 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
       testID={rootId}
       tone={tone}
       size={size}
+      elevation={elevation}
       disabled={isInactive}
       backgroundColor={buttonColors?.background}
       borderColor={buttonColors?.border}

@@ -50,6 +50,13 @@ export default function ButtonScreen() {
         <Button.Primary radius={24}>radius=24 (custom px)</Button.Primary>
       </Section>
 
+      <Section title="Elevation">
+        <Button.Primary elevation="none">elevation=none (flat)</Button.Primary>
+        <Button.Primary elevation="sm">elevation=sm</Button.Primary>
+        <Button.Primary elevation="md">elevation=md</Button.Primary>
+        <Button.Primary elevation="lg">elevation=lg</Button.Primary>
+      </Section>
+
       <Section title="Per-instance color overrides">
         <Button.Primary
           buttonColors={{ background: "#FF6B00", label: "#FFFFFF" }}

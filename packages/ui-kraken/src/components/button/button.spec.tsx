@@ -156,4 +156,29 @@ describe("Button", () => {
 
     expect(screen.getByTestId("btn").props.borderRadius).toBe("$krakenRadiusLg");
   });
+
+  it("defaults elevation to 'none'", async () => {
+    await render(<Button testID="btn">Flat</Button>);
+    expect(screen.getByTestId("btn").props.elevation).toBe("none");
+  });
+
+  it("forwards each elevation preset to the styled variant", async () => {
+    await render(
+      <>
+        <Button testID="sm" elevation="sm">
+          sm
+        </Button>
+        <Button testID="md" elevation="md">
+          md
+        </Button>
+        <Button testID="lg" elevation="lg">
+          lg
+        </Button>
+      </>
+    );
+
+    expect(screen.getByTestId("sm").props.elevation).toBe("sm");
+    expect(screen.getByTestId("md").props.elevation).toBe("md");
+    expect(screen.getByTestId("lg").props.elevation).toBe("lg");
+  });
 });
