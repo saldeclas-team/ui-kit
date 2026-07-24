@@ -1,10 +1,30 @@
 # Dependabot configuration
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 #
-# Auto-opens weekly PRs for outdated dependencies. Groupings collapse
-# related packages into a single PR to reduce review overhead; ignores
-# skip deps whose updates need coordinated ecosystem decisions (peer
-# deps, Expo SDK majors) and are handled manually.
+# Auto-opens **monthly** PRs for outdated dependencies (default day-of-
+# month = 1st, in Dependabot's timezone). Groupings collapse related
+# packages into a single PR to reduce review overhead; ignores skip
+# deps whose updates need coordinated ecosystem decisions (peer deps,
+# Expo SDK majors) and are handled manually.
+#
+# **Why monthly, not weekly:**
+#   - Solo maintainer cadence — matches the industry pattern for
+#     small OSS projects (weekly is for teams of 2+ reviewing on
+#     rotation).
+#   - Combined with `minimumReleaseAge` in pnpm-workspace.yaml
+#     (currently 24h, ramping to 7d), bumps that arrive here are
+#     already aged + battle-tested — no rush.
+#   - Security updates are **independent** of this schedule. When
+#     GitHub Security detects a CVE affecting a dependency, Dependabot
+#     opens a security-labeled PR **immediately**, not on the next
+#     monthly run. So slowing routine bumps does NOT slow CVE patches.
+#   - Trade-off: routine feature bumps of deps take up to 30 days
+#     to arrive. Acceptable for a UI library (we do not need cutting-
+#     edge of transitive tooling).
+#
+# To temporarily accelerate to `weekly` for a specific ecosystem
+# (e.g. during a coordinated Expo SDK migration), bump the
+# `schedule.interval` in that update block. Revert after.
 
 version: 2
 
@@ -15,8 +35,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "monthly"
     open-pull-requests-limit: 5
     labels:
       - "dependencies"
@@ -49,8 +68,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/packages/ui-kraken"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "monthly"
     open-pull-requests-limit: 5
     labels:
       - "dependencies"
@@ -86,8 +104,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/apps/example"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "monthly"
     open-pull-requests-limit: 5
     labels:
       - "dependencies"
@@ -96,7 +113,7 @@ updates:
       prefix: "chore(deps)"
     groups:
       # Storybook ships ~20 packages in lockstep. Grouping them means
-      # one weekly PR instead of twenty.
+      # one PR per interval instead of twenty.
       storybook:
         applies-to: version-updates
         patterns:
@@ -134,15 +151,14 @@ updates:
           - "version-update:semver-major"
 
   # -----------------------------------------------------------------
-  # GitHub Actions — bump action versions weekly. Prevents actions
+  # GitHub Actions — bump action versions monthly. Prevents actions
   # from silently going stale (e.g. actions/checkout@v7 →
   # actions/checkout@v8 when it lands).
   # -----------------------------------------------------------------
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: "monthly"
     open-pull-requests-limit: 3
     labels:
       - "dependencies"
