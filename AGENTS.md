@@ -9,6 +9,7 @@ Task-specific skills (each has single responsibility — do not mix them):
 - [`.agents/skills/creating-component-tamagui/SKILL.md`](./.agents/skills/creating-component-tamagui/SKILL.md) — building a visual/interactive component under `packages/ui-kraken/src/components/`.
 - [`.agents/skills/creating-provider-tamagui/SKILL.md`](./.agents/skills/creating-provider-tamagui/SKILL.md) — building a React context provider under `packages/ui-kraken/src/provider/`.
 - [`.agents/skills/naming-git-branches/SKILL.md`](./.agents/skills/naming-git-branches/SKILL.md) — naming a new git branch so its intent is legible from `gh pr list` alone.
+- [`.agents/skills/drafting-pr-descriptions/SKILL.md`](./.agents/skills/drafting-pr-descriptions/SKILL.md) — at the end of an initiative, produce a ready-to-paste PR title and body matching the template, without the user having to ask.
 
 ---
 
@@ -193,6 +194,7 @@ Every field is optional. Missing slots inherit from the theme. Fallback order at
 ### PR descriptions
 
 - Every PR follows [`.github/PULL_REQUEST_TEMPLATE.md`](./.github/PULL_REQUEST_TEMPLATE.md). Fill Summary / Changes / Screenshots (or drop with a note) / Test plan, and complete the Standards checklist — uncheck items with a one-line justification instead of deleting rows.
+- **AI collaborators**: when an initiative is done and committed, return the PR title + body **in the same message as the "done" report**, without waiting for the user to ask. See the [`drafting-pr-descriptions`](./.agents/skills/drafting-pr-descriptions/SKILL.md) skill for the trigger rules and the exact format.
 
 ---
 
@@ -203,6 +205,7 @@ Every field is optional. Missing slots inherit from the theme. Fallback order at
 | Build a visual/interactive component (Button, Card, Input)              | [`creating-component-tamagui`](./.agents/skills/creating-component-tamagui/SKILL.md) | `packages/ui-kraken/src/components/<name>/`                                            |
 | Build a React context / provider (KrakenProvider, future ToastProvider) | [`creating-provider-tamagui`](./.agents/skills/creating-provider-tamagui/SKILL.md)   | `packages/ui-kraken/src/provider/` (or `providers/<name>/` once we have more than one) |
 | Name a new git branch                                                   | [`naming-git-branches`](./.agents/skills/naming-git-branches/SKILL.md)               | n/a (git only)                                                                         |
+| Draft the PR title and body after committing                            | [`drafting-pr-descriptions`](./.agents/skills/drafting-pr-descriptions/SKILL.md)     | n/a (chat handoff)                                                                     |
 | Build a token schema / theme value                                      | (skill TBD)                                                                          | `packages/ui-kraken/src/tokens/`                                                       |
 | Build a standalone hook                                                 | (skill TBD)                                                                          | co-located with its consumer, or `packages/ui-kraken/src/hooks/` for shared ones       |
 

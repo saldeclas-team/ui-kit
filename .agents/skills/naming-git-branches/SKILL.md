@@ -86,5 +86,4 @@ If the branch will bundle unrelated work (rare — prefer separate branches), na
 ## Related conventions
 
 - **Commit messages** — the branch name and the commit `type(scope):` line should agree. If the branch is `feat/text-primitive-13-variants`, the first commit typically is `feat(text): ...` or `feat(tokens): ...` (scope narrows per commit).
-- **PR titles** — the PR title is a full sentence; the branch name is a slug. `feat/text-primitive-13-variants` → PR title `feat(text): ship the Text primitive with 13 HTML-familiar variants`.
-- **PR body** — follow [`.github/PULL_REQUEST_TEMPLATE.md`](../../../.github/PULL_REQUEST_TEMPLATE.md). It expects Summary / Changes / Screenshots / Test plan sections plus the Standards checklist — do not replace the checklist; uncheck items with a note if they do not apply.
+- **PR titles + body** — the [`drafting-pr-descriptions`](../drafting-pr-descriptions/SKILL.md) skill covers the handoff after the last commit. The PR title is a full sentence; the branch name is a slug. `feat/text-primitive-13-variants` → PR title `feat(text): ship the Text primitive with 13 HTML-familiar variants`. The body follows [`.github/PULL_REQUEST_TEMPLATE.md`](../../../.github/PULL_REQUEST_TEMPLATE.md).
