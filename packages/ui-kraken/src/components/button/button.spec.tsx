@@ -17,14 +17,14 @@ jest.mock("./button.styled", () => {
   return { StyledButton, StyledButtonLabel };
 });
 
-// Mock useKraken so Button can run without a KrakenProvider wrapper in tests.
+// Mock useUIKit so Button can run without a KrakenProvider wrapper in tests.
 // The dark-elevation border path is exercised separately in `dark-elevation`
 // tests below by re-mocking the return value.
-const mockUseKraken: jest.Mock<{ activeTheme: "light" | "dark" }, []> = jest.fn(() => ({
+const mockUseUIKit: jest.Mock<{ activeTheme: "light" | "dark" }, []> = jest.fn(() => ({
   activeTheme: "light",
 }));
-jest.mock("../../provider/use-kraken", () => ({
-  useKraken: () => mockUseKraken(),
+jest.mock("../../provider/use-ui-kit", () => ({
+  useUIKit: () => mockUseUIKit(),
 }));
 
 import { Button } from "./button";
@@ -164,7 +164,7 @@ describe("Button", () => {
       </Button>
     );
 
-    expect(screen.getByTestId("btn").props.borderRadius).toBe("$krakenRadiusLg");
+    expect(screen.getByTestId("btn").props.borderRadius).toBe("$uiRadiusLg");
   });
 
   it("defaults to a flat elevation (no shadow, no border)", async () => {
@@ -204,11 +204,11 @@ describe("Button", () => {
 
   describe("dark mode elevation swap", () => {
     beforeEach(() => {
-      mockUseKraken.mockReturnValue({ activeTheme: "dark" });
+      mockUseUIKit.mockReturnValue({ activeTheme: "dark" });
     });
 
     afterEach(() => {
-      mockUseKraken.mockReturnValue({ activeTheme: "light" });
+      mockUseUIKit.mockReturnValue({ activeTheme: "light" });
     });
 
     it("applies a translucent-white border on solid tones when elevation is set", async () => {

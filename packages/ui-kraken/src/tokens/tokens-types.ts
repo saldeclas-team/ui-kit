@@ -8,7 +8,7 @@
  * across every variant. If a consumer needs a truly custom disabled color
  * they can pass it per-instance via `buttonColors.background`.
  */
-export interface KrakenButtonVariantColors {
+export interface ButtonVariantColors {
   /** Surface color. Ignored by `outline` and `ghost`. */
   background?: string;
   /** Label / text color. Every variant uses this. */
@@ -23,12 +23,12 @@ export interface KrakenButtonVariantColors {
  * some values do `<KrakenProvider buttonColors={{ primary: {...} }}>` and the
  * missing variants merge with the defaults (see `mergeButtonColors`).
  */
-export interface KrakenButtonColors {
-  primary: KrakenButtonVariantColors;
-  secondary: KrakenButtonVariantColors;
-  outline: KrakenButtonVariantColors;
-  ghost: KrakenButtonVariantColors;
-  destructive: KrakenButtonVariantColors;
+export interface ButtonColors {
+  primary: ButtonVariantColors;
+  secondary: ButtonVariantColors;
+  outline: ButtonVariantColors;
+  ghost: ButtonVariantColors;
+  destructive: ButtonVariantColors;
 }
 
 /**
@@ -46,7 +46,7 @@ export interface KrakenButtonColors {
  *   surface (e.g. label inside a filled Button, text on a Toast). Auto-contrast
  *   is intentionally NOT applied — consumers pick the right `on-*` explicitly.
  */
-export interface KrakenTextColors {
+export interface TextColors {
   primary: string;
   secondary: string;
   tertiary: string;
@@ -69,9 +69,9 @@ export interface KrakenTextColors {
  * releases will add `cardColors`, `inputColors`, etc. — grouped by component
  * role in the same way.
  */
-export interface KrakenTokens {
-  buttonColors: KrakenButtonColors;
-  textColors: KrakenTextColors;
+export interface Tokens {
+  buttonColors: ButtonColors;
+  textColors: TextColors;
   radius: number;
   spacing: number;
 }
@@ -81,9 +81,9 @@ export interface KrakenTokens {
  * Colors pass through as-is in v0.3; kept as a separate type so we can add
  * derived scales later without breaking the provider contract.
  */
-export interface ResolvedKrakenTokens {
-  buttonColors: KrakenButtonColors;
-  textColors: KrakenTextColors;
+export interface ResolvedTokens {
+  buttonColors: ButtonColors;
+  textColors: TextColors;
   radius: {
     sm: number;
     md: number;

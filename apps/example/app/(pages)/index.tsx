@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import type { Href } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useKraken } from "ui-kraken";
+import { useUIKit } from "ui-kraken";
 
 import { Screen } from "../../src/screen";
 
@@ -56,7 +56,7 @@ export default function CatalogHome() {
 }
 
 function CatalogRow({ item }: { item: CatalogItem }) {
-  const { activeTheme } = useKraken();
+  const { activeTheme } = useUIKit();
   const isDark = activeTheme === "dark";
   const shipped = item.status === "shipped";
   const cardBg = isDark ? "#111827" : "#F9FAFB";

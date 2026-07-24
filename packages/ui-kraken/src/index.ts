@@ -7,25 +7,25 @@
  */
 
 // Provider
-export { KrakenProvider, useKraken } from "./provider";
+export { KrakenProvider, useUIKit } from "./provider";
 export type {
-  KrakenProviderProps,
-  KrakenContextValue,
-  KrakenThemeMode,
-  KrakenTokensInput,
-  KrakenButtonColorsInput,
-  KrakenTextColorsInput,
+  ProviderProps,
+  ContextValue,
+  ThemeMode,
+  TokensInput,
+  ButtonColorsInput,
+  TextColorsInput,
 } from "./provider";
 
 // Tokens
 export {
-  DEFAULT_KRAKEN_TOKENS,
-  DEFAULT_DARK_KRAKEN_TOKENS,
+  DEFAULT_TOKENS,
+  DEFAULT_DARK_TOKENS,
   DEFAULT_LIGHT_BUTTON_COLORS,
   DEFAULT_DARK_BUTTON_COLORS,
   DEFAULT_LIGHT_TEXT_COLORS,
   DEFAULT_DARK_TEXT_COLORS,
-  buildKrakenConfig,
+  buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
   mergeButtonVariantColors,
@@ -33,19 +33,19 @@ export {
   tint,
 } from "./tokens";
 export type {
-  KrakenTokens,
-  KrakenButtonColors,
-  KrakenButtonVariantColors,
-  KrakenTextColors,
-  ResolvedKrakenTokens,
-  KrakenConfig,
+  Tokens,
+  ButtonColors,
+  ButtonVariantColors,
+  TextColors,
+  ResolvedTokens,
+  Config,
 } from "./tokens";
 
 // Components
 export { Button } from "./components";
 export type {
   ButtonProps,
-  ButtonColorsInput,
+  ButtonVariantColorsInput,
   ButtonTone,
   ButtonSize,
   ButtonRadius,

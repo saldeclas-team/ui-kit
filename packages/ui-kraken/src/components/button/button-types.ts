@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import type { GetProps } from "tamagui";
 
-import type { KrakenButtonVariantColors } from "../../tokens/kraken-tokens-types";
+import type { ButtonVariantColors } from "../../tokens/tokens-types";
 import type { StyledButton } from "./button.styled";
 
 /**
@@ -33,12 +33,12 @@ export type ButtonRadius = number | "none" | "sm" | "md" | "lg" | "pill";
 export type ButtonElevation = "none" | "sm" | "md" | "lg";
 
 /**
- * Per-instance color override. Same shape as `KrakenButtonVariantColors` at
+ * Per-instance color override. Same shape as `ButtonVariantColors` at
  * the provider level, but partial — missing fields fall through to the theme
  * palette for the current variant. The variant itself is implicit because you
  * already picked it (`Button.Primary`, `Button.Ghost`, etc.).
  */
-export type ButtonColorsInput = Partial<KrakenButtonVariantColors>;
+export type ButtonVariantColorsInput = Partial<ButtonVariantColors>;
 
 /**
  * All Tamagui style props the underlying `StyledButton` accepts flow through
@@ -77,7 +77,7 @@ export interface ButtonProps extends Omit<StyledButtonProps, "children" | "size"
    * corresponding variant slot at the provider (`{ background?, label, border? }`)
    * but every field is optional — missing slots fall through to the theme.
    */
-  buttonColors?: ButtonColorsInput;
+  buttonColors?: ButtonVariantColorsInput;
   /** Root testID. Subelements derive: `{testID}-label`, `{testID}-left-icon`, `{testID}-right-icon`, `{testID}-loader`. */
   testID?: string;
 }

@@ -1,16 +1,16 @@
 import type {
-  KrakenButtonColors,
-  KrakenButtonVariantColors,
-  KrakenTextColors,
-  KrakenTokens,
-  ResolvedKrakenTokens,
-} from "./kraken-tokens-types";
+  ButtonColors,
+  ButtonVariantColors,
+  TextColors,
+  Tokens,
+  ResolvedTokens,
+} from "./tokens-types";
 
 /**
  * Default light-mode Button palette. Tuned to work on a white / near-white
  * surface with WCAG AA contrast for the label color.
  */
-export const DEFAULT_LIGHT_BUTTON_COLORS: KrakenButtonColors = {
+export const DEFAULT_LIGHT_BUTTON_COLORS: ButtonColors = {
   primary: { background: "#2563EB", label: "#FFFFFF" },
   secondary: { background: "#0EA5E9", label: "#FFFFFF" },
   outline: { border: "#2563EB", label: "#2563EB" },
@@ -22,7 +22,7 @@ export const DEFAULT_LIGHT_BUTTON_COLORS: KrakenButtonColors = {
  * Default dark-mode Button palette. Uses lighter brand shades so they pop on
  * a dark surface, and inverts the label colors where needed for contrast.
  */
-export const DEFAULT_DARK_BUTTON_COLORS: KrakenButtonColors = {
+export const DEFAULT_DARK_BUTTON_COLORS: ButtonColors = {
   primary: { background: "#3B82F6", label: "#FFFFFF" },
   secondary: { background: "#38BDF8", label: "#0B0B0F" },
   outline: { border: "#60A5FA", label: "#60A5FA" },
@@ -35,7 +35,7 @@ export const DEFAULT_DARK_BUTTON_COLORS: KrakenButtonColors = {
  * surfaces. Semantic colors mirror the brand primary (Blue-600) and the
  * standard Tailwind/Material palette for success / warning / danger / info.
  */
-export const DEFAULT_LIGHT_TEXT_COLORS: KrakenTextColors = {
+export const DEFAULT_LIGHT_TEXT_COLORS: TextColors = {
   primary: "#0B0B0F",
   secondary: "#5B6472",
   tertiary: "#9CA3AF",
@@ -58,7 +58,7 @@ export const DEFAULT_LIGHT_TEXT_COLORS: KrakenTextColors = {
  * `onSecondary` and `onSuccess` flip to near-black because the corresponding
  * dark-mode Button `background` for those variants is a light color.
  */
-export const DEFAULT_DARK_TEXT_COLORS: KrakenTextColors = {
+export const DEFAULT_DARK_TEXT_COLORS: TextColors = {
   primary: "#F5F5F7",
   secondary: "#9CA3AF",
   tertiary: "#6B7280",
@@ -79,7 +79,7 @@ export const DEFAULT_DARK_TEXT_COLORS: KrakenTextColors = {
  * Fallback tokens when a consumer mounts `<KrakenProvider>` without any
  * overrides. Uses the light-mode palette by default.
  */
-export const DEFAULT_KRAKEN_TOKENS: KrakenTokens = {
+export const DEFAULT_TOKENS: Tokens = {
   buttonColors: DEFAULT_LIGHT_BUTTON_COLORS,
   textColors: DEFAULT_LIGHT_TEXT_COLORS,
   radius: 12,
@@ -90,7 +90,7 @@ export const DEFAULT_KRAKEN_TOKENS: KrakenTokens = {
  * Fallback dark tokens when a consumer opts into dark mode without passing
  * their own `dark` prop.
  */
-export const DEFAULT_DARK_KRAKEN_TOKENS: KrakenTokens = {
+export const DEFAULT_DARK_TOKENS: Tokens = {
   buttonColors: DEFAULT_DARK_BUTTON_COLORS,
   textColors: DEFAULT_DARK_TEXT_COLORS,
   radius: 12,
@@ -103,9 +103,9 @@ export const DEFAULT_DARK_KRAKEN_TOKENS: KrakenTokens = {
  * `primary.background` should not have to re-declare `primary.label`.
  */
 export function mergeButtonVariantColors(
-  base: KrakenButtonVariantColors,
-  override?: Partial<KrakenButtonVariantColors>
-): KrakenButtonVariantColors {
+  base: ButtonVariantColors,
+  override?: Partial<ButtonVariantColors>
+): ButtonVariantColors {
   if (override == null) return base;
   return { ...base, ...override };
 }
@@ -114,9 +114,9 @@ export function mergeButtonVariantColors(
  * Merge partial button-color overrides across every variant.
  */
 export function mergeButtonColors(
-  base: KrakenButtonColors,
-  override?: Partial<Record<keyof KrakenButtonColors, Partial<KrakenButtonVariantColors>>>
-): KrakenButtonColors {
+  base: ButtonColors,
+  override?: Partial<Record<keyof ButtonColors, Partial<ButtonVariantColors>>>
+): ButtonColors {
   if (override == null) return base;
   return {
     primary: mergeButtonVariantColors(base.primary, override.primary),
@@ -131,10 +131,7 @@ export function mergeButtonColors(
  * Merge partial text-color overrides on top of a base palette. Missing slots
  * fall through — consumers only declare the slots they want to change.
  */
-export function mergeTextColors(
-  base: KrakenTextColors,
-  override?: Partial<KrakenTextColors>
-): KrakenTextColors {
+export function mergeTextColors(base: TextColors, override?: Partial<TextColors>): TextColors {
   if (override == null) return base;
   return { ...base, ...override };
 }
@@ -155,7 +152,7 @@ export function tint(hex: string, amount: number): string {
  * colors pass through unchanged; only the radius / space scales are derived.
  * Pure — safe to call inside a `useMemo`.
  */
-export function coarseToFineTokens(tokens: KrakenTokens): ResolvedKrakenTokens {
+export function coarseToFineTokens(tokens: Tokens): ResolvedTokens {
   const { buttonColors, textColors, radius, spacing } = tokens;
   return {
     buttonColors,

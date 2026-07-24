@@ -13,10 +13,10 @@ jest.mock("./text.styled", () => {
   return { StyledText };
 });
 
-// Mock useKraken so Text can run without a KrakenProvider wrapper in tests.
+// Mock useUIKit so Text can run without a KrakenProvider wrapper in tests.
 // Give it the DEFAULT_LIGHT_TEXT_COLORS values so `color="danger"` etc. can
 // be asserted against a known palette.
-const mockUseKraken = jest.fn(() => ({
+const mockUseUIKit = jest.fn(() => ({
   activeTheme: "light" as const,
   tokens: {
     textColors: {
@@ -37,8 +37,8 @@ const mockUseKraken = jest.fn(() => ({
     },
   },
 }));
-jest.mock("../../provider/use-kraken", () => ({
-  useKraken: () => mockUseKraken(),
+jest.mock("../../provider/use-ui-kit", () => ({
+  useUIKit: () => mockUseUIKit(),
 }));
 
 import { Text } from "./text";
@@ -82,7 +82,7 @@ describe("Text", () => {
     }
   });
 
-  it("resolves each theme slot when color matches KrakenTextColors", async () => {
+  it("resolves each theme slot when color matches TextColors", async () => {
     await render(
       <>
         <Text testID="danger" color="danger">

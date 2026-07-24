@@ -19,8 +19,8 @@ Task-specific skills (each has single responsibility — do not mix them):
 ui-kit/
 ├── packages/ui-kraken/     # The library published to npm as `ui-kraken`
 │   └── src/
-│       ├── tokens/         # KrakenTokens schema + translator + defaults
-│       ├── provider/       # KrakenProvider + useKraken
+│       ├── tokens/         # Tokens schema + translator + defaults
+│       ├── provider/       # KrakenProvider + useUIKit
 │       ├── components/     # Every UI component (button/, card/, ...)
 │       └── index.ts        # Public barrel (explicit named exports)
 ├── apps/example/           # Expo app for showcase + on-device Storybook
@@ -48,9 +48,9 @@ ui-kit/
 | Files                                      | kebab-case                                    | `kraken-provider.tsx`, `use-kraken.ts`       |
 | Folders                                    | kebab-case                                    | `components/button/`, `provider/`            |
 | React components                           | PascalCase                                    | `Button`, `KrakenProvider`                   |
-| Functions / hooks (hooks start with `use`) | camelCase                                     | `buildKrakenConfig`, `useKraken`             |
-| Global constants                           | SCREAMING_SNAKE_CASE                          | `DEFAULT_KRAKEN_TOKENS`                      |
-| Types / interfaces                         | PascalCase                                    | `ButtonProps`, `KrakenTokens`                |
+| Functions / hooks (hooks start with `use`) | camelCase                                     | `buildConfig`, `useUIKit`                    |
+| Global constants                           | SCREAMING_SNAKE_CASE                          | `DEFAULT_TOKENS`                             |
+| Types / interfaces                         | PascalCase                                    | `ButtonProps`, `Tokens`                      |
 | Prop interfaces                            | `<ComponentName>Props`                        | `ButtonProps`                                |
 | Grouped color prop                         | camelCase prop, PascalCase type               | prop `buttonColors: ButtonColors`            |
 | Enums / union types                        | PascalCase for the type, camelCase for values | `type ButtonTone = "primary" \| "secondary"` |
@@ -83,7 +83,7 @@ Filename suffixes that carry meaning:
 
 - Only Tamagui `styled()`. `StyleSheet.create()` from React Native is banned repo-wide (ESLint).
 - Only theme tokens for colors, spacing, radius, typography. No hex literals in `*.styled.ts`.
-- Tokens defined in `packages/ui-kraken/src/tokens/` are prefixed `$kraken*` (e.g. `$krakenPrimary9`, `$krakenSpacingMd`) so they never collide with `@tamagui/config/v4` defaults.
+- Tokens defined in `packages/ui-kraken/src/tokens/` are prefixed `$kraken*` (e.g. `$krakenPrimary9`, `$uiSpacingMd`) so they never collide with `@tamagui/config/v4` defaults.
 - Interactive elements: minimum touch target 48 × 48 px.
 - Press feedback on button-like elements: `pressStyle={{ scale: 0.98, opacity: 0.9 }}`.
 
@@ -121,7 +121,7 @@ Every component gets its own block (`buttonColors`, future `textColors`, `cardCo
 </Button.Primary>
 ```
 
-Every field is optional. Missing slots inherit from the theme. Fallback order at render: per-instance override → provider-level `buttonColors[variant]` → shipped default (`DEFAULT_KRAKEN_TOKENS`).
+Every field is optional. Missing slots inherit from the theme. Fallback order at render: per-instance override → provider-level `buttonColors[variant]` → shipped default (`DEFAULT_TOKENS`).
 
 **Design rules for new components:**
 

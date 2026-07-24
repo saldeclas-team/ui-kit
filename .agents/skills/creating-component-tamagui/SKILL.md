@@ -13,7 +13,7 @@ Related skills (do not mix responsibilities):
 
 - `creating-provider-tamagui` — for React providers / contexts.
 - (future) `creating-hook` — for standalone hooks.
-- (future) `creating-token-set` — for extending the KrakenTokens schema.
+- (future) `creating-token-set` — for extending the Tokens schema.
 
 ---
 
@@ -82,7 +82,7 @@ export interface TextColors {
 Fallback order at render time:
 
 1. Per-instance override prop (`buttonColors.primary`).
-2. Theme token derived from `KrakenTokens` (e.g. `$krakenPrimary9`) — provided by whatever provider is mounted above the component.
+2. Theme token derived from `Tokens` (e.g. `$krakenPrimary9`) — provided by whatever provider is mounted above the component.
 
 The component knows nothing about how the theme tokens were produced. It just reads `$kraken*` tokens from Tamagui.
 
@@ -105,9 +105,9 @@ export const StyledButton = styled(Stack, {
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "center",
-  gap: "$krakenSpacingSm",
+  gap: "$uiSpacingSm",
   minHeight: 48,
-  borderRadius: "$krakenRadiusMd",
+  borderRadius: "$uiRadiusMd",
   pressStyle: { scale: 0.98, opacity: 0.9 },
 
   variants: {
@@ -118,9 +118,9 @@ export const StyledButton = styled(Stack, {
       destructive: { backgroundColor: "$krakenDanger9" },
     },
     size: {
-      sm: { minHeight: 36, paddingHorizontal: "$krakenSpacingSm" },
-      md: { minHeight: 48, paddingHorizontal: "$krakenSpacingMd" },
-      lg: { minHeight: 56, paddingHorizontal: "$krakenSpacingLg" },
+      sm: { minHeight: 36, paddingHorizontal: "$uiSpacingSm" },
+      md: { minHeight: 48, paddingHorizontal: "$uiSpacingMd" },
+      lg: { minHeight: 56, paddingHorizontal: "$uiSpacingLg" },
     },
     disabled: { true: { opacity: 0.45, pointerEvents: "none" } },
   } as const,
@@ -132,7 +132,7 @@ export const StyledButtonLabel = styled(Text, {
   name: "KrakenButtonLabel",
   fontFamily: "$body",
   fontWeight: "600",
-  color: "$krakenTextOnPrimary",
+  color: "$uiTextOnPrimary",
 });
 ```
 
@@ -274,7 +274,7 @@ import { Button } from "./button";
 jest.mock("@tamagui/core", () => ({
   useTheme: () => ({
     krakenPrimary9: { val: "#2563EB" },
-    krakenTextOnPrimary: { val: "#FFFFFF" },
+    uiTextOnPrimary: { val: "#FFFFFF" },
   }),
   getConfig: () => ({ fonts: { body: { family: { val: "Inter" } } } }),
 }));

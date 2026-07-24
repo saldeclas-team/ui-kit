@@ -3,41 +3,36 @@ import { useColorScheme } from "react-native";
 import { TamaguiProvider } from "tamagui";
 
 import {
-  DEFAULT_DARK_KRAKEN_TOKENS,
-  DEFAULT_KRAKEN_TOKENS,
-  buildKrakenConfig,
+  DEFAULT_DARK_TOKENS,
+  DEFAULT_TOKENS,
+  buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
   mergeTextColors,
-} from "../tokens/kraken-tokens";
-import { KrakenContext } from "./kraken-provider-context";
-import type { KrakenProviderProps } from "./kraken-provider-types";
+} from "../tokens/tokens";
+import { UIKitContext } from "./provider-context";
+import type { ProviderProps } from "./provider-types";
 
 // NOTE: Tamagui v2's `TamaguiProvider` already mounts a `PortalProvider` with
 // a root host internally. Adding our own wrapper produces a "Nested
 // PortalProvider with shouldAddRootHost" warning and can cause hydration
 // mismatches. Consumers who need a portal can still use `<Portal>` from
 // `tamagui` — the root host from TamaguiProvider is sufficient.
-export function KrakenProvider({
-  children,
-  tokens,
-  dark,
-  defaultTheme = "light",
-}: KrakenProviderProps) {
+export function KrakenProvider({ children, tokens, dark, defaultTheme = "light" }: ProviderProps) {
   const systemScheme = useColorScheme();
 
   const contextValue = useMemo(() => {
     const mergedLight = {
-      ...DEFAULT_KRAKEN_TOKENS,
+      ...DEFAULT_TOKENS,
       ...tokens,
-      buttonColors: mergeButtonColors(DEFAULT_KRAKEN_TOKENS.buttonColors, tokens?.buttonColors),
-      textColors: mergeTextColors(DEFAULT_KRAKEN_TOKENS.textColors, tokens?.textColors),
+      buttonColors: mergeButtonColors(DEFAULT_TOKENS.buttonColors, tokens?.buttonColors),
+      textColors: mergeTextColors(DEFAULT_TOKENS.textColors, tokens?.textColors),
     };
     const mergedDark = {
-      ...DEFAULT_DARK_KRAKEN_TOKENS,
+      ...DEFAULT_DARK_TOKENS,
       ...dark,
-      buttonColors: mergeButtonColors(DEFAULT_DARK_KRAKEN_TOKENS.buttonColors, dark?.buttonColors),
-      textColors: mergeTextColors(DEFAULT_DARK_KRAKEN_TOKENS.textColors, dark?.textColors),
+      buttonColors: mergeButtonColors(DEFAULT_DARK_TOKENS.buttonColors, dark?.buttonColors),
+      textColors: mergeTextColors(DEFAULT_DARK_TOKENS.textColors, dark?.textColors),
     };
     const resolvedLight = coarseToFineTokens(mergedLight);
     const resolvedDark = coarseToFineTokens(mergedDark);
@@ -49,13 +44,13 @@ export function KrakenProvider({
       darkTokens: resolvedDark,
       activeTheme,
       tokens: activeTheme === "dark" ? resolvedDark : resolvedLight,
-      tamaguiConfig: buildKrakenConfig(mergedLight, mergedDark),
+      tamaguiConfig: buildConfig(mergedLight, mergedDark),
     };
   }, [tokens, dark, defaultTheme, systemScheme]);
 
   return (
     <TamaguiProvider config={contextValue.tamaguiConfig} defaultTheme={contextValue.activeTheme}>
-      <KrakenContext.Provider value={contextValue}>{children}</KrakenContext.Provider>
+      <UIKitContext.Provider value={contextValue}>{children}</UIKitContext.Provider>
     </TamaguiProvider>
   );
 }

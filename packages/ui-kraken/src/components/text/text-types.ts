@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import type { GetProps } from "tamagui";
 
-import type { KrakenTextColors } from "../../tokens/kraken-tokens-types";
+import type { TextColors } from "../../tokens/tokens-types";
 import type { StyledText } from "./text.styled";
 
 /**
@@ -25,12 +25,12 @@ export type TextVariant =
   | "label";
 
 /**
- * Semantic color slot from `KrakenTextColors`. The `color` prop on `<Text>`
+ * Semantic color slot from `TextColors`. The `color` prop on `<Text>`
  * accepts either one of these slot names (resolves to the theme token) OR an
  * arbitrary color string (hex / rgb / rgba) that ui-kraken passes through
  * to the underlying RN Text as-is.
  */
-export type TextColor = keyof KrakenTextColors;
+export type TextColor = keyof TextColors;
 
 /**
  * Intensity modulator applied on top of the resolved color.
@@ -58,8 +58,8 @@ export interface TextProps extends Omit<GetProps<typeof StyledText>, "children" 
   /** HTML-familiar type-scale variant. Defaults to `"body2"`. */
   variant?: TextVariant;
   /**
-   * Text color. Either a slot name from `KrakenTextColors` (resolves to a
-   * theme token via `useKraken()`) OR a raw color string (`#RRGGBB`, `rgb(...)`)
+   * Text color. Either a slot name from `TextColors` (resolves to a
+   * theme token via `useUIKit()`) OR a raw color string (`#RRGGBB`, `rgb(...)`)
    * applied as-is. Defaults to `"primary"`.
    */
   color?: TextColor | (string & {});

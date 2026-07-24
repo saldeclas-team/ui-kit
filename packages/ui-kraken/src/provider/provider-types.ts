@@ -1,47 +1,45 @@
 import type { ReactNode } from "react";
 
-import type { KrakenConfig } from "../tokens/kraken-tokens";
+import type { Config } from "../tokens/tokens";
 import type {
-  KrakenButtonColors,
-  KrakenButtonVariantColors,
-  KrakenTextColors,
-  ResolvedKrakenTokens,
-} from "../tokens/kraken-tokens-types";
+  ButtonColors,
+  ButtonVariantColors,
+  TextColors,
+  ResolvedTokens,
+} from "../tokens/tokens-types";
 
-export type KrakenThemeMode = "light" | "dark" | "system";
+export type ThemeMode = "light" | "dark" | "system";
 
 /**
  * A partial-of-partials for `buttonColors`: consumers can override just one
  * variant, or just one slot within a variant, and the rest fills in from the
  * shipped defaults.
  */
-export type KrakenButtonColorsInput = Partial<
-  Record<keyof KrakenButtonColors, Partial<KrakenButtonVariantColors>>
->;
+export type ButtonColorsInput = Partial<Record<keyof ButtonColors, Partial<ButtonVariantColors>>>;
 
 /**
  * Partial override for `textColors` — consumers only declare the slots they
  * want to change; the rest fills in from the shipped defaults.
  */
-export type KrakenTextColorsInput = Partial<KrakenTextColors>;
+export type TextColorsInput = Partial<TextColors>;
 
 /**
  * The input shape accepted by `<KrakenProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
-export interface KrakenTokensInput {
-  buttonColors?: KrakenButtonColorsInput;
-  textColors?: KrakenTextColorsInput;
+export interface TokensInput {
+  buttonColors?: ButtonColorsInput;
+  textColors?: TextColorsInput;
   radius?: number;
   spacing?: number;
 }
 
-export interface KrakenProviderProps {
+export interface ProviderProps {
   children: ReactNode;
-  /** Partial light-mode token overrides. Missing fields fall back to `DEFAULT_KRAKEN_TOKENS`. */
-  tokens?: KrakenTokensInput;
-  /** Partial dark-mode token overrides. Missing fields fall back to `DEFAULT_DARK_KRAKEN_TOKENS`. */
-  dark?: KrakenTokensInput;
+  /** Partial light-mode token overrides. Missing fields fall back to `DEFAULT_TOKENS`. */
+  tokens?: TokensInput;
+  /** Partial dark-mode token overrides. Missing fields fall back to `DEFAULT_DARK_TOKENS`. */
+  dark?: TokensInput;
   /**
    * Which theme to render.
    *
@@ -51,21 +49,21 @@ export interface KrakenProviderProps {
    *   `useColorScheme()`. Falls back to `"light"` when the platform has no
    *   preference.
    */
-  defaultTheme?: KrakenThemeMode;
+  defaultTheme?: ThemeMode;
 }
 
-export interface KrakenContextValue {
+export interface ContextValue {
   /** Resolved light-mode tokens (defaults + light overrides). */
-  lightTokens: ResolvedKrakenTokens;
+  lightTokens: ResolvedTokens;
   /** Resolved dark-mode tokens (defaults + dark overrides). */
-  darkTokens: ResolvedKrakenTokens;
+  darkTokens: ResolvedTokens;
   /** The theme currently rendered — resolved from `defaultTheme` (with `"system"` collapsed). */
   activeTheme: "light" | "dark";
   /**
    * Tokens for the currently active theme — the shortcut most consumers use.
    * Equivalent to `activeTheme === "dark" ? darkTokens : lightTokens`.
    */
-  tokens: ResolvedKrakenTokens;
+  tokens: ResolvedTokens;
   /** Raw Tamagui config — escape hatch for consumers who need to drop down to Tamagui APIs directly. */
-  tamaguiConfig: KrakenConfig;
+  tamaguiConfig: Config;
 }

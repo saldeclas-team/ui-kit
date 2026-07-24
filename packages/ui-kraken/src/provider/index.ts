@@ -1,10 +1,10 @@
-export { KrakenProvider } from "./kraken-provider";
-export { useKraken } from "./use-kraken";
+export { KrakenProvider } from "./provider";
+export { useUIKit } from "./use-ui-kit";
 export type {
-  KrakenProviderProps,
-  KrakenContextValue,
-  KrakenThemeMode,
-  KrakenTokensInput,
-  KrakenButtonColorsInput,
-  KrakenTextColorsInput,
-} from "./kraken-provider-types";
+  ProviderProps,
+  ContextValue,
+  ThemeMode,
+  TokensInput,
+  ButtonColorsInput,
+  TextColorsInput,
+} from "./provider-types";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Stack } from "expo-router";
-import type { KrakenThemeMode } from "ui-kraken";
+import type { ThemeMode } from "ui-kraken";
 import { KrakenProvider } from "ui-kraken";
 
 import { ThemeToggle } from "../src/theme-toggle";
@@ -15,7 +15,7 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
-  const [themeMode, setThemeMode] = useState<KrakenThemeMode>("system");
+  const [themeMode, setThemeMode] = useState<ThemeMode>("system");
 
   return (
     <KrakenProvider defaultTheme={themeMode}>

@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import type { ComponentRef } from "react";
 import { ActivityIndicator, View } from "react-native";
 
-import { useKraken } from "../../provider/use-kraken";
+import { useUIKit } from "../../provider/use-ui-kit";
 import { StyledButton, StyledButtonLabel } from "./button.styled";
 import type { ButtonElevation, ButtonProps, ButtonRadius, ButtonTone } from "./button-types";
 
@@ -113,7 +113,7 @@ function useElevationStyle(
   elevation: ButtonElevation,
   overrideBorder: string | undefined
 ): ElevationStyle {
-  const { activeTheme } = useKraken();
+  const { activeTheme } = useUIKit();
   const isDark = activeTheme === "dark";
 
   if (elevation === "none") return FLAT_ELEVATION;
@@ -190,7 +190,7 @@ function resolveRadius(radius: ButtonRadius | undefined): number | string | unde
   if (radius === "none") return 0;
   if (radius === "pill") return 9999;
   const capitalized = radius.charAt(0).toUpperCase() + radius.slice(1);
-  return `$krakenRadius${capitalized}`;
+  return `$uiRadius${capitalized}`;
 }
 
 function makeToneVariant(tone: ButtonTone) {
