@@ -1,0 +1,958 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button snapshots buttonColors override: custom brand orange 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  backgroundColor="#FF6B00"
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    color="#FFFFFF"
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots elevation=lg @ primary md (dark) 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  borderColor="rgba(255,255,255,0.28)"
+  borderWidth={1}
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots elevation=lg @ primary md (light) 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={8}
+  shadowColor="#000000"
+  shadowOffset={
+    {
+      "height": 6,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0.24}
+  shadowRadius={12}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots elevation=md @ primary md (dark) 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  borderColor="rgba(255,255,255,0.18)"
+  borderWidth={1}
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots elevation=md @ primary md (light) 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={4}
+  shadowColor="#000000"
+  shadowOffset={
+    {
+      "height": 3,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0.18}
+  shadowRadius={6}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots elevation=none @ primary md (dark) 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots elevation=none @ primary md (light) 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots elevation=sm @ primary md (dark) 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  borderColor="rgba(255,255,255,0.10)"
+  borderWidth={1}
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots elevation=sm @ primary md (light) 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={2}
+  shadowColor="#000000"
+  shadowOffset={
+    {
+      "height": 1,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0.12}
+  shadowRadius={3}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots radius=24 (raw px) @ primary md 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  borderRadius={24}
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots radius=lg @ primary md 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  borderRadius="$uiRadiusLg"
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots radius=md @ primary md 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  borderRadius="$uiRadiusMd"
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots radius=none @ primary md 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  borderRadius={0}
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots radius=pill @ primary md 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  borderRadius={9999}
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots radius=sm @ primary md 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  borderRadius="$uiRadiusSm"
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots size=lg @ primary tone 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="lg"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="lg"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots size=md @ primary tone 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots size=sm @ primary tone 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="sm"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="sm"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots state: disabled 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": true,
+    }
+  }
+  disabled={true}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots state: icon-only (no children) 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <View
+    testID="button-left-icon"
+  >
+    <Text
+      testID="lf"
+    >
+      L
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Button snapshots state: loading 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": true,
+      "disabled": true,
+    }
+  }
+  disabled={true}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <View
+    testID="button-loader"
+  >
+    <ActivityIndicator />
+  </View>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots state: with leftIcon + rightIcon 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <View
+    testID="button-left-icon"
+  >
+    <Text
+      testID="lf"
+    >
+      L
+    </Text>
+  </View>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Save
+  </Text>
+  <View
+    testID="button-right-icon"
+  >
+    <Text
+      testID="rf"
+    >
+      R
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Button snapshots tone=destructive @ md size 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="destructive"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="destructive"
+  >
+    Destructive
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots tone=ghost @ md size 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="ghost"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="ghost"
+  >
+    Ghost
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots tone=outline @ md size 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="outline"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="outline"
+  >
+    Outline
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots tone=primary @ md size 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="primary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="primary"
+  >
+    Primary
+  </Text>
+</View>
+`;
+
+exports[`Button snapshots tone=secondary @ md size 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "disabled": false,
+    }
+  }
+  disabled={false}
+  elevationAndroid={0}
+  shadowColor="transparent"
+  shadowOffset={
+    {
+      "height": 0,
+      "width": 0,
+    }
+  }
+  shadowOpacity={0}
+  shadowRadius={0}
+  size="md"
+  testID="button"
+  tone="secondary"
+>
+  <Text
+    size="md"
+    testID="button-label"
+    tone="secondary"
+  >
+    Secondary
+  </Text>
+</View>
+`;

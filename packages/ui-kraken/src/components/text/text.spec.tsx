@@ -202,4 +202,111 @@ describe("Text", () => {
       expect(screen.getByTestId(`c-${key}`).props.variant).toBe(variant);
     }
   });
+
+  // Structural snapshots — serialize the rendered RN tree and diff on any
+  // structural / prop / inline-style change. Complements the targeted
+  // assertions above by catching regressions the specific asserts don't
+  // (e.g. a variant losing its fontWeight, an intensity dropping opacity).
+  //
+  // If a snapshot diff is intentional: run `pnpm --filter ui-kraken test -u`,
+  // review the .snap diff carefully, and commit both the code and the
+  // snapshot update in the same PR.
+  describe("snapshots", () => {
+    // --- Variants × primary color (13) ---
+    const VARIANTS = [
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "h5",
+      "h6",
+      "subtitle1",
+      "subtitle2",
+      "body1",
+      "body2",
+      "caption",
+      "overline",
+      "label",
+    ] as const;
+
+    it.each(VARIANTS)("variant=%s @ primary color", async (variant) => {
+      await render(<Text variant={variant}>The quick brown fox</Text>);
+      expect(screen.toJSON()).toMatchSnapshot();
+    });
+
+    // --- Hierarchy colors × body2 (5) ---
+    it.each(["primary", "secondary", "tertiary", "disabled", "inverse"] as const)(
+      "hierarchy color=%s @ body2",
+      async (color) => {
+        await render(<Text color={color}>Hierarchy</Text>);
+        expect(screen.toJSON()).toMatchSnapshot();
+      }
+    );
+
+    // --- Semantic colors × body2 (5) ---
+    it.each(["interactive", "success", "warning", "danger", "info"] as const)(
+      "semantic color=%s @ body2",
+      async (color) => {
+        await render(<Text color={color}>Semantic</Text>);
+        expect(screen.toJSON()).toMatchSnapshot();
+      }
+    );
+
+    // --- On-* colors × body2 (4) ---
+    it.each(["onPrimary", "onSecondary", "onSuccess", "onDanger"] as const)(
+      "on-* color=%s @ body2",
+      async (color) => {
+        await render(<Text color={color}>OnColor</Text>);
+        expect(screen.toJSON()).toMatchSnapshot();
+      }
+    );
+
+    // --- Intensities × body1 × primary (3) ---
+    it.each(["subtle", "normal", "strong"] as const)(
+      "intensity=%s @ body1 primary",
+      async (intensity) => {
+        await render(
+          <Text variant="body1" intensity={intensity}>
+            Intensity
+          </Text>
+        );
+        expect(screen.toJSON()).toMatchSnapshot();
+      }
+    );
+
+    // --- Custom color passthrough (hex / rgb / named) (3) ---
+    it("custom color: hex", async () => {
+      await render(<Text color="#FF6B00">Custom</Text>);
+      expect(screen.toJSON()).toMatchSnapshot();
+    });
+
+    it("custom color: rgb", async () => {
+      await render(<Text color="rgb(139, 92, 246)">Custom</Text>);
+      expect(screen.toJSON()).toMatchSnapshot();
+    });
+
+    it("custom color: named", async () => {
+      await render(<Text color="hotpink">Custom</Text>);
+      expect(screen.toJSON()).toMatchSnapshot();
+    });
+
+    // --- Truncation + textAlign (5) ---
+    it("truncation: numberOfLines=2", async () => {
+      await render(
+        <Text numberOfLines={2}>
+          A longer paragraph that would wrap onto three lines but should be truncated after two,
+          with an ellipsis at the tail.
+        </Text>
+      );
+      expect(screen.toJSON()).toMatchSnapshot();
+    });
+
+    it.each(["auto", "left", "center", "right", "justify"] as const)(
+      "textAlign=%s",
+      async (textAlign) => {
+        await render(<Text textAlign={textAlign}>Aligned</Text>);
+        expect(screen.toJSON()).toMatchSnapshot();
+      }
+    );
+  });
 });

@@ -136,6 +136,8 @@ Every field is optional. Missing slots inherit from the theme. Fallback order at
 - `@testing-library/react-native` v14 (sync destructuring queries from `render`).
 - Mock `@tamagui/core` and the component's own `*.styled.ts` when testing behavior.
 - Every interactive element carries `testID`; assertions prefer `getByTestId`.
+- **Snapshots required for every visual component.** Ship a `describe("snapshots")` block in the spec that iterates every variant × relevant axis (tone / size / state / color / intensity — whatever the component exposes), calling `expect(screen.toJSON()).toMatchSnapshot()` per case. See `button.spec.tsx` / `text.spec.tsx` for the pattern. Intentional snapshot changes: `pnpm --filter ui-kraken test -u`, review the `.snap` diff, commit both code and snapshot together.
+- **Coverage gate is enforced by Codecov.** Every PR gets two required checks: `codecov/project` (total coverage cannot drop more than 0.5%) and `codecov/patch` (new code must hit 80%). Config at repo root `codecov.yml`; upload wired in `.github/workflows/ci.yml` via `codecov/codecov-action@v5`. Local threshold in `packages/ui-kraken/jest.config.cjs` catches the same regressions before push.
 
 ### `testID` propagation
 
