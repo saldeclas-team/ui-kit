@@ -133,3 +133,11 @@ Per-instance color overrides — only the fields you want to change, rest come f
 - `disabled` and `loading` both apply `opacity: 0.45`. There is no separate "inactive color" slot — if you need one, pass `buttonColors.background` per-instance for the disabled state or wrap the button in a container that adjusts the tint.
 - `outline` and `ghost` have transparent backgrounds; passing `buttonColors.background` on them explicitly fills the surface if you need it.
 - Difference between `outline` and `ghost`: both use `buttonColors[variant].label` for the text, but `outline` adds a 1 px border (`buttonColors.outline.border`), `ghost` renders as pure text.
+
+## Platform support
+
+| Platform | Status | Notes                                                                                                                                                                                                                                                                                                |
+| -------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| iOS      | ✅     | Full support. Shadow rendering via `shadowColor` + `shadowOffset`.                                                                                                                                                                                                                                   |
+| Android  | ✅     | Full support. Elevation via native `elevation` prop.                                                                                                                                                                                                                                                 |
+| Web      | ✅     | Via `react-native-web` (optional peer). Renders as `<button>` / `<div>` DOM elements; `pressStyle` animates via CSS transitions; `disabled` maps to `aria-disabled`; `testID` becomes `data-testid`. `elevation` uses CSS `box-shadow`. Dark-mode elevation border swap works identically to native. |

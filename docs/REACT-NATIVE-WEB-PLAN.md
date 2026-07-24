@@ -1,6 +1,8 @@
 # React Native Web support — implementation plan
 
-**Status:** planned. Ships as **Phase 2 of 3** in the testing-quality initiative. **Blocks Phase 3 (Chromatic).** Ships as its own PR after [Phase 1 (Codecov + snapshots)](./CODECOV-AND-SNAPSHOTS-PLAN.md) merges.
+**Status:** shipped on 2026-07-24 (ui-kraken v0.5.0 minor — adds `react-native-web` as an optional peer, opening the library to web consumers and unlocking [Phase 3 (Chromatic)](./CHROMATIC-PLAN.md)). Phase 2 of 3 in the testing-quality initiative.
+
+**Turned out simpler than estimated:** the Expo SDK 57 template that scaffolded `apps/example` already ships `react-native-web` and `react-dom` as dependencies AND already configures `web: { output: "static" }` in `app.json` AND already exposes a `pnpm --filter @ui-kraken/example web` script. So the real Phase 2 work was: add the optional peer to `ui-kraken/package.json`, add the AGENTS.md `platforms.supported` rule, add Platform support tables to component READMEs, reverse the PLAN §1 "no web" decision, and manually verify Button + Text on web. No new dependencies to install, no new scripts, no new app config.
 
 Forward-looking design record. Reverses a locked decision in [`docs/PLAN.md`](./PLAN.md) §1 ("Target platforms: iOS + Android (Expo) — No web / react-native-web support in v1"). That decision was made when the roadmap didn't include visual regression testing; Phase 3 requires a web target to run Chromatic. Adding web unlocks Chromatic AND opens `ui-kraken` as a cross-platform library — a real user-facing capability, not just a testing dependency.
 
