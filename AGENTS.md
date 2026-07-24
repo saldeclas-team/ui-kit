@@ -87,6 +87,12 @@ Filename suffixes that carry meaning:
 - Interactive elements: minimum touch target 48 × 48 px.
 - Press feedback on button-like elements: `pressStyle={{ scale: 0.98, opacity: 0.9 }}`.
 
+### Platform support
+
+- **Every component must render on iOS + Android + Web.** `react-native-web` is an optional peer (landed 2026-07-24); consumers who want web opt in by installing it. Tamagui + RN primitives translate to DOM automatically — components typically "just work" without web-specific code.
+- Any component that MUST opt out of a platform gates the feature at runtime with `Platform.OS !== "web"` (or the applicable check) and documents the limitation under a `## Platform support` section in that component's `README.md`. Don't preemptively write `.web.tsx` files — reach for platform shims only after verification proves you need one.
+- Verification happens on-device during Phase 3 (Chromatic snapshots each story on a headless Chromium via `react-native-web`). Until Phase 3 lands, contributors verify manually with `pnpm --filter @ui-kraken/example web`.
+
 ### Color-override model (project convention)
 
 **Tokens are per-component, NOT global.** There is no `primaryColor: string` at the theme root. Instead the provider (`KrakenProvider`) receives one block per component role:

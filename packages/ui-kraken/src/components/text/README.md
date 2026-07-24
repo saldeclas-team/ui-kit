@@ -151,3 +151,11 @@ Example combining everything:
 - `intensity="strong"` bumps weight relative to the variant's base — `body*` (400) → 600, `subtitle*` / `label` (500) → 700, `h1..h3` (already 700) → no change.
 - Nesting `<Text>` inside `<Text>` for inline color changes is supported (RN native behavior).
 - No auto-contrast for `on-*` slots — you pick explicitly (same rule as Button).
+
+## Platform support
+
+| Platform | Status | Notes                                                                                                                                                                                                                                                     |
+| -------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| iOS      | ✅     | Full support via native RN Text. `numberOfLines` uses native truncation.                                                                                                                                                                                  |
+| Android  | ✅     | Full support.                                                                                                                                                                                                                                             |
+| Web      | ✅     | Via `react-native-web` (optional peer). Renders as `<span>` DOM element. `numberOfLines` maps to CSS `-webkit-line-clamp`. `onPress` becomes a click handler. `textAlign` and every variant's `fontSize`/`lineHeight`/`fontWeight` land as inline styles. |
