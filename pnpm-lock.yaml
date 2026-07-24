@@ -155,10 +155,10 @@ importers:
         version: 10.5.2(c30c04bd643f428ea56eb3fa2649c26e)
       '@storybook/addon-ondevice-notes':
         specifier: ^10.5.2
-        version: 10.5.2(@storybook/react@10.5.3(@types/react@19.2.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))(supports-color@8.1.1)(typescript@6.0.3))(react-native@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/jest-preset@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(react@19.2.3)(supports-color@8.1.1))(@react-native/metro-config@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.17)(react@19.2.3)(supports-color@8.1.1))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))
+        version: 10.5.2(@storybook/react@10.5.4(@types/react@19.2.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))(supports-color@8.1.1)(typescript@6.0.3))(react-native@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/jest-preset@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(react@19.2.3)(supports-color@8.1.1))(@react-native/metro-config@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.17)(react@19.2.3)(supports-color@8.1.1))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))
       '@storybook/react':
-        specifier: ^10.5.3
-        version: 10.5.3(@types/react@19.2.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))(supports-color@8.1.1)(typescript@6.0.3)
+        specifier: ^10.5.4
+        version: 10.5.4(@types/react@19.2.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))(supports-color@8.1.1)(typescript@6.0.3)
       '@storybook/react-native':
         specifier: ^10.5.2
         version: 10.5.2(4a0a358a5391b56a65280e7db3de00aa)
@@ -2451,6 +2451,20 @@ packages:
       '@types/react-dom':
         optional: true
 
+  '@storybook/react-dom-shim@10.5.4':
+    resolution: {integrity: sha512-YdlppEOReg8MvTECRNuf79gu2zL83JqKDHIR/65eS0M6y+ue9pkpfjYo7hZVIcyOcRd9npBDXMdt2kC92bCuaA==}
+    peerDependencies:
+      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      '@types/react-dom': ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      storybook: ^10.5.4
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+
   '@storybook/react-native-theming@10.5.2':
     resolution: {integrity: sha512-70LjM2Uz/b/D7UCg1W9I/Ai/YcWvImpz/n2z5zLSdlsNbTIYrDohIBQSYlzOLz3Q9acTCSNKa9e9+FEm7oviLQ==}
     peerDependencies:
@@ -2528,6 +2542,23 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       storybook: ^10.5.3
+      typescript: '>= 4.9.x'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+      typescript:
+        optional: true
+
+  '@storybook/react@10.5.4':
+    resolution: {integrity: sha512-tOxfVgbYcaVsArN8XTDkJfdsnsnHh1LxjRHVpJ/N+VEkz4FveK/XH3jOLV0YqgrG8yXza7+CteDP4FfPVQY/mw==}
+    peerDependencies:
+      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      '@types/react-dom': ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      storybook: ^10.5.4
       typescript: '>= 4.9.x'
     peerDependenciesMeta:
       '@types/react':
@@ -10358,9 +10389,9 @@ snapshots:
       - supports-color
       - typescript
 
-  '@storybook/addon-ondevice-notes@10.5.2(@storybook/react@10.5.3(@types/react@19.2.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))(supports-color@8.1.1)(typescript@6.0.3))(react-native@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/jest-preset@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(react@19.2.3)(supports-color@8.1.1))(@react-native/metro-config@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.17)(react@19.2.3)(supports-color@8.1.1))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))':
+  '@storybook/addon-ondevice-notes@10.5.2(@storybook/react@10.5.4(@types/react@19.2.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))(supports-color@8.1.1)(typescript@6.0.3))(react-native@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/jest-preset@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(react@19.2.3)(supports-color@8.1.1))(@react-native/metro-config@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.17)(react@19.2.3)(supports-color@8.1.1))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))':
     dependencies:
-      '@storybook/react': 10.5.3(@types/react@19.2.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))(supports-color@8.1.1)(typescript@6.0.3)
+      '@storybook/react': 10.5.4(@types/react@19.2.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))(supports-color@8.1.1)(typescript@6.0.3)
       '@storybook/react-native-theming': 10.5.2(react-native@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/jest-preset@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(react@19.2.3)(supports-color@8.1.1))(@react-native/metro-config@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.17)(react@19.2.3)(supports-color@8.1.1))(react@19.2.3)
       react: 19.2.3
       react-native: 0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/jest-preset@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(react@19.2.3)(supports-color@8.1.1))(@react-native/metro-config@0.86.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.17)(react@19.2.3)(supports-color@8.1.1)
@@ -10403,6 +10434,14 @@ snapshots:
       - typescript
 
   '@storybook/react-dom-shim@10.5.3(@types/react@19.2.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))':
+    dependencies:
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      storybook: 10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3)
+    optionalDependencies:
+      '@types/react': 19.2.17
+
+  '@storybook/react-dom-shim@10.5.4(@types/react@19.2.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))':
     dependencies:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
@@ -10548,6 +10587,21 @@ snapshots:
     dependencies:
       '@storybook/global': 5.0.0
       '@storybook/react-dom-shim': 10.5.3(@types/react@19.2.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))
+      react: 19.2.3
+      react-docgen: 8.0.3(supports-color@8.1.1)
+      react-docgen-typescript: 2.4.0(typescript@6.0.3)
+      react-dom: 19.2.3(react@19.2.3)
+      storybook: 10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3)
+    optionalDependencies:
+      '@types/react': 19.2.17
+      typescript: 6.0.3
+    transitivePeerDependencies:
+      - supports-color
+
+  '@storybook/react@10.5.4(@types/react@19.2.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))(supports-color@8.1.1)(typescript@6.0.3)':
+    dependencies:
+      '@storybook/global': 5.0.0
+      '@storybook/react-dom-shim': 10.5.4(@types/react@19.2.17)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(storybook@10.5.3(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.3))
       react: 19.2.3
       react-docgen: 8.0.3(supports-color@8.1.1)
       react-docgen-typescript: 2.4.0(typescript@6.0.3)
