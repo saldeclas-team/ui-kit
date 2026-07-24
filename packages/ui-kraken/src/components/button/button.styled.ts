@@ -58,42 +58,15 @@ export const StyledButton = styled(View, {
         pointerEvents: "none",
       },
     },
-    elevation: {
-      none: {
-        shadowColor: "transparent",
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0,
-        shadowRadius: 0,
-        elevationAndroid: 0,
-      },
-      sm: {
-        shadowColor: "#000000",
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 2,
-        elevationAndroid: 1,
-      },
-      md: {
-        shadowColor: "#000000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevationAndroid: 3,
-      },
-      lg: {
-        shadowColor: "#000000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.15,
-        shadowRadius: 8,
-        elevationAndroid: 6,
-      },
-    },
+    // NOTE: elevation lives in Button.tsx (theme-aware runtime). Keeping it
+    // out of the styled variant means there is exactly ONE place to change
+    // shadow values, and it can react to `useKraken().activeTheme` — which
+    // static styled() variants cannot.
   } as const,
 
   defaultVariants: {
     tone: "primary",
     size: "md",
-    elevation: "none",
   },
 });
 

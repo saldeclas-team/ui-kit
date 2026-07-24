@@ -167,12 +167,16 @@ describe("Button", () => {
     expect(screen.getByTestId("btn").props.borderRadius).toBe("$krakenRadiusLg");
   });
 
-  it("defaults elevation to 'none'", async () => {
+  it("defaults to a flat elevation (no shadow, no border)", async () => {
     await render(<Button testID="btn">Flat</Button>);
-    expect(screen.getByTestId("btn").props.elevation).toBe("none");
+    const props = screen.getByTestId("btn").props;
+    expect(props.shadowColor).toBe("transparent");
+    expect(props.shadowOpacity).toBe(0);
+    expect(props.elevationAndroid).toBe(0);
+    expect(props.borderColor).toBeUndefined();
   });
 
-  it("forwards each elevation preset to the styled variant", async () => {
+  it("applies stronger shadow values as elevation increases (light mode)", async () => {
     await render(
       <>
         <Button testID="sm" elevation="sm">
@@ -187,9 +191,15 @@ describe("Button", () => {
       </>
     );
 
-    expect(screen.getByTestId("sm").props.elevation).toBe("sm");
-    expect(screen.getByTestId("md").props.elevation).toBe("md");
-    expect(screen.getByTestId("lg").props.elevation).toBe("lg");
+    const sm = screen.getByTestId("sm").props;
+    const md = screen.getByTestId("md").props;
+    const lg = screen.getByTestId("lg").props;
+
+    expect(sm.shadowColor).toBe("#000000");
+    expect(sm.shadowOpacity).toBeLessThan(md.shadowOpacity);
+    expect(md.shadowOpacity).toBeLessThan(lg.shadowOpacity);
+    expect(sm.elevationAndroid).toBeLessThan(md.elevationAndroid);
+    expect(md.elevationAndroid).toBeLessThan(lg.elevationAndroid);
   });
 
   describe("dark mode elevation swap", () => {
@@ -208,8 +218,13 @@ describe("Button", () => {
         </Button>
       );
 
-      expect(screen.getByTestId("btn").props.borderColor).toBe("rgba(255,255,255,0.10)");
-      expect(screen.getByTestId("btn").props.borderWidth).toBe(1);
+      const props = screen.getByTestId("btn").props;
+      expect(props.borderColor).toMatch(/^rgba\(255,255,255,0\.\d+\)$/);
+      expect(props.borderWidth).toBe(1);
+      // Shadows must be fully cancelled in dark mode.
+      expect(props.shadowColor).toBe("transparent");
+      expect(props.shadowOpacity).toBe(0);
+      expect(props.elevationAndroid).toBe(0);
     });
 
     it("scales the border opacity with the elevation level", async () => {
@@ -218,14 +233,25 @@ describe("Button", () => {
           <Button testID="sm" elevation="sm">
             sm
           </Button>
+          <Button testID="md" elevation="md">
+            md
+          </Button>
           <Button testID="lg" elevation="lg">
             lg
           </Button>
         </>
       );
 
-      expect(screen.getByTestId("sm").props.borderColor).toBe("rgba(255,255,255,0.05)");
-      expect(screen.getByTestId("lg").props.borderColor).toBe("rgba(255,255,255,0.15)");
+      const parseOpacity = (rgba: string): number => {
+        const match = rgba.match(/rgba\(255,255,255,(0\.\d+)\)/);
+        if (match == null) throw new Error(`unexpected color: ${rgba}`);
+        return Number(match[1]);
+      };
+      const smOp = parseOpacity(screen.getByTestId("sm").props.borderColor);
+      const mdOp = parseOpacity(screen.getByTestId("md").props.borderColor);
+      const lgOp = parseOpacity(screen.getByTestId("lg").props.borderColor);
+      expect(smOp).toBeLessThan(mdOp);
+      expect(mdOp).toBeLessThan(lgOp);
     });
 
     it("skips the dark-border swap for outline / ghost tones", async () => {

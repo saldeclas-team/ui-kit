@@ -37,7 +37,7 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
   const rootId = testID ?? "button";
   const isInactive = Boolean(disabled) || Boolean(loading);
   const resolvedBorderRadius = resolveRadius(radius);
-  const darkElevation = useDarkElevationSwap(tone, elevation, buttonColors?.border);
+  const elevationStyle = useElevationStyle(tone, elevation, buttonColors?.border);
 
   return (
     <StyledButton
@@ -45,17 +45,16 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
       testID={rootId}
       tone={tone}
       size={size}
-      elevation={elevation}
       disabled={isInactive}
       backgroundColor={buttonColors?.background}
-      borderColor={buttonColors?.border ?? darkElevation?.borderColor}
-      borderWidth={darkElevation?.borderWidth}
+      borderColor={buttonColors?.border ?? elevationStyle.borderColor}
+      borderWidth={elevationStyle.borderWidth}
       borderRadius={resolvedBorderRadius}
-      shadowColor={darkElevation?.shadowColor}
-      shadowOpacity={darkElevation?.shadowOpacity}
-      shadowRadius={darkElevation?.shadowRadius}
-      shadowOffset={darkElevation?.shadowOffset}
-      elevationAndroid={darkElevation?.elevationAndroid}
+      shadowColor={elevationStyle.shadowColor}
+      shadowOpacity={elevationStyle.shadowOpacity}
+      shadowRadius={elevationStyle.shadowRadius}
+      shadowOffset={elevationStyle.shadowOffset}
+      elevationAndroid={elevationStyle.elevationAndroid}
       accessibilityRole="button"
       accessibilityState={{ disabled: isInactive, busy: Boolean(loading) }}
       {...rest}
@@ -84,54 +83,98 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
   );
 });
 
-interface DarkElevationSwap {
-  borderColor: string;
-  borderWidth: number;
-  // Explicit "off" values that cancel the styled variant's default shadow /
-  // Android elevation. Without these, iOS renders an invisible black shadow
-  // and Android renders a native elevation whose shadow color it controls —
-  // both look wrong against a dark surface.
+interface ElevationStyle {
   shadowColor: string;
   shadowOpacity: number;
   shadowRadius: number;
   shadowOffset: { width: number; height: number };
   elevationAndroid: number;
+  borderColor: string | undefined;
+  borderWidth: number | undefined;
 }
 
 /**
- * Dark-mode elevation swap. Black shadows are invisible on a dark surface, so
- * on dark tones we render a subtle translucent-white border whose opacity
- * scales with the elevation level AND explicitly cancel every shadow / native
- * elevation prop so nothing weird bleeds through underneath. `outline` and
- * `ghost` already control their own border, and any per-instance
- * `buttonColors.border` override wins — we only apply the swap when we would
- * otherwise render an invisible shadow.
+ * Compute the full shadow + border config for this Button. All elevation
+ * values live here (not in the styled variant) so we can pick different
+ * strategies per theme in one place:
+ *
+ * - **Light mode**: iOS uses `shadow*` props with strong opacity, Android
+ *   uses native `elevation`. Both cast a black shadow that reads on white.
+ * - **Dark mode**: black shadows are invisible against a dark surface, so
+ *   we cancel every shadow / elevation prop and instead render a subtle
+ *   translucent-white border whose opacity scales with the level.
+ *
+ * `outline` and `ghost` tones do not participate in the dark-border swap
+ * because they already draw their own border. A per-instance
+ * `buttonColors.border` override wins over the dark swap.
  */
-function useDarkElevationSwap(
+function useElevationStyle(
   tone: ButtonTone,
   elevation: ButtonElevation,
   overrideBorder: string | undefined
-): DarkElevationSwap | undefined {
+): ElevationStyle {
   const { activeTheme } = useKraken();
-  if (activeTheme !== "dark") return undefined;
-  if (elevation === "none") return undefined;
-  if (tone === "outline" || tone === "ghost") return undefined;
-  if (overrideBorder != null) return undefined;
-  return {
-    borderColor: DARK_ELEVATION_BORDER[elevation],
-    borderWidth: 1,
-    shadowColor: "transparent",
-    shadowOpacity: 0,
-    shadowRadius: 0,
-    shadowOffset: { width: 0, height: 0 },
-    elevationAndroid: 0,
-  };
+  const isDark = activeTheme === "dark";
+
+  if (elevation === "none") return FLAT_ELEVATION;
+
+  if (isDark) {
+    const flat = { ...FLAT_ELEVATION };
+    const canSwap = tone !== "outline" && tone !== "ghost" && overrideBorder == null;
+    if (canSwap) {
+      flat.borderColor = DARK_ELEVATION_BORDER[elevation];
+      flat.borderWidth = 1;
+    }
+    return flat;
+  }
+
+  return LIGHT_ELEVATION[elevation];
 }
 
+const FLAT_ELEVATION: ElevationStyle = {
+  shadowColor: "transparent",
+  shadowOpacity: 0,
+  shadowRadius: 0,
+  shadowOffset: { width: 0, height: 0 },
+  elevationAndroid: 0,
+  borderColor: undefined,
+  borderWidth: undefined,
+};
+
+const LIGHT_ELEVATION: Record<Exclude<ButtonElevation, "none">, ElevationStyle> = {
+  sm: {
+    shadowColor: "#000000",
+    shadowOpacity: 0.12,
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 1 },
+    elevationAndroid: 2,
+    borderColor: undefined,
+    borderWidth: undefined,
+  },
+  md: {
+    shadowColor: "#000000",
+    shadowOpacity: 0.18,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+    elevationAndroid: 4,
+    borderColor: undefined,
+    borderWidth: undefined,
+  },
+  lg: {
+    shadowColor: "#000000",
+    shadowOpacity: 0.24,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevationAndroid: 8,
+    borderColor: undefined,
+    borderWidth: undefined,
+  },
+};
+
 const DARK_ELEVATION_BORDER: Record<Exclude<ButtonElevation, "none">, string> = {
-  sm: "rgba(255,255,255,0.05)",
-  md: "rgba(255,255,255,0.10)",
-  lg: "rgba(255,255,255,0.15)",
+  sm: "rgba(255,255,255,0.10)",
+  md: "rgba(255,255,255,0.18)",
+  lg: "rgba(255,255,255,0.28)",
 };
 
 /**
