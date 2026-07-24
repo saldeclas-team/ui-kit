@@ -12,8 +12,40 @@ permissions:
   id-token: write
 
 jobs:
+  # Cheap check that gates the release job. Without this, `changesets/action`
+  # tries to publish ui-kraken@0.0.0 on every push to main (including the
+  # scaffold commit), because "0.0.0 not on npm" is treated as publishable.
+  # We only want to act when there is either a pending changeset OR the commit
+  # is a merge of a "Version Packages" PR that changesets itself opened.
+  intent:
+    name: Detect release intent
+    runs-on: ubuntu-latest
+    outputs:
+      proceed: ${{ steps.check.outputs.proceed }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: check
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          set -euo pipefail
+          count=0
+          if compgen -G ".changeset/*.md" > /dev/null 2>&1; then
+            count=$(ls .changeset/*.md 2>/dev/null | grep -cv README.md || true)
+          fi
+          echo "Pending changesets: ${count}"
+          echo "Commit subject: ${COMMIT_MSG%%$'\n'*}"
+          if [[ "${count}" -gt 0 ]] || [[ "${COMMIT_MSG}" == chore\(release\):* ]]; then
+            echo "proceed=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "proceed=false" >> "${GITHUB_OUTPUT}"
+            echo "::notice::No pending changesets and not a Version Packages merge — skipping release."
+          fi
+
   release:
     name: Version or publish
+    needs: intent
+    if: needs.intent.outputs.proceed == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

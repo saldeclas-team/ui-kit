@@ -37,7 +37,11 @@ jobs:
         run: pnpm typecheck
 
       - name: Test
-        run: pnpm test -- --ci --coverage
+        # Use a dedicated `test:ci` script instead of forwarding flags through
+        # `pnpm test -- --ci --coverage`. The extra `--` gets passed through to
+        # jest verbatim, which then treats `--ci --coverage` as positional test
+        # name patterns (finds nothing, exits 1).
+        run: pnpm --filter ui-kraken test:ci
 
       - name: Build library
         run: pnpm build
