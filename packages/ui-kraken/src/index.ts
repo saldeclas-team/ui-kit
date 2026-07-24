@@ -14,6 +14,7 @@ export type {
   KrakenThemeMode,
   KrakenTokensInput,
   KrakenButtonColorsInput,
+  KrakenTextColorsInput,
 } from "./provider";
 
 // Tokens
@@ -22,16 +23,20 @@ export {
   DEFAULT_DARK_KRAKEN_TOKENS,
   DEFAULT_LIGHT_BUTTON_COLORS,
   DEFAULT_DARK_BUTTON_COLORS,
+  DEFAULT_LIGHT_TEXT_COLORS,
+  DEFAULT_DARK_TEXT_COLORS,
   buildKrakenConfig,
   coarseToFineTokens,
   mergeButtonColors,
   mergeButtonVariantColors,
+  mergeTextColors,
   tint,
 } from "./tokens";
 export type {
   KrakenTokens,
   KrakenButtonColors,
   KrakenButtonVariantColors,
+  KrakenTextColors,
   ResolvedKrakenTokens,
   KrakenConfig,
 } from "./tokens";
@@ -46,3 +51,6 @@ export type {
   ButtonRadius,
   ButtonElevation,
 } from "./components";
+
+export { Text } from "./components";
+export type { TextProps, TextVariant, TextColor, TextIntensity } from "./components";

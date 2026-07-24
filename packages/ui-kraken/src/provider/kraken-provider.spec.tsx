@@ -84,6 +84,35 @@ describe("KrakenProvider", () => {
     expect(screen.getByTestId("primary-bg").props.children).toBe("#111827");
   });
 
+  it("exposes textColors overrides through useKraken", async () => {
+    function ReadTextPrimary() {
+      const { tokens } = useKraken();
+      return <Text testID="text-primary">{tokens.textColors.primary}</Text>;
+    }
+
+    await render(
+      <KrakenProvider tokens={{ textColors: { primary: "#123456" } }}>
+        <ReadTextPrimary />
+      </KrakenProvider>
+    );
+    expect(screen.getByTestId("text-primary").props.children).toBe("#123456");
+  });
+
+  it("keeps unmodified textColors slots from the defaults on partial override", async () => {
+    function ReadTextSecondary() {
+      const { tokens } = useKraken();
+      return <Text testID="text-secondary">{tokens.textColors.secondary}</Text>;
+    }
+
+    await render(
+      <KrakenProvider tokens={{ textColors: { primary: "#123456" } }}>
+        <ReadTextSecondary />
+      </KrakenProvider>
+    );
+    // DEFAULT_LIGHT_TEXT_COLORS.secondary
+    expect(screen.getByTestId("text-secondary").props.children).toBe("#5B6472");
+  });
+
   // NOTE: defaultTheme="system" is covered by the app-level integration test
   // (apps/example runs with useColorScheme wired up). Mocking RN's
   // useColorScheme() from Jest is fragile because it drags in TurboModule

@@ -32,25 +32,58 @@ export interface KrakenButtonColors {
 }
 
 /**
+ * Text-color palette exposed to standalone `<Text>` components. Fourteen
+ * slots grouped in three semantic buckets:
+ *
+ * - **Hierarchy (5)** — `primary`, `secondary`, `tertiary`, `disabled`, `inverse`.
+ *   For content on standard app surfaces. `inverse` is the text color meant
+ *   for a surface whose background contrasts against the active theme
+ *   (e.g. dark text on a light card in dark mode).
+ * - **Semantic (5)** — `interactive`, `success`, `warning`, `danger`, `info`.
+ *   Meaning-carrying slots for links, feedback messages, etc.
+ * - **On-* (4)** — `onPrimary`, `onSecondary`, `onSuccess`, `onDanger`. Text
+ *   colors used specifically when the text sits on top of a solid brand
+ *   surface (e.g. label inside a filled Button, text on a Toast). Auto-contrast
+ *   is intentionally NOT applied — consumers pick the right `on-*` explicitly.
+ */
+export interface KrakenTextColors {
+  primary: string;
+  secondary: string;
+  tertiary: string;
+  disabled: string;
+  inverse: string;
+  interactive: string;
+  success: string;
+  warning: string;
+  danger: string;
+  info: string;
+  onPrimary: string;
+  onSecondary: string;
+  onSuccess: string;
+  onDanger: string;
+}
+
+/**
  * Coarse token schema exposed to consumers of `<KrakenProvider>`.
- * v0.2 ships only what Button needs (`buttonColors` + `radius` + `spacing`).
- * Future minor releases will add `textColors`, `cardColors`, etc. — grouped
- * by component role in the same way.
+ * v0.3 ships Button (`buttonColors`) + Text (`textColors`). Future minor
+ * releases will add `cardColors`, `inputColors`, etc. — grouped by component
+ * role in the same way.
  */
 export interface KrakenTokens {
   buttonColors: KrakenButtonColors;
+  textColors: KrakenTextColors;
   radius: number;
   spacing: number;
 }
 
 /**
  * Result of resolving the coarse schema into what components read at runtime.
- * v0.2 the resolved shape is nearly identical to the input — kept as a
- * separate type so we can add derived scales later without breaking the
- * provider contract.
+ * Colors pass through as-is in v0.3; kept as a separate type so we can add
+ * derived scales later without breaking the provider contract.
  */
 export interface ResolvedKrakenTokens {
   buttonColors: KrakenButtonColors;
+  textColors: KrakenTextColors;
   radius: {
     sm: number;
     md: number;

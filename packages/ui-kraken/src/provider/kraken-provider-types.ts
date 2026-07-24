@@ -4,6 +4,7 @@ import type { KrakenConfig } from "../tokens/kraken-tokens";
 import type {
   KrakenButtonColors,
   KrakenButtonVariantColors,
+  KrakenTextColors,
   ResolvedKrakenTokens,
 } from "../tokens/kraken-tokens-types";
 
@@ -19,11 +20,18 @@ export type KrakenButtonColorsInput = Partial<
 >;
 
 /**
+ * Partial override for `textColors` — consumers only declare the slots they
+ * want to change; the rest fills in from the shipped defaults.
+ */
+export type KrakenTextColorsInput = Partial<KrakenTextColors>;
+
+/**
  * The input shape accepted by `<KrakenProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
 export interface KrakenTokensInput {
   buttonColors?: KrakenButtonColorsInput;
+  textColors?: KrakenTextColorsInput;
   radius?: number;
   spacing?: number;
 }

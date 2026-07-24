@@ -1,6 +1,7 @@
 import type {
   KrakenButtonColors,
   KrakenButtonVariantColors,
+  KrakenTextColors,
   KrakenTokens,
   ResolvedKrakenTokens,
 } from "./kraken-tokens-types";
@@ -30,11 +31,57 @@ export const DEFAULT_DARK_BUTTON_COLORS: KrakenButtonColors = {
 };
 
 /**
+ * Default light-mode Text palette. Tuned for WCAG AA contrast on white
+ * surfaces. Semantic colors mirror the brand primary (Blue-600) and the
+ * standard Tailwind/Material palette for success / warning / danger / info.
+ */
+export const DEFAULT_LIGHT_TEXT_COLORS: KrakenTextColors = {
+  primary: "#0B0B0F",
+  secondary: "#5B6472",
+  tertiary: "#9CA3AF",
+  disabled: "#D1D5DB",
+  inverse: "#FFFFFF",
+  interactive: "#2563EB",
+  success: "#059669",
+  warning: "#D97706",
+  danger: "#DC2626",
+  info: "#0284C7",
+  onPrimary: "#FFFFFF",
+  onSecondary: "#FFFFFF",
+  onSuccess: "#FFFFFF",
+  onDanger: "#FFFFFF",
+};
+
+/**
+ * Default dark-mode Text palette. Lighter brand hues, near-white foreground
+ * text, gray-scale hierarchy adjusted for readability against dark surfaces.
+ * `onSecondary` and `onSuccess` flip to near-black because the corresponding
+ * dark-mode Button `background` for those variants is a light color.
+ */
+export const DEFAULT_DARK_TEXT_COLORS: KrakenTextColors = {
+  primary: "#F5F5F7",
+  secondary: "#9CA3AF",
+  tertiary: "#6B7280",
+  disabled: "#4B5563",
+  inverse: "#0B0B0F",
+  interactive: "#60A5FA",
+  success: "#34D399",
+  warning: "#FBBF24",
+  danger: "#F87171",
+  info: "#38BDF8",
+  onPrimary: "#FFFFFF",
+  onSecondary: "#0B0B0F",
+  onSuccess: "#0B0B0F",
+  onDanger: "#FFFFFF",
+};
+
+/**
  * Fallback tokens when a consumer mounts `<KrakenProvider>` without any
  * overrides. Uses the light-mode palette by default.
  */
 export const DEFAULT_KRAKEN_TOKENS: KrakenTokens = {
   buttonColors: DEFAULT_LIGHT_BUTTON_COLORS,
+  textColors: DEFAULT_LIGHT_TEXT_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -45,6 +92,7 @@ export const DEFAULT_KRAKEN_TOKENS: KrakenTokens = {
  */
 export const DEFAULT_DARK_KRAKEN_TOKENS: KrakenTokens = {
   buttonColors: DEFAULT_DARK_BUTTON_COLORS,
+  textColors: DEFAULT_DARK_TEXT_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -80,6 +128,18 @@ export function mergeButtonColors(
 }
 
 /**
+ * Merge partial text-color overrides on top of a base palette. Missing slots
+ * fall through — consumers only declare the slots they want to change.
+ */
+export function mergeTextColors(
+  base: KrakenTextColors,
+  override?: Partial<KrakenTextColors>
+): KrakenTextColors {
+  if (override == null) return base;
+  return { ...base, ...override };
+}
+
+/**
  * Adjust a hex color's lightness by `amount` (in [-1, 1]). Positive lightens,
  * negative darkens. Cheap HSL round-trip; useful for consumers who want to
  * derive shade variations without a full color library.
@@ -91,14 +151,15 @@ export function tint(hex: string, amount: number): string {
 }
 
 /**
- * Resolve the coarse token schema into the shape components consume. In v0.2
- * this only derives the radius / space scales; `buttonColors` pass through.
+ * Resolve the coarse token schema into the shape components consume. In v0.3
+ * colors pass through unchanged; only the radius / space scales are derived.
  * Pure — safe to call inside a `useMemo`.
  */
 export function coarseToFineTokens(tokens: KrakenTokens): ResolvedKrakenTokens {
-  const { buttonColors, radius, spacing } = tokens;
+  const { buttonColors, textColors, radius, spacing } = tokens;
   return {
     buttonColors,
+    textColors,
     radius: {
       sm: radius * 0.5,
       md: radius,
