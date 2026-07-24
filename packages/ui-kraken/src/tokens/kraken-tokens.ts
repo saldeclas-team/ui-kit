@@ -6,14 +6,20 @@ import {
   DEFAULT_KRAKEN_TOKENS,
   coarseToFineTokens,
 } from "./kraken-tokens-derive";
-import type { KrakenButtonColors, KrakenTokens, ResolvedKrakenTokens } from "./kraken-tokens-types";
+import type {
+  KrakenButtonColors,
+  KrakenTextColors,
+  KrakenTokens,
+  ResolvedKrakenTokens,
+} from "./kraken-tokens-types";
 
 /**
  * Build a Tamagui config that carries ui-kraken tokens under a `kraken*`
  * prefix (so we never clobber the defaults from `@tamagui/config/v4`) AND
  * wires the same token names into both the `light` and `dark` themes so
  * `<Theme name="dark">` (or a KrakenProvider mounted in dark mode) flips
- * every `$krakenButtonPrimaryBackground` etc. reference automatically.
+ * every `$krakenButtonPrimaryBackground` / `$krakenTextPrimary` etc.
+ * reference automatically.
  *
  * Both `light` and `dark` are optional. When omitted, the shipped defaults
  * (`DEFAULT_KRAKEN_TOKENS` / `DEFAULT_DARK_KRAKEN_TOKENS`) are used.
@@ -33,6 +39,7 @@ export function buildKrakenConfig(
     color: {
       ...(baseTokens as { color?: Record<string, string> }).color,
       ...flattenButtonColors(lightResolved.buttonColors),
+      ...flattenTextColors(lightResolved.textColors),
     },
     radius: {
       ...baseTokens.radius,
@@ -67,10 +74,12 @@ export function buildKrakenConfig(
       light: {
         ...(baseThemes.light ?? {}),
         ...flattenButtonColors(lightResolved.buttonColors),
+        ...flattenTextColors(lightResolved.textColors),
       },
       dark: {
         ...(baseThemes.dark ?? {}),
         ...flattenButtonColors(darkResolved.buttonColors),
+        ...flattenTextColors(darkResolved.textColors),
       },
     },
   });
@@ -80,18 +89,13 @@ export function buildKrakenConfig(
  * Flatten the nested `buttonColors` shape into a flat `$kraken*` token map:
  *
  * ```
- * {
- *   primary: { background: "#2563EB", label: "#FFFFFF" }
- * }
+ * { primary: { background: "#2563EB", label: "#FFFFFF" } }
  * ```
  *
  * becomes
  *
  * ```
- * {
- *   krakenButtonPrimaryBackground: "#2563EB",
- *   krakenButtonPrimaryLabel: "#FFFFFF"
- * }
+ * { krakenButtonPrimaryBackground: "#2563EB", krakenButtonPrimaryLabel: "#FFFFFF" }
  * ```
  */
 function flattenButtonColors(colors: KrakenButtonColors): Record<string, string> {
@@ -106,6 +110,18 @@ function flattenButtonColors(colors: KrakenButtonColors): Record<string, string>
   return out;
 }
 
+/**
+ * Flatten the `textColors` map into `$krakenText{PascalCase}` Tamagui tokens.
+ */
+function flattenTextColors(colors: KrakenTextColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof KrakenTextColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`krakenText${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
 export type KrakenConfig = ReturnType<typeof buildKrakenConfig>;
 
 // Re-export the pure derive helpers so consumers get a single entry point.
@@ -114,9 +130,12 @@ export {
   DEFAULT_KRAKEN_TOKENS,
   DEFAULT_DARK_BUTTON_COLORS,
   DEFAULT_LIGHT_BUTTON_COLORS,
+  DEFAULT_DARK_TEXT_COLORS,
+  DEFAULT_LIGHT_TEXT_COLORS,
   coarseToFineTokens,
   mergeButtonColors,
   mergeButtonVariantColors,
+  mergeTextColors,
   tint,
 } from "./kraken-tokens-derive";
 export type { ResolvedKrakenTokens };

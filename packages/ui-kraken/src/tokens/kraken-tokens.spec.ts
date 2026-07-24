@@ -4,6 +4,7 @@ import {
   coarseToFineTokens,
   mergeButtonColors,
   mergeButtonVariantColors,
+  mergeTextColors,
   tint,
 } from "./kraken-tokens-derive";
 
@@ -81,6 +82,22 @@ describe("mergeButtonColors", () => {
   });
 });
 
+describe("mergeTextColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_KRAKEN_TOKENS.textColors;
+    expect(mergeTextColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_KRAKEN_TOKENS.textColors;
+    const merged = mergeTextColors(base, { primary: "#123456", danger: "#FF0000" });
+    expect(merged.primary).toBe("#123456");
+    expect(merged.danger).toBe("#FF0000");
+    expect(merged.secondary).toBe(base.secondary);
+    expect(merged.onPrimary).toBe(base.onPrimary);
+  });
+});
+
 describe("defaults", () => {
   it("light defaults expose a filled palette for every Button variant", () => {
     const colors = DEFAULT_KRAKEN_TOKENS.buttonColors;
@@ -89,9 +106,43 @@ describe("defaults", () => {
     }
   });
 
-  it("dark defaults are different from light defaults", () => {
+  it("dark defaults are different from light defaults for Button", () => {
     expect(DEFAULT_DARK_KRAKEN_TOKENS.buttonColors.primary).not.toEqual(
       DEFAULT_KRAKEN_TOKENS.buttonColors.primary
+    );
+  });
+
+  it("light defaults expose every KrakenTextColors slot as a non-empty string", () => {
+    const colors = DEFAULT_KRAKEN_TOKENS.textColors;
+    for (const slot of [
+      "primary",
+      "secondary",
+      "tertiary",
+      "disabled",
+      "inverse",
+      "interactive",
+      "success",
+      "warning",
+      "danger",
+      "info",
+      "onPrimary",
+      "onSecondary",
+      "onSuccess",
+      "onDanger",
+    ] as const) {
+      expect(colors[slot]).toBeTruthy();
+    }
+  });
+
+  it("dark textColors defaults differ from light on the hierarchy slots", () => {
+    expect(DEFAULT_DARK_KRAKEN_TOKENS.textColors.primary).not.toBe(
+      DEFAULT_KRAKEN_TOKENS.textColors.primary
+    );
+    expect(DEFAULT_DARK_KRAKEN_TOKENS.textColors.tertiary).not.toBe(
+      DEFAULT_KRAKEN_TOKENS.textColors.tertiary
+    );
+    expect(DEFAULT_DARK_KRAKEN_TOKENS.textColors.interactive).not.toBe(
+      DEFAULT_KRAKEN_TOKENS.textColors.interactive
     );
   });
 });
