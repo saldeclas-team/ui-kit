@@ -215,3 +215,15 @@ Every shipped component gets a design record in `docs/` capturing **what we buil
 - [`TYPOGRAPHY-PLAN.md`](./TYPOGRAPHY-PLAN.md) — Text (v0.3.0) — 13 HTML-familiar variants, 14 semantic color slots, intensity modulator, `color` accepts slot name or raw hex/rgb.
 
 **Convention when shipping a new component:** create `docs/{COMPONENT}-PLAN.md` in the same branch as the implementation, following the same shape (Overview → API → Token schema → File structure → Testing → Storybook → Example → Non-goals → How it shipped → How to extend). The component-level README stays focused on **usage**; the PLAN doc stays focused on **rationale and decisions**.
+
+## 7. Infrastructure initiatives
+
+Multi-phase workstreams that affect testing, CI, or build tooling — not any single component. Same forward-looking-then-retrospective format as §6 (status flips from "planned" to "shipped in vX.Y.Z" as each phase merges).
+
+Current initiative — **Testing quality** (3 phases, ship independently, in this order):
+
+- [`CODECOV-AND-SNAPSHOTS-PLAN.md`](./CODECOV-AND-SNAPSHOTS-PLAN.md) — **Phase 1**. Codecov integration + structural snapshot tests (~65 snapshots covering Button and Text). Independent of Phase 2 and 3. Ships first.
+- [`REACT-NATIVE-WEB-PLAN.md`](./REACT-NATIVE-WEB-PLAN.md) — **Phase 2**. Add `react-native-web` support to `ui-kraken` (optional peer) + `apps/example` web target. **Reverses §1 "no web support in v1"** — motivated primarily by unlocking Chromatic in Phase 3, secondarily by enabling web consumers of the library. Blocks Phase 3.
+- [`CHROMATIC-PLAN.md`](./CHROMATIC-PLAN.md) — **Phase 3**. Chromatic visual regression testing on a Storybook Web build. Every PR gets pixel-diffed for every story. Requires Phase 2.
+
+**Convention when shipping a new infrastructure initiative:** create `docs/{INITIATIVE}-PLAN.md` in the branch that ships (or in a dedicated docs-only branch when the initiative spans multiple PRs). If it's multi-phase, one plan per phase, cross-linked with "blocks" / "depends on" so the read order is obvious. Same lifecycle as component plans (planned → shipped, in place).
