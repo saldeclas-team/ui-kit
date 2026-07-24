@@ -1,6 +1,7 @@
 # ui-kraken
 
 [![npm version](https://img.shields.io/npm/v/ui-kraken?color=cb3837&logo=npm)](https://www.npmjs.com/package/ui-kraken)
+[![Live Storybook](https://img.shields.io/badge/Storybook-live-ff4785?logo=storybook&logoColor=white)](https://main--6a63d07d1946f494a4c93ad3.chromatic.com/)
 [![codecov](https://codecov.io/gh/saldeclas-team/ui-kit/branch/main/graph/badge.svg?flag=ui-kraken)](https://codecov.io/gh/saldeclas-team/ui-kit)
 [![Chromatic](https://img.shields.io/badge/Chromatic-visual%20tests-ff4785?logo=storybook&logoColor=white)](https://www.chromatic.com/library?appId=6a63d07d1946f494a4c93ad3)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](../../LICENSE)
@@ -8,6 +9,10 @@
 Highly customizable React Native / Expo component library powered by [Tamagui](https://tamagui.dev/).
 
 > Status: **pre-alpha** — no components published yet. See the [monorepo README](../../README.md) and [`docs/PLAN.md`](../../docs/PLAN.md) at the repo root.
+
+## Preview
+
+📖 **[Live Storybook →](https://main--6a63d07d1946f494a4c93ad3.chromatic.com/)** — every component in every variant, size, and theme, rendered live from the latest `main`. Explore before you install; updated automatically on every merge. No login required.
 
 ## Install
 
