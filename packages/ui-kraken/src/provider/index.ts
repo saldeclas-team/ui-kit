@@ -6,4 +6,5 @@ export type {
   KrakenThemeMode,
   KrakenTokensInput,
   KrakenButtonColorsInput,
+  KrakenTextColorsInput,
 } from "./kraken-provider-types";

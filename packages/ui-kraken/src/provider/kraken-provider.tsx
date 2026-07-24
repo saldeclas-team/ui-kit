@@ -8,6 +8,7 @@ import {
   buildKrakenConfig,
   coarseToFineTokens,
   mergeButtonColors,
+  mergeTextColors,
 } from "../tokens/kraken-tokens";
 import { KrakenContext } from "./kraken-provider-context";
 import type { KrakenProviderProps } from "./kraken-provider-types";
@@ -30,11 +31,13 @@ export function KrakenProvider({
       ...DEFAULT_KRAKEN_TOKENS,
       ...tokens,
       buttonColors: mergeButtonColors(DEFAULT_KRAKEN_TOKENS.buttonColors, tokens?.buttonColors),
+      textColors: mergeTextColors(DEFAULT_KRAKEN_TOKENS.textColors, tokens?.textColors),
     };
     const mergedDark = {
       ...DEFAULT_DARK_KRAKEN_TOKENS,
       ...dark,
       buttonColors: mergeButtonColors(DEFAULT_DARK_KRAKEN_TOKENS.buttonColors, dark?.buttonColors),
+      textColors: mergeTextColors(DEFAULT_DARK_KRAKEN_TOKENS.textColors, dark?.textColors),
     };
     const resolvedLight = coarseToFineTokens(mergedLight);
     const resolvedDark = coarseToFineTokens(mergedDark);
