@@ -343,10 +343,12 @@ git diff packages/ui-kraken/src/components/<name>/__snapshots__/
 
 Accidental snapshot change (CI fails): fix the code or, if the change is desired but the intent wasn't captured, treat as intentional above.
 
-## 8. `*.stories.tsx` — Storybook
+## 8. `*.stories.tsx` — Storybook (also feeds Chromatic visual regression)
 
 - One `.stories.tsx` per component, at least one story per variant × size, one story with per-instance overrides, one dark-theme story.
 - File name is the component in kebab-case (matches every other file). The story `title` is in `UI Kit/<PascalCase>` for the Storybook sidebar.
+- **Stories are the source of truth for Chromatic visual regression.** Every story gets pixel-diffed against the baseline on every PR (via `.github/workflows/chromatic.yml`). This means: adding a component variant WITHOUT adding a story for it is an unreviewed regression risk — the visual matrix is what you write in this file. Contributors reviewing your PR will see side-by-side diffs of every story in the Chromatic UI; keep the story set complete and representative.
+- Stories run in TWO renderers automatically: on-device via `.rnstorybook/` (RN native, dev tool for the maintainer) AND on Storybook Web via `.storybook/` (Chromatic, CI). Write once, both pick it up. Do not add renderer-specific code in the story file itself.
 
 ```tsx
 // packages/ui-kraken/src/components/button/button.stories.tsx

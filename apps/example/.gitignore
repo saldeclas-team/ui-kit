@@ -9,6 +9,9 @@ dist/
 web-build/
 expo-env.d.ts
 
+# Storybook Web build (Chromatic uploads this; not committed)
+storybook-static/
+
 # Native
 .kotlin/
 *.orig.*

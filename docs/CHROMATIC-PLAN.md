@@ -1,6 +1,12 @@
 # Chromatic visual regression testing — implementation plan
 
-**Status:** planned. Ships as **Phase 3 of 3** in the testing-quality initiative. **Depends on [Phase 2 (react-native-web)](./REACT-NATIVE-WEB-PLAN.md).** Ships as its own PR after Phase 2 merges.
+**Status:** shipped on 2026-07-24 (ui-kraken v0.5.x patch — CI + config only, no user-facing API change). Phase 3 of 3 (final) in the testing-quality initiative. Completes the trio: Codecov (Phase 1) + `react-native-web` support (Phase 2) + Chromatic visual regression (this phase).
+
+**Implementation notes vs. the plan:**
+
+- The plan estimated 2–3 h; actual work was ~2 h, mostly split between (a) getting `@storybook/react-native-web-vite` to bundle ui-kraken correctly and (b) diagnosing a two-instance React Context bug that surfaced only in the Chromatic browser render (not in the local `storybook build`).
+- **The Context bug** (documented below because it will trip up the next contributor): stories inside `packages/ui-kraken/src/**/*.stories.tsx` import components via relative paths, so their `useUIKit()` reaches the source's `UIKitContext`. Meanwhile `.storybook/preview.tsx` was importing `KrakenProvider` via the package name `"ui-kraken"`, which Vite resolved through the exports map to a DIFFERENT module — hence a second `UIKitContext` instance, hence "useUIKit must be called inside <KrakenProvider>" even though the decorator was wrapping the story. Fixed by adding a `viteFinal.resolve.alias` for `"ui-kraken"` → `packages/ui-kraken/src/index.ts` in `.storybook/main.ts`. One package = one module = one Context.
+- Framework `@storybook/react-native-web-vite` (Storybook 10 compatible, uses Vite ≥ 5 under the hood, translates RN → RN-Web automatically).
 
 Forward-looking design record. Adds true visual regression testing — every PR gets pixel-diffed against `main` for every Storybook story, and reviewers see a visual review page before approving.
 
