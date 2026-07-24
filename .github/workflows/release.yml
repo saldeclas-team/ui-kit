@@ -7,6 +7,10 @@ on:
 
 concurrency: release-${{ github.ref }}
 
+# `id-token: write` is REQUIRED for OIDC trusted publishing to npm — it lets
+# the runner mint a short-lived OIDC token that npm validates against the
+# trusted publisher config registered for `ui-kraken` on npmjs.com. See:
+# https://docs.npmjs.com/trusted-publishers
 permissions:
   contents: write
   pull-requests: write
@@ -62,6 +66,14 @@ jobs:
       - name: Build library
         run: pnpm build
 
+      # Trusted Publishing (OIDC) — no NPM_TOKEN needed. npm reads the OIDC
+      # token minted by `id-token: write` and validates it against the
+      # trusted publisher registered for `ui-kraken` on npmjs.com pointing at
+      # (repo: saldeclas-team/ui-kit, workflow: release.yml).
+      #
+      # The `--provenance` flag is set per-package via `publishConfig` in
+      # packages/ui-kraken/package.json, so `changeset publish` picks it up
+      # without any extra CLI flag.
       - name: Create Release PR or publish
         uses: changesets/action@v1
         with:
@@ -71,4 +83,3 @@ jobs:
           title: "chore(release): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
