@@ -217,3 +217,25 @@ Order of operations on the `test/coverage-and-snapshot-tests` branch (name per [
 ## Estimated effort
 
 2–3 hours end-to-end (writing ~65 snapshots + Codecov wiring + docs). Most time is in reviewing initial snapshot output for correctness before committing.
+
+## Known issue — `codecov/project` does NOT post
+
+Discovered post-ship (2026-07-24) while trying to promote `codecov/project` from optional to required in the `main` branch protection. Findings after diagnosis:
+
+- `codecov.yml` requests both `project` and `patch` status checks — validated as "Valid!" by `https://codecov.io/validate`.
+- Codecov is definitely processing reports (dashboard on `https://app.codecov.io/gh/saldeclas-team/ui-kit` shows 98.42% coverage).
+- BUT only `codecov/patch` actually posts to GitHub commits. Confirmed via `gh api repos/saldeclas-team/ui-kit/commits/<sha>/status` and `.../check-runs` across every commit that has ever uploaded coverage (Phase 1 merge `b47dbea`, Phase 2 head `beb4d8f`, Phase 2 merge, release commits) — `codecov/project` never appears anywhere.
+- Codecov docs say "By default, Codecov only shows patch (git diff) coverage checks" — apparently the yml `coverage.status.project.default` block isn't triggering the post, despite validating cleanly.
+
+**Consequence:** `main` branch protection has these required status checks:
+
+- `Lint · Typecheck · Test · Build`
+- `codecov/patch`
+
+NOT `codecov/project` — attempting to add it would block every PR (the check never posts).
+
+**Why we're not blocking on this:**
+
+`codecov/patch` (new code must hit 80%) is the more important gate — it prevents anyone from mergeing a PR that adds untested code. `codecov/project` would be defense-in-depth (catches cases where deleting tests reduces total coverage) but is secondary. Coverage still visible in the Codecov dashboard, just not gated on GitHub.
+
+**If this matters in the future:** file an issue with Codecov, or experiment with a fixed `target: 90%` (instead of `target: auto`) in the yml to see if that forces the check to post. Not done yet — cost/benefit was against it while other phases were in flight.
