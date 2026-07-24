@@ -118,12 +118,14 @@ export default [
     // Files that MUST use `export default` because the tool that reads them
     // does not accept named exports:
     //   - apps/example/app/**  — Expo Router route components
-    //   - **/.rnstorybook/**   — Storybook config / decorators / entry
+    //   - **/.rnstorybook/**   — Storybook on-device config / decorators / entry
+    //   - **/.storybook/**     — Storybook Web config (main.ts + preview.tsx)
     //   - **/*.config.ts       — tool configs (tsup.config.ts, jest, etc.)
     //   - **/*.stories.tsx     — Storybook meta object
     files: [
       "apps/example/app/**/*.{ts,tsx}",
       "**/.rnstorybook/**/*.{ts,tsx}",
+      "**/.storybook/**/*.{ts,tsx}",
       "**/*.config.ts",
       "**/*.stories.tsx",
     ],

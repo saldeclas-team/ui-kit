@@ -1,0 +1,56 @@
+name: Chromatic
+
+# Runs on every PR against main AND on every push to main. The push run
+# establishes the visual baseline; PR runs diff against it and post the
+# `UI Tests` status check.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel superseded runs — no point diffing a stale commit if a newer
+# push landed.
+concurrency:
+  group: chromatic-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  chromatic:
+    name: Publish to Chromatic
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Chromatic's TurboSnap needs the full git history to trace the
+          # dependency graph between the PR and its base and decide which
+          # stories the diff actually affects.
+          fetch-depth: 0
+
+      - name: Enable pnpm via corepack
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.17.0 --activate
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          workingDir: apps/example
+          buildScriptName: storybook:web:build
+          # TurboSnap — only re-snapshot stories whose upstream dep graph
+          # changed vs. the base. Massive perf win once the story count
+          # grows; harmless overhead when only 2 components exist.
+          onlyChanged: true
+          # Post the check and exit; don't block the workflow on manual
+          # snapshot review. The `UI Tests` check itself is the gate;
+          # `UI Review` (visual approval) stays optional in branch
+          # protection for now.
+          exitOnceUploaded: true
