@@ -1,0 +1,116 @@
+# Dependabot configuration
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+#
+# Auto-opens weekly PRs for outdated dependencies. Groupings collapse
+# related packages into a single PR to reduce review overhead; ignores
+# skip deps whose updates need coordinated ecosystem decisions (peer
+# deps, Expo SDK majors) and are handled manually.
+
+version: 2
+
+updates:
+  # -----------------------------------------------------------------
+  # Root workspace — dev deps at the monorepo root.
+  # -----------------------------------------------------------------
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      # Bundle patch + minor for lint / format / commit tooling — low
+      # review cost, changes rarely conflict.
+      dev-tooling:
+        applies-to: version-updates
+        update-types:
+          - "minor"
+          - "patch"
+        patterns:
+          - "@typescript-eslint/*"
+          - "eslint*"
+          - "prettier*"
+          - "@commitlint/*"
+          - "husky"
+          - "lint-staged"
+      # Bundle the changesets tooling — they release in lockstep.
+      changesets:
+        applies-to: version-updates
+        patterns:
+          - "@changesets/*"
+
+  # -----------------------------------------------------------------
+  # packages/ui-kraken — the library published to npm.
+  # -----------------------------------------------------------------
+  - package-ecosystem: "npm"
+    directory: "/packages/ui-kraken"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "package:ui-kraken"
+    commit-message:
+      prefix: "chore(deps)"
+    ignore:
+      # Peer dependency version ranges are coordinated releases with
+      # the RN / Expo / Tamagui ecosystem, not automatic bumps.
+      # Widening a peer range is a semver-meaningful change done by
+      # hand alongside a component or provider update.
+      - dependency-name: "react"
+      - dependency-name: "react-native"
+      - dependency-name: "react-native-reanimated"
+      - dependency-name: "react-native-web"
+      - dependency-name: "tamagui"
+
+  # -----------------------------------------------------------------
+  # apps/example — the showcase Expo app + Storybook host.
+  # -----------------------------------------------------------------
+  - package-ecosystem: "npm"
+    directory: "/apps/example"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "app:example"
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      # Storybook ships ~20 packages in lockstep. Grouping them means
+      # one weekly PR instead of twenty.
+      storybook:
+        applies-to: version-updates
+        patterns:
+          - "storybook"
+          - "@storybook/*"
+    ignore:
+      # Expo SDK bumps involve native module rebuilds and often break
+      # things — a full migration event, not a weekly Dependabot PR.
+      # Handle major bumps manually (patch and minor still land).
+      - dependency-name: "expo"
+        update-types:
+          - "version-update:semver-major"
+
+  # -----------------------------------------------------------------
+  # GitHub Actions — bump action versions weekly. Prevents actions
+  # from silently going stale (e.g. actions/checkout@v7 →
+  # actions/checkout@v8 when it lands).
+  # -----------------------------------------------------------------
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "ci"
+    commit-message:
+      prefix: "ci(deps)"
