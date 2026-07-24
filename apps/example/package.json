@@ -60,7 +60,7 @@
     "@types/react": "~19.2.2",
     "chromatic": "^18.1.0",
     "storybook": "^10.5.3",
-    "typescript": "~6.0.3",
+    "typescript": "~7.0.2",
     "vite": "^8.1.5"
   }
 }
