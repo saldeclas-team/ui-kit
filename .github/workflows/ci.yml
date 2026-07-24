@@ -48,7 +48,7 @@ jobs:
         # under `packages/ui-kraken/coverage/` when `test:ci` runs with
         # `--coverage`. `fail_ci_if_error: true` treats a missing upload as a
         # hard failure — silent coverage drops are worse than a red build.
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./packages/ui-kraken/coverage/lcov.info
