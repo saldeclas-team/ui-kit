@@ -2,12 +2,13 @@
 "ui-kraken": minor
 ---
 
-Add `KrakenProvider`, per-component `KrakenTokens` schema, and the `Button` component with five tones — plus dark-mode support and a live catalog demo.
+Add `KrakenProvider`, per-component `KrakenTokens` schema, and the `Button` component with five tones, `radius`, and theme-aware `elevation` — plus dark-mode support and a live catalog demo.
 
 **Provider layer**
 
-- `KrakenProvider` mounts `TamaguiProvider` + `PortalProvider` and accepts a per-component token schema via context.
-- `useKraken()` returns both the resolved tokens for the active theme and the raw Tamagui config as an escape hatch.
+- `KrakenProvider` wraps Tamagui's `TamaguiProvider` (which already includes a `PortalProvider` root host — we do not double-mount one).
+- Accepts a per-component token schema via context.
+- `useKraken()` returns both the resolved tokens for the active theme AND the raw Tamagui config as an escape hatch.
 - `defaultTheme` accepts `"light" | "dark" | "system"`; the `"system"` mode follows RN's `useColorScheme()`.
 - Optional `dark` prop lets consumers customize dark-mode tokens independently. When omitted, ships `DEFAULT_DARK_KRAKEN_TOKENS` (Blue-500 palette tuned for dark surfaces).
 
@@ -22,14 +23,16 @@ Add `KrakenProvider`, per-component `KrakenTokens` schema, and the `Button` comp
 
 - Compound API: `Button.Primary`, `Button.Secondary`, `Button.Outline`, `Button.Ghost`, `Button.Destructive`. Top-level `Button` aliases `Button.Primary`.
 - Sizes: `sm` / `md` / `lg`. States: `disabled` / `loading` (both apply `opacity: 0.45`).
-- New `radius` prop: `number | "none" | "sm" | "md" | "lg" | "pill"` — numeric is raw px, preset maps to the theme scale, `"pill"` is fully rounded.
-- Slots: `leftIcon` / `rightIcon` (`ReactNode`).
+- `radius` prop: `number | "none" | "sm" | "md" | "lg" | "pill"` — numeric is raw px, preset maps to the theme scale, `"pill"` is fully rounded.
+- `elevation` prop: `"none" | "sm" | "md" | "lg"` — theme-aware. In light mode it casts iOS `shadow*` + Android `elevation` with tuned opacity/radius. In dark mode it cancels every shadow prop (black shadows are invisible on dark surfaces) and instead renders a translucent-white border whose opacity scales with the level (pattern lifted from Linear / Notion / Vercel). `outline` and `ghost` skip the dark-swap because they already own their border, and any explicit `buttonColors.border` override wins.
+- Slots: `leftIcon` / `rightIcon` (accept any `ReactNode` — plug in your own SVG / vector icon library).
 - Per-instance color override via `buttonColors?: Partial<{ background?, label, border? }>` — variant implicit from the compound subcomponent.
 - Full accessibility: `accessibilityRole="button"`, `accessibilityState`, minimum 48 × 48 px touch target (grows to 56 for `lg`, shrinks to 36 for `sm`), `pressStyle: { scale: 0.98, opacity: 0.9 }`.
 
 **Example app catalog**
 
 - `apps/example/app/(pages)/index.tsx` is now a catalog home listing every component (with "Ready" / "Planned" badges).
-- `apps/example/app/(pages)/components/button.tsx` hosts the full Button demo — every variant, every size, states, radius presets, per-instance overrides.
+- `apps/example/app/(pages)/components/button.tsx` hosts the full Button demo — every variant, every size, states, radius presets, elevation levels, per-instance overrides.
 - New `<Screen>` wrapper forces `#000` background in dark mode / `#FFF` in light so text stays readable.
 - New `<ThemeToggle>` in the header lets you flip between light / dark / system live.
+- Storybook on-device wires up `AsyncStorage` so it remembers the last opened story between reloads.
