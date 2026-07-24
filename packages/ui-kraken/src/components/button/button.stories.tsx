@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-native";
 import { View } from "react-native";
-import { Theme, XStack, YStack } from "tamagui";
+import { Theme, YStack } from "tamagui";
 
 import { Button } from "./button";
 
@@ -28,12 +28,28 @@ export const Secondary: Story = {
   render: (args) => <Button.Secondary {...args} />,
 };
 
+export const Outline: Story = {
+  render: (args) => <Button.Outline {...args} />,
+};
+
 export const Ghost: Story = {
   render: (args) => <Button.Ghost {...args} />,
 };
 
 export const Destructive: Story = {
   render: (args) => <Button.Destructive {...args}>Delete</Button.Destructive>,
+};
+
+export const AllVariants: Story = {
+  render: (args) => (
+    <YStack gap="$3">
+      <Button.Primary {...args}>Primary</Button.Primary>
+      <Button.Secondary {...args}>Secondary</Button.Secondary>
+      <Button.Outline {...args}>Outline</Button.Outline>
+      <Button.Ghost {...args}>Ghost</Button.Ghost>
+      <Button.Destructive {...args}>Destructive</Button.Destructive>
+    </YStack>
+  ),
 };
 
 export const AllSizes: Story = {
@@ -60,22 +76,51 @@ export const Disabled: Story = {
   args: { disabled: true },
 };
 
-export const WithOverride: Story = {
+export const WithBackgroundOverride: Story = {
   args: {
-    buttonColors: { primary: "#FF6B00" },
-    textColors: { primary: "#FFFFFF" },
+    buttonColors: { background: "#FF6B00", label: "#FFFFFF" },
   },
 };
 
-export const AllVariantsRow: Story = {
+export const WithLabelOverride: Story = {
+  args: {
+    buttonColors: { label: "#111827" },
+  },
+};
+
+export const OutlineWithBorderOverride: Story = {
   render: (args) => (
-    <XStack gap="$3" flexWrap="wrap">
-      <Button.Primary {...args}>Primary</Button.Primary>
-      <Button.Secondary {...args}>Secondary</Button.Secondary>
-      <Button.Ghost {...args}>Ghost</Button.Ghost>
-      <Button.Destructive {...args}>Destructive</Button.Destructive>
-    </XStack>
+    <Button.Outline {...args} buttonColors={{ border: "#FF6B00", label: "#FF6B00" }}>
+      Custom outline
+    </Button.Outline>
   ),
+};
+
+export const RadiusPresets: Story = {
+  render: (args) => (
+    <YStack gap="$3">
+      <Button.Primary {...args} radius="none">
+        Square (none)
+      </Button.Primary>
+      <Button.Primary {...args} radius="sm">
+        sm
+      </Button.Primary>
+      <Button.Primary {...args} radius="md">
+        md (default)
+      </Button.Primary>
+      <Button.Primary {...args} radius="lg">
+        lg
+      </Button.Primary>
+      <Button.Primary {...args} radius="pill">
+        pill (full round)
+      </Button.Primary>
+    </YStack>
+  ),
+};
+
+export const RadiusCustomNumber: Story = {
+  args: { radius: 24 },
+  render: (args) => <Button.Primary {...args}>radius=24</Button.Primary>,
 };
 
 export const DarkTheme: Story = {
@@ -83,7 +128,10 @@ export const DarkTheme: Story = {
     <Theme name="dark">
       <YStack gap="$3">
         <Button.Primary {...args}>Primary</Button.Primary>
+        <Button.Secondary {...args}>Secondary</Button.Secondary>
+        <Button.Outline {...args}>Outline</Button.Outline>
         <Button.Ghost {...args}>Ghost</Button.Ghost>
+        <Button.Destructive {...args}>Destructive</Button.Destructive>
       </YStack>
     </Theme>
   ),

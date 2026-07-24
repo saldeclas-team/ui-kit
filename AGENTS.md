@@ -85,21 +85,48 @@ Filename suffixes that carry meaning:
 - Interactive elements: minimum touch target 48 × 48 px.
 - Press feedback on button-like elements: `pressStyle={{ scale: 0.98, opacity: 0.9 }}`.
 
-### Color-override props (project convention)
+### Color-override model (project convention)
 
-Every component with color surfaces exposes overrides as **grouped object props**, one per semantic role. **No flat props** like `primaryColor` / `textPrimaryColor`.
+**Tokens are per-component, NOT global.** There is no `primaryColor: string` at the theme root. Instead the provider (`KrakenProvider`) receives one block per component role:
 
 ```tsx
-<Button.Primary
-  buttonColors={{ primary: "#2563EB", secondary: "#1E40AF", disabled: "#93C5FD" }}
-  textColors={{ primary: "#FFFFFF", secondary: "#E0E7FF", disabled: "#DBEAFE" }}
-  iconColors={{ primary: "#FFFFFF" }}
+<KrakenProvider
+  tokens={{
+    buttonColors: {
+      primary: { background: "#2563EB", label: "#FFFFFF" },
+      secondary: { background: "#0EA5E9", label: "#FFFFFF" },
+      outline: { border: "#2563EB", label: "#2563EB" },
+      ghost: { label: "#2563EB" },
+      destructive: { background: "#DC2626", label: "#FFFFFF" },
+    },
+    radius: 12,
+    spacing: 8,
+  }}
+  dark={{ buttonColors: { primary: { background: "#3B82F6", label: "#FFFFFF" } } }}
+  defaultTheme="system"
 >
-  Save
+  <App />
+</KrakenProvider>
+```
+
+Every component gets its own block (`buttonColors`, future `textColors`, `cardColors`, etc.), keyed by the component's variants. The slots inside each variant match the visible surfaces of that component — for Button that's `{ background?, label, border? }`; other components will define their own slot set.
+
+**At the component instance**, the same block name is used to override — but scoped to the variant already selected:
+
+```tsx
+<Button.Primary buttonColors={{ background: "#FF6B00" }}>
+  Override just the background — label falls back to the theme.
 </Button.Primary>
 ```
 
-Each grouped prop is typed as its own interface in the component's `-types.ts`. Fallback order at render time: per-instance override → provider-derived Tamagui token.
+Every field is optional. Missing slots inherit from the theme. Fallback order at render: per-instance override → provider-level `buttonColors[variant]` → shipped default (`DEFAULT_KRAKEN_TOKENS`).
+
+**Design rules for new components:**
+
+- Ship the block under a name that matches the component role in plural + `Colors`: `buttonColors`, `cardColors`, `inputColors`.
+- Each variant / hierarchy level is a key: `{ primary: {...}, secondary: {...} }` for variant-based components; `{ primary: string, secondary: string, tertiary: string }` for hierarchy-based components (like text and card layers).
+- Do NOT add "state" slots per variant unless the state needs a distinct color (e.g. loading with a visible spinner tint). `disabled` / `loading` are handled uniformly by `opacity: 0.45` — no separate slot.
+- Every color slot is a plain hex string in v0.2. Parser for `rgb()` / named colors comes later.
 
 ### Testing
 

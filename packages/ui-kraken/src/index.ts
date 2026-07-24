@@ -8,19 +8,40 @@
 
 // Provider
 export { KrakenProvider, useKraken } from "./provider";
-export type { KrakenProviderProps, KrakenContextValue } from "./provider";
+export type {
+  KrakenProviderProps,
+  KrakenContextValue,
+  KrakenThemeMode,
+  KrakenTokensInput,
+  KrakenButtonColorsInput,
+} from "./provider";
 
 // Tokens
-export { DEFAULT_KRAKEN_TOKENS, buildKrakenConfig, coarseToFineTokens, tint } from "./tokens";
-export type { KrakenTokens, ResolvedKrakenTokens, KrakenConfig } from "./tokens";
+export {
+  DEFAULT_KRAKEN_TOKENS,
+  DEFAULT_DARK_KRAKEN_TOKENS,
+  DEFAULT_LIGHT_BUTTON_COLORS,
+  DEFAULT_DARK_BUTTON_COLORS,
+  buildKrakenConfig,
+  coarseToFineTokens,
+  mergeButtonColors,
+  mergeButtonVariantColors,
+  tint,
+} from "./tokens";
+export type {
+  KrakenTokens,
+  KrakenButtonColors,
+  KrakenButtonVariantColors,
+  ResolvedKrakenTokens,
+  KrakenConfig,
+} from "./tokens";
 
 // Components
 export { Button } from "./components";
 export type {
   ButtonProps,
-  ButtonColors,
-  TextColors,
-  IconColors,
+  ButtonColorsInput,
   ButtonTone,
   ButtonSize,
+  ButtonRadius,
 } from "./components";

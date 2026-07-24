@@ -1,30 +1,88 @@
-import type { KrakenTokens, ResolvedKrakenTokens } from "./kraken-tokens-types";
+import type {
+  KrakenButtonColors,
+  KrakenButtonVariantColors,
+  KrakenTokens,
+  ResolvedKrakenTokens,
+} from "./kraken-tokens-types";
+
+/**
+ * Default light-mode Button palette. Tuned to work on a white / near-white
+ * surface with WCAG AA contrast for the label color.
+ */
+export const DEFAULT_LIGHT_BUTTON_COLORS: KrakenButtonColors = {
+  primary: { background: "#2563EB", label: "#FFFFFF" },
+  secondary: { background: "#0EA5E9", label: "#FFFFFF" },
+  outline: { border: "#2563EB", label: "#2563EB" },
+  ghost: { label: "#2563EB" },
+  destructive: { background: "#DC2626", label: "#FFFFFF" },
+};
+
+/**
+ * Default dark-mode Button palette. Uses lighter brand shades so they pop on
+ * a dark surface, and inverts the label colors where needed for contrast.
+ */
+export const DEFAULT_DARK_BUTTON_COLORS: KrakenButtonColors = {
+  primary: { background: "#3B82F6", label: "#FFFFFF" },
+  secondary: { background: "#38BDF8", label: "#0B0B0F" },
+  outline: { border: "#60A5FA", label: "#60A5FA" },
+  ghost: { label: "#60A5FA" },
+  destructive: { background: "#EF4444", label: "#FFFFFF" },
+};
 
 /**
  * Fallback tokens when a consumer mounts `<KrakenProvider>` without any
- * overrides. Blue-600 primary (Tailwind #2563EB) chosen because it's a
- * broadly recognized, WCAG-AA-on-white "default brand blue".
+ * overrides. Uses the light-mode palette by default.
  */
 export const DEFAULT_KRAKEN_TOKENS: KrakenTokens = {
-  primaryColor: "#2563EB",
-  secondaryColor: "#0EA5E9",
-  textPrimaryColor: "#0B0B0F",
-  textSecondaryColor: "#5B6472",
+  buttonColors: DEFAULT_LIGHT_BUTTON_COLORS,
   radius: 12,
   spacing: 8,
 };
 
 /**
- * Danger color is not part of the coarse KrakenTokens schema in v0.1 — every
- * app uses roughly the same "red-600" for destructive actions. Pinning it
- * here keeps Button.Destructive predictable without adding a knob users
- * rarely touch.
+ * Fallback dark tokens when a consumer opts into dark mode without passing
+ * their own `dark` prop.
  */
-const DANGER_BASE = "#DC2626";
+export const DEFAULT_DARK_KRAKEN_TOKENS: KrakenTokens = {
+  buttonColors: DEFAULT_DARK_BUTTON_COLORS,
+  radius: 12,
+  spacing: 8,
+};
+
+/**
+ * Merge a partial per-variant override on top of a base variant palette.
+ * Missing fields fall through — a consumer who only wants to change
+ * `primary.background` should not have to re-declare `primary.label`.
+ */
+export function mergeButtonVariantColors(
+  base: KrakenButtonVariantColors,
+  override?: Partial<KrakenButtonVariantColors>
+): KrakenButtonVariantColors {
+  if (override == null) return base;
+  return { ...base, ...override };
+}
+
+/**
+ * Merge partial button-color overrides across every variant.
+ */
+export function mergeButtonColors(
+  base: KrakenButtonColors,
+  override?: Partial<Record<keyof KrakenButtonColors, Partial<KrakenButtonVariantColors>>>
+): KrakenButtonColors {
+  if (override == null) return base;
+  return {
+    primary: mergeButtonVariantColors(base.primary, override.primary),
+    secondary: mergeButtonVariantColors(base.secondary, override.secondary),
+    outline: mergeButtonVariantColors(base.outline, override.outline),
+    ghost: mergeButtonVariantColors(base.ghost, override.ghost),
+    destructive: mergeButtonVariantColors(base.destructive, override.destructive),
+  };
+}
 
 /**
  * Adjust a hex color's lightness by `amount` (in [-1, 1]). Positive lightens,
- * negative darkens. Cheap HSL round-trip; enough for tint/shade math in v0.1.
+ * negative darkens. Cheap HSL round-trip; useful for consumers who want to
+ * derive shade variations without a full color library.
  */
 export function tint(hex: string, amount: number): string {
   const [h, s, l] = hexToHsl(hex);
@@ -33,31 +91,14 @@ export function tint(hex: string, amount: number): string {
 }
 
 /**
- * Derive the full token set consumed by ui-kraken components from the coarse
- * knobs the user provides. Pure — safe to call inside a `useMemo`.
+ * Resolve the coarse token schema into the shape components consume. In v0.2
+ * this only derives the radius / space scales; `buttonColors` pass through.
+ * Pure — safe to call inside a `useMemo`.
  */
 export function coarseToFineTokens(tokens: KrakenTokens): ResolvedKrakenTokens {
-  const { primaryColor, secondaryColor, textPrimaryColor, textSecondaryColor, radius, spacing } =
-    tokens;
-
+  const { buttonColors, radius, spacing } = tokens;
   return {
-    color: {
-      primary3: tint(primaryColor, 0.4),
-      primary9: primaryColor,
-      primary10: tint(primaryColor, -0.06),
-      primary11: tint(primaryColor, -0.14),
-      secondary3: tint(secondaryColor, 0.4),
-      secondary9: secondaryColor,
-      secondary10: tint(secondaryColor, -0.06),
-      secondary11: tint(secondaryColor, -0.14),
-      danger9: DANGER_BASE,
-      danger10: tint(DANGER_BASE, -0.06),
-      textPrimary: textPrimaryColor,
-      textSecondary: textSecondaryColor,
-      textOnPrimary: "#FFFFFF",
-      textOnSecondary: "#FFFFFF",
-      textOnDanger: "#FFFFFF",
-    },
+    buttonColors,
     radius: {
       sm: radius * 0.5,
       md: radius,
@@ -88,9 +129,7 @@ function hexToHsl(hex: string): [number, number, number] {
   const max = Math.max(r, g, b);
   const min = Math.min(r, g, b);
   const l = (max + min) / 2;
-  if (max === min) {
-    return [0, 0, l];
-  }
+  if (max === min) return [0, 0, l];
   const d = max - min;
   const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
   let h = 0;

@@ -3,31 +3,30 @@ import type { ComponentRef } from "react";
 import { ActivityIndicator, View } from "react-native";
 
 import { StyledButton, StyledButtonLabel } from "./button.styled";
-import type { ButtonProps, ButtonTone } from "./button-types";
+import type { ButtonProps, ButtonRadius, ButtonTone } from "./button-types";
 
 type ButtonRef = ComponentRef<typeof StyledButton>;
 
 /**
  * Compound Button. Consumers usually reach it via `Button.Primary`,
- * `Button.Secondary`, `Button.Ghost`, `Button.Destructive` — the top-level
- * `Button` is aliased to `Button.Primary` for the common case.
+ * `Button.Secondary`, `Button.Outline`, `Button.Ghost`, `Button.Destructive`
+ * — the top-level `Button` is aliased to `Button.Primary` for the common case.
  *
- * Per-instance color overrides use grouped role props (see AGENTS.md and the
- * component skill): `buttonColors`, `textColors`, `iconColors`. Anything not
- * overridden falls through to the theme tokens provided by `KrakenProvider`.
+ * Per-instance color overrides use the `buttonColors` prop — same slots as the
+ * provider-level palette for this variant (`{ background?, label, border? }`),
+ * with every field optional. Missing slots fall through to the theme.
  */
 const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
   {
     children,
     tone = "primary",
     size = "md",
+    radius,
     disabled,
     loading,
     leftIcon,
     rightIcon,
     buttonColors,
-    textColors,
-    iconColors,
     testID,
     ...rest
   },
@@ -35,9 +34,7 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
 ) {
   const rootId = testID ?? "button";
   const isInactive = Boolean(disabled) || Boolean(loading);
-  const backgroundOverride = pickColor(buttonColors, tone, disabled, loading);
-  const labelColorOverride = pickColor(textColors, tone, disabled);
-  const iconTintOverride = pickColor(iconColors, tone, disabled);
+  const resolvedBorderRadius = resolveRadius(radius);
 
   return (
     <StyledButton
@@ -46,14 +43,16 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
       tone={tone}
       size={size}
       disabled={isInactive}
-      backgroundColor={backgroundOverride}
+      backgroundColor={backgroundOverride(tone, buttonColors?.background)}
+      borderColor={borderOverride(tone, buttonColors?.border)}
+      borderRadius={resolvedBorderRadius}
       accessibilityRole="button"
       accessibilityState={{ disabled: isInactive, busy: Boolean(loading) }}
       {...rest}
     >
       {loading ? (
         <View testID={`${rootId}-loader`}>
-          <ActivityIndicator color={iconTintOverride ?? undefined} />
+          <ActivityIndicator color={buttonColors?.label ?? undefined} />
         </View>
       ) : leftIcon != null ? (
         <View testID={`${rootId}-left-icon`}>{leftIcon}</View>
@@ -64,7 +63,7 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
           testID={`${rootId}-label`}
           tone={tone}
           size={size}
-          color={labelColorOverride}
+          color={buttonColors?.label}
         >
           {children}
         </StyledButtonLabel>
@@ -76,22 +75,39 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
 });
 
 /**
- * Pick the effective color for a given tone from a grouped-color override
- * object. Precedence: state-specific slot (`disabled`, `loading`) wins over
- * tone-specific slot. Returns `undefined` when nothing overrides the theme.
+ * `outline` and `ghost` have no background token — passing `undefined`
+ * preserves the styled variant's transparent default. For solid tones, `undefined`
+ * also falls back to the styled variant's theme token.
  */
-function pickColor(
-  colors: { primary?: string; secondary?: string; disabled?: string; loading?: string } | undefined,
-  tone: ButtonTone,
-  disabled?: boolean,
-  loading?: boolean
-): string | undefined {
-  if (colors == null) return undefined;
-  if (loading === true && colors.loading != null) return colors.loading;
-  if (disabled === true && colors.disabled != null) return colors.disabled;
-  if (tone === "primary" || tone === "ghost" || tone === "destructive") return colors.primary;
-  if (tone === "secondary") return colors.secondary;
-  return undefined;
+function backgroundOverride(tone: ButtonTone, override: string | undefined): string | undefined {
+  if (tone === "outline" || tone === "ghost") return override;
+  return override;
+}
+
+/**
+ * Only `outline` renders a border in the styled variants, so `border` on other
+ * tones is a no-op. We still forward when set so a consumer explicitly asking
+ * for a border on, say, a primary button gets it (Tamagui's default `borderWidth: 0`
+ * would still hide it, but the intent is preserved).
+ */
+function borderOverride(_tone: ButtonTone, override: string | undefined): string | undefined {
+  return override;
+}
+
+/**
+ * Resolve the `radius` prop to a value the styled `borderRadius` prop accepts.
+ * Numeric values pass through unchanged. Presets map to Tamagui theme tokens
+ * so they respect the consumer's coarse `radius` knob on `KrakenProvider`.
+ * `"pill"` is the special "fully rounded" case. Returns `undefined` when the
+ * prop is not provided so the size variant's default radius wins.
+ */
+function resolveRadius(radius: ButtonRadius | undefined): number | string | undefined {
+  if (radius === undefined) return undefined;
+  if (typeof radius === "number") return radius;
+  if (radius === "none") return 0;
+  if (radius === "pill") return 9999;
+  const capitalized = radius.charAt(0).toUpperCase() + radius.slice(1);
+  return `$krakenRadius${capitalized}`;
 }
 
 function makeToneVariant(tone: ButtonTone) {
@@ -102,17 +118,19 @@ function makeToneVariant(tone: ButtonTone) {
 
 const ButtonPrimary = makeToneVariant("primary");
 const ButtonSecondary = makeToneVariant("secondary");
+const ButtonOutline = makeToneVariant("outline");
 const ButtonGhost = makeToneVariant("ghost");
 const ButtonDestructive = makeToneVariant("destructive");
 
 /**
  * Dual export: `<Button>Save</Button>` behaves like `<Button.Primary>Save</Button.Primary>`
- * for the 80% case, and `Button.Primary` / `.Secondary` / `.Ghost` / `.Destructive`
- * work as compound variants for the 20%. See the component skill for rationale.
+ * for the 80% case, and `Button.Primary` / `.Secondary` / `.Outline` /
+ * `.Ghost` / `.Destructive` work as compound variants for the 20%.
  */
 export const Button = Object.assign(ButtonPrimary, {
   Primary: ButtonPrimary,
   Secondary: ButtonSecondary,
+  Outline: ButtonOutline,
   Ghost: ButtonGhost,
   Destructive: ButtonDestructive,
 });

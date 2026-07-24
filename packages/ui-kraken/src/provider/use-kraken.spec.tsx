@@ -5,7 +5,7 @@ import { useKraken } from "./use-kraken";
 
 function UseKrakenOrThrow() {
   const value = useKraken();
-  return <Text>{value.tokens.color.primary9}</Text>;
+  return <Text>{value.tokens.buttonColors.primary.background}</Text>;
 }
 
 describe("useKraken", () => {

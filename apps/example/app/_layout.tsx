@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { Stack } from "expo-router";
-import { useColorScheme } from "react-native";
+import type { KrakenThemeMode } from "ui-kraken";
 import { KrakenProvider } from "ui-kraken";
+
+import { ThemeToggle } from "../src/theme-toggle";
 
 const STORYBOOK_ENABLED = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === "true";
 
@@ -12,16 +15,26 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const [themeMode, setThemeMode] = useState<KrakenThemeMode>("system");
 
   return (
-    <KrakenProvider defaultTheme={colorScheme === "dark" ? "dark" : "light"}>
-      <Stack screenOptions={{ headerShown: false }}>
+    <KrakenProvider defaultTheme={themeMode}>
+      <Stack
+        screenOptions={{
+          headerShown: !STORYBOOK_ENABLED,
+          headerRight: () => <ThemeToggle value={themeMode} onChange={setThemeMode} />,
+          headerTitleAlign: "center",
+        }}
+      >
         <Stack.Protected guard={STORYBOOK_ENABLED}>
-          <Stack.Screen name="(storybook)/index" />
+          <Stack.Screen name="(storybook)/index" options={{ headerShown: false }} />
         </Stack.Protected>
 
-        <Stack.Screen name="(pages)/index" />
+        <Stack.Screen name="(pages)/index" options={{ title: "ui-kraken catalog" }} />
+        <Stack.Screen
+          name="(pages)/components/button"
+          options={{ title: "Button", headerBackTitle: "Catalog" }}
+        />
       </Stack>
     </KrakenProvider>
   );

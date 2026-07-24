@@ -41,9 +41,9 @@ describe("Button", () => {
     expect(onPress).toHaveBeenCalledTimes(1);
   });
 
-  it("applies per-instance buttonColors override", async () => {
+  it("applies per-instance background override", async () => {
     await render(
-      <Button testID="save" buttonColors={{ primary: "#FF0000" }}>
+      <Button testID="save" buttonColors={{ background: "#FF0000" }}>
         Save
       </Button>
     );
@@ -51,9 +51,9 @@ describe("Button", () => {
     expect(screen.getByTestId("save").props.backgroundColor).toBe("#FF0000");
   });
 
-  it("applies per-instance textColors override", async () => {
+  it("applies per-instance label override", async () => {
     await render(
-      <Button testID="save" textColors={{ primary: "#00FF00" }}>
+      <Button testID="save" buttonColors={{ label: "#00FF00" }}>
         Save
       </Button>
     );
@@ -61,14 +61,23 @@ describe("Button", () => {
     expect(screen.getByTestId("save-label").props.color).toBe("#00FF00");
   });
 
-  it("prefers the disabled slot when the button is disabled", async () => {
+  it("applies per-instance border override on outline variant", async () => {
     await render(
-      <Button testID="save" disabled buttonColors={{ primary: "#FF0000", disabled: "#AAAAAA" }}>
+      <Button.Outline testID="save" buttonColors={{ border: "#0000FF" }}>
+        Save
+      </Button.Outline>
+    );
+
+    expect(screen.getByTestId("save").props.borderColor).toBe("#0000FF");
+  });
+
+  it("sets accessibilityState.disabled when disabled", async () => {
+    await render(
+      <Button testID="save" disabled>
         Save
       </Button>
     );
 
-    expect(screen.getByTestId("save").props.backgroundColor).toBe("#AAAAAA");
     expect(screen.getByTestId("save").props.accessibilityState).toMatchObject({ disabled: true });
   });
 
@@ -84,11 +93,12 @@ describe("Button", () => {
     expect(screen.getByTestId("save").props.accessibilityState).toMatchObject({ busy: true });
   });
 
-  it("exposes the compound variants (Primary/Secondary/Ghost/Destructive)", async () => {
+  it("exposes all five compound variants (Primary/Secondary/Outline/Ghost/Destructive)", async () => {
     await render(
       <>
         <Button.Primary testID="primary">P</Button.Primary>
         <Button.Secondary testID="secondary">S</Button.Secondary>
+        <Button.Outline testID="outline">O</Button.Outline>
         <Button.Ghost testID="ghost">G</Button.Ghost>
         <Button.Destructive testID="destructive">D</Button.Destructive>
       </>
@@ -96,6 +106,7 @@ describe("Button", () => {
 
     expect(screen.getByTestId("primary").props.tone).toBe("primary");
     expect(screen.getByTestId("secondary").props.tone).toBe("secondary");
+    expect(screen.getByTestId("outline").props.tone).toBe("outline");
     expect(screen.getByTestId("ghost").props.tone).toBe("ghost");
     expect(screen.getByTestId("destructive").props.tone).toBe("destructive");
   });
@@ -104,5 +115,45 @@ describe("Button", () => {
     await render(<Button testID="default-button">Default</Button>);
 
     expect(screen.getByTestId("default-button").props.tone).toBe("primary");
+  });
+
+  it("resolves radius='pill' to 9999", async () => {
+    await render(
+      <Button testID="btn" radius="pill">
+        Round
+      </Button>
+    );
+
+    expect(screen.getByTestId("btn").props.borderRadius).toBe(9999);
+  });
+
+  it("passes a numeric radius through unchanged", async () => {
+    await render(
+      <Button testID="btn" radius={20}>
+        Custom
+      </Button>
+    );
+
+    expect(screen.getByTestId("btn").props.borderRadius).toBe(20);
+  });
+
+  it("resolves radius='none' to 0", async () => {
+    await render(
+      <Button testID="btn" radius="none">
+        Square
+      </Button>
+    );
+
+    expect(screen.getByTestId("btn").props.borderRadius).toBe(0);
+  });
+
+  it("resolves preset radius names to theme tokens", async () => {
+    await render(
+      <Button testID="btn" radius="lg">
+        Large
+      </Button>
+    );
+
+    expect(screen.getByTestId("btn").props.borderRadius).toBe("$krakenRadiusLg");
   });
 });

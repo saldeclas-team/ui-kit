@@ -1,76 +1,123 @@
-import { ScrollView } from "react-native";
-import { H2, H4, Paragraph, XStack, YStack } from "tamagui";
-import { Button } from "ui-kraken";
+import { Link } from "expo-router";
+import type { Href } from "expo-router";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useKraken } from "ui-kraken";
 
-export default function Home() {
+import { Screen } from "../../src/screen";
+
+interface CatalogItem {
+  title: string;
+  description: string;
+  href: Href;
+  status: "shipped" | "planned";
+}
+
+const CATALOG: CatalogItem[] = [
+  {
+    title: "Button",
+    description: "Interactive button — primary / secondary / outline / ghost / destructive.",
+    href: "/components/button",
+    status: "shipped",
+  },
+  {
+    title: "Text",
+    description: "Typographic component with heading / body / caption levels.",
+    href: "/components/button",
+    status: "planned",
+  },
+  {
+    title: "Card",
+    description: "Surface primitive with layered background variants.",
+    href: "/components/button",
+    status: "planned",
+  },
+  {
+    title: "Input",
+    description: "Text input with label, helper text, and validation slots.",
+    href: "/components/button",
+    status: "planned",
+  },
+];
+
+export default function CatalogHome() {
   return (
-    <ScrollView contentContainerStyle={{ padding: 16, paddingTop: 60, gap: 24 }}>
-      <YStack gap="$2">
-        <H2>ui-kraken example</H2>
-        <Paragraph>
-          Tap through the Button variants below. Set{" "}
-          <Paragraph fontWeight="600">EXPO_PUBLIC_STORYBOOK_ENABLED=true</Paragraph> and reload to
-          boot into Storybook instead.
-        </Paragraph>
-      </YStack>
-
-      <Section title="Variants (default primary color)">
-        <XStack flexWrap="wrap" gap="$3">
-          <Button.Primary onPress={() => undefined}>Primary</Button.Primary>
-          <Button.Secondary onPress={() => undefined}>Secondary</Button.Secondary>
-          <Button.Ghost onPress={() => undefined}>Ghost</Button.Ghost>
-          <Button.Destructive onPress={() => undefined}>Destructive</Button.Destructive>
-        </XStack>
-      </Section>
-
-      <Section title="Sizes">
-        <YStack gap="$3">
-          <Button.Primary size="sm" onPress={() => undefined}>
-            Small
-          </Button.Primary>
-          <Button.Primary size="md" onPress={() => undefined}>
-            Medium
-          </Button.Primary>
-          <Button.Primary size="lg" onPress={() => undefined}>
-            Large
-          </Button.Primary>
-        </YStack>
-      </Section>
-
-      <Section title="States">
-        <XStack gap="$3" flexWrap="wrap">
-          <Button.Primary disabled>Disabled</Button.Primary>
-          <Button.Primary loading>Loading</Button.Primary>
-        </XStack>
-      </Section>
-
-      <Section title="Per-instance overrides">
-        <YStack gap="$3">
-          <Button.Primary
-            buttonColors={{ primary: "#FF6B00", disabled: "#FFB380" }}
-            textColors={{ primary: "#FFFFFF", disabled: "#FFF3E0" }}
-            onPress={() => undefined}
-          >
-            Custom brand
-          </Button.Primary>
-          <Button.Ghost
-            buttonColors={{ primary: "#DC2626" }}
-            textColors={{ primary: "#DC2626" }}
-            onPress={() => undefined}
-          >
-            Danger ghost
-          </Button.Ghost>
-        </YStack>
-      </Section>
-    </ScrollView>
+    <Screen
+      title="ui-kraken catalog"
+      subtitle="Tap a component to open its live demo. Use the theme toggle in the header to flip between light, dark, and system."
+    >
+      <View style={styles.list}>
+        {CATALOG.map((item) => (
+          <CatalogRow key={item.title} item={item} />
+        ))}
+      </View>
+    </Screen>
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function CatalogRow({ item }: { item: CatalogItem }) {
+  const { activeTheme } = useKraken();
+  const isDark = activeTheme === "dark";
+  const shipped = item.status === "shipped";
+  const cardBg = isDark ? "#111827" : "#F9FAFB";
+  const borderColor = isDark ? "#1F2937" : "#E5E7EB";
+  const titleColor = shipped ? (isDark ? "#F5F5F7" : "#0B0B0F") : isDark ? "#4B5563" : "#9CA3AF";
+  const descriptionColor = isDark ? "#9CA3AF" : "#6B7280";
+
+  const content = (
+    <View style={[styles.row, { backgroundColor: cardBg, borderColor }]}>
+      <View style={styles.rowText}>
+        <Text style={[styles.rowTitle, { color: titleColor }]}>{item.title}</Text>
+        <Text style={[styles.rowDescription, { color: descriptionColor }]}>{item.description}</Text>
+      </View>
+      <Text style={[styles.rowStatus, { color: shipped ? "#10B981" : descriptionColor }]}>
+        {shipped ? "Ready" : "Planned"}
+      </Text>
+    </View>
+  );
+
+  if (!shipped) {
+    return <View style={styles.rowWrapper}>{content}</View>;
+  }
+
   return (
-    <YStack gap="$3">
-      <H4>{title}</H4>
-      {children}
-    </YStack>
+    <Link href={item.href} asChild>
+      <Pressable style={styles.rowWrapper} accessibilityRole="button">
+        {content}
+      </Pressable>
+    </Link>
   );
 }
+
+const styles = StyleSheet.create({
+  list: {
+    gap: 12,
+  },
+  rowWrapper: {
+    borderRadius: 12,
+    overflow: "hidden",
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    gap: 12,
+  },
+  rowText: {
+    flex: 1,
+    gap: 4,
+  },
+  rowTitle: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  rowDescription: {
+    fontSize: 13,
+  },
+  rowStatus: {
+    fontSize: 12,
+    fontWeight: "600",
+  },
+});

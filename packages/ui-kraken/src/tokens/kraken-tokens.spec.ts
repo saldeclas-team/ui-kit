@@ -1,4 +1,11 @@
-import { DEFAULT_KRAKEN_TOKENS, coarseToFineTokens, tint } from "./kraken-tokens-derive";
+import {
+  DEFAULT_DARK_KRAKEN_TOKENS,
+  DEFAULT_KRAKEN_TOKENS,
+  coarseToFineTokens,
+  mergeButtonColors,
+  mergeButtonVariantColors,
+  tint,
+} from "./kraken-tokens-derive";
 
 describe("tint", () => {
   it("returns the same color at amount=0", () => {
@@ -28,12 +35,9 @@ describe("tint", () => {
 });
 
 describe("coarseToFineTokens", () => {
-  it("uses the provided primary color as primary9", () => {
-    const out = coarseToFineTokens({
-      ...DEFAULT_KRAKEN_TOKENS,
-      primaryColor: "#FF6B00",
-    });
-    expect(out.color.primary9).toBe("#FF6B00");
+  it("passes buttonColors through unchanged", () => {
+    const out = coarseToFineTokens(DEFAULT_KRAKEN_TOKENS);
+    expect(out.buttonColors).toEqual(DEFAULT_KRAKEN_TOKENS.buttonColors);
   });
 
   it("derives radius scale from the base radius", () => {
@@ -45,15 +49,50 @@ describe("coarseToFineTokens", () => {
     const out = coarseToFineTokens({ ...DEFAULT_KRAKEN_TOKENS, spacing: 10 });
     expect(out.space).toMatchObject({ xs: 5, sm: 10, md: 20, lg: 30, xl: 40 });
   });
+});
 
-  it("passes through text colors unchanged", () => {
-    const out = coarseToFineTokens({
-      ...DEFAULT_KRAKEN_TOKENS,
-      textPrimaryColor: "#111827",
-      textSecondaryColor: "#6B7280",
-    });
-    expect(out.color.textPrimary).toBe("#111827");
-    expect(out.color.textSecondary).toBe("#6B7280");
+describe("mergeButtonVariantColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = { background: "#000", label: "#FFF" };
+    expect(mergeButtonVariantColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base", () => {
+    const merged = mergeButtonVariantColors(
+      { background: "#000", label: "#FFF" },
+      { background: "#FF0000" }
+    );
+    expect(merged).toEqual({ background: "#FF0000", label: "#FFF" });
+  });
+});
+
+describe("mergeButtonColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_KRAKEN_TOKENS.buttonColors;
+    expect(mergeButtonColors(base, undefined)).toBe(base);
+  });
+
+  it("only touches the variants the caller passed", () => {
+    const base = DEFAULT_KRAKEN_TOKENS.buttonColors;
+    const merged = mergeButtonColors(base, { primary: { background: "#FF0000" } });
+    expect(merged.primary.background).toBe("#FF0000");
+    expect(merged.primary.label).toBe(base.primary.label);
+    expect(merged.secondary).toEqual(base.secondary);
+  });
+});
+
+describe("defaults", () => {
+  it("light defaults expose a filled palette for every Button variant", () => {
+    const colors = DEFAULT_KRAKEN_TOKENS.buttonColors;
+    for (const variant of ["primary", "secondary", "outline", "ghost", "destructive"] as const) {
+      expect(colors[variant].label).toBeTruthy();
+    }
+  });
+
+  it("dark defaults are different from light defaults", () => {
+    expect(DEFAULT_DARK_KRAKEN_TOKENS.buttonColors.primary).not.toEqual(
+      DEFAULT_KRAKEN_TOKENS.buttonColors.primary
+    );
   });
 });
 

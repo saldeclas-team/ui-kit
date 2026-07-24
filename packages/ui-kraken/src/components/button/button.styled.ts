@@ -14,20 +14,24 @@ export const StyledButton = styled(View, {
   variants: {
     tone: {
       primary: {
-        backgroundColor: "$krakenPrimary9",
+        backgroundColor: "$krakenButtonPrimaryBackground",
         borderWidth: 0,
       },
       secondary: {
-        backgroundColor: "$krakenSecondary9",
+        backgroundColor: "$krakenButtonSecondaryBackground",
         borderWidth: 0,
+      },
+      outline: {
+        backgroundColor: "transparent",
+        borderWidth: 1,
+        borderColor: "$krakenButtonOutlineBorder",
       },
       ghost: {
         backgroundColor: "transparent",
-        borderWidth: 1,
-        borderColor: "$krakenPrimary9",
+        borderWidth: 0,
       },
       destructive: {
-        backgroundColor: "$krakenDanger9",
+        backgroundColor: "$krakenButtonDestructiveBackground",
         borderWidth: 0,
       },
     },
@@ -68,10 +72,11 @@ export const StyledButtonLabel = styled(Text, {
 
   variants: {
     tone: {
-      primary: { color: "$krakenTextOnPrimary" },
-      secondary: { color: "$krakenTextOnSecondary" },
-      ghost: { color: "$krakenPrimary11" },
-      destructive: { color: "$krakenTextOnDanger" },
+      primary: { color: "$krakenButtonPrimaryLabel" },
+      secondary: { color: "$krakenButtonSecondaryLabel" },
+      outline: { color: "$krakenButtonOutlineLabel" },
+      ghost: { color: "$krakenButtonGhostLabel" },
+      destructive: { color: "$krakenButtonDestructiveLabel" },
     },
     size: {
       sm: { fontSize: 13 },

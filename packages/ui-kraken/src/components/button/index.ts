@@ -1,9 +1,8 @@
 export { Button } from "./button";
 export type {
   ButtonProps,
-  ButtonColors,
-  TextColors,
-  IconColors,
+  ButtonColorsInput,
   ButtonTone,
   ButtonSize,
+  ButtonRadius,
 } from "./button-types";

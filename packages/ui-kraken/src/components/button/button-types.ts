@@ -1,44 +1,55 @@
 import type { ReactNode } from "react";
 import type { GetProps } from "tamagui";
 
+import type { KrakenButtonVariantColors } from "../../tokens/kraken-tokens-types";
 import type { StyledButton } from "./button.styled";
 
-export interface ButtonColors {
-  primary?: string;
-  secondary?: string;
-  disabled?: string;
-  loading?: string;
-}
+/**
+ * Visual tone of the button.
+ *
+ * - `primary` — solid surface, `buttonColors.primary` palette.
+ * - `secondary` — solid surface, `buttonColors.secondary` palette.
+ * - `outline` — transparent surface with a border, `buttonColors.outline` palette.
+ * - `ghost` — no surface, no border, `buttonColors.ghost` palette (text-only).
+ * - `destructive` — solid surface, `buttonColors.destructive` palette.
+ */
+export type ButtonTone = "primary" | "secondary" | "outline" | "ghost" | "destructive";
 
-export interface TextColors {
-  primary?: string;
-  secondary?: string;
-  disabled?: string;
-}
-
-export interface IconColors {
-  primary?: string;
-  secondary?: string;
-  disabled?: string;
-}
-
-export type ButtonTone = "primary" | "secondary" | "ghost" | "destructive";
 export type ButtonSize = "sm" | "md" | "lg";
+
+/**
+ * Border radius selector. Preset name that maps to the theme scale, an
+ * explicit pixel number, or `"pill"` for a fully rounded button.
+ */
+export type ButtonRadius = number | "none" | "sm" | "md" | "lg" | "pill";
+
+/**
+ * Per-instance color override. Same shape as `KrakenButtonVariantColors` at
+ * the provider level, but partial — missing fields fall through to the theme
+ * palette for the current variant. The variant itself is implicit because you
+ * already picked it (`Button.Primary`, `Button.Ghost`, etc.).
+ */
+export type ButtonColorsInput = Partial<KrakenButtonVariantColors>;
 
 /**
  * All Tamagui style props the underlying `StyledButton` accepts flow through
  * for free (`onPress`, `paddingHorizontal`, `animation`, `pressStyle`, …).
- * Consumers rarely need them thanks to the variant system, but they exist.
  */
 type StyledButtonProps = GetProps<typeof StyledButton>;
 
-export interface ButtonProps extends Omit<StyledButtonProps, "children" | "size"> {
+export interface ButtonProps extends Omit<StyledButtonProps, "children" | "size" | "borderRadius"> {
   children?: ReactNode;
-  /** Explicit tone. Usually driven by the subcomponent (Button.Primary sets `tone="primary"`). */
+  /** Explicit tone. Usually driven by the subcomponent (`Button.Ghost` sets `tone="ghost"`). */
   tone?: ButtonTone;
   /** Vertical size. Defaults to `"md"`. */
   size?: ButtonSize;
-  /** Disables press interaction and dims the surface. */
+  /**
+   * Border radius. Preset name (`"sm" | "md" | "lg" | "pill" | "none"`) or an
+   * explicit px number. `"pill"` produces a fully rounded button. When
+   * omitted, the radius is derived from `size` (each size has a default).
+   */
+  radius?: ButtonRadius;
+  /** Disables press interaction and dims the surface (opacity 0.45). */
   disabled?: boolean;
   /** Replaces the left icon with a loading spinner and disables interaction. */
   loading?: boolean;
@@ -46,12 +57,12 @@ export interface ButtonProps extends Omit<StyledButtonProps, "children" | "size"
   leftIcon?: ReactNode;
   /** Slot rendered after the label. */
   rightIcon?: ReactNode;
-  /** Per-instance overrides for the button surface color, keyed by tone. */
-  buttonColors?: ButtonColors;
-  /** Per-instance overrides for the label color, keyed by tone. */
-  textColors?: TextColors;
-  /** Per-instance overrides for icon slot tint, keyed by tone. */
-  iconColors?: IconColors;
+  /**
+   * Per-instance color override for THIS button's variant. Same shape as the
+   * corresponding variant slot at the provider (`{ background?, label, border? }`)
+   * but every field is optional — missing slots fall through to the theme.
+   */
+  buttonColors?: ButtonColorsInput;
   /** Root testID. Subelements derive: `{testID}-label`, `{testID}-left-icon`, `{testID}-right-icon`, `{testID}-loader`. */
   testID?: string;
 }
