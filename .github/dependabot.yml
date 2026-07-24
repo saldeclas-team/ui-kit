@@ -67,6 +67,18 @@ updates:
       - dependency-name: "react-native-reanimated"
       - dependency-name: "react-native-web"
       - dependency-name: "tamagui"
+      # React ecosystem devDeps — must stay in lockstep with the
+      # `react` peer-dep version above, otherwise the test renderer
+      # mismatches the runtime and jest fails obscurely.
+      - dependency-name: "react-test-renderer"
+      - dependency-name: "@types/react"
+      # TypeScript major bumps introduce new strict flags and API
+      # changes that surface as type errors across ui-kraken. Migrate
+      # manually alongside a review of the release notes. Patch and
+      # minor bumps still land automatically.
+      - dependency-name: "typescript"
+        update-types:
+          - "version-update:semver-major"
 
   # -----------------------------------------------------------------
   # apps/example — the showcase Expo app + Storybook host.
@@ -97,6 +109,29 @@ updates:
       - dependency-name: "expo"
         update-types:
           - "version-update:semver-major"
+      # Everything below is pinned by the current Expo SDK release.
+      # Bumping independently risks version drift + native rebuild
+      # failures + peer-dep incompatibility. Handled as part of
+      # coordinated Expo SDK migration events, not weekly PRs.
+      - dependency-name: "react"
+      - dependency-name: "react-dom"
+      - dependency-name: "react-native"
+      - dependency-name: "react-native-reanimated"
+      - dependency-name: "react-native-web"
+      - dependency-name: "react-native-worklets"
+      - dependency-name: "react-native-gesture-handler"
+      - dependency-name: "react-native-safe-area-context"
+      - dependency-name: "react-native-screens"
+      - dependency-name: "@react-native-async-storage/async-storage"
+      # Every @expo/* and expo-* package ships with the SDK, same
+      # rationale as above.
+      - dependency-name: "@expo/*"
+      - dependency-name: "expo-*"
+      # TypeScript major bumps require manual migration. Patches and
+      # minors still land automatically.
+      - dependency-name: "typescript"
+        update-types:
+          - "version-update:semver-major"
 
   # -----------------------------------------------------------------
   # GitHub Actions — bump action versions weekly. Prevents actions
@@ -114,3 +149,14 @@ updates:
       - "ci"
     commit-message:
       prefix: "ci(deps)"
+    ignore:
+      # These actions have historically broken with major bumps
+      # (input renames, config changes, removed features). Bump
+      # manually after reading release notes so CI doesn't silently
+      # break. Patch and minor bumps still land automatically.
+      - dependency-name: "chromaui/action"
+        update-types:
+          - "version-update:semver-major"
+      - dependency-name: "codecov/codecov-action"
+        update-types:
+          - "version-update:semver-major"
