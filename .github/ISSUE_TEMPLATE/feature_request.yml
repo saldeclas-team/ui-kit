@@ -3,6 +3,10 @@ description: Suggest a new component, variant, or API for ui-kraken.
 title: "feat: "
 labels: ["enhancement", "triage"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        **Thinking of contributing a component yourself?** The guide at [CONTRIBUTING.md §4 "Adding a new component"](https://github.com/saldeclas-team/ui-kit/blob/main/CONTRIBUTING.md#4-adding-a-new-component) walks through the 7-file layout, snapshot / story requirements, and PR flow. Feature requests are welcome either way — file this issue OR open a PR straight away.
   - type: textarea
     id: problem
     attributes:
