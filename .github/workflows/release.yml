@@ -3,6 +3,7 @@ name: Release
 on:
   push:
     branches: [main]
+  workflow_dispatch: # allow manual triggering from the Actions UI
 
 concurrency: release-${{ github.ref }}
 
@@ -12,11 +13,9 @@ permissions:
   id-token: write
 
 jobs:
-  # Cheap check that gates the release job. Without this, `changesets/action`
-  # tries to publish ui-kraken@0.0.0 on every push to main (including the
-  # scaffold commit), because "0.0.0 not on npm" is treated as publishable.
-  # We only want to act when there is either a pending changeset OR the commit
-  # is a merge of a "Version Packages" PR that changesets itself opened.
+  # Safety gate: only skip the release job when ui-kraken is still at the
+  # placeholder 0.0.0 (scaffold state). Once we bumped to 0.1.0, we can trust
+  # changesets/action to be a no-op if there is nothing new to publish.
   intent:
     name: Detect release intent
     runs-on: ubuntu-latest
@@ -25,21 +24,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: check
-        env:
-          COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
           set -euo pipefail
-          count=0
-          if compgen -G ".changeset/*.md" > /dev/null 2>&1; then
-            count=$(ls .changeset/*.md 2>/dev/null | grep -cv README.md || true)
-          fi
-          echo "Pending changesets: ${count}"
-          echo "Commit subject: ${COMMIT_MSG%%$'\n'*}"
-          if [[ "${count}" -gt 0 ]] || [[ "${COMMIT_MSG}" == chore\(release\):* ]]; then
-            echo "proceed=true" >> "${GITHUB_OUTPUT}"
-          else
+          version=$(node -p "require('./packages/ui-kraken/package.json').version")
+          echo "ui-kraken version in main: ${version}"
+          if [[ "${version}" == "0.0.0" ]]; then
             echo "proceed=false" >> "${GITHUB_OUTPUT}"
-            echo "::notice::No pending changesets and not a Version Packages merge — skipping release."
+            echo "::notice::ui-kraken is still at placeholder 0.0.0 — skipping release."
+          else
+            echo "proceed=true" >> "${GITHUB_OUTPUT}"
           fi
 
   release:
