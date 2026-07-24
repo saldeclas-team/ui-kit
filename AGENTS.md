@@ -27,6 +27,12 @@ ui-kit/
 
 ## Non-negotiable rules
 
+### Language
+
+- **Everything ships in English.** Identifiers, prop names, type names, file names, folder names, code comments, README content, commit messages, PR descriptions, changesets, JSDoc. Do NOT mix Spanish or other languages into shipped code or public docs.
+- The ONLY places where non-English text is acceptable: user-facing localized strings inside `apps/example/` demo screens (if we ever add them), and conversational messages in issues / PR discussions.
+- This applies to placeholder / example content too: `<Button>Save</Button>`, not `<Button>Guardar</Button>`.
+
 ### Exports
 
 - **NEVER `export default`.** Named exports only. The one exception is `apps/example/app/**/*.tsx` (Expo Router requires default exports on route components). ESLint enforces this.
@@ -35,13 +41,25 @@ ui-kit/
 
 ### Naming
 
-| Kind               | Case                 | Example                                |
-| ------------------ | -------------------- | -------------------------------------- |
-| Files              | kebab-case           | `kraken-provider.tsx`, `use-kraken.ts` |
-| React components   | PascalCase           | `Button`, `KrakenProvider`             |
-| Functions / hooks  | camelCase            | `buildKrakenConfig`, `useKraken`       |
-| Global constants   | SCREAMING_SNAKE_CASE | `DEFAULT_KRAKEN_TOKENS`                |
-| Types / interfaces | PascalCase           | `ButtonProps`, `KrakenTokens`          |
+| Kind                                       | Case                                          | Example                                      |
+| ------------------------------------------ | --------------------------------------------- | -------------------------------------------- |
+| Files                                      | kebab-case                                    | `kraken-provider.tsx`, `use-kraken.ts`       |
+| Folders                                    | kebab-case                                    | `components/button/`, `provider/`            |
+| React components                           | PascalCase                                    | `Button`, `KrakenProvider`                   |
+| Functions / hooks (hooks start with `use`) | camelCase                                     | `buildKrakenConfig`, `useKraken`             |
+| Global constants                           | SCREAMING_SNAKE_CASE                          | `DEFAULT_KRAKEN_TOKENS`                      |
+| Types / interfaces                         | PascalCase                                    | `ButtonProps`, `KrakenTokens`                |
+| Prop interfaces                            | `<ComponentName>Props`                        | `ButtonProps`                                |
+| Grouped color prop                         | camelCase prop, PascalCase type               | prop `buttonColors: ButtonColors`            |
+| Enums / union types                        | PascalCase for the type, camelCase for values | `type ButtonTone = "primary" \| "secondary"` |
+
+Descriptive naming rules:
+
+- **Boolean props read like statements** — `disabled`, `loading`, `isLoading`, `hasError` (not `disable`, `load`).
+- **Callback props start with `on`** — `onPress`, `onLayout`, `onValueChange`.
+- **Local handlers start with `handle`** — `const handlePress = () => ...`, wired as `onPress={handlePress}`.
+- **Avoid abbreviations** unless universal (`props`, `id`, `url`, `api`, `hex`). Prefer `background` over `bg`, `configuration` over `cfg`, `error` over `err`.
+- **Component filename matches the exported component in kebab-case** — `Button` exports from `button.tsx`, `KrakenProvider` from `kraken-provider.tsx`.
 
 Filename suffixes that carry meaning:
 
@@ -98,8 +116,20 @@ Each grouped prop is typed as its own interface in the component's `-types.ts`. 
 
 ### Documentation
 
-- README.md per component (props table + at least 3 usage examples).
+- README.md per component (props table + at least 3 usage examples), all in English.
 - Comments explain WHY (non-obvious constraint, workaround, subtle invariant). Never explain WHAT — the code already does that.
+- Component / prop `description` in JSDoc — one sentence, present tense, describes the visible behavior. e.g. `/** Replaces the left icon with a loader and blocks presses. */`.
+- Package.json `description` — one full sentence, English, describes what the package does and what it ships. This is what shows up on npm's search results and package page.
+
+### npm publishing hygiene
+
+- `packages/ui-kraken/package.json` is the public face of the library. Every field matters for npm search, security, and consumer DX. Do not merge changes that:
+  - lower the `description` quality or truncate keywords,
+  - remove `sideEffects: false` (breaks tree-shaking),
+  - remove `types` from `exports` (breaks TypeScript autocomplete for consumers),
+  - broaden the `files` include list (accidentally publishes tests, stories, or internal notes),
+  - add `postinstall` / `preinstall` scripts (npm warns loudly and it's a supply-chain smell).
+- Every publish is provenance-signed once OIDC lands (deferred — see docs/PLAN.md §4).
 
 ### Do NOT
 
