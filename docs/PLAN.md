@@ -141,7 +141,7 @@ Locked convention (AGENTS.md): consumers use `react-hook-form` + `zod`. ui-krake
 
 Order TBD; probably:
 
-- `Text` / typography scale
+- ~~`Text` / typography scale~~ — **Shipped in v0.3.0** (2026-07-24). 13 HTML-familiar variants (`h1`–`h6`, `subtitle1/2`, `body1/2`, `caption`, `overline`, `label`), 14 semantic color slots grouped hierarchy/semantic/on-\*, `intensity="subtle|normal|strong"`, `color` accepts slot name OR raw hex/rgb, RN Text + Tamagui style props flow through, compound API (`Text.H1`, …).
 - `Input` (single-line + multi-line)
 - `Card`
 - `Stack` / `Row` / `Column` (thin wrappers over Tamagui `XStack` / `YStack` with ui-kraken tokens)

@@ -21,9 +21,10 @@ const CATALOG: CatalogItem[] = [
   },
   {
     title: "Text",
-    description: "Typographic component with heading / body / caption levels.",
-    href: "/components/button",
-    status: "planned",
+    description:
+      "13 HTML-familiar variants (H1-H6, subtitle, body, caption, overline, label) with 14 color slots.",
+    href: "/components/text",
+    status: "shipped",
   },
   {
     title: "Card",
