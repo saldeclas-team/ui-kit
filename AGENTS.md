@@ -190,6 +190,8 @@ Every field is optional. Missing slots inherit from the theme. Fallback order at
 ### Push
 
 - Only the user pushes. Automated tooling never runs `git push` — commit locally and report the SHA + suggested push command instead.
+- **`main` is protected — never push to it directly.** All changes to `main`, without exceptions (feature / fix / doc / chore / one-liner), land via a pull request. GitHub branch protection on `main` blocks direct pushes and force-pushes and enforces the rule for admins too. If a local branch's upstream is set to `origin/main` (from a rename or a `git checkout main && checkout -b`), unset it (`git branch --unset-upstream`) before pushing — otherwise the push tries to fast-forward main and gets rejected.
+- Before every push, verify with `git branch -vv` that the current branch tracks its OWN remote (or has no upstream yet), not `origin/main`.
 
 ### PR descriptions
 
