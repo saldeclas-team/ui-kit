@@ -11,6 +11,8 @@
     "storybook": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start --clear",
     "storybook:ios": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start --ios --clear",
     "storybook:android": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start --android --clear",
+    "storybook:web": "storybook dev -p 6006 -c .storybook",
+    "storybook:web:build": "storybook build -c .storybook -o storybook-static",
     "typecheck": "tsc --noEmit",
     "lint": "expo lint",
     "reset-project": "node ./scripts/reset-project.js"
@@ -54,8 +56,11 @@
     "@storybook/addon-ondevice-notes": "^10.5.2",
     "@storybook/react": "^10.5.3",
     "@storybook/react-native": "^10.5.2",
+    "@storybook/react-native-web-vite": "^10.5.3",
     "@types/react": "~19.2.2",
+    "chromatic": "^18.1.0",
     "storybook": "^10.5.3",
-    "typescript": "~6.0.3"
+    "typescript": "~6.0.3",
+    "vite": "^8.1.5"
   }
 }

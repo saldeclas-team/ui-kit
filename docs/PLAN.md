@@ -220,10 +220,10 @@ Every shipped component gets a design record in `docs/` capturing **what we buil
 
 Multi-phase workstreams that affect testing, CI, or build tooling — not any single component. Same forward-looking-then-retrospective format as §6 (status flips from "planned" to "shipped in vX.Y.Z" as each phase merges).
 
-Current initiative — **Testing quality** (3 phases, ship independently, in this order):
+Completed initiative — **Testing quality** (3 phases, all shipped 2026-07-24):
 
-- [`CODECOV-AND-SNAPSHOTS-PLAN.md`](./CODECOV-AND-SNAPSHOTS-PLAN.md) — **Phase 1**. Codecov integration + structural snapshot tests (~65 snapshots covering Button and Text). Independent of Phase 2 and 3. Ships first.
-- [`REACT-NATIVE-WEB-PLAN.md`](./REACT-NATIVE-WEB-PLAN.md) — **Phase 2**. Add `react-native-web` support to `ui-kraken` (optional peer) + `apps/example` web target. **Reverses §1 "no web support in v1"** — motivated primarily by unlocking Chromatic in Phase 3, secondarily by enabling web consumers of the library. Blocks Phase 3.
-- [`CHROMATIC-PLAN.md`](./CHROMATIC-PLAN.md) — **Phase 3**. Chromatic visual regression testing on a Storybook Web build. Every PR gets pixel-diffed for every story. Requires Phase 2.
+- [`CODECOV-AND-SNAPSHOTS-PLAN.md`](./CODECOV-AND-SNAPSHOTS-PLAN.md) — **Phase 1 shipped**. Codecov integration + 66 structural snapshot tests covering Button and Text. Known issue: `codecov/project` doesn't post (see plan's "Known issue" section); only `codecov/patch` is required-check gated.
+- [`REACT-NATIVE-WEB-PLAN.md`](./REACT-NATIVE-WEB-PLAN.md) — **Phase 2 shipped in ui-kraken v0.5.0**. `react-native-web` as optional peer, `apps/example` gained web target. Reversed §1 "no web support in v1".
+- [`CHROMATIC-PLAN.md`](./CHROMATIC-PLAN.md) — **Phase 3 shipped**. Chromatic visual regression testing over Storybook Web (via `@storybook/react-native-web-vite`). Every PR gets pixel-diffed for every story.
 
 **Convention when shipping a new infrastructure initiative:** create `docs/{INITIATIVE}-PLAN.md` in the branch that ships (or in a dedicated docs-only branch when the initiative spans multiple PRs). If it's multi-phase, one plan per phase, cross-linked with "blocks" / "depends on" so the read order is obvious. Same lifecycle as component plans (planned → shipped, in place).
