@@ -1,6 +1,6 @@
 # Codecov + structural snapshots — implementation plan
 
-**Status:** planned. Ships as **Phase 1 of 3** in the testing-quality initiative (Phase 2 = react-native-web, Phase 3 = Chromatic visual regression). Independent of Phase 2 and 3 — can ship on its own.
+**Status:** shipped on 2026-07-24 (ui-kraken v0.4.x patch — tests/CI, no user-facing API change). Phase 1 of 3 in the testing-quality initiative (Phase 2 = react-native-web, Phase 3 = Chromatic visual regression). Independent of Phase 2 and 3.
 
 Forward-looking design record. Follows the same shape as [`BUTTON-PLAN.md`](./BUTTON-PLAN.md) and [`TYPOGRAPHY-PLAN.md`](./TYPOGRAPHY-PLAN.md); status flips to "shipped in vX.Y.Z" when the branch merges.
 

@@ -1,0 +1,49 @@
+# Codecov configuration — companion to the CI upload step in
+# `.github/workflows/ci.yml`. Two required status checks land on every PR:
+# `codecov/project` (total coverage cannot drop) and `codecov/patch` (new
+# code must hit the target). Both are enforced via GitHub branch protection
+# on `main` once the maintainer promotes them from optional to required
+# after the first CI run posts a coverage report.
+
+coverage:
+  status:
+    project:
+      default:
+        # Baseline = whatever the branch currently has. A dip means the PR
+        # regressed coverage.
+        target: auto
+        # Allow a tiny dip so flaky lines (env-specific branches, node
+        # version diffs) don't red-fail an otherwise-clean PR.
+        threshold: 0.5%
+        base: auto
+        if_ci_failed: error
+    patch:
+      default:
+        # Every PR's NEW code must hit 80%+. Independent of the project
+        # baseline — a PR adding well-tested code to a poorly-tested area
+        # still passes.
+        target: 80%
+        if_ci_failed: error
+
+comment:
+  # Post a coverage summary comment on every PR, but only when coverage
+  # actually changed — no noise on docs-only or config-only PRs.
+  layout: "reach, diff, flags, files"
+  behavior: default
+  require_changes: true
+
+ignore:
+  # Storybook stories, spec files, type-only files, styled definitions,
+  # and re-export barrels have no branching logic worth measuring.
+  - "**/*.stories.tsx"
+  - "**/*.spec.tsx"
+  - "**/*.spec.ts"
+  - "**/*-types.ts"
+  - "**/*.styled.ts"
+  - "**/index.ts"
+  # The example app is the showcase, not the library. When it grows its
+  # own tests, they land under a separate Codecov flag.
+  - "apps/example/**"
+  # Build output.
+  - "dist/**"
+  - "coverage/**"

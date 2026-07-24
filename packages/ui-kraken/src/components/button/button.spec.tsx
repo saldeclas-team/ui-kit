@@ -287,4 +287,109 @@ describe("Button", () => {
       expect(screen.getByTestId("btn").props.borderWidth).toBeUndefined();
     });
   });
+
+  // Structural snapshots — serialize the rendered RN tree and diff on any
+  // structural / prop / inline-style change. Complements the targeted
+  // assertions above by catching regressions the specific asserts don't
+  // (e.g. an accidental extra wrapper, a dropped prop, a style flip).
+  //
+  // If a snapshot diff is intentional: run `pnpm --filter ui-kraken test -u`,
+  // review the .snap diff carefully, and commit both the code and the
+  // snapshot update in the same PR.
+  describe("snapshots", () => {
+    beforeEach(() => {
+      // The dark-elevation describe flips this to "dark" and restores in
+      // afterEach — but if the snapshot block runs before it (jest order is
+      // insertion), we still want an explicit reset so intra-block state
+      // never leaks in.
+      mockUseUIKit.mockReturnValue({ activeTheme: "light" });
+    });
+
+    // --- Tones × md size (5) ---
+    it.each([
+      ["primary", <Button.Primary key="p">Primary</Button.Primary>],
+      ["secondary", <Button.Secondary key="s">Secondary</Button.Secondary>],
+      ["outline", <Button.Outline key="o">Outline</Button.Outline>],
+      ["ghost", <Button.Ghost key="g">Ghost</Button.Ghost>],
+      ["destructive", <Button.Destructive key="d">Destructive</Button.Destructive>],
+    ])("tone=%s @ md size", async (_tone, node) => {
+      await render(node);
+      expect(screen.toJSON()).toMatchSnapshot();
+    });
+
+    // --- Sizes × primary tone (3) ---
+    it.each(["sm", "md", "lg"] as const)("size=%s @ primary tone", async (size) => {
+      await render(<Button.Primary size={size}>Save</Button.Primary>);
+      expect(screen.toJSON()).toMatchSnapshot();
+    });
+
+    // --- States: disabled / loading / with-icons / icon-only (4) ---
+    it("state: disabled", async () => {
+      await render(<Button disabled>Save</Button>);
+      expect(screen.toJSON()).toMatchSnapshot();
+    });
+
+    it("state: loading", async () => {
+      await render(<Button loading>Save</Button>);
+      expect(screen.toJSON()).toMatchSnapshot();
+    });
+
+    it("state: with leftIcon + rightIcon", async () => {
+      await render(
+        <Button leftIcon={<Text testID="lf">L</Text>} rightIcon={<Text testID="rf">R</Text>}>
+          Save
+        </Button>
+      );
+      expect(screen.toJSON()).toMatchSnapshot();
+    });
+
+    it("state: icon-only (no children)", async () => {
+      await render(<Button leftIcon={<Text testID="lf">L</Text>} />);
+      expect(screen.toJSON()).toMatchSnapshot();
+    });
+
+    // --- Radius presets + raw number (6) ---
+    it.each(["none", "sm", "md", "lg", "pill"] as const)(
+      "radius=%s @ primary md",
+      async (radius) => {
+        await render(<Button.Primary radius={radius}>Save</Button.Primary>);
+        expect(screen.toJSON()).toMatchSnapshot();
+      }
+    );
+
+    it("radius=24 (raw px) @ primary md", async () => {
+      await render(<Button.Primary radius={24}>Save</Button.Primary>);
+      expect(screen.toJSON()).toMatchSnapshot();
+    });
+
+    // --- Elevation × light theme (4) ---
+    it.each(["none", "sm", "md", "lg"] as const)(
+      "elevation=%s @ primary md (light)",
+      async (elevation) => {
+        mockUseUIKit.mockReturnValue({ activeTheme: "light" });
+        await render(<Button.Primary elevation={elevation}>Save</Button.Primary>);
+        expect(screen.toJSON()).toMatchSnapshot();
+      }
+    );
+
+    // --- Elevation × dark theme (4) — exercises the dark-elevation border swap ---
+    it.each(["none", "sm", "md", "lg"] as const)(
+      "elevation=%s @ primary md (dark)",
+      async (elevation) => {
+        mockUseUIKit.mockReturnValue({ activeTheme: "dark" });
+        await render(<Button.Primary elevation={elevation}>Save</Button.Primary>);
+        expect(screen.toJSON()).toMatchSnapshot();
+      }
+    );
+
+    // --- Per-instance color override (1) ---
+    it("buttonColors override: custom brand orange", async () => {
+      await render(
+        <Button.Primary buttonColors={{ background: "#FF6B00", label: "#FFFFFF" }}>
+          Save
+        </Button.Primary>
+      );
+      expect(screen.toJSON()).toMatchSnapshot();
+    });
+  });
 });

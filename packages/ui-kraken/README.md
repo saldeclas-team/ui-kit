@@ -1,5 +1,9 @@
 # ui-kraken
 
+[![npm version](https://img.shields.io/npm/v/ui-kraken?color=cb3837&logo=npm)](https://www.npmjs.com/package/ui-kraken)
+[![codecov](https://codecov.io/gh/saldeclas-team/ui-kit/branch/main/graph/badge.svg?flag=ui-kraken)](https://codecov.io/gh/saldeclas-team/ui-kit)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](../../LICENSE)
+
 Highly customizable React Native / Expo component library powered by [Tamagui](https://tamagui.dev/).
 
 > Status: **pre-alpha** — no components published yet. See the [monorepo README](../../README.md) and [`docs/PLAN.md`](../../docs/PLAN.md) at the repo root.

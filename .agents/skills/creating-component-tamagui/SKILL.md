@@ -316,6 +316,33 @@ describe("Button", () => {
 });
 ```
 
+### 7.1 Structural snapshots (required for visual components)
+
+Every visual component MUST also ship a `describe("snapshots")` block that iterates every variant × relevant axis (tone / size / state / color / intensity — whatever the component exposes) and calls `expect(screen.toJSON()).toMatchSnapshot()` per case. This complements the targeted assertions above by catching regressions the specific asserts don't — a dropped prop, an accidental extra wrapper, an inline-style flip. See the shipped Button spec and Text spec for the canonical shape.
+
+Coverage guidelines by component axis (adapt per component):
+
+- Every variant / tone at the default size (5–13 snapshots depending on how many variants exist).
+- Every size at the primary variant (typically 3 — sm / md / lg).
+- Every state that visibly changes the output: `disabled`, `loading`, with/without icons, icon-only.
+- Every radius / elevation preset — for elevation, cross with `light` / `dark` theme if the component has a dark-mode-specific rendering path (Button does; Text doesn't).
+- Every color slot × the base variant (hierarchy / semantic / on-\*).
+- Every intensity / opacity modulator.
+- Every truncation / alignment / passthrough prop that changes output.
+- At least one per-instance override snapshot.
+
+Use `it.each([...])` to parametrize where the axis has more than 3 values. Keep tests inside the same `describe("<Component>", () => { ... })` block as the behavioral tests, and reset any mocked hook state in a `beforeEach` inside the snapshots describe so intra-file mock leakage doesn't cause false diffs.
+
+Intentional snapshot change:
+
+```bash
+pnpm --filter ui-kraken test -u          # regenerate
+git diff packages/ui-kraken/src/components/<name>/__snapshots__/
+# eyeball the diff, commit both the code and the snapshot update together
+```
+
+Accidental snapshot change (CI fails): fix the code or, if the change is desired but the intent wasn't captured, treat as intentional above.
+
 ## 8. `*.stories.tsx` — Storybook
 
 - One `.stories.tsx` per component, at least one story per variant × size, one story with per-instance overrides, one dark-theme story.

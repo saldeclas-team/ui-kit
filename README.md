@@ -2,6 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/ui-kraken?color=cb3837&logo=npm)](https://www.npmjs.com/package/ui-kraken)
 [![CI](https://github.com/saldeclas-team/ui-kit/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/saldeclas-team/ui-kit/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/saldeclas-team/ui-kit/branch/main/graph/badge.svg?flag=ui-kraken)](https://codecov.io/gh/saldeclas-team/ui-kit)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 React Native / Expo component library built with [Tamagui](https://tamagui.dev/).

@@ -1,0 +1,398 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Text snapshots custom color: hex 1`] = `
+<Text
+  color="#FF6B00"
+  opacity={1}
+  variant="body2"
+>
+  Custom
+</Text>
+`;
+
+exports[`Text snapshots custom color: named 1`] = `
+<Text
+  color="hotpink"
+  opacity={1}
+  variant="body2"
+>
+  Custom
+</Text>
+`;
+
+exports[`Text snapshots custom color: rgb 1`] = `
+<Text
+  color="rgb(139, 92, 246)"
+  opacity={1}
+  variant="body2"
+>
+  Custom
+</Text>
+`;
+
+exports[`Text snapshots hierarchy color=disabled @ body2 1`] = `
+<Text
+  color="#D1D5DB"
+  opacity={1}
+  variant="body2"
+>
+  Hierarchy
+</Text>
+`;
+
+exports[`Text snapshots hierarchy color=inverse @ body2 1`] = `
+<Text
+  color="#FFFFFF"
+  opacity={1}
+  variant="body2"
+>
+  Hierarchy
+</Text>
+`;
+
+exports[`Text snapshots hierarchy color=primary @ body2 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="body2"
+>
+  Hierarchy
+</Text>
+`;
+
+exports[`Text snapshots hierarchy color=secondary @ body2 1`] = `
+<Text
+  color="#5B6472"
+  opacity={1}
+  variant="body2"
+>
+  Hierarchy
+</Text>
+`;
+
+exports[`Text snapshots hierarchy color=tertiary @ body2 1`] = `
+<Text
+  color="#9CA3AF"
+  opacity={1}
+  variant="body2"
+>
+  Hierarchy
+</Text>
+`;
+
+exports[`Text snapshots intensity=normal @ body1 primary 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="body1"
+>
+  Intensity
+</Text>
+`;
+
+exports[`Text snapshots intensity=strong @ body1 primary 1`] = `
+<Text
+  color="#0B0B0F"
+  fontWeight="600"
+  opacity={1}
+  variant="body1"
+>
+  Intensity
+</Text>
+`;
+
+exports[`Text snapshots intensity=subtle @ body1 primary 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={0.65}
+  variant="body1"
+>
+  Intensity
+</Text>
+`;
+
+exports[`Text snapshots on-* color=onDanger @ body2 1`] = `
+<Text
+  color="#FFFFFF"
+  opacity={1}
+  variant="body2"
+>
+  OnColor
+</Text>
+`;
+
+exports[`Text snapshots on-* color=onPrimary @ body2 1`] = `
+<Text
+  color="#FFFFFF"
+  opacity={1}
+  variant="body2"
+>
+  OnColor
+</Text>
+`;
+
+exports[`Text snapshots on-* color=onSecondary @ body2 1`] = `
+<Text
+  color="#FFFFFF"
+  opacity={1}
+  variant="body2"
+>
+  OnColor
+</Text>
+`;
+
+exports[`Text snapshots on-* color=onSuccess @ body2 1`] = `
+<Text
+  color="#FFFFFF"
+  opacity={1}
+  variant="body2"
+>
+  OnColor
+</Text>
+`;
+
+exports[`Text snapshots semantic color=danger @ body2 1`] = `
+<Text
+  color="#DC2626"
+  opacity={1}
+  variant="body2"
+>
+  Semantic
+</Text>
+`;
+
+exports[`Text snapshots semantic color=info @ body2 1`] = `
+<Text
+  color="#0284C7"
+  opacity={1}
+  variant="body2"
+>
+  Semantic
+</Text>
+`;
+
+exports[`Text snapshots semantic color=interactive @ body2 1`] = `
+<Text
+  color="#2563EB"
+  opacity={1}
+  variant="body2"
+>
+  Semantic
+</Text>
+`;
+
+exports[`Text snapshots semantic color=success @ body2 1`] = `
+<Text
+  color="#059669"
+  opacity={1}
+  variant="body2"
+>
+  Semantic
+</Text>
+`;
+
+exports[`Text snapshots semantic color=warning @ body2 1`] = `
+<Text
+  color="#D97706"
+  opacity={1}
+  variant="body2"
+>
+  Semantic
+</Text>
+`;
+
+exports[`Text snapshots textAlign=auto 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  textAlign="auto"
+  variant="body2"
+>
+  Aligned
+</Text>
+`;
+
+exports[`Text snapshots textAlign=center 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  textAlign="center"
+  variant="body2"
+>
+  Aligned
+</Text>
+`;
+
+exports[`Text snapshots textAlign=justify 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  textAlign="justify"
+  variant="body2"
+>
+  Aligned
+</Text>
+`;
+
+exports[`Text snapshots textAlign=left 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  textAlign="left"
+  variant="body2"
+>
+  Aligned
+</Text>
+`;
+
+exports[`Text snapshots textAlign=right 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  textAlign="right"
+  variant="body2"
+>
+  Aligned
+</Text>
+`;
+
+exports[`Text snapshots truncation: numberOfLines=2 1`] = `
+<Text
+  color="#0B0B0F"
+  numberOfLines={2}
+  opacity={1}
+  variant="body2"
+>
+  A longer paragraph that would wrap onto three lines but should be truncated after two, with an ellipsis at the tail.
+</Text>
+`;
+
+exports[`Text snapshots variant=body1 @ primary color 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="body1"
+>
+  The quick brown fox
+</Text>
+`;
+
+exports[`Text snapshots variant=body2 @ primary color 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="body2"
+>
+  The quick brown fox
+</Text>
+`;
+
+exports[`Text snapshots variant=caption @ primary color 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="caption"
+>
+  The quick brown fox
+</Text>
+`;
+
+exports[`Text snapshots variant=h1 @ primary color 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="h1"
+>
+  The quick brown fox
+</Text>
+`;
+
+exports[`Text snapshots variant=h2 @ primary color 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="h2"
+>
+  The quick brown fox
+</Text>
+`;
+
+exports[`Text snapshots variant=h3 @ primary color 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="h3"
+>
+  The quick brown fox
+</Text>
+`;
+
+exports[`Text snapshots variant=h4 @ primary color 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="h4"
+>
+  The quick brown fox
+</Text>
+`;
+
+exports[`Text snapshots variant=h5 @ primary color 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="h5"
+>
+  The quick brown fox
+</Text>
+`;
+
+exports[`Text snapshots variant=h6 @ primary color 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="h6"
+>
+  The quick brown fox
+</Text>
+`;
+
+exports[`Text snapshots variant=label @ primary color 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="label"
+>
+  The quick brown fox
+</Text>
+`;
+
+exports[`Text snapshots variant=overline @ primary color 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="overline"
+>
+  The quick brown fox
+</Text>
+`;
+
+exports[`Text snapshots variant=subtitle1 @ primary color 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="subtitle1"
+>
+  The quick brown fox
+</Text>
+`;
+
+exports[`Text snapshots variant=subtitle2 @ primary color 1`] = `
+<Text
+  color="#0B0B0F"
+  opacity={1}
+  variant="subtitle2"
+>
+  The quick brown fox
+</Text>
+`;
