@@ -20,7 +20,9 @@ jest.mock("./button.styled", () => {
 // Mock useKraken so Button can run without a KrakenProvider wrapper in tests.
 // The dark-elevation border path is exercised separately in `dark-elevation`
 // tests below by re-mocking the return value.
-const mockUseKraken = jest.fn(() => ({ activeTheme: "light" as const }));
+const mockUseKraken: jest.Mock<{ activeTheme: "light" | "dark" }, []> = jest.fn(() => ({
+  activeTheme: "light",
+}));
 jest.mock("../../provider/use-kraken", () => ({
   useKraken: () => mockUseKraken(),
 }));
@@ -192,11 +194,11 @@ describe("Button", () => {
 
   describe("dark mode elevation swap", () => {
     beforeEach(() => {
-      mockUseKraken.mockReturnValue({ activeTheme: "dark" as const });
+      mockUseKraken.mockReturnValue({ activeTheme: "dark" });
     });
 
     afterEach(() => {
-      mockUseKraken.mockReturnValue({ activeTheme: "light" as const });
+      mockUseKraken.mockReturnValue({ activeTheme: "light" });
     });
 
     it("applies a translucent-white border on solid tones when elevation is set", async () => {

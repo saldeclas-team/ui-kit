@@ -37,7 +37,7 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
   const rootId = testID ?? "button";
   const isInactive = Boolean(disabled) || Boolean(loading);
   const resolvedBorderRadius = resolveRadius(radius);
-  const darkBorder = useDarkElevationBorder(tone, elevation, buttonColors?.border);
+  const darkElevation = useDarkElevationSwap(tone, elevation, buttonColors?.border);
 
   return (
     <StyledButton
@@ -48,9 +48,14 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
       elevation={elevation}
       disabled={isInactive}
       backgroundColor={buttonColors?.background}
-      borderColor={buttonColors?.border ?? darkBorder?.color}
-      borderWidth={darkBorder?.width}
+      borderColor={buttonColors?.border ?? darkElevation?.borderColor}
+      borderWidth={darkElevation?.borderWidth}
       borderRadius={resolvedBorderRadius}
+      shadowColor={darkElevation?.shadowColor}
+      shadowOpacity={darkElevation?.shadowOpacity}
+      shadowRadius={darkElevation?.shadowRadius}
+      shadowOffset={darkElevation?.shadowOffset}
+      elevationAndroid={darkElevation?.elevationAndroid}
       accessibilityRole="button"
       accessibilityState={{ disabled: isInactive, busy: Boolean(loading) }}
       {...rest}
@@ -79,25 +84,48 @@ const BaseButton = forwardRef<ButtonRef, ButtonProps>(function BaseButton(
   );
 });
 
+interface DarkElevationSwap {
+  borderColor: string;
+  borderWidth: number;
+  // Explicit "off" values that cancel the styled variant's default shadow /
+  // Android elevation. Without these, iOS renders an invisible black shadow
+  // and Android renders a native elevation whose shadow color it controls —
+  // both look wrong against a dark surface.
+  shadowColor: string;
+  shadowOpacity: number;
+  shadowRadius: number;
+  shadowOffset: { width: number; height: number };
+  elevationAndroid: number;
+}
+
 /**
  * Dark-mode elevation swap. Black shadows are invisible on a dark surface, so
  * on dark tones we render a subtle translucent-white border whose opacity
- * scales with the elevation level. `outline` and `ghost` already control their
- * own border, and any per-instance `buttonColors.border` override wins over
- * this — we only apply the visual when we know we would otherwise render an
- * invisible shadow.
+ * scales with the elevation level AND explicitly cancel every shadow / native
+ * elevation prop so nothing weird bleeds through underneath. `outline` and
+ * `ghost` already control their own border, and any per-instance
+ * `buttonColors.border` override wins — we only apply the swap when we would
+ * otherwise render an invisible shadow.
  */
-function useDarkElevationBorder(
+function useDarkElevationSwap(
   tone: ButtonTone,
   elevation: ButtonElevation,
   overrideBorder: string | undefined
-): { color: string; width: number } | undefined {
+): DarkElevationSwap | undefined {
   const { activeTheme } = useKraken();
   if (activeTheme !== "dark") return undefined;
   if (elevation === "none") return undefined;
   if (tone === "outline" || tone === "ghost") return undefined;
   if (overrideBorder != null) return undefined;
-  return { color: DARK_ELEVATION_BORDER[elevation], width: 1 };
+  return {
+    borderColor: DARK_ELEVATION_BORDER[elevation],
+    borderWidth: 1,
+    shadowColor: "transparent",
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    shadowOffset: { width: 0, height: 0 },
+    elevationAndroid: 0,
+  };
 }
 
 const DARK_ELEVATION_BORDER: Record<Exclude<ButtonElevation, "none">, string> = {
