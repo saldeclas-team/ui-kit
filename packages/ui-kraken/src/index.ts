@@ -54,3 +54,12 @@ export type {
 
 export { Text } from "./components";
 export type { TextProps, TextVariant, TextColor, TextIntensity } from "./components";
+
+export { Alert } from "./components";
+export type {
+  AlertProps,
+  AlertVariant,
+  AlertRadius,
+  AlertColors,
+  AlertColorsInput,
+} from "./components";

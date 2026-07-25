@@ -27,6 +27,13 @@ const CATALOG: CatalogItem[] = [
     status: "shipped",
   },
   {
+    title: "Alert",
+    description:
+      "Contextual feedback — info / success / warning / danger with optional title + icon slot.",
+    href: "/components/alert",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

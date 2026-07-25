@@ -1,0 +1,461 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alert snapshots alertColors override: all 4 slots set 1`] = `
+<View
+  accessibilityLiveRegion="assertive"
+  accessibilityRole="alert"
+  backgroundColor="#4A0000"
+  borderColor="#FFFFFF"
+  borderRadius="$uiRadiusMd"
+  borderWidth={1}
+  testID="alert"
+>
+  <View
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+    testID="alert-icon"
+  >
+    <Text
+      color="#FFFFFF"
+    >
+      <Text>
+        i
+      </Text>
+    </Text>
+  </View>
+  <View>
+    <Text
+      color="#FFFFFF"
+      testID="alert-title"
+    >
+      Override
+    </Text>
+    <Text
+      color="#FFFFFF"
+      testID="alert-body"
+    >
+      Custom paint
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots body only, no title 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#0284C726"
+  borderRadius="$uiRadiusMd"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#0284C7"
+      testID="alert-body"
+    >
+      Just body text.
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots radius=24 (raw px) 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#0284C726"
+  borderRadius={24}
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#0284C7"
+      testID="alert-body"
+    >
+      Radius 24
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots radius=lg 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#0284C726"
+  borderRadius="$uiRadiusLg"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#0284C7"
+      testID="alert-body"
+    >
+      Radius 
+      lg
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots radius=md 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#0284C726"
+  borderRadius="$uiRadiusMd"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#0284C7"
+      testID="alert-body"
+    >
+      Radius 
+      md
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots radius=none 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#0284C726"
+  borderRadius={0}
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#0284C7"
+      testID="alert-body"
+    >
+      Radius 
+      none
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots radius=pill 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#0284C726"
+  borderRadius={9999}
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#0284C7"
+      testID="alert-body"
+    >
+      Radius 
+      pill
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots radius=sm 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#0284C726"
+  borderRadius="$uiRadiusSm"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#0284C7"
+      testID="alert-body"
+    >
+      Radius 
+      sm
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots title + body 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#0284C726"
+  borderRadius="$uiRadiusMd"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#0284C7"
+      testID="alert-title"
+    >
+      A title
+    </Text>
+    <Text
+      color="#0284C7"
+      testID="alert-body"
+    >
+      A body.
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots variant=danger in dark theme 1`] = `
+<View
+  accessibilityLiveRegion="assertive"
+  accessibilityRole="alert"
+  backgroundColor="#F8717126"
+  borderRadius="$uiRadiusMd"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#F87171"
+      testID="alert-title"
+    >
+      Dark
+    </Text>
+    <Text
+      color="#F87171"
+      testID="alert-body"
+    >
+      Body
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots variant=danger with title + body 1`] = `
+<View
+  accessibilityLiveRegion="assertive"
+  accessibilityRole="alert"
+  backgroundColor="#DC262626"
+  borderRadius="$uiRadiusMd"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#DC2626"
+      testID="alert-title"
+    >
+      Title
+    </Text>
+    <Text
+      color="#DC2626"
+      testID="alert-body"
+    >
+      Body content
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots variant=info in dark theme 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#38BDF826"
+  borderRadius="$uiRadiusMd"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#38BDF8"
+      testID="alert-title"
+    >
+      Dark
+    </Text>
+    <Text
+      color="#38BDF8"
+      testID="alert-body"
+    >
+      Body
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots variant=info with title + body 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#0284C726"
+  borderRadius="$uiRadiusMd"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#0284C7"
+      testID="alert-title"
+    >
+      Title
+    </Text>
+    <Text
+      color="#0284C7"
+      testID="alert-body"
+    >
+      Body content
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots variant=success in dark theme 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#34D39926"
+  borderRadius="$uiRadiusMd"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#34D399"
+      testID="alert-title"
+    >
+      Dark
+    </Text>
+    <Text
+      color="#34D399"
+      testID="alert-body"
+    >
+      Body
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots variant=success with title + body 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#05966926"
+  borderRadius="$uiRadiusMd"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#059669"
+      testID="alert-title"
+    >
+      Title
+    </Text>
+    <Text
+      color="#059669"
+      testID="alert-body"
+    >
+      Body content
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots variant=warning in dark theme 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#FBBF2426"
+  borderRadius="$uiRadiusMd"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#FBBF24"
+      testID="alert-title"
+    >
+      Dark
+    </Text>
+    <Text
+      color="#FBBF24"
+      testID="alert-body"
+    >
+      Body
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots variant=warning with title + body 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#D9770626"
+  borderRadius="$uiRadiusMd"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#D97706"
+      testID="alert-title"
+    >
+      Title
+    </Text>
+    <Text
+      color="#D97706"
+      testID="alert-body"
+    >
+      Body content
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots with icon slot 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#0284C726"
+  borderRadius="$uiRadiusMd"
+  testID="alert"
+>
+  <View
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+    testID="alert-icon"
+  >
+    <Text
+      color="#0284C7"
+    >
+      <Text>
+        i
+      </Text>
+    </Text>
+  </View>
+  <View>
+    <Text
+      color="#0284C7"
+      testID="alert-body"
+    >
+      Body with icon
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Alert snapshots without icon slot 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="alert"
+  backgroundColor="#0284C726"
+  borderRadius="$uiRadiusMd"
+  testID="alert"
+>
+  <View>
+    <Text
+      color="#0284C7"
+      testID="alert-body"
+    >
+      Body no icon
+    </Text>
+  </View>
+</View>
+`;
