@@ -39,6 +39,10 @@ export default function RootLayout() {
           name="(pages)/components/text"
           options={{ title: "Text", headerBackTitle: "Catalog" }}
         />
+        <Stack.Screen
+          name="(pages)/components/alert"
+          options={{ title: "Alert", headerBackTitle: "Catalog" }}
+        />
       </Stack>
     </KrakenProvider>
   );
