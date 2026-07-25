@@ -53,3 +53,11 @@ export type {
   StatCardRadius,
   StatCardColorsInput,
 } from "./stat-card";
+
+export { MultiSelect } from "./multi-select";
+export type {
+  MultiSelectProps,
+  MultiSelectOption,
+  MultiSelectRadius,
+  MultiSelectColorsInput,
+} from "./multi-select";

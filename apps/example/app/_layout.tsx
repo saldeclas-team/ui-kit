@@ -75,6 +75,10 @@ export default function RootLayout() {
           name="(pages)/components/stat-card"
           options={{ title: "StatCard", headerBackTitle: "Components" }}
         />
+        <Stack.Screen
+          name="(pages)/components/multi-select"
+          options={{ title: "MultiSelect", headerBackTitle: "Components" }}
+        />
       </Stack>
     </UIKitProvider>
   );

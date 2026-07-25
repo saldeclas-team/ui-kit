@@ -16,4 +16,5 @@ export type {
   SkeletonColorsInput,
   HintColorsInput,
   StatCardColorsInput,
+  MultiSelectColorsInput,
 } from "./provider-types";

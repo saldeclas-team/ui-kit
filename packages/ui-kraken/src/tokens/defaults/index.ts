@@ -31,6 +31,10 @@ import {
 import { DEFAULT_LIGHT_SKELETON_COLORS, DEFAULT_DARK_SKELETON_COLORS } from "./skeleton";
 import { DEFAULT_LIGHT_HINT_COLORS, DEFAULT_DARK_HINT_COLORS } from "./hint";
 import { DEFAULT_LIGHT_STAT_CARD_COLORS, DEFAULT_DARK_STAT_CARD_COLORS } from "./stat-card";
+import {
+  DEFAULT_LIGHT_MULTI_SELECT_COLORS,
+  DEFAULT_DARK_MULTI_SELECT_COLORS,
+} from "./multi-select";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -48,6 +52,7 @@ export const DEFAULT_TOKENS: Tokens = {
   skeletonColors: DEFAULT_LIGHT_SKELETON_COLORS,
   hintColors: DEFAULT_LIGHT_HINT_COLORS,
   statCardColors: DEFAULT_LIGHT_STAT_CARD_COLORS,
+  multiSelectColors: DEFAULT_LIGHT_MULTI_SELECT_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -68,6 +73,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   skeletonColors: DEFAULT_DARK_SKELETON_COLORS,
   hintColors: DEFAULT_DARK_HINT_COLORS,
   statCardColors: DEFAULT_DARK_STAT_CARD_COLORS,
+  multiSelectColors: DEFAULT_DARK_MULTI_SELECT_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -124,3 +130,8 @@ export {
   DEFAULT_DARK_STAT_CARD_COLORS,
   mergeStatCardColors,
 } from "./stat-card";
+export {
+  DEFAULT_LIGHT_MULTI_SELECT_COLORS,
+  DEFAULT_DARK_MULTI_SELECT_COLORS,
+  mergeMultiSelectColors,
+} from "./multi-select";

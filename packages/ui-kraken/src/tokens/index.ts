@@ -23,6 +23,8 @@ export {
   DEFAULT_DARK_HINT_COLORS,
   DEFAULT_LIGHT_STAT_CARD_COLORS,
   DEFAULT_DARK_STAT_CARD_COLORS,
+  DEFAULT_LIGHT_MULTI_SELECT_COLORS,
+  DEFAULT_DARK_MULTI_SELECT_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -39,6 +41,7 @@ export {
   mergeHintColors,
   mergeHintToneColors,
   mergeStatCardColors,
+  mergeMultiSelectColors,
   tint,
 } from "./tokens";
 export type { Config } from "./tokens";
@@ -57,6 +60,7 @@ export type {
   HintColors,
   HintToneColors,
   StatCardColors,
+  MultiSelectColors,
   Tokens,
   ResolvedTokens,
 } from "./tokens-types";

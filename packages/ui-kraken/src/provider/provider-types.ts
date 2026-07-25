@@ -11,6 +11,7 @@ import type {
   RadioGroupColors,
   HintColors,
   HintToneColors,
+  MultiSelectColors,
   RefreshControlColors,
   SkeletonColors,
   StatCardColors,
@@ -102,6 +103,14 @@ export type HintColorsInput = Partial<Record<keyof HintColors, Partial<HintToneC
 export type StatCardColorsInput = Partial<StatCardColors>;
 
 /**
+ * Partial override for `multiSelectColors` — consumers only declare
+ * the slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, 9 slots (3 selected + 3 unselected chip
+ * states, plus groupLabel / helperText / errorText).
+ */
+export type MultiSelectColorsInput = Partial<MultiSelectColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -117,6 +126,7 @@ export interface TokensInput {
   skeletonColors?: SkeletonColorsInput;
   hintColors?: HintColorsInput;
   statCardColors?: StatCardColorsInput;
+  multiSelectColors?: MultiSelectColorsInput;
   radius?: number;
   spacing?: number;
 }

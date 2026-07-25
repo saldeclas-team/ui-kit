@@ -204,6 +204,34 @@ export interface HintColors {
 }
 
 /**
+ * MultiSelect color palette. Slot-based, 9 slots — 3 for selected
+ * chip state (`selectedBackground`, `selectedLabel`, `selectedBorder`),
+ * 3 for unselected (`unselectedBackground`, `unselectedLabel`,
+ * `unselectedBorder`), plus `groupLabel` above and `helperText` /
+ * `errorText` below.
+ */
+export interface MultiSelectColors {
+  /** Chip background when selected. */
+  selectedBackground: string;
+  /** Chip label text color when selected. */
+  selectedLabel: string;
+  /** Chip border color when selected. */
+  selectedBorder: string;
+  /** Chip background when unselected. */
+  unselectedBackground: string;
+  /** Chip label text color when unselected. */
+  unselectedLabel: string;
+  /** Chip border color when unselected. */
+  unselectedBorder: string;
+  /** Bold heading above the chip row. */
+  groupLabel: string;
+  /** Muted helper copy below the chip row. */
+  helperText: string;
+  /** Error copy below the chip row (overrides helperText when `errorText` set). */
+  errorText: string;
+}
+
+/**
  * StatCard color palette. Slot-based, 8 slots that cover the card
  * background, three text tiers (title / value / description), the
  * icon-slot wrapper color, and three trend-arrow colors driven by
@@ -308,6 +336,7 @@ export interface Tokens {
   skeletonColors: SkeletonColors;
   hintColors: HintColors;
   statCardColors: StatCardColors;
+  multiSelectColors: MultiSelectColors;
   radius: number;
   spacing: number;
 }
@@ -329,6 +358,7 @@ export interface ResolvedTokens {
   skeletonColors: SkeletonColors;
   hintColors: HintColors;
   statCardColors: StatCardColors;
+  multiSelectColors: MultiSelectColors;
   radius: {
     sm: number;
     md: number;

@@ -17,6 +17,7 @@ import type {
   CurrencyInputColors,
   HintColors,
   InputColors,
+  MultiSelectColors,
   RadioGroupColors,
   RefreshControlColors,
   SkeletonColors,
@@ -219,6 +220,21 @@ export function flattenStatCardColors(colors: StatCardColors): Record<string, st
   for (const slot of Object.keys(colors) as Array<keyof StatCardColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiStatCard${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `multiSelectColors` slot map into
+ * `$uiMultiSelect{PascalCase}` Tamagui tokens
+ * (`$uiMultiSelectSelectedBackground`,
+ * `$uiMultiSelectUnselectedLabel`, ...).
+ */
+export function flattenMultiSelectColors(colors: MultiSelectColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof MultiSelectColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiMultiSelect${capitalized}`] = colors[slot];
   }
   return out;
 }

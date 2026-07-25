@@ -8,6 +8,7 @@ import {
   flattenInputColors,
   flattenRadioGroupColors,
   flattenHintColors,
+  flattenMultiSelectColors,
   flattenRefreshControlColors,
   flattenSkeletonColors,
   flattenStatCardColors,
@@ -51,6 +52,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
       ...flattenSkeletonColors(lightResolved.skeletonColors),
       ...flattenHintColors(lightResolved.hintColors),
       ...flattenStatCardColors(lightResolved.statCardColors),
+      ...flattenMultiSelectColors(lightResolved.multiSelectColors),
     },
     radius: {
       ...baseTokens.radius,
@@ -95,6 +97,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenSkeletonColors(lightResolved.skeletonColors),
         ...flattenHintColors(lightResolved.hintColors),
         ...flattenStatCardColors(lightResolved.statCardColors),
+        ...flattenMultiSelectColors(lightResolved.multiSelectColors),
       },
       dark: {
         ...(baseThemes.dark ?? {}),
@@ -109,6 +112,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenSkeletonColors(darkResolved.skeletonColors),
         ...flattenHintColors(darkResolved.hintColors),
         ...flattenStatCardColors(darkResolved.statCardColors),
+        ...flattenMultiSelectColors(darkResolved.multiSelectColors),
       },
     },
   });
@@ -144,6 +148,8 @@ export {
   DEFAULT_LIGHT_HINT_COLORS,
   DEFAULT_DARK_STAT_CARD_COLORS,
   DEFAULT_LIGHT_STAT_CARD_COLORS,
+  DEFAULT_DARK_MULTI_SELECT_COLORS,
+  DEFAULT_LIGHT_MULTI_SELECT_COLORS,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
@@ -158,6 +164,7 @@ export {
   mergeHintColors,
   mergeHintToneColors,
   mergeStatCardColors,
+  mergeMultiSelectColors,
 } from "./defaults";
 export { coarseToFineTokens } from "./tokens-derive";
 export { tint } from "../utils/color";

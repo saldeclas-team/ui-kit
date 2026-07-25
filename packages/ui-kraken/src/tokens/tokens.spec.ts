@@ -10,6 +10,7 @@ import {
   mergeRadioGroupColors,
   mergeHintColors,
   mergeHintToneColors,
+  mergeMultiSelectColors,
   mergeRefreshControlColors,
   mergeSkeletonColors,
   mergeStatCardColors,
@@ -305,6 +306,30 @@ describe("mergeHintColors", () => {
     expect(merged.success).toBe(base.success);
     expect(merged.warning).toBe(base.warning);
     expect(merged.neutral).toBe(base.neutral);
+  });
+});
+
+describe("mergeMultiSelectColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.multiSelectColors;
+    expect(mergeMultiSelectColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.multiSelectColors;
+    const merged = mergeMultiSelectColors(base, {
+      selectedBackground: "#7C3AED",
+      unselectedLabel: "#111827",
+    });
+    expect(merged.selectedBackground).toBe("#7C3AED");
+    expect(merged.unselectedLabel).toBe("#111827");
+    expect(merged.selectedLabel).toBe(base.selectedLabel);
+    expect(merged.selectedBorder).toBe(base.selectedBorder);
+    expect(merged.unselectedBackground).toBe(base.unselectedBackground);
+    expect(merged.unselectedBorder).toBe(base.unselectedBorder);
+    expect(merged.groupLabel).toBe(base.groupLabel);
+    expect(merged.helperText).toBe(base.helperText);
+    expect(merged.errorText).toBe(base.errorText);
   });
 });
 

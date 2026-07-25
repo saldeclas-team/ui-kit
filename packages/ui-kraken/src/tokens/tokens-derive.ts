@@ -19,6 +19,7 @@ export function coarseToFineTokens(tokens: Tokens): ResolvedTokens {
     skeletonColors,
     hintColors,
     statCardColors,
+    multiSelectColors,
     radius,
     spacing,
   } = tokens;
@@ -34,6 +35,7 @@ export function coarseToFineTokens(tokens: Tokens): ResolvedTokens {
     skeletonColors,
     hintColors,
     statCardColors,
+    multiSelectColors,
     radius: {
       sm: radius * 0.5,
       md: radius,

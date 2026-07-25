@@ -11,4 +11,5 @@ export {
   flattenSkeletonColors,
   flattenHintColors,
   flattenStatCardColors,
+  flattenMultiSelectColors,
 } from "./flatten";

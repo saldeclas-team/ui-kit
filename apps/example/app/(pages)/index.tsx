@@ -90,6 +90,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "MultiSelect",
+    description:
+      "Chip-based multi-choice picker — wrap layout, generic value type, per-option disabled.",
+    href: "/components/multi-select",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

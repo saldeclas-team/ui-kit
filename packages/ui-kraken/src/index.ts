@@ -24,6 +24,7 @@ export type {
   SkeletonColorsInput,
   HintColorsInput,
   StatCardColorsInput,
+  MultiSelectColorsInput,
 } from "./provider";
 
 // Tokens
@@ -52,6 +53,8 @@ export {
   DEFAULT_DARK_HINT_COLORS,
   DEFAULT_LIGHT_STAT_CARD_COLORS,
   DEFAULT_DARK_STAT_CARD_COLORS,
+  DEFAULT_LIGHT_MULTI_SELECT_COLORS,
+  DEFAULT_DARK_MULTI_SELECT_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -68,6 +71,7 @@ export {
   mergeHintColors,
   mergeHintToneColors,
   mergeStatCardColors,
+  mergeMultiSelectColors,
   tint,
 } from "./tokens";
 export type {
@@ -86,6 +90,7 @@ export type {
   HintColors,
   HintToneColors,
   StatCardColors,
+  MultiSelectColors,
   ResolvedTokens,
   Config,
 } from "./tokens";
@@ -130,3 +135,6 @@ export type { HintProps, HintTone, HintEmphasis } from "./components";
 
 export { StatCard } from "./components";
 export type { StatCardProps, StatCardTrend, StatCardRadius } from "./components";
+
+export { MultiSelect } from "./components";
+export type { MultiSelectProps, MultiSelectOption, MultiSelectRadius } from "./components";
