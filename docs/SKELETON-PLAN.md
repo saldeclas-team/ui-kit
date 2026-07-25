@@ -16,7 +16,7 @@ Common uses: profile cards during initial fetch, feed items before the API resol
 
 - **Naming**: `Skeleton` — the term is industry-standard (React Native Paper, MUI, Chakra all use it). No ambiguity.
 - **Single primitive, no compound API** — `Skeleton` is one leaf element. Consumers compose stacks / groups themselves; no `Skeleton.Text` / `Skeleton.Avatar` / `Skeleton.Card` sub-components. The composition ergonomics are already good with plain layout, and presets would just be sugar over the same primitive.
-- **Pulse animation only in v1** — animated via RN's `Animated.Value` opacity loop (no gradient shimmer, no external deps). Shimmer requires `LinearGradient` (or Reanimated 3 + Skia) and doubles the API surface. If demand emerges, add `variant="shimmer"` in a future minor.
+- **Pulse animation only in v1** — animated via `react-native-reanimated` (`useSharedValue` + `withRepeat(withSequence(withTiming(...), withTiming(...)))` on `opacity`). Repo-wide policy bans plain RN `Animated` — see AGENTS.md § Animation. Shimmer requires `LinearGradient` or Skia and doubles the API surface; if demand emerges, add `variant="shimmer"` in a future minor.
 - **Reduced-motion opt-out**: `variant="static"` disables the animation and paints a solid `base` fill. Consumers wire `AccessibilityInfo.isReduceMotionEnabled()` themselves — the primitive stays declarative.
 - **Own color block on the token schema**: `skeletonColors` with 2 slots — `base` (the fill at rest) and `highlight` (the pulse peak). Both are typically alpha-tinted grays that read as "loading" against any surface.
 - **Per-instance color override**: `skeletonColors?: Partial<SkeletonColors>` prop for one-off palettes (e.g. a promoted feed with brand-tinted skeletons).
@@ -182,14 +182,14 @@ Same signature as `mergeSurfaceColors` / `mergeRefreshControlColors`.
 
 ## Animation
 
-The pulse loop uses RN's `Animated.Value` opacity:
+The pulse loop uses `react-native-reanimated` on the `opacity` slot:
 
 - Two `View` layers stacked absolutely — `base` fill on the bottom, `highlight` fill on top with animated opacity.
 - Opacity animates `0 → 1 → 0` on a 1200ms loop (600ms ease-in, 600ms ease-out).
-- `Animated.loop(Animated.sequence([...]))` — canceled in the cleanup of the `useEffect` so unmounting stops the loop cleanly.
+- `withRepeat(withSequence(withTiming(1, ...), withTiming(0, ...)), -1, false)` — canceled in the cleanup of the `useEffect` via `cancelAnimation(sharedValue)` so unmounting stops the loop cleanly.
 - `variant="static"` skips the effect entirely; the highlight layer is not mounted.
 
-No Reanimated dependency. `Animated` ships with RN and works under jest-expo without extra config.
+Reanimated is a required peer dep of ui-kraken. Jest uses a hand-rolled reanimated mock in `packages/ui-kraken/jest.setup.ts` (worklets resolve synchronously).
 
 ## File structure
 
@@ -279,7 +279,7 @@ Executed on branch `feat/duna-migration-batch-1`:
 
 ## How to extend
 
-- **Add shimmer** — `variant="shimmer"` that renders an `Animated.View` translating a `LinearGradient` across the fill. Requires `expo-linear-gradient` (peer). Keep pulse as the default.
+- **Add shimmer** — `variant="shimmer"` that renders a reanimated `<Animated.View>` translating a `LinearGradient` across the fill. Requires `expo-linear-gradient` (peer). Keep pulse as the default.
 - **Add reduced-motion auto-detect** — read `AccessibilityInfo.isReduceMotionEnabled()` in a `useEffect` and swap `variant` to `"static"` automatically. Would introduce a subscription; probably better as an opt-in prop `respectReducedMotion?: boolean`.
 - **Add compound presets** — if the same "avatar + 2 lines" shape appears often in downstream apps, ship `Skeleton.Card` / `Skeleton.Avatar` / `Skeleton.Text` as thin wrappers.
-- **Tune the pulse curve** — swap `Animated.timing` for `Animated.spring` if the current linear ease feels stiff; or expose `pulseDurationMs?: number` for consumers who want a slower / faster cadence.
+- **Tune the pulse curve** — swap `withTiming` for `withSpring` if the current ease feels stiff; or expose `pulseDurationMs?: number` for consumers who want a slower / faster cadence.

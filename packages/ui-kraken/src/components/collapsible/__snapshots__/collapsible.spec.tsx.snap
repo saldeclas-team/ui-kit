@@ -28,6 +28,7 @@ exports[`Collapsible snapshots animation='none' — expanded 1`] = `
       }
     }
     accessible={true}
+    backgroundColor="#F9FAFB"
     collapsable={false}
     focusable={true}
     onBlur={[Function]}
@@ -41,41 +42,35 @@ exports[`Collapsible snapshots animation='none' — expanded 1`] = `
     onStartShouldSetResponder={[Function]}
     testID="collapsible-header"
   >
-    <View
-      backgroundColor="#F9FAFB"
-      disabled={false}
+    <Text
+      color="#0B0B0F"
+      testID="collapsible-title"
     >
-      <Text
-        color="#0B0B0F"
-        testID="collapsible-title"
-      >
-        No animation
-      </Text>
-      <View
-        collapsable={false}
-        style={
-          {
-            "transform": [
-              {
-                "rotate": "90deg",
-              },
-            ],
-          }
+      No animation
+    </Text>
+    <View
+      style={
+        {
+          "transform": [
+            {
+              "rotate": "90deg",
+            },
+          ],
         }
-        testID="collapsible-chevron"
-      >
-        <View>
-          <Text
-            style={
-              {
-                "color": "#6B7280",
-                "fontWeight": "700",
-              }
+      }
+      testID="collapsible-chevron"
+    >
+      <View>
+        <Text
+          style={
+            {
+              "color": "#6B7280",
+              "fontWeight": "700",
             }
-          >
-            ▸
-          </Text>
-        </View>
+          }
+        >
+          ▸
+        </Text>
       </View>
     </View>
   </View>
@@ -118,6 +113,7 @@ exports[`Collapsible snapshots dark palette — expanded 1`] = `
       }
     }
     accessible={true}
+    backgroundColor="#111827"
     collapsable={false}
     focusable={true}
     onBlur={[Function]}
@@ -131,46 +127,39 @@ exports[`Collapsible snapshots dark palette — expanded 1`] = `
     onStartShouldSetResponder={[Function]}
     testID="collapsible-header"
   >
-    <View
-      backgroundColor="#111827"
-      disabled={false}
+    <Text
+      color="#F5F5F7"
+      testID="collapsible-title"
     >
-      <Text
-        color="#F5F5F7"
-        testID="collapsible-title"
-      >
-        Dark section
-      </Text>
-      <View
-        collapsable={false}
-        style={
-          {
-            "transform": [
-              {
-                "rotate": "90deg",
-              },
-            ],
-          }
+      Dark section
+    </Text>
+    <View
+      style={
+        {
+          "transform": [
+            {
+              "rotate": "90deg",
+            },
+          ],
         }
-        testID="collapsible-chevron"
-      >
-        <View>
-          <Text
-            style={
-              {
-                "color": "#9CA3AF",
-                "fontWeight": "700",
-              }
+      }
+      testID="collapsible-chevron"
+    >
+      <View>
+        <Text
+          style={
+            {
+              "color": "#9CA3AF",
+              "fontWeight": "700",
             }
-          >
-            ▸
-          </Text>
-        </View>
+          }
+        >
+          ▸
+        </Text>
       </View>
     </View>
   </View>
   <View
-    collapsable={false}
     style={
       {
         "height": undefined,
@@ -220,6 +209,7 @@ exports[`Collapsible snapshots default light — collapsed 1`] = `
       }
     }
     accessible={true}
+    backgroundColor="#F9FAFB"
     collapsable={false}
     focusable={true}
     onBlur={[Function]}
@@ -233,46 +223,39 @@ exports[`Collapsible snapshots default light — collapsed 1`] = `
     onStartShouldSetResponder={[Function]}
     testID="collapsible-header"
   >
-    <View
-      backgroundColor="#F9FAFB"
-      disabled={false}
+    <Text
+      color="#0B0B0F"
+      testID="collapsible-title"
     >
-      <Text
-        color="#0B0B0F"
-        testID="collapsible-title"
-      >
-        Advanced options
-      </Text>
-      <View
-        collapsable={false}
-        style={
-          {
-            "transform": [
-              {
-                "rotate": "0deg",
-              },
-            ],
-          }
+      Advanced options
+    </Text>
+    <View
+      style={
+        {
+          "transform": [
+            {
+              "rotate": "0deg",
+            },
+          ],
         }
-        testID="collapsible-chevron"
-      >
-        <View>
-          <Text
-            style={
-              {
-                "color": "#6B7280",
-                "fontWeight": "700",
-              }
+      }
+      testID="collapsible-chevron"
+    >
+      <View>
+        <Text
+          style={
+            {
+              "color": "#6B7280",
+              "fontWeight": "700",
             }
-          >
-            ▸
-          </Text>
-        </View>
+          }
+        >
+          ▸
+        </Text>
       </View>
     </View>
   </View>
   <View
-    collapsable={false}
     style={
       {
         "height": undefined,
@@ -322,6 +305,7 @@ exports[`Collapsible snapshots default light — expanded + icon + custom chevro
       }
     }
     accessible={true}
+    backgroundColor="#F9FAFB"
     collapsable={false}
     focusable={true}
     onBlur={[Function]}
@@ -336,53 +320,46 @@ exports[`Collapsible snapshots default light — expanded + icon + custom chevro
     testID="collapsible-header"
   >
     <View
-      backgroundColor="#F9FAFB"
-      disabled={false}
+      testID="collapsible-icon"
     >
-      <View
-        testID="collapsible-icon"
-      >
-        <Text
-          style={
-            {
-              "color": "#6B7280",
-            }
-          }
-        >
-          <Text>
-            i
-          </Text>
-        </Text>
-      </View>
       <Text
-        color="#0B0B0F"
-        testID="collapsible-title"
-      >
-        Advanced options
-      </Text>
-      <View
-        collapsable={false}
         style={
           {
-            "transform": [
-              {
-                "rotate": "90deg",
-              },
-            ],
+            "color": "#6B7280",
           }
         }
-        testID="collapsible-chevron"
       >
-        <View>
-          <Text>
-            +
-          </Text>
-        </View>
+        <Text>
+          i
+        </Text>
+      </Text>
+    </View>
+    <Text
+      color="#0B0B0F"
+      testID="collapsible-title"
+    >
+      Advanced options
+    </Text>
+    <View
+      style={
+        {
+          "transform": [
+            {
+              "rotate": "90deg",
+            },
+          ],
+        }
+      }
+      testID="collapsible-chevron"
+    >
+      <View>
+        <Text>
+          +
+        </Text>
       </View>
     </View>
   </View>
   <View
-    collapsable={false}
     style={
       {
         "height": undefined,

@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import type { LayoutChangeEvent } from "react-native";
-import { Animated, Pressable, Text } from "react-native";
+import { Text } from "react-native";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { useUIKit } from "../../provider/use-ui-kit";
 import type { CollapsibleColors } from "../../tokens/tokens-types";
@@ -58,23 +59,17 @@ export function Collapsible({
   const resolvedBorderRadius = resolveRadius(radius);
 
   const [contentHeight, setContentHeight] = useState<number | null>(null);
-  const heightAnim = useRef(new Animated.Value(0)).current;
-  const rotateAnim = useRef(new Animated.Value(expanded ? 1 : 0)).current;
+  const heightValue = useSharedValue(0);
+  const rotateValue = useSharedValue(expanded ? 1 : 0);
 
   useEffect(() => {
     if (animation === "height" && contentHeight != null) {
-      Animated.timing(heightAnim, {
-        toValue: expanded ? contentHeight : 0,
-        duration,
-        useNativeDriver: false,
-      }).start();
+      heightValue.value = withTiming(expanded ? contentHeight : 0, { duration });
     }
-    Animated.timing(rotateAnim, {
-      toValue: expanded ? 1 : 0,
+    rotateValue.value = withTiming(expanded ? 1 : 0, {
       duration: Math.min(duration, CHEVRON_MAX_DURATION_MS),
-      useNativeDriver: true,
-    }).start();
-  }, [expanded, contentHeight, animation, duration, heightAnim, rotateAnim]);
+    });
+  }, [expanded, contentHeight, animation, duration, heightValue, rotateValue]);
 
   const handleHeaderPress = useCallback(() => {
     onExpandedChange(!expanded);
@@ -84,10 +79,14 @@ export function Collapsible({
     setContentHeight(event.nativeEvent.layout.height);
   }, []);
 
-  const chevronRotation = rotateAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "90deg"],
-  });
+  const bodyAnimatedStyle = useAnimatedStyle(() => ({
+    height: contentHeight == null ? undefined : heightValue.value,
+    overflow: "hidden",
+  }));
+
+  const chevronAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotateValue.value * 90}deg` }],
+  }));
 
   return (
     <StyledCollapsible
@@ -97,33 +96,38 @@ export function Collapsible({
       borderRadius={resolvedBorderRadius}
       {...rest}
     >
-      <Pressable
+      {/*
+        onPress lives on the StyledCollapsibleHeader itself (not a
+        wrapping Pressable) because the header is a Tamagui XStack with
+        `pressStyle` — Tamagui registers internal press-in/out handlers
+        on the styled component, which hijack the touch responder and
+        prevent taps from bubbling to any outer Pressable. Putting
+        onPress on the styled component wires both the tap AND the
+        press feedback into the same node.
+      */}
+      <StyledCollapsibleHeader
         testID={`${rootId}-header`}
         onPress={handleHeaderPress}
         disabled={disabled}
         accessibilityRole="button"
         accessibilityLabel={title}
         accessibilityState={{ expanded, disabled }}
+        backgroundColor={palette.headerBackground}
       >
-        <StyledCollapsibleHeader disabled={disabled} backgroundColor={palette.headerBackground}>
-          {icon != null ? (
-            <StyledCollapsibleIconWrapper testID={`${rootId}-icon`}>
-              <IconTintOverride color={palette.icon}>{icon}</IconTintOverride>
-            </StyledCollapsibleIconWrapper>
-          ) : null}
-          <StyledCollapsibleTitle testID={`${rootId}-title`} color={palette.title}>
-            {title}
-          </StyledCollapsibleTitle>
-          <Animated.View
-            testID={`${rootId}-chevron`}
-            style={{ transform: [{ rotate: chevronRotation }] }}
-          >
-            <StyledCollapsibleChevronWrapper>
-              {chevron ?? <Text style={{ color: palette.chevron, fontWeight: "700" }}>▸</Text>}
-            </StyledCollapsibleChevronWrapper>
-          </Animated.View>
-        </StyledCollapsibleHeader>
-      </Pressable>
+        {icon != null ? (
+          <StyledCollapsibleIconWrapper testID={`${rootId}-icon`}>
+            <IconTintOverride color={palette.icon}>{icon}</IconTintOverride>
+          </StyledCollapsibleIconWrapper>
+        ) : null}
+        <StyledCollapsibleTitle testID={`${rootId}-title`} color={palette.title}>
+          {title}
+        </StyledCollapsibleTitle>
+        <Animated.View testID={`${rootId}-chevron`} style={chevronAnimatedStyle}>
+          <StyledCollapsibleChevronWrapper>
+            {chevron ?? <Text style={{ color: palette.chevron, fontWeight: "700" }}>▸</Text>}
+          </StyledCollapsibleChevronWrapper>
+        </Animated.View>
+      </StyledCollapsibleHeader>
 
       {animation === "none" ? (
         expanded && (
@@ -132,13 +136,7 @@ export function Collapsible({
           </StyledCollapsibleBody>
         )
       ) : (
-        <Animated.View
-          testID={`${rootId}-body`}
-          style={{
-            height: contentHeight == null ? undefined : heightAnim,
-            overflow: "hidden",
-          }}
-        >
+        <Animated.View testID={`${rootId}-body`} style={bodyAnimatedStyle}>
           <StyledCollapsibleBody
             testID={`${rootId}-body-content`}
             onLayout={handleBodyLayout}

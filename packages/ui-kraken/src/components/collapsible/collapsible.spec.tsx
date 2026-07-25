@@ -4,21 +4,26 @@ import { Text } from "react-native";
 import type { CollapsibleColors } from "../../tokens/tokens-types";
 
 // Mock the styled file with plain-RN stubs. Header forwards to
-// `rn.View` since the outer Pressable owns the press handling
-// (Collapsible's tsx wraps `<Pressable>` around the header row).
-// Same forwarders pattern as Hint / StatCard.
+// `rn.Pressable` because the component wires `onPress` + `disabled`
+// directly onto it (there is no wrapping Pressable — Tamagui XStack
+// with `pressStyle` hijacks the touch responder if you try to nest
+// a Pressable around it). Same gotcha we hit on MultiSelect /
+// SocialButton.
 jest.mock("./collapsible.styled", () => {
   const rn = jest.requireActual("react-native");
   const forwardRef = jest.requireActual("react").forwardRef;
   const view = forwardRef((props: Record<string, unknown>, ref: unknown) => (
     <rn.View ref={ref} {...props} />
   ));
+  const pressable = forwardRef((props: Record<string, unknown>, ref: unknown) => (
+    <rn.Pressable ref={ref} {...props} />
+  ));
   const text = forwardRef((props: Record<string, unknown>, ref: unknown) => (
     <rn.Text ref={ref} {...props} />
   ));
   return {
     StyledCollapsible: view,
-    StyledCollapsibleHeader: view,
+    StyledCollapsibleHeader: pressable,
     StyledCollapsibleIconWrapper: view,
     StyledCollapsibleTitle: text,
     StyledCollapsibleChevronWrapper: view,

@@ -95,8 +95,9 @@ export default [
     },
   },
   {
-    // Library code (packages/ui-kraken/src/**): also block `StyleSheet` from
-    // react-native so nobody bypasses Tamagui styling.
+    // Library code (packages/ui-kraken/src/**): block `StyleSheet` +
+    // `Animated` + `Easing` from react-native so nobody bypasses
+    // Tamagui styling or the reanimated animation stack.
     files: ["packages/ui-kraken/src/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-imports": [
@@ -108,6 +109,12 @@ export default [
               importNames: ["StyleSheet"],
               message:
                 "ui-kraken components must style via Tamagui `styled()` — StyleSheet.create() is banned. See .agents/skills/creating-component-tamagui/SKILL.md §6.",
+            },
+            {
+              name: "react-native",
+              importNames: ["Animated", "Easing"],
+              message:
+                "ui-kraken components must animate via `react-native-reanimated` (useSharedValue + useAnimatedStyle + withTiming / withRepeat) — RN's built-in `Animated` + `Easing` are banned. See AGENTS.md § Animation.",
             },
           ],
         },

@@ -111,6 +111,43 @@ export const StyledButtonLabel = styled(Text, {
 });
 ```
 
+### 3.1 Animation
+
+- **Only `react-native-reanimated`.** RN's built-in `Animated` + `Easing` are banned in `packages/ui-kraken/src/**` (ESLint). Reanimated is a required peer dep; consumers already have it.
+- Standard shape: `useSharedValue` for the animated value, `useAnimatedStyle` to bind it, `withTiming` / `withRepeat` / `withSequence` / `withSpring` for the interpolation, `cancelAnimation(sharedValue)` in the `useEffect` cleanup for loops. Import `Animated` (default) from `react-native-reanimated` for the animated view (`<Animated.View>`, `<Animated.Text>`).
+- Jest already has a hand-rolled reanimated mock in `packages/ui-kraken/jest.setup.ts` (worklets resolve synchronously to their end value). No component-level mock needed.
+
+```tsx
+import Animated, {
+  cancelAnimation,
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
+
+export function PulsingDot() {
+  const opacity = useSharedValue(0);
+  useEffect(() => {
+    opacity.value = withRepeat(
+      withSequence(
+        withTiming(1, { duration: 600, easing: Easing.inOut(Easing.ease) }),
+        withTiming(0, { duration: 600, easing: Easing.inOut(Easing.ease) })
+      ),
+      -1,
+      false
+    );
+    return () => cancelAnimation(opacity);
+  }, [opacity]);
+  const style = useAnimatedStyle(() => ({ opacity: opacity.value }));
+  return <Animated.View style={[baseStyle, style]} />;
+}
+```
+
+**Why single-stack**: mixing RN `Animated` (JS thread) with reanimated (UI thread worklets) in the same tree causes drop-frames and confusing debugging. Every animated component in ui-kraken uses reanimated so consumers get one predictable perf profile.
+
 ## 4. `*.tsx` — component logic
 
 The component file wires props → styled primitives, applies per-instance overrides, and handles slots (icons, loader).

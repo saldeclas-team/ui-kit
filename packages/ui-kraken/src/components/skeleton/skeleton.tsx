@@ -1,6 +1,15 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo } from "react";
 import type { StyleProp, ViewStyle } from "react-native";
-import { Animated, Easing, View } from "react-native";
+import { View } from "react-native";
+import Animated, {
+  Easing,
+  cancelAnimation,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
 
 import { useUIKit } from "../../provider/use-ui-kit";
 import type { SkeletonColors } from "../../tokens/tokens-types";
@@ -48,29 +57,27 @@ export function Skeleton({
   const palette = resolvePalette(tokens.skeletonColors, skeletonColors);
   const borderRadius = resolveRadius(radius, tokens.radius);
 
-  const opacity = useRef(new Animated.Value(0)).current;
+  const opacity = useSharedValue(0);
 
   useEffect(() => {
-    if (variant !== "pulse") return;
-    const loop = Animated.loop(
-      Animated.sequence([
-        Animated.timing(opacity, {
-          toValue: 1,
-          duration: PULSE_DURATION_MS,
-          easing: Easing.inOut(Easing.ease),
-          useNativeDriver: true,
-        }),
-        Animated.timing(opacity, {
-          toValue: 0,
-          duration: PULSE_DURATION_MS,
-          easing: Easing.inOut(Easing.ease),
-          useNativeDriver: true,
-        }),
-      ])
+    if (variant !== "pulse") {
+      opacity.value = 0;
+      return;
+    }
+    opacity.value = withRepeat(
+      withSequence(
+        withTiming(1, { duration: PULSE_DURATION_MS, easing: Easing.inOut(Easing.ease) }),
+        withTiming(0, { duration: PULSE_DURATION_MS, easing: Easing.inOut(Easing.ease) })
+      ),
+      -1,
+      false
     );
-    loop.start();
-    return () => loop.stop();
+    return () => cancelAnimation(opacity);
   }, [opacity, variant]);
+
+  const animatedHighlightStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
 
   const wrapperStyle: StyleProp<ViewStyle> = useMemo(
     () => [{ borderRadius, backgroundColor: palette.base, overflow: "hidden" }, style],
@@ -89,7 +96,7 @@ export function Skeleton({
         <Animated.View
           testID={`${testID}-highlight`}
           pointerEvents="none"
-          style={[ABSOLUTE_FILL, { backgroundColor: palette.highlight, opacity }]}
+          style={[ABSOLUTE_FILL, { backgroundColor: palette.highlight }, animatedHighlightStyle]}
         />
       )}
     </View>

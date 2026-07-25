@@ -17,7 +17,7 @@ Animated expand-collapse section. A header row toggles visibility of a body regi
 - **Header layout**: horizontal row with optional leading `icon`, `title` text, and a trailing `chevron` that rotates 90° when expanded. Icon + chevron are `ReactNode` slots (consumer brings any element).
 - **Auto chevron glyph, overridable**: the trailing chevron defaults to `"▸"` (right-pointing triangle) so consumers never have to import an icon library just for a disclosure arrow. Overridable per-instance via `chevron?: ReactNode` when the design system ships a specific icon.
 - **`title` is required** — the header always displays a text label. No auto-generated fallback.
-- **Height animation via plain RN `Animated`**: the body wraps in an `Animated.View` whose `height` interpolates between `0` and the measured content height. Plain RN `Animated` (not `react-native-reanimated`) mirrors Skeleton's animation approach — zero babel-plugin setup for jest-expo, no extra runtime deps. Reanimated is available as a peer for consumer apps but Collapsible does not require it.
+- **Height animation via `react-native-reanimated`**: the body wraps in a reanimated `<Animated.View>` whose `height` interpolates between `0` and the measured content height via `useSharedValue` + `useAnimatedStyle` + `withTiming`. Repo-wide policy (AGENTS.md § Animation) bans plain RN `Animated` — every animated component in ui-kraken uses the reanimated stack for one predictable perf profile.
 - **`animation` prop for opt-out**: `"height"` (default) animates the smooth height slide; `"none"` skips the animation entirely (body just mounts/unmounts). Consumers on reduced-motion or in performance-sensitive contexts pass `"none"`.
 - **Configurable `duration`**: default `200ms`. Chevron rotation uses `min(duration, 150ms)` so it always finishes slightly before the height animation.
 - **Own color block on the token schema**: `collapsibleColors` with 6 slots (`headerBackground`, `title`, `icon`, `chevron`, `bodyBackground`, `border`). Provider-level + per-instance overrides.
@@ -85,9 +85,9 @@ export interface CollapsibleProps extends Omit<GetProps<typeof StyledCollapsible
 
 1. **First render**: body mounts at natural height so `onLayout` measures it.
 2. **Measurement**: `onLayout` fires and stores the content height in local state.
-3. **Height clamp activates**: the `Animated.View` wrapper switches from `height: undefined` (natural) to `height: heightAnim` (clamped).
-4. **Every subsequent `expanded` change**: `Animated.timing` animates `heightAnim` between `0` and the measured content height.
-5. **Chevron**: rotates via a separate `Animated.Value` that interpolates to `"0deg" | "90deg"`.
+3. **Height clamp activates**: the reanimated `<Animated.View>` wrapper switches from `height: undefined` (natural) to `height: heightSharedValue.value` (clamped via `useAnimatedStyle`).
+4. **Every subsequent `expanded` change**: `withTiming(expanded ? contentHeight : 0, { duration })` animates the shared value between `0` and the measured content height.
+5. **Chevron**: rotates via a separate shared value — `useAnimatedStyle` outputs `transform: [{ rotate: `${value * 90}deg` }]`.
 
 Consumers that want zero mount-flash can start with `expanded={true}` (body renders at its natural height immediately, no animation needed).
 
@@ -262,8 +262,8 @@ Token / provider wiring per [`creating-component-tamagui` Section 11](../.agents
 - Provider-level palette propagates via `useUIKit()`
 - Dark palette resolves when `activeTheme === "dark"`
 - `radius` prop maps to correct value on each preset + number
-- `duration` prop passes through to the Animated.timing config
-- `animation="none"` skips the Animated.View wrapper entirely
+- `duration` prop passes through to the `withTiming` config
+- `animation="none"` skips the reanimated `<Animated.View>` wrapper entirely
 - YStack pass-through (padding, margin, width) flows through the spread
 
 ### Structural snapshots (~4)
@@ -302,7 +302,7 @@ Plus route registration + row on the components home.
 - **No coordinated accordion mode** built in — consumers wire "only one open at a time" via shared state across sibling Collapsibles (documented recipe in README).
 - **No `defaultExpanded` / uncontrolled mode** — controlled only. Simpler API surface, accordion pattern is easier with a single owning state.
 - **No `onAnimationEnd` callback** in v1 — animations complete via `useEffect` cleanup. If demand emerges, add a callback prop.
-- **No custom easing / spring configs** — `Animated.timing` with the default easing curve. Consumers who need fancier motion wrap in `react-native-reanimated` themselves.
+- **No custom easing / spring configs** — `withTiming` with the default easing curve. Consumers who need fancier motion wrap the primitive in their own reanimated `withSpring` orchestration.
 - **No `renderHeader` render-prop** — the `icon` + `title` + `chevron` slot combination covers the 95% case. Consumers who need a fully-custom header build their own accordion + reuse only the body-animation pattern.
 - **No `animation="fade"` opt-in** in v1 — the two modes (`"height"` / `"none"`) cover the reduced-motion case cleanly. Fade adds one more state axis without clear demand.
 
@@ -324,5 +324,5 @@ Executed on branch `feat/duna-migration-batch-1`:
 - **Add an uncontrolled mode** — `defaultExpanded?: boolean` with internal state. Would parallel what RadioGroup would need if it grows uncontrolled support.
 - **Add `renderHeader?` render-prop** — for full header customization beyond the icon + title + chevron slots.
 - **Add `onAnimationEnd?: () => void` callback** — fires once the height/rotation animations settle.
-- **Add a reanimated backend** — swap `Animated.timing` for `useSharedValue` + `withTiming` for smoother 120fps easing. Would require the reanimated babel-plugin in tests.
+- **Add spring physics** — swap `withTiming` for `withSpring` on the height + chevron interpolations. Reanimated already provides both; only the API config choice needs to change.
 - **Add an `Accordion` compound** — coordinates state across multiple Collapsibles (only-one-open, all-open, all-closed). Would live as a separate primitive, not a mode on Collapsible.

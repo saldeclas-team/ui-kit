@@ -146,8 +146,8 @@ Both flow through pass-through so you can localize the label (`"Cargando la secc
 
 ## Platform support
 
-| Platform | Status | Notes                                                                                                              |
-| -------- | ------ | ------------------------------------------------------------------------------------------------------------------ |
-| iOS      | ✅     | Native `View` + RN `Animated`.                                                                                     |
-| Android  | ✅     | Native `View` + RN `Animated`.                                                                                     |
-| Web      | ✅     | Via `react-native-web`. `Animated.timing` uses `requestAnimationFrame`; opacity animation runs on the main thread. |
+| Platform | Status | Notes                                                                                            |
+| -------- | ------ | ------------------------------------------------------------------------------------------------ |
+| iOS      | ✅     | Native `View` + `react-native-reanimated` worklets (UI thread).                                  |
+| Android  | ✅     | Native `View` + `react-native-reanimated` worklets (UI thread).                                  |
+| Web      | ✅     | Via `react-native-web`. Reanimated runs on the main thread; opacity crossfade animates smoothly. |

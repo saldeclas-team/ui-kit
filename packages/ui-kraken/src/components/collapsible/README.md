@@ -38,17 +38,17 @@ Every Tamagui `YStackProps` flows through the spread — `padding`, `margin`, `w
 `animation="height"` (default):
 
 1. Body mounts at natural height on first render → `onLayout` measures it.
-2. `Animated.View` wrapper clamps `height` to the measured value.
-3. Every `expanded` change animates the height between `0` and the measured content height.
-4. Chevron rotates 90° on a separate `Animated.Value` (uses native driver for smoothness).
+2. A reanimated `<Animated.View>` wrapper clamps `height` to the measured value via `useAnimatedStyle`.
+3. Every `expanded` change animates the shared `height` value between `0` and the measured content height via `withTiming`.
+4. Chevron rotates 90° via a separate shared value (`transform: [{ rotate: `${value * 90}deg` }]`).
 
 `animation="none"`:
 
 - Skips the height animation entirely. Body mounts when `expanded=true`, unmounts when `false`.
-- Chevron rotation still animates (fast, native-driver).
+- Chevron rotation still animates (fast).
 - Use for reduced-motion contexts or long lists where measuring dozens of Collapsibles would be wasteful.
 
-Consumers on RN 0.86 don't need any extra setup — the animation uses plain RN `Animated`, no `react-native-reanimated` babel-plugin.
+Animations run through `react-native-reanimated` (required peer dep, already installed by consumers).
 
 ## Color model
 
@@ -192,13 +192,13 @@ Per-instance brand palette:
 - **Controlled only** — no `defaultExpanded` / uncontrolled mode. Mirrors RadioGroup / MultiSelect. Accordion coordination is easier when the container owns state.
 - **No coordinated accordion mode** built in — wire "only-one-open" via shared state across siblings (see the Usage section for the recipe).
 - **No `onAnimationEnd` callback** in v1 — animations complete via `useEffect` cleanup.
-- **Plain RN `Animated`, not `react-native-reanimated`** — mirrors Skeleton's approach; zero babel-plugin setup for tests, no runtime dep gap. Consumers on reanimated can wrap the primitive themselves for fancier motion.
+- **Animation uses `react-native-reanimated`** — repo-wide policy (AGENTS.md § Animation). RN's built-in `Animated` is banned in the library so every animated component in ui-kraken runs on the same stack (worklets on the UI thread).
 - **Body renders at natural height on first mount** to measure it — for one frame the body is visible before clamping. If you start with `expanded=true`, this isn't visible. If you start with `expanded=false`, there's a very brief flash on mount.
 
 ## Platform support
 
-| Platform | Status | Notes                                                                                               |
-| -------- | ------ | --------------------------------------------------------------------------------------------------- |
-| iOS      | ✅     | Native rendering + `Animated.timing` on `height` (JS thread) + `transform: rotate` (native thread). |
-| Android  | ✅     | Native rendering + same animation stack.                                                            |
-| Web      | ✅     | Via `react-native-web`. `Animated.timing` uses `requestAnimationFrame` on the main thread.          |
+| Platform | Status | Notes                                                                                     |
+| -------- | ------ | ----------------------------------------------------------------------------------------- |
+| iOS      | ✅     | Native rendering + `react-native-reanimated` worklets on the UI thread (height + rotate). |
+| Android  | ✅     | Native rendering + same reanimated stack.                                                 |
+| Web      | ✅     | Via `react-native-web`. Reanimated runs on the main thread via `requestAnimationFrame`.   |
