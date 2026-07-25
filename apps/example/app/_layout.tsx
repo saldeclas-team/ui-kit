@@ -55,6 +55,10 @@ export default function RootLayout() {
           name="(pages)/components/currency-input"
           options={{ title: "CurrencyInput", headerBackTitle: "Components" }}
         />
+        <Stack.Screen
+          name="(pages)/components/surface"
+          options={{ title: "Surface", headerBackTitle: "Components" }}
+        />
       </Stack>
     </UIKitProvider>
   );

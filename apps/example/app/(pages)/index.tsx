@@ -55,6 +55,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Surface",
+    description:
+      "Theme-bound background container with 4 elevation levels (base / raised / overlay / sunken).",
+    href: "/components/surface",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",
