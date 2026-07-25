@@ -19,7 +19,11 @@ exports[`Alert snapshots alertColors override: all 4 slots set 1`] = `
     testID="alert-icon"
   >
     <Text
-      color="#FFFFFF"
+      style={
+        {
+          "color": "#FFFFFF",
+        }
+      }
     >
       <Text>
         i
@@ -423,7 +427,11 @@ exports[`Alert snapshots with icon slot 1`] = `
     testID="alert-icon"
   >
     <Text
-      color="#0284C7"
+      style={
+        {
+          "color": "#0284C7",
+        }
+      }
     >
       <Text>
         i

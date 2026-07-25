@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 import { useUIKit } from "../../provider/use-ui-kit";
 import { resolveRadius } from "../../utils/radius";
-import type { MultiSelectColors } from "../../tokens/tokens-types";
+import { resolvePalette } from "../../utils/resolve-palette";
 import {
   StyledMultiSelect,
   StyledMultiSelectChip,
@@ -12,7 +12,7 @@ import {
   StyledMultiSelectGroupLabel,
   StyledMultiSelectHelperText,
 } from "./multi-select.styled";
-import type { MultiSelectColorsInput, MultiSelectProps } from "./multi-select-types";
+import type { MultiSelectProps } from "./multi-select-types";
 
 /**
  * Multi-choice selector rendered as a wrap of pill chips. Controlled:
@@ -122,18 +122,6 @@ export function MultiSelect<Value extends string = string>({
       ) : null}
     </StyledMultiSelect>
   );
-}
-
-/**
- * Merge the per-instance `multiSelectColors?` override on top of the
- * provider-resolved palette. Missing slots fall through.
- */
-function resolvePalette(
-  base: MultiSelectColors,
-  override: MultiSelectColorsInput | undefined
-): MultiSelectColors {
-  if (override == null) return base;
-  return { ...base, ...override };
 }
 
 /**

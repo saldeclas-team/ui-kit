@@ -5,7 +5,7 @@ import type { TextInputProps } from "react-native";
 
 import { useUIKit } from "../../provider/use-ui-kit";
 import { resolveRadius } from "../../utils/radius";
-import type { CurrencyInputColors } from "../../tokens/tokens-types";
+import { resolvePalette } from "../../utils/resolve-palette";
 import {
   StyledCurrencyInputContainer,
   StyledCurrencyInputError,
@@ -15,7 +15,7 @@ import {
   StyledCurrencyInputPrefix,
   StyledCurrencyInputWrapper,
 } from "./currency-input.styled";
-import type { CurrencyInputColorsInput, CurrencyInputProps } from "./currency-input-types";
+import type { CurrencyInputProps } from "./currency-input-types";
 import { formatCurrency } from "./format-currency";
 import { parseCurrency } from "./parse-currency";
 
@@ -177,18 +177,6 @@ export const CurrencyInput = forwardRef<CurrencyInputRef, CurrencyInputProps>(
     );
   }
 );
-
-/**
- * Merge the per-instance `currencyInputColors?` override on top of the
- * provider-resolved palette. Missing slots fall through.
- */
-function resolvePalette(
-  base: CurrencyInputColors,
-  override: CurrencyInputColorsInput | undefined
-): CurrencyInputColors {
-  if (override == null) return base;
-  return { ...base, ...override };
-}
 
 export type {
   CurrencyInputColorsInput,

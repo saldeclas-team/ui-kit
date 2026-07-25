@@ -2,9 +2,9 @@ import { forwardRef } from "react";
 import type { ComponentRef } from "react";
 
 import { useUIKit } from "../../provider/use-ui-kit";
-import type { SurfaceColors } from "../../tokens/tokens-types";
+import { resolvePalette } from "../../utils/resolve-palette";
 import { StyledSurface } from "./surface.styled";
-import type { SurfaceColorsInput, SurfaceProps } from "./surface-types";
+import type { SurfaceProps } from "./surface-types";
 
 type SurfaceRef = ComponentRef<typeof StyledSurface>;
 
@@ -34,17 +34,5 @@ export const Surface = forwardRef<SurfaceRef, SurfaceProps>(function Surface(
     </StyledSurface>
   );
 });
-
-/**
- * Merge the per-instance `surfaceColors?` override on top of the
- * provider-resolved palette. Missing slots fall through.
- */
-function resolvePalette(
-  base: SurfaceColors,
-  override: SurfaceColorsInput | undefined
-): SurfaceColors {
-  if (override == null) return base;
-  return { ...base, ...override };
-}
 
 export type { SurfaceColorsInput, SurfaceLevel, SurfaceProps } from "./surface-types";

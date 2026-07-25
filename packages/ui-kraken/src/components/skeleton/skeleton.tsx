@@ -12,8 +12,8 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { useUIKit } from "../../provider/use-ui-kit";
-import type { SkeletonColors } from "../../tokens/tokens-types";
-import type { SkeletonColorsInput, SkeletonProps, SkeletonRadius } from "./skeleton-types";
+import { resolvePalette } from "../../utils/resolve-palette";
+import type { SkeletonProps, SkeletonRadius } from "./skeleton-types";
 
 const PULSE_DURATION_MS = 600;
 
@@ -101,18 +101,6 @@ export function Skeleton({
       )}
     </View>
   );
-}
-
-/**
- * Merge the per-instance `skeletonColors?` override on top of the
- * provider-resolved palette. Missing slots fall through.
- */
-function resolvePalette(
-  base: SkeletonColors,
-  override: SkeletonColorsInput | undefined
-): SkeletonColors {
-  if (override == null) return base;
-  return { ...base, ...override };
 }
 
 /**

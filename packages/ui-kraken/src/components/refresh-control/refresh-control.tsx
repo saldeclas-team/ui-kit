@@ -3,8 +3,8 @@ import type { ComponentRef } from "react";
 import { RefreshControl as RNRefreshControl } from "react-native";
 
 import { useUIKit } from "../../provider/use-ui-kit";
-import type { RefreshControlColors } from "../../tokens/tokens-types";
-import type { RefreshControlColorsInput, RefreshControlProps } from "./refresh-control-types";
+import { resolvePalette } from "../../utils/resolve-palette";
+import type { RefreshControlProps } from "./refresh-control-types";
 
 type RefreshControlRef = ComponentRef<typeof RNRefreshControl>;
 
@@ -51,17 +51,5 @@ export const RefreshControl = forwardRef<RefreshControlRef, RefreshControlProps>
     );
   }
 );
-
-/**
- * Merge the per-instance `refreshControlColors?` override on top of
- * the provider-resolved palette. Missing slots fall through.
- */
-function resolvePalette(
-  base: RefreshControlColors,
-  override: RefreshControlColorsInput | undefined
-): RefreshControlColors {
-  if (override == null) return base;
-  return { ...base, ...override };
-}
 
 export type { RefreshControlColorsInput, RefreshControlProps } from "./refresh-control-types";

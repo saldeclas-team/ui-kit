@@ -1,5 +1,7 @@
 import { forwardRef } from "react";
-import type { ComponentRef, ReactNode } from "react";
+import type { ComponentRef } from "react";
+
+import { IconTintOverride } from "../icon-tint-override";
 
 import { useUIKit } from "../../provider/use-ui-kit";
 import type { HintColors, HintToneColors } from "../../tokens/tokens-types";
@@ -111,18 +113,6 @@ const LIVE_REGION: Record<HintTone, "none" | "polite" | "assertive"> = {
   warning: "polite",
   danger: "polite",
 };
-
-/**
- * The icon slot is `ReactNode` (consumer brings any icon component)
- * so we cannot style its color from CSS. This wrapper sets a `color`
- * on a plain `<Text>`-like container that MOST icon libraries pick
- * up via their `color` prop or inherited CSS `currentColor`. Falls
- * back gracefully — an icon that ignores color simply renders its
- * intrinsic color and Hint's palette does not apply to it.
- */
-function IconTintOverride({ color, children }: { color: string; children: ReactNode }): ReactNode {
-  return <StyledHintBody color={color}>{children}</StyledHintBody>;
-}
 
 function makeToneShortcut(tone: HintTone) {
   return forwardRef<HintRef, HintProps>(function HintToneShortcut(props, ref) {

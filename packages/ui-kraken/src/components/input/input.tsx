@@ -6,8 +6,8 @@ import type { TextInputProps } from "react-native";
 type FocusHandlerArg = Parameters<NonNullable<TextInputProps["onFocus"]>>[0];
 
 import { useUIKit } from "../../provider/use-ui-kit";
-import type { InputColors } from "../../tokens/tokens-types";
 import { resolveRadius } from "../../utils/radius";
+import { resolvePalette } from "../../utils/resolve-palette";
 import {
   StyledInputContainer,
   StyledInputError,
@@ -16,7 +16,7 @@ import {
   StyledInputLabel,
   StyledInputWrapper,
 } from "./input.styled";
-import type { InputColorsInput, InputProps } from "./input-types";
+import type { InputProps } from "./input-types";
 
 type InputRef = ComponentRef<typeof TextInput>;
 
@@ -137,14 +137,5 @@ export const Input = forwardRef<InputRef, InputProps>(function Input(
     </StyledInputContainer>
   );
 });
-
-/**
- * Merge the per-instance `inputColors?` override on top of the
- * provider-resolved palette. Missing slots fall through.
- */
-function resolvePalette(base: InputColors, override: InputColorsInput | undefined): InputColors {
-  if (override == null) return base;
-  return { ...base, ...override };
-}
 
 export type { InputColorsInput, InputProps, InputRadius } from "./input-types";

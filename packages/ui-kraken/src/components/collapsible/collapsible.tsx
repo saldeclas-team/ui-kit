@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { ReactNode } from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { Text } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
+import { IconTintOverride } from "../icon-tint-override";
+
 import { useUIKit } from "../../provider/use-ui-kit";
 import { resolveRadius } from "../../utils/radius";
-import type { CollapsibleColors } from "../../tokens/tokens-types";
+import { resolvePalette } from "../../utils/resolve-palette";
 import {
   StyledCollapsible,
   StyledCollapsibleBody,
@@ -15,7 +16,7 @@ import {
   StyledCollapsibleIconWrapper,
   StyledCollapsibleTitle,
 } from "./collapsible.styled";
-import type { CollapsibleColorsInput, CollapsibleProps } from "./collapsible-types";
+import type { CollapsibleProps } from "./collapsible-types";
 
 const DEFAULT_DURATION_MS = 200;
 const CHEVRON_MAX_DURATION_MS = 150;
@@ -173,34 +174,10 @@ export function Collapsible({
 }
 
 /**
- * Merge the per-instance `collapsibleColors?` override on top of
- * the provider-resolved palette. Missing slots fall through.
- */
-function resolvePalette(
-  base: CollapsibleColors,
-  override: CollapsibleColorsInput | undefined
-): CollapsibleColors {
-  if (override == null) return base;
-  return { ...base, ...override };
-}
-
-/**
  * Map the `radius` shorthand onto a `borderRadius` value. Numbers
  * and `"pill"` pass through directly; named preset values map onto
  * the theme's `$uiRadius*` token scale.
  */
-
-/**
- * The icon slot is `ReactNode` (consumer brings any icon component)
- * so we cannot style its color from CSS. This wrapper sets a `color`
- * on a plain `<Text>`-like container that MOST icon libraries pick
- * up via their `color` prop or inherited CSS `currentColor`. Falls
- * back gracefully — an icon that ignores color simply renders its
- * intrinsic color.
- */
-function IconTintOverride({ color, children }: { color: string; children: ReactNode }): ReactNode {
-  return <Text style={{ color }}>{children}</Text>;
-}
 
 export type {
   CollapsibleAnimation,

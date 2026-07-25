@@ -1,6 +1,8 @@
 import { forwardRef } from "react";
-import type { ComponentRef, ReactNode } from "react";
-import { ActivityIndicator, View } from "react-native";
+import type { ComponentRef } from "react";
+import { ActivityIndicator } from "react-native";
+
+import { IconTintOverride } from "../icon-tint-override";
 
 import { useUIKit } from "../../provider/use-ui-kit";
 import type { SocialButtonColors, SocialButtonProviderColors } from "../../tokens/tokens-types";
@@ -120,19 +122,6 @@ function resolvePalette(
  * and `"pill"` pass through directly; named preset values map onto
  * the theme's `$uiRadius*` token scale.
  */
-
-/**
- * The icon slot is `ReactNode` (consumer brings any icon component)
- * so we cannot style its color from CSS. This wrapper sets a `color`
- * on a plain `<View>` container that MOST icon libraries pick up via
- * their `color` prop or inherited CSS `currentColor`. Falls back
- * gracefully — an icon that ignores color simply renders its
- * intrinsic color (which is usually the whole point for branded
- * logos like Google's multi-color G).
- */
-function IconTintOverride({ color, children }: { color: string; children: ReactNode }): ReactNode {
-  return <View style={{ ...({ color } as object) }}>{children}</View>;
-}
 
 function makeProviderShortcut(provider: SocialButtonProvider) {
   return forwardRef<SocialButtonRef, Omit<SocialButtonProps, "provider">>(

@@ -1,10 +1,12 @@
 import { useCallback } from "react";
-import type { ComponentRef, ReactNode } from "react";
+import type { ComponentRef } from "react";
 import { Text } from "react-native";
 
+import { IconTintOverride } from "../icon-tint-override";
+
 import { useUIKit } from "../../provider/use-ui-kit";
-import type { ExternalLinkColors } from "../../tokens/tokens-types";
-import type { ExternalLinkColorsInput, ExternalLinkProps } from "./external-link-types";
+import { resolvePalette } from "../../utils/resolve-palette";
+import type { ExternalLinkProps } from "./external-link-types";
 import {
   StyledExternalLink,
   StyledExternalLinkIconWrapper,
@@ -122,41 +124,6 @@ export function ExternalLink({
         </StyledExternalLinkTrailingIconWrapper>
       )}
     </StyledExternalLink>
-  );
-}
-
-/**
- * Merge the per-instance `externalLinkColors?` override on top of
- * the provider-resolved palette. Missing slots fall through.
- */
-function resolvePalette(
-  base: ExternalLinkColors,
-  override: ExternalLinkColorsInput | undefined
-): ExternalLinkColors {
-  if (override == null) return base;
-  return { ...base, ...override };
-}
-
-/**
- * The icon / children slots are `ReactNode` (consumer brings any
- * element) so we cannot style their color from CSS. This wrapper
- * sets a `color` on a plain `<Text>`-like container that MOST icon
- * libraries and Text children pick up via inheritance. Falls back
- * gracefully — content that ignores color renders as-is.
- */
-function IconTintOverride({
-  color,
-  children,
-  testID,
-}: {
-  color: string;
-  children: ReactNode;
-  testID?: string;
-}): ReactNode {
-  return (
-    <Text testID={testID} style={{ color }}>
-      {children}
-    </Text>
   );
 }
 

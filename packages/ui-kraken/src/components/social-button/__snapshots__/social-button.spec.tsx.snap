@@ -43,7 +43,7 @@ exports[`SocialButton snapshots apple + md + light 1`] = `
     size="md"
     testID="social-button-icon"
   >
-    <View
+    <Text
       style={
         {
           "color": "#FFFFFF",
@@ -53,7 +53,7 @@ exports[`SocialButton snapshots apple + md + light 1`] = `
       <Text>
         A
       </Text>
-    </View>
+    </Text>
   </View>
   <Text
     color="#FFFFFF"
@@ -108,7 +108,7 @@ exports[`SocialButton snapshots dark palette (google) 1`] = `
     size="md"
     testID="social-button-icon"
   >
-    <View
+    <Text
       style={
         {
           "color": "#F5F5F7",
@@ -118,7 +118,7 @@ exports[`SocialButton snapshots dark palette (google) 1`] = `
       <Text>
         G
       </Text>
-    </View>
+    </Text>
   </View>
   <Text
     color="#F5F5F7"
@@ -173,7 +173,7 @@ exports[`SocialButton snapshots facebook + lg + light 1`] = `
     size="lg"
     testID="social-button-icon"
   >
-    <View
+    <Text
       style={
         {
           "color": "#FFFFFF",
@@ -183,7 +183,7 @@ exports[`SocialButton snapshots facebook + lg + light 1`] = `
       <Text>
         f
       </Text>
-    </View>
+    </Text>
   </View>
   <Text
     color="#FFFFFF"
@@ -238,7 +238,7 @@ exports[`SocialButton snapshots google + md + light 1`] = `
     size="md"
     testID="social-button-icon"
   >
-    <View
+    <Text
       style={
         {
           "color": "#1F1F1F",
@@ -248,7 +248,7 @@ exports[`SocialButton snapshots google + md + light 1`] = `
       <Text>
         G
       </Text>
-    </View>
+    </Text>
   </View>
   <Text
     color="#1F1F1F"
