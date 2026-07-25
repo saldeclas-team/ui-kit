@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Skeleton snapshots dark palette × pulse 1`] = `
+<View
+  accessibilityLabel="Loading"
+  accessibilityRole="progressbar"
+  style={
+    [
+      {
+        "backgroundColor": "#1F2937",
+        "borderRadius": 12,
+        "overflow": "hidden",
+      },
+      {
+        "height": 16,
+        "width": 240,
+      },
+    ]
+  }
+  testID="skeleton"
+>
+  <View
+    pointerEvents="none"
+    style={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#374151",
+        },
+        {
+          "opacity": 0,
+        },
+      ]
+    }
+    testID="skeleton-highlight"
+  />
+</View>
+`;
+
+exports[`Skeleton snapshots default pulse × light × md radius 1`] = `
+<View
+  accessibilityLabel="Loading"
+  accessibilityRole="progressbar"
+  style={
+    [
+      {
+        "backgroundColor": "#E5E7EB",
+        "borderRadius": 12,
+        "overflow": "hidden",
+      },
+      {
+        "height": 16,
+        "width": 240,
+      },
+    ]
+  }
+  testID="skeleton"
+>
+  <View
+    pointerEvents="none"
+    style={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#F3F4F6",
+        },
+        {
+          "opacity": 0,
+        },
+      ]
+    }
+    testID="skeleton-highlight"
+  />
+</View>
+`;
+
+exports[`Skeleton snapshots pill radius × avatar dimensions 1`] = `
+<View
+  accessibilityLabel="Loading"
+  accessibilityRole="progressbar"
+  style={
+    [
+      {
+        "backgroundColor": "#E5E7EB",
+        "borderRadius": 9999,
+        "overflow": "hidden",
+      },
+      {
+        "height": 48,
+        "width": 48,
+      },
+    ]
+  }
+  testID="skeleton"
+>
+  <View
+    pointerEvents="none"
+    style={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "backgroundColor": "#F3F4F6",
+        },
+        {
+          "opacity": 0,
+        },
+      ]
+    }
+    testID="skeleton-highlight"
+  />
+</View>
+`;
+
+exports[`Skeleton snapshots static variant × light 1`] = `
+<View
+  accessibilityLabel="Loading"
+  accessibilityRole="progressbar"
+  style={
+    [
+      {
+        "backgroundColor": "#E5E7EB",
+        "borderRadius": 12,
+        "overflow": "hidden",
+      },
+      {
+        "height": 16,
+        "width": 240,
+      },
+    ]
+  }
+  testID="skeleton"
+/>
+`;

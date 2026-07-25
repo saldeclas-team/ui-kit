@@ -1,0 +1,253 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hint snapshots danger tone × ghost emphasis 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="text"
+  backgroundColor="transparent"
+  testID="hint"
+>
+  <View
+    testID="hint-icon"
+  >
+    <Text
+      style={
+        {
+          "color": "#DC2626",
+        }
+      }
+    >
+      <Text>
+        i
+      </Text>
+    </Text>
+  </View>
+  <View>
+    <Text
+      color="#991B1B"
+      testID="hint-title"
+    >
+      Heads up
+    </Text>
+    <Text
+      color="#991B1B"
+      testID="hint-body"
+    >
+      Body copy for the hint
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Hint snapshots dark palette × info × soft 1`] = `
+<View
+  accessibilityLiveRegion="none"
+  accessibilityRole="text"
+  backgroundColor="#1E3A8A"
+  testID="hint"
+>
+  <View>
+    <Text
+      color="#93C5FD"
+      testID="hint-title"
+    >
+      Note
+    </Text>
+    <Text
+      color="#93C5FD"
+      testID="hint-body"
+    >
+      Body copy in dark mode
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Hint snapshots info tone × ghost emphasis 1`] = `
+<View
+  accessibilityLiveRegion="none"
+  accessibilityRole="text"
+  backgroundColor="transparent"
+  testID="hint"
+>
+  <View
+    testID="hint-icon"
+  >
+    <Text
+      style={
+        {
+          "color": "#2563EB",
+        }
+      }
+    >
+      <Text>
+        i
+      </Text>
+    </Text>
+  </View>
+  <View>
+    <Text
+      color="#1E40AF"
+      testID="hint-title"
+    >
+      Heads up
+    </Text>
+    <Text
+      color="#1E40AF"
+      testID="hint-body"
+    >
+      Body copy for the hint
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Hint snapshots neutral tone × ghost emphasis 1`] = `
+<View
+  accessibilityLiveRegion="none"
+  accessibilityRole="text"
+  backgroundColor="transparent"
+  testID="hint"
+>
+  <View
+    testID="hint-icon"
+  >
+    <Text
+      style={
+        {
+          "color": "#6B7280",
+        }
+      }
+    >
+      <Text>
+        i
+      </Text>
+    </Text>
+  </View>
+  <View>
+    <Text
+      color="#4B5563"
+      testID="hint-title"
+    >
+      Heads up
+    </Text>
+    <Text
+      color="#4B5563"
+      testID="hint-body"
+    >
+      Body copy for the hint
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Hint snapshots success tone × ghost emphasis 1`] = `
+<View
+  accessibilityLiveRegion="none"
+  accessibilityRole="text"
+  backgroundColor="transparent"
+  testID="hint"
+>
+  <View
+    testID="hint-icon"
+  >
+    <Text
+      style={
+        {
+          "color": "#059669",
+        }
+      }
+    >
+      <Text>
+        i
+      </Text>
+    </Text>
+  </View>
+  <View>
+    <Text
+      color="#065F46"
+      testID="hint-title"
+    >
+      Heads up
+    </Text>
+    <Text
+      color="#065F46"
+      testID="hint-body"
+    >
+      Body copy for the hint
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Hint snapshots warning tone × ghost emphasis 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="text"
+  backgroundColor="transparent"
+  testID="hint"
+>
+  <View
+    testID="hint-icon"
+  >
+    <Text
+      style={
+        {
+          "color": "#D97706",
+        }
+      }
+    >
+      <Text>
+        i
+      </Text>
+    </Text>
+  </View>
+  <View>
+    <Text
+      color="#92400E"
+      testID="hint-title"
+    >
+      Heads up
+    </Text>
+    <Text
+      color="#92400E"
+      testID="hint-body"
+    >
+      Body copy for the hint
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Hint snapshots warning tone × soft emphasis 1`] = `
+<View
+  accessibilityLiveRegion="polite"
+  accessibilityRole="text"
+  backgroundColor="#FFFBEB"
+  testID="hint"
+>
+  <View
+    testID="hint-icon"
+  >
+    <Text
+      style={
+        {
+          "color": "#D97706",
+        }
+      }
+    >
+      <Text>
+        !
+      </Text>
+    </Text>
+  </View>
+  <View>
+    <Text
+      color="#92400E"
+      testID="hint-body"
+    >
+      You are approaching your limit
+    </Text>
+  </View>
+</View>
+`;

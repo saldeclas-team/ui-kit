@@ -9,7 +9,18 @@ import {
   coarseToFineTokens,
   mergeAlertColors,
   mergeButtonColors,
+  mergeCurrencyInputColors,
+  mergeInputColors,
   mergeRadioGroupColors,
+  mergeCollapsibleColors,
+  mergeExternalLinkColors,
+  mergeHintColors,
+  mergeMultiSelectColors,
+  mergeRefreshControlColors,
+  mergeSkeletonColors,
+  mergeSocialButtonColors,
+  mergeStatCardColors,
+  mergeSurfaceColors,
   mergeTextColors,
 } from "../tokens/tokens";
 import { UIKitContext } from "./provider-context";
@@ -34,6 +45,35 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         DEFAULT_TOKENS.radioGroupColors,
         tokens?.radioGroupColors
       ),
+      inputColors: mergeInputColors(DEFAULT_TOKENS.inputColors, tokens?.inputColors),
+      currencyInputColors: mergeCurrencyInputColors(
+        DEFAULT_TOKENS.currencyInputColors,
+        tokens?.currencyInputColors
+      ),
+      surfaceColors: mergeSurfaceColors(DEFAULT_TOKENS.surfaceColors, tokens?.surfaceColors),
+      refreshControlColors: mergeRefreshControlColors(
+        DEFAULT_TOKENS.refreshControlColors,
+        tokens?.refreshControlColors
+      ),
+      skeletonColors: mergeSkeletonColors(DEFAULT_TOKENS.skeletonColors, tokens?.skeletonColors),
+      hintColors: mergeHintColors(DEFAULT_TOKENS.hintColors, tokens?.hintColors),
+      statCardColors: mergeStatCardColors(DEFAULT_TOKENS.statCardColors, tokens?.statCardColors),
+      multiSelectColors: mergeMultiSelectColors(
+        DEFAULT_TOKENS.multiSelectColors,
+        tokens?.multiSelectColors
+      ),
+      socialButtonColors: mergeSocialButtonColors(
+        DEFAULT_TOKENS.socialButtonColors,
+        tokens?.socialButtonColors
+      ),
+      collapsibleColors: mergeCollapsibleColors(
+        DEFAULT_TOKENS.collapsibleColors,
+        tokens?.collapsibleColors
+      ),
+      externalLinkColors: mergeExternalLinkColors(
+        DEFAULT_TOKENS.externalLinkColors,
+        tokens?.externalLinkColors
+      ),
     };
     const mergedDark = {
       ...DEFAULT_DARK_TOKENS,
@@ -44,6 +84,35 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
       radioGroupColors: mergeRadioGroupColors(
         DEFAULT_DARK_TOKENS.radioGroupColors,
         dark?.radioGroupColors
+      ),
+      inputColors: mergeInputColors(DEFAULT_DARK_TOKENS.inputColors, dark?.inputColors),
+      currencyInputColors: mergeCurrencyInputColors(
+        DEFAULT_DARK_TOKENS.currencyInputColors,
+        dark?.currencyInputColors
+      ),
+      surfaceColors: mergeSurfaceColors(DEFAULT_DARK_TOKENS.surfaceColors, dark?.surfaceColors),
+      refreshControlColors: mergeRefreshControlColors(
+        DEFAULT_DARK_TOKENS.refreshControlColors,
+        dark?.refreshControlColors
+      ),
+      skeletonColors: mergeSkeletonColors(DEFAULT_DARK_TOKENS.skeletonColors, dark?.skeletonColors),
+      hintColors: mergeHintColors(DEFAULT_DARK_TOKENS.hintColors, dark?.hintColors),
+      statCardColors: mergeStatCardColors(DEFAULT_DARK_TOKENS.statCardColors, dark?.statCardColors),
+      multiSelectColors: mergeMultiSelectColors(
+        DEFAULT_DARK_TOKENS.multiSelectColors,
+        dark?.multiSelectColors
+      ),
+      socialButtonColors: mergeSocialButtonColors(
+        DEFAULT_DARK_TOKENS.socialButtonColors,
+        dark?.socialButtonColors
+      ),
+      collapsibleColors: mergeCollapsibleColors(
+        DEFAULT_DARK_TOKENS.collapsibleColors,
+        dark?.collapsibleColors
+      ),
+      externalLinkColors: mergeExternalLinkColors(
+        DEFAULT_DARK_TOKENS.externalLinkColors,
+        dark?.externalLinkColors
       ),
     };
     const resolvedLight = coarseToFineTokens(mergedLight);

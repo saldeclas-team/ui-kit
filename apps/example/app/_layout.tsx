@@ -47,6 +47,50 @@ export default function RootLayout() {
           name="(pages)/components/radio-group"
           options={{ title: "RadioGroup", headerBackTitle: "Components" }}
         />
+        <Stack.Screen
+          name="(pages)/components/input"
+          options={{ title: "Input", headerBackTitle: "Components" }}
+        />
+        <Stack.Screen
+          name="(pages)/components/currency-input"
+          options={{ title: "CurrencyInput", headerBackTitle: "Components" }}
+        />
+        <Stack.Screen
+          name="(pages)/components/surface"
+          options={{ title: "Surface", headerBackTitle: "Components" }}
+        />
+        <Stack.Screen
+          name="(pages)/components/refresh-control"
+          options={{ title: "RefreshControl", headerBackTitle: "Components" }}
+        />
+        <Stack.Screen
+          name="(pages)/components/skeleton"
+          options={{ title: "Skeleton", headerBackTitle: "Components" }}
+        />
+        <Stack.Screen
+          name="(pages)/components/hint"
+          options={{ title: "Hint", headerBackTitle: "Components" }}
+        />
+        <Stack.Screen
+          name="(pages)/components/stat-card"
+          options={{ title: "StatCard", headerBackTitle: "Components" }}
+        />
+        <Stack.Screen
+          name="(pages)/components/multi-select"
+          options={{ title: "MultiSelect", headerBackTitle: "Components" }}
+        />
+        <Stack.Screen
+          name="(pages)/components/social-button"
+          options={{ title: "SocialButton", headerBackTitle: "Components" }}
+        />
+        <Stack.Screen
+          name="(pages)/components/collapsible"
+          options={{ title: "Collapsible", headerBackTitle: "Components" }}
+        />
+        <Stack.Screen
+          name="(pages)/components/external-link"
+          options={{ title: "ExternalLink", headerBackTitle: "Components" }}
+        />
       </Stack>
     </UIKitProvider>
   );

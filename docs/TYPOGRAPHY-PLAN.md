@@ -317,7 +317,7 @@ Total: 56 tests passing after ship (up from 44).
 6. **Custom color** — hex + rgb + named-color passthrough examples.
 7. **Truncation** — long text with `numberOfLines={2}`.
 
-Catalog home flips the Text row from `status: "planned"` → `status: "shipped"` and wires it to `/components/text`.
+Components home flips the Text row from `status: "planned"` → `status: "shipped"` and wires it to `/components/text`.
 
 ## Non-goals (explicitly deferred)
 
@@ -336,14 +336,14 @@ Executed in this order on branch `feat/text`:
 2. Extended the provider (accept `textColors` in input + merge + tests).
 3. Implemented the `Text` component (styled + types + tsx + compound + spec + stories + README).
 4. Wired into public barrels (`components/index.ts`, `src/index.ts`).
-5. Added the example screen + updated catalog home.
+5. Added the example screen + updated the components home.
 6. Verified: `pnpm typecheck && pnpm lint && pnpm test && pnpm build` — all green, 56 tests.
 7. Added a changeset for the `0.3.0` minor bump.
 8. Landed as 4 atomic commits:
    - `feat(tokens): add textColors block to Tokens (14 slots)`
    - `feat(provider): accept textColors overrides in TokensInput`
    - `feat(text): ship the Text primitive (13 variants, 14 color slots, intensity, compound API)`
-   - `docs(example): add Text demo screen and flip catalog row to shipped`
+   - `docs(example): add Text demo screen and flip components-home row to shipped`
 
 ## How to extend
 

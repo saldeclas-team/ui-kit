@@ -1,0 +1,187 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { LayoutChangeEvent } from "react-native";
+import { Text } from "react-native";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+
+import { IconTintOverride } from "../icon-tint-override";
+
+import { useUIKit } from "../../provider/use-ui-kit";
+import { resolveRadius } from "../../utils/radius";
+import { resolvePalette } from "../../utils/resolve-palette";
+import {
+  StyledCollapsible,
+  StyledCollapsibleBody,
+  StyledCollapsibleChevronWrapper,
+  StyledCollapsibleHeader,
+  StyledCollapsibleIconWrapper,
+  StyledCollapsibleTitle,
+} from "./collapsible.styled";
+import type { CollapsibleProps } from "./collapsible-types";
+
+const DEFAULT_DURATION_MS = 200;
+const CHEVRON_MAX_DURATION_MS = 150;
+
+/**
+ * Animated expand-collapse section. A pressable header toggles
+ * visibility of the body region below it. Controlled: consumer
+ * holds `expanded` in state and updates via `onExpandedChange`.
+ *
+ * ```tsx
+ * const [open, setOpen] = useState(false);
+ * <Collapsible title="Advanced options" expanded={open} onExpandedChange={setOpen}>
+ *   {}
+ * </Collapsible>
+ * ```
+ *
+ * Palette derived from `tokens.collapsibleColors` on the provider,
+ * overridable per-instance via the `collapsibleColors?` prop.
+ */
+export function Collapsible({
+  title,
+  expanded,
+  onExpandedChange,
+  children,
+  icon,
+  chevron,
+  disabled = false,
+  animation = "height",
+  duration = DEFAULT_DURATION_MS,
+  radius = "md",
+  collapsibleColors,
+  testID,
+  ...rest
+}: CollapsibleProps) {
+  const { tokens } = useUIKit();
+  const rootId = testID ?? "collapsible";
+  const palette = resolvePalette(tokens.collapsibleColors, collapsibleColors);
+  const resolvedBorderRadius = resolveRadius(radius);
+
+  const [contentHeight, setContentHeight] = useState<number | null>(null);
+  const heightValue = useSharedValue(0);
+  const rotateValue = useSharedValue(expanded ? 1 : 0);
+  // Track whether we've already handled the first measurement. On the
+  // first sync (contentHeight goes from null → measured), we SNAP the
+  // shared height to the correct value without animating — otherwise
+  // a Collapsible mounted with `expanded=true` would flash empty for
+  // one frame while the animation runs from 0 → measured.
+  const hasMeasuredRef = useRef(false);
+
+  useEffect(() => {
+    if (animation === "height" && contentHeight != null) {
+      if (!hasMeasuredRef.current) {
+        hasMeasuredRef.current = true;
+        heightValue.value = expanded ? contentHeight : 0;
+      } else {
+        heightValue.value = withTiming(expanded ? contentHeight : 0, { duration });
+      }
+    }
+    rotateValue.value = withTiming(expanded ? 1 : 0, {
+      duration: Math.min(duration, CHEVRON_MAX_DURATION_MS),
+    });
+  }, [expanded, contentHeight, animation, duration, heightValue, rotateValue]);
+
+  const handleHeaderPress = useCallback(() => {
+    onExpandedChange(!expanded);
+  }, [expanded, onExpandedChange]);
+
+  const handleBodyLayout = useCallback((event: LayoutChangeEvent) => {
+    setContentHeight(event.nativeEvent.layout.height);
+  }, []);
+
+  // `overflow` is a static style, not an animated property. Keeping
+  // it inside `useAnimatedStyle` triggers reanimated to re-apply it on
+  // every worklet tick, which can suppress children rendering on
+  // some RN versions. Keep the animated style narrow to `height`
+  // only, and put `overflow: hidden` in the static style array.
+  const bodyAnimatedStyle = useAnimatedStyle(() => ({
+    height: heightValue.value,
+  }));
+
+  const chevronAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${rotateValue.value * 90}deg` }],
+  }));
+
+  return (
+    <StyledCollapsible
+      testID={rootId}
+      backgroundColor={palette.bodyBackground}
+      borderColor={palette.border}
+      borderRadius={resolvedBorderRadius}
+      {...rest}
+    >
+      {/*
+        onPress lives on the StyledCollapsibleHeader itself (not a
+        wrapping Pressable) because the header is a Tamagui XStack with
+        `pressStyle` — Tamagui registers internal press-in/out handlers
+        on the styled component, which hijack the touch responder and
+        prevent taps from bubbling to any outer Pressable. Putting
+        onPress on the styled component wires both the tap AND the
+        press feedback into the same node.
+      */}
+      <StyledCollapsibleHeader
+        testID={`${rootId}-header`}
+        onPress={handleHeaderPress}
+        disabled={disabled}
+        accessibilityRole="button"
+        accessibilityLabel={title}
+        accessibilityState={{ expanded, disabled }}
+        backgroundColor={palette.headerBackground}
+      >
+        {icon != null ? (
+          <StyledCollapsibleIconWrapper testID={`${rootId}-icon`}>
+            <IconTintOverride color={palette.icon}>{icon}</IconTintOverride>
+          </StyledCollapsibleIconWrapper>
+        ) : null}
+        <StyledCollapsibleTitle testID={`${rootId}-title`} color={palette.title}>
+          {title}
+        </StyledCollapsibleTitle>
+        <Animated.View testID={`${rootId}-chevron`} style={chevronAnimatedStyle}>
+          <StyledCollapsibleChevronWrapper>
+            {chevron ?? <Text style={{ color: palette.chevron, fontWeight: "700" }}>▸</Text>}
+          </StyledCollapsibleChevronWrapper>
+        </Animated.View>
+      </StyledCollapsibleHeader>
+
+      {animation === "none" ? (
+        expanded && (
+          <StyledCollapsibleBody testID={`${rootId}-body`} backgroundColor={palette.bodyBackground}>
+            {children}
+          </StyledCollapsibleBody>
+        )
+      ) : (
+        <Animated.View
+          testID={`${rootId}-body`}
+          style={[
+            // Before the first onLayout, no height clamp — body renders
+            // at its natural height so the layout system can measure it.
+            // After measurement, the animated height clamps the container
+            // and hides overflow so children don't paint outside the card.
+            contentHeight == null ? null : { overflow: "hidden" },
+            contentHeight == null ? null : bodyAnimatedStyle,
+          ]}
+        >
+          <StyledCollapsibleBody
+            testID={`${rootId}-body-content`}
+            onLayout={handleBodyLayout}
+            backgroundColor={palette.bodyBackground}
+          >
+            {children}
+          </StyledCollapsibleBody>
+        </Animated.View>
+      )}
+    </StyledCollapsible>
+  );
+}
+
+/**
+ * Map the `radius` shorthand onto a `borderRadius` value. Numbers
+ * and `"pill"` pass through directly; named preset values map onto
+ * the theme's `$uiRadius*` token scale.
+ */
+
+export type {
+  CollapsibleAnimation,
+  CollapsibleColorsInput,
+  CollapsibleProps,
+  CollapsibleRadius,
+} from "./collapsible-types";

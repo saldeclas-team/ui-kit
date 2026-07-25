@@ -1,0 +1,134 @@
+import { useEffect, useMemo } from "react";
+import type { StyleProp, ViewStyle } from "react-native";
+import { View } from "react-native";
+import Animated, {
+  Easing,
+  cancelAnimation,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
+
+import { useUIKit } from "../../provider/use-ui-kit";
+import { resolvePalette } from "../../utils/resolve-palette";
+import type { SkeletonProps, SkeletonRadius } from "./skeleton-types";
+
+const PULSE_DURATION_MS = 600;
+
+const ABSOLUTE_FILL: ViewStyle = {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+};
+
+/**
+ * Animated placeholder for loading states. Stamp Skeletons in the shape
+ * of the content that will replace them — a rounded rectangle where a
+ * `Text.H4` will render, a pill-shaped circle where an avatar will
+ * render, a stack of narrow rectangles where a paragraph will render.
+ *
+ * The pulse animation gives the user a visual signal that something is
+ * coming, without committing to a specific content shape.
+ *
+ * ```tsx
+ * <Skeleton style={{ width: 240, height: 16 }} />           // text line
+ * <Skeleton style={{ width: 48,  height: 48 }} radius="pill" />  // avatar
+ * <Skeleton style={{ width: "100%", height: 120 }} radius="lg" /> // image
+ * ```
+ *
+ * Palette derived from `tokens.skeletonColors` on the provider, overridable
+ * per-instance via the `skeletonColors?` prop.
+ */
+export function Skeleton({
+  variant = "pulse",
+  radius = "md",
+  skeletonColors,
+  testID = "skeleton",
+  style,
+  accessibilityRole = "progressbar",
+  accessibilityLabel = "Loading",
+  ...rest
+}: SkeletonProps) {
+  const { tokens } = useUIKit();
+  const palette = resolvePalette(tokens.skeletonColors, skeletonColors);
+  const borderRadius = resolveRadius(radius, tokens.radius);
+
+  const opacity = useSharedValue(0);
+
+  useEffect(() => {
+    if (variant !== "pulse") {
+      opacity.value = 0;
+      return;
+    }
+    opacity.value = withRepeat(
+      withSequence(
+        withTiming(1, { duration: PULSE_DURATION_MS, easing: Easing.inOut(Easing.ease) }),
+        withTiming(0, { duration: PULSE_DURATION_MS, easing: Easing.inOut(Easing.ease) })
+      ),
+      -1,
+      false
+    );
+    return () => cancelAnimation(opacity);
+  }, [opacity, variant]);
+
+  const animatedHighlightStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
+  const wrapperStyle: StyleProp<ViewStyle> = useMemo(
+    () => [{ borderRadius, backgroundColor: palette.base, overflow: "hidden" }, style],
+    [borderRadius, palette.base, style]
+  );
+
+  return (
+    <View
+      {...rest}
+      testID={testID}
+      style={wrapperStyle}
+      accessibilityRole={accessibilityRole}
+      accessibilityLabel={accessibilityLabel}
+    >
+      {variant === "pulse" && (
+        <Animated.View
+          testID={`${testID}-highlight`}
+          pointerEvents="none"
+          style={[ABSOLUTE_FILL, { backgroundColor: palette.highlight }, animatedHighlightStyle]}
+        />
+      )}
+    </View>
+  );
+}
+
+/**
+ * Map the `radius` shorthand onto a numeric `borderRadius`. `"pill"`
+ * is a fixed 9999 (RN clamps to `min(width, height) / 2`); the other
+ * three values pull from the resolved token scale.
+ */
+function resolveRadius(
+  radius: SkeletonRadius,
+  scale: { sm: number; md: number; lg: number; pill: number }
+): number {
+  switch (radius) {
+    case "none":
+      return 0;
+    case "sm":
+      return scale.sm;
+    case "md":
+      return scale.md;
+    case "lg":
+      return scale.lg;
+    case "pill":
+      return scale.pill;
+  }
+}
+
+export type {
+  SkeletonColorsInput,
+  SkeletonProps,
+  SkeletonRadius,
+  SkeletonVariant,
+} from "./skeleton-types";

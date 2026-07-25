@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useUIKit } from "ui-kraken";
 
@@ -6,6 +6,12 @@ export interface ScreenProps {
   children: ReactNode;
   title?: string;
   subtitle?: string;
+  /**
+   * Optional `refreshControl` element passed through to the inner
+   * `ScrollView`. Used only by the RefreshControl demo so pull-to-refresh
+   * works at the screen level; every other page leaves this unset.
+   */
+  refreshControl?: ReactElement<{ refreshing: boolean; onRefresh: () => void }>;
 }
 
 /**
@@ -14,7 +20,7 @@ export interface ScreenProps {
  * The title and subtitle also flip color per theme. This is app-only glue —
  * NOT part of ui-kraken itself.
  */
-export function Screen({ children, title, subtitle }: ScreenProps) {
+export function Screen({ children, title, subtitle, refreshControl }: ScreenProps) {
   const { activeTheme } = useUIKit();
   const isDark = activeTheme === "dark";
   const backgroundColor = isDark ? "#000000" : "#FFFFFF";
@@ -25,6 +31,14 @@ export function Screen({ children, title, subtitle }: ScreenProps) {
     <ScrollView
       style={{ flex: 1, backgroundColor }}
       contentContainerStyle={[styles.content, { backgroundColor }]}
+      // Auto-scroll focused inputs into view + drop the keyboard when
+      // the user taps outside a text field. Both are app-level concerns
+      // (ui-kraken's Input is a leaf primitive with no keyboard chrome);
+      // set here so every demo screen behaves like a real app form.
+      automaticallyAdjustKeyboardInsets
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="interactive"
+      refreshControl={refreshControl}
     >
       {title != null && <Text style={[styles.title, { color: titleColor }]}>{title}</Text>}
       {subtitle != null && (

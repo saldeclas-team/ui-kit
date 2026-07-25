@@ -253,7 +253,7 @@ Example app:
 
 - `apps/example/app/(pages)/components/radio-group.tsx` — full showcase (5 sections)
 - `apps/example/app/_layout.tsx` — register `Stack.Screen` with `headerBackTitle: "Components"`
-- `apps/example/app/(pages)/index.tsx` — add RadioGroup catalog row with `status: "shipped"`
+- `apps/example/app/(pages)/index.tsx` — add RadioGroup components-home row with `status: "shipped"`
 
 ## Testing (Jest + RTL v14 + jest-expo)
 
@@ -316,7 +316,7 @@ Every story is one Chromatic snapshot on Storybook Web. Adding a variant without
 5. **Custom colors** — brand-color override showing `radioGroupColors` in action.
 6. **Radius presets** — 5 rows demonstrating each `radius` value.
 
-Register the route in `_layout.tsx` (`headerBackTitle: "Components"`) and add a `status: "shipped"` catalog row in `(pages)/index.tsx`.
+Register the route in `_layout.tsx` (`headerBackTitle: "Components"`) and add a `status: "shipped"` components-home row in `(pages)/index.tsx`.
 
 ## Non-goals
 
@@ -344,7 +344,7 @@ Order of implementation:
 5. **Storybook** — `radio-group.stories.tsx` (8 stories)
 6. **Docs** — `README.md` for the component
 7. **Barrels** — `radio-group/index.ts` → `components/index.ts` → `src/index.ts`
-8. **Example** — new screen + route registration + catalog row
+8. **Example** — new screen + route registration + components-home row
 9. **Flip status** in this doc to `shipped on <YYYY-MM-DD> in ui-kraken v0.7.0`
 10. **Verify**: `pnpm typecheck && pnpm -r lint && pnpm test && pnpm --filter ui-kraken build`
 11. **Changeset** — bundled with the Alert refactor + provider rename into a single `0.7.0` minor bump

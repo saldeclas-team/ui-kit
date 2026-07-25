@@ -5,7 +5,20 @@ import {
   mergeAlertVariantColors,
   mergeButtonColors,
   mergeButtonVariantColors,
+  mergeCurrencyInputColors,
+  mergeInputColors,
   mergeRadioGroupColors,
+  mergeCollapsibleColors,
+  mergeExternalLinkColors,
+  mergeHintColors,
+  mergeHintToneColors,
+  mergeMultiSelectColors,
+  mergeRefreshControlColors,
+  mergeSkeletonColors,
+  mergeSocialButtonColors,
+  mergeSocialButtonProviderColors,
+  mergeStatCardColors,
+  mergeSurfaceColors,
   mergeTextColors,
 } from "./defaults";
 import { tint } from "../utils/color";
@@ -172,6 +185,250 @@ describe("mergeRadioGroupColors", () => {
     expect(merged.unselectedBorder).toBe(base.unselectedBorder);
     expect(merged.label).toBe(base.label);
     expect(merged.groupLabel).toBe(base.groupLabel);
+  });
+});
+
+describe("mergeInputColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.inputColors;
+    expect(mergeInputColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.inputColors;
+    const merged = mergeInputColors(base, {
+      borderFocused: "#FF6B00",
+      background: "#FFF7ED",
+    });
+    expect(merged.borderFocused).toBe("#FF6B00");
+    expect(merged.background).toBe("#FFF7ED");
+    expect(merged.border).toBe(base.border);
+    expect(merged.borderError).toBe(base.borderError);
+    expect(merged.label).toBe(base.label);
+    expect(merged.errorText).toBe(base.errorText);
+  });
+});
+
+describe("mergeCurrencyInputColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.currencyInputColors;
+    expect(mergeCurrencyInputColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.currencyInputColors;
+    const merged = mergeCurrencyInputColors(base, {
+      prefix: "#FF6B00",
+    });
+    expect(merged.prefix).toBe("#FF6B00");
+    expect(merged.text).toBe(base.text);
+    expect(merged.placeholder).toBe(base.placeholder);
+  });
+});
+
+describe("mergeSurfaceColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.surfaceColors;
+    expect(mergeSurfaceColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.surfaceColors;
+    const merged = mergeSurfaceColors(base, {
+      raised: "#FFF7ED",
+    });
+    expect(merged.raised).toBe("#FFF7ED");
+    expect(merged.base).toBe(base.base);
+    expect(merged.overlay).toBe(base.overlay);
+    expect(merged.sunken).toBe(base.sunken);
+  });
+});
+
+describe("mergeRefreshControlColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.refreshControlColors;
+    expect(mergeRefreshControlColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.refreshControlColors;
+    const merged = mergeRefreshControlColors(base, {
+      spinner: "#7C3AED",
+    });
+    expect(merged.spinner).toBe("#7C3AED");
+    expect(merged.background).toBe(base.background);
+    expect(merged.title).toBe(base.title);
+  });
+});
+
+describe("mergeSkeletonColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.skeletonColors;
+    expect(mergeSkeletonColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.skeletonColors;
+    const merged = mergeSkeletonColors(base, {
+      base: "#DBEAFE",
+    });
+    expect(merged.base).toBe("#DBEAFE");
+    expect(merged.highlight).toBe(base.highlight);
+  });
+});
+
+describe("mergeHintToneColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.hintColors.info;
+    expect(mergeHintToneColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.hintColors.info;
+    const merged = mergeHintToneColors(base, { text: "#312E81" });
+    expect(merged.text).toBe("#312E81");
+    expect(merged.icon).toBe(base.icon);
+    expect(merged.background).toBe(base.background);
+  });
+});
+
+describe("mergeHintColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.hintColors;
+    expect(mergeHintColors(base, undefined)).toBe(base);
+  });
+
+  it("merges per-tone overrides and leaves untouched tones intact", () => {
+    const base = DEFAULT_TOKENS.hintColors;
+    const merged = mergeHintColors(base, {
+      danger: { text: "#7F1D1D" },
+    });
+    expect(merged.danger.text).toBe("#7F1D1D");
+    expect(merged.danger.icon).toBe(base.danger.icon);
+    expect(merged.danger.background).toBe(base.danger.background);
+    expect(merged.info).toBe(base.info);
+    expect(merged.success).toBe(base.success);
+    expect(merged.warning).toBe(base.warning);
+    expect(merged.neutral).toBe(base.neutral);
+  });
+});
+
+describe("mergeCollapsibleColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.collapsibleColors;
+    expect(mergeCollapsibleColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.collapsibleColors;
+    const merged = mergeCollapsibleColors(base, {
+      headerBackground: "#F5F3FF",
+      chevron: "#7C3AED",
+    });
+    expect(merged.headerBackground).toBe("#F5F3FF");
+    expect(merged.chevron).toBe("#7C3AED");
+    expect(merged.title).toBe(base.title);
+    expect(merged.icon).toBe(base.icon);
+    expect(merged.bodyBackground).toBe(base.bodyBackground);
+    expect(merged.border).toBe(base.border);
+  });
+});
+
+describe("mergeExternalLinkColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.externalLinkColors;
+    expect(mergeExternalLinkColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.externalLinkColors;
+    const merged = mergeExternalLinkColors(base, { label: "#7C3AED" });
+    expect(merged.label).toBe("#7C3AED");
+    expect(merged.icon).toBe(base.icon);
+  });
+});
+
+describe("mergeSocialButtonProviderColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.socialButtonColors.google;
+    expect(mergeSocialButtonProviderColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.socialButtonColors.google;
+    const merged = mergeSocialButtonProviderColors(base, { background: "#7C3AED" });
+    expect(merged.background).toBe("#7C3AED");
+    expect(merged.label).toBe(base.label);
+    expect(merged.border).toBe(base.border);
+  });
+});
+
+describe("mergeSocialButtonColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.socialButtonColors;
+    expect(mergeSocialButtonColors(base, undefined)).toBe(base);
+  });
+
+  it("merges per-provider overrides and leaves untouched providers intact", () => {
+    const base = DEFAULT_TOKENS.socialButtonColors;
+    const merged = mergeSocialButtonColors(base, {
+      google: { background: "#7C3AED" },
+    });
+    expect(merged.google.background).toBe("#7C3AED");
+    expect(merged.google.label).toBe(base.google.label);
+    expect(merged.google.border).toBe(base.google.border);
+    expect(merged.apple).toBe(base.apple);
+    expect(merged.facebook).toBe(base.facebook);
+    expect(merged.github).toBe(base.github);
+    expect(merged.microsoft).toBe(base.microsoft);
+    expect(merged.generic).toBe(base.generic);
+  });
+});
+
+describe("mergeMultiSelectColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.multiSelectColors;
+    expect(mergeMultiSelectColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.multiSelectColors;
+    const merged = mergeMultiSelectColors(base, {
+      selectedBackground: "#7C3AED",
+      unselectedLabel: "#111827",
+    });
+    expect(merged.selectedBackground).toBe("#7C3AED");
+    expect(merged.unselectedLabel).toBe("#111827");
+    expect(merged.selectedLabel).toBe(base.selectedLabel);
+    expect(merged.selectedBorder).toBe(base.selectedBorder);
+    expect(merged.unselectedBackground).toBe(base.unselectedBackground);
+    expect(merged.unselectedBorder).toBe(base.unselectedBorder);
+    expect(merged.groupLabel).toBe(base.groupLabel);
+    expect(merged.helperText).toBe(base.helperText);
+    expect(merged.errorText).toBe(base.errorText);
+  });
+});
+
+describe("mergeStatCardColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.statCardColors;
+    expect(mergeStatCardColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.statCardColors;
+    const merged = mergeStatCardColors(base, {
+      background: "#F5F3FF",
+      value: "#4C1D95",
+    });
+    expect(merged.background).toBe("#F5F3FF");
+    expect(merged.value).toBe("#4C1D95");
+    expect(merged.title).toBe(base.title);
+    expect(merged.description).toBe(base.description);
+    expect(merged.icon).toBe(base.icon);
+    expect(merged.trendUp).toBe(base.trendUp);
+    expect(merged.trendDown).toBe(base.trendDown);
+    expect(merged.trendNeutral).toBe(base.trendNeutral);
   });
 });
 

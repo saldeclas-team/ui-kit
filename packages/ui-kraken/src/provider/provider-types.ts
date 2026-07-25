@@ -6,7 +6,20 @@ import type {
   AlertVariantColors,
   ButtonColors,
   ButtonVariantColors,
+  CurrencyInputColors,
+  InputColors,
   RadioGroupColors,
+  CollapsibleColors,
+  ExternalLinkColors,
+  HintColors,
+  HintToneColors,
+  MultiSelectColors,
+  RefreshControlColors,
+  SkeletonColors,
+  SocialButtonColors,
+  SocialButtonProviderColors,
+  StatCardColors,
+  SurfaceColors,
   TextColors,
   ResolvedTokens,
 } from "../tokens/tokens-types";
@@ -42,6 +55,91 @@ export type AlertColorsInput = Partial<Record<keyof AlertColors, Partial<AlertVa
 export type RadioGroupColorsInput = Partial<RadioGroupColors>;
 
 /**
+ * Partial override for `inputColors` — consumers only declare the slots
+ * they want to change; the rest fills in from the shipped defaults.
+ * Slot-based (no variants), so the shape mirrors `TextColorsInput`.
+ */
+export type InputColorsInput = Partial<InputColors>;
+
+/**
+ * Partial override for `currencyInputColors` — consumers only declare
+ * the slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, same shape as `InputColorsInput` plus a
+ * `prefix` slot for the currency-symbol text color.
+ */
+export type CurrencyInputColorsInput = Partial<CurrencyInputColors>;
+
+/**
+ * Partial override for `surfaceColors` — consumers only declare the
+ * slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, mirrors `TextColorsInput`.
+ */
+export type SurfaceColorsInput = Partial<SurfaceColors>;
+
+/**
+ * Partial override for `refreshControlColors` — consumers only
+ * declare the slots they want to change; the rest fills in from the
+ * shipped defaults. Slot-based, 3 slots.
+ */
+export type RefreshControlColorsInput = Partial<RefreshControlColors>;
+
+/**
+ * Partial override for `skeletonColors` — consumers only declare the
+ * slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, 2 slots (`base` + `highlight`).
+ */
+export type SkeletonColorsInput = Partial<SkeletonColors>;
+
+/**
+ * A partial-of-partials for `hintColors`: consumers can override just
+ * one tone (e.g. `danger`), or just one slot within a tone (e.g.
+ * `danger.background`), and the rest fills in from the shipped
+ * defaults. Same shape as `AlertColorsInput`.
+ */
+export type HintColorsInput = Partial<Record<keyof HintColors, Partial<HintToneColors>>>;
+
+/**
+ * Partial override for `statCardColors` — consumers only declare the
+ * slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, 8 slots (background / title / value /
+ * description / icon / trendUp / trendDown / trendNeutral).
+ */
+export type StatCardColorsInput = Partial<StatCardColors>;
+
+/**
+ * Partial override for `multiSelectColors` — consumers only declare
+ * the slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, 9 slots (3 selected + 3 unselected chip
+ * states, plus groupLabel / helperText / errorText).
+ */
+export type MultiSelectColorsInput = Partial<MultiSelectColors>;
+
+/**
+ * A partial-of-partials for `socialButtonColors`: consumers can
+ * override just one provider (e.g. `google`), or just one slot
+ * within a provider (e.g. `google.background`), and the rest fills
+ * in from the shipped defaults. Same shape as `ButtonColorsInput`.
+ */
+export type SocialButtonColorsInput = Partial<
+  Record<keyof SocialButtonColors, Partial<SocialButtonProviderColors>>
+>;
+
+/**
+ * Partial override for `collapsibleColors` — consumers only declare
+ * the slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, 6 slots (4 header chrome + body background +
+ * outer border).
+ */
+export type CollapsibleColorsInput = Partial<CollapsibleColors>;
+
+/**
+ * Partial override for `externalLinkColors` — consumers only
+ * declare the slots they want to change; the rest fills in from the
+ * shipped defaults. Slot-based, 2 slots (`label` + `icon`).
+ */
+export type ExternalLinkColorsInput = Partial<ExternalLinkColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -50,6 +148,17 @@ export interface TokensInput {
   textColors?: TextColorsInput;
   alertColors?: AlertColorsInput;
   radioGroupColors?: RadioGroupColorsInput;
+  inputColors?: InputColorsInput;
+  currencyInputColors?: CurrencyInputColorsInput;
+  surfaceColors?: SurfaceColorsInput;
+  refreshControlColors?: RefreshControlColorsInput;
+  skeletonColors?: SkeletonColorsInput;
+  hintColors?: HintColorsInput;
+  statCardColors?: StatCardColorsInput;
+  multiSelectColors?: MultiSelectColorsInput;
+  socialButtonColors?: SocialButtonColorsInput;
+  collapsibleColors?: CollapsibleColorsInput;
+  externalLinkColors?: ExternalLinkColorsInput;
   radius?: number;
   spacing?: number;
 }

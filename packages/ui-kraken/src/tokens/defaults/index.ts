@@ -18,6 +18,32 @@ import { DEFAULT_LIGHT_BUTTON_COLORS, DEFAULT_DARK_BUTTON_COLORS } from "./butto
 import { DEFAULT_LIGHT_TEXT_COLORS, DEFAULT_DARK_TEXT_COLORS } from "./text";
 import { DEFAULT_LIGHT_ALERT_COLORS, DEFAULT_DARK_ALERT_COLORS } from "./alert";
 import { DEFAULT_LIGHT_RADIO_GROUP_COLORS, DEFAULT_DARK_RADIO_GROUP_COLORS } from "./radio-group";
+import { DEFAULT_LIGHT_INPUT_COLORS, DEFAULT_DARK_INPUT_COLORS } from "./input";
+import {
+  DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
+  DEFAULT_DARK_CURRENCY_INPUT_COLORS,
+} from "./currency-input";
+import { DEFAULT_LIGHT_SURFACE_COLORS, DEFAULT_DARK_SURFACE_COLORS } from "./surface";
+import {
+  DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
+  DEFAULT_DARK_REFRESH_CONTROL_COLORS,
+} from "./refresh-control";
+import { DEFAULT_LIGHT_SKELETON_COLORS, DEFAULT_DARK_SKELETON_COLORS } from "./skeleton";
+import { DEFAULT_LIGHT_HINT_COLORS, DEFAULT_DARK_HINT_COLORS } from "./hint";
+import { DEFAULT_LIGHT_STAT_CARD_COLORS, DEFAULT_DARK_STAT_CARD_COLORS } from "./stat-card";
+import {
+  DEFAULT_LIGHT_MULTI_SELECT_COLORS,
+  DEFAULT_DARK_MULTI_SELECT_COLORS,
+} from "./multi-select";
+import {
+  DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
+  DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
+} from "./social-button";
+import { DEFAULT_LIGHT_COLLAPSIBLE_COLORS, DEFAULT_DARK_COLLAPSIBLE_COLORS } from "./collapsible";
+import {
+  DEFAULT_LIGHT_EXTERNAL_LINK_COLORS,
+  DEFAULT_DARK_EXTERNAL_LINK_COLORS,
+} from "./external-link";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -28,6 +54,17 @@ export const DEFAULT_TOKENS: Tokens = {
   textColors: DEFAULT_LIGHT_TEXT_COLORS,
   alertColors: DEFAULT_LIGHT_ALERT_COLORS,
   radioGroupColors: DEFAULT_LIGHT_RADIO_GROUP_COLORS,
+  inputColors: DEFAULT_LIGHT_INPUT_COLORS,
+  currencyInputColors: DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
+  surfaceColors: DEFAULT_LIGHT_SURFACE_COLORS,
+  refreshControlColors: DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
+  skeletonColors: DEFAULT_LIGHT_SKELETON_COLORS,
+  hintColors: DEFAULT_LIGHT_HINT_COLORS,
+  statCardColors: DEFAULT_LIGHT_STAT_CARD_COLORS,
+  multiSelectColors: DEFAULT_LIGHT_MULTI_SELECT_COLORS,
+  socialButtonColors: DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
+  collapsibleColors: DEFAULT_LIGHT_COLLAPSIBLE_COLORS,
+  externalLinkColors: DEFAULT_LIGHT_EXTERNAL_LINK_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -41,6 +78,17 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   textColors: DEFAULT_DARK_TEXT_COLORS,
   alertColors: DEFAULT_DARK_ALERT_COLORS,
   radioGroupColors: DEFAULT_DARK_RADIO_GROUP_COLORS,
+  inputColors: DEFAULT_DARK_INPUT_COLORS,
+  currencyInputColors: DEFAULT_DARK_CURRENCY_INPUT_COLORS,
+  surfaceColors: DEFAULT_DARK_SURFACE_COLORS,
+  refreshControlColors: DEFAULT_DARK_REFRESH_CONTROL_COLORS,
+  skeletonColors: DEFAULT_DARK_SKELETON_COLORS,
+  hintColors: DEFAULT_DARK_HINT_COLORS,
+  statCardColors: DEFAULT_DARK_STAT_CARD_COLORS,
+  multiSelectColors: DEFAULT_DARK_MULTI_SELECT_COLORS,
+  socialButtonColors: DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
+  collapsibleColors: DEFAULT_DARK_COLLAPSIBLE_COLORS,
+  externalLinkColors: DEFAULT_DARK_EXTERNAL_LINK_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -65,3 +113,56 @@ export {
   DEFAULT_DARK_RADIO_GROUP_COLORS,
   mergeRadioGroupColors,
 } from "./radio-group";
+export { DEFAULT_LIGHT_INPUT_COLORS, DEFAULT_DARK_INPUT_COLORS, mergeInputColors } from "./input";
+export {
+  DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
+  DEFAULT_DARK_CURRENCY_INPUT_COLORS,
+  mergeCurrencyInputColors,
+} from "./currency-input";
+export {
+  DEFAULT_LIGHT_SURFACE_COLORS,
+  DEFAULT_DARK_SURFACE_COLORS,
+  mergeSurfaceColors,
+} from "./surface";
+export {
+  DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
+  DEFAULT_DARK_REFRESH_CONTROL_COLORS,
+  mergeRefreshControlColors,
+} from "./refresh-control";
+export {
+  DEFAULT_LIGHT_SKELETON_COLORS,
+  DEFAULT_DARK_SKELETON_COLORS,
+  mergeSkeletonColors,
+} from "./skeleton";
+export {
+  DEFAULT_LIGHT_HINT_COLORS,
+  DEFAULT_DARK_HINT_COLORS,
+  mergeHintColors,
+  mergeHintToneColors,
+} from "./hint";
+export {
+  DEFAULT_LIGHT_STAT_CARD_COLORS,
+  DEFAULT_DARK_STAT_CARD_COLORS,
+  mergeStatCardColors,
+} from "./stat-card";
+export {
+  DEFAULT_LIGHT_MULTI_SELECT_COLORS,
+  DEFAULT_DARK_MULTI_SELECT_COLORS,
+  mergeMultiSelectColors,
+} from "./multi-select";
+export {
+  DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
+  DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
+  mergeSocialButtonColors,
+  mergeSocialButtonProviderColors,
+} from "./social-button";
+export {
+  DEFAULT_LIGHT_COLLAPSIBLE_COLORS,
+  DEFAULT_DARK_COLLAPSIBLE_COLORS,
+  mergeCollapsibleColors,
+} from "./collapsible";
+export {
+  DEFAULT_LIGHT_EXTERNAL_LINK_COLORS,
+  DEFAULT_DARK_EXTERNAL_LINK_COLORS,
+  mergeExternalLinkColors,
+} from "./external-link";

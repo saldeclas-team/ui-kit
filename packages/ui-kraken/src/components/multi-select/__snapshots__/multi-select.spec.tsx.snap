@@ -1,0 +1,611 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MultiSelect snapshots dark palette + 3 options, 1 selected 1`] = `
+<View
+  accessibilityLabel="Pick"
+  accessibilityRole="list"
+  testID="multi-select"
+>
+  <Text
+    color="#F5F5F7"
+    testID="multi-select-label"
+  >
+    Pick
+  </Text>
+  <View
+    testID="multi-select-chips"
+  >
+    <View
+      accessibilityLabel="One"
+      accessibilityRole="checkbox"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": false,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      backgroundColor="transparent"
+      borderColor="#374151"
+      borderRadius={9999}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="multi-select-chip-one"
+    >
+      <Text
+        color="#F5F5F7"
+        testID="multi-select-chip-one-label"
+      >
+        One
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Two"
+      accessibilityRole="checkbox"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": true,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      backgroundColor="#60A5FA"
+      borderColor="#60A5FA"
+      borderRadius={9999}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="multi-select-chip-two"
+    >
+      <Text
+        color="#0B0B0F"
+        testID="multi-select-chip-two-label"
+      >
+        Two
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Three"
+      accessibilityRole="checkbox"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": false,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      backgroundColor="transparent"
+      borderColor="#374151"
+      borderRadius={9999}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="multi-select-chip-three"
+    >
+      <Text
+        color="#F5F5F7"
+        testID="multi-select-chip-three-label"
+      >
+        Three
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MultiSelect snapshots default + 3 options, 2 selected 1`] = `
+<View
+  accessibilityLabel="Pick"
+  accessibilityRole="list"
+  testID="multi-select"
+>
+  <Text
+    color="#0B0B0F"
+    testID="multi-select-label"
+  >
+    Pick
+  </Text>
+  <View
+    testID="multi-select-chips"
+  >
+    <View
+      accessibilityLabel="One"
+      accessibilityRole="checkbox"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": true,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      backgroundColor="#2563EB"
+      borderColor="#2563EB"
+      borderRadius={9999}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="multi-select-chip-one"
+    >
+      <Text
+        color="#FFFFFF"
+        testID="multi-select-chip-one-label"
+      >
+        One
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Two"
+      accessibilityRole="checkbox"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": false,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      backgroundColor="#FFFFFF"
+      borderColor="#D1D5DB"
+      borderRadius={9999}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="multi-select-chip-two"
+    >
+      <Text
+        color="#374151"
+        testID="multi-select-chip-two-label"
+      >
+        Two
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Three"
+      accessibilityRole="checkbox"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": true,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      backgroundColor="#2563EB"
+      borderColor="#2563EB"
+      borderRadius={9999}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="multi-select-chip-three"
+    >
+      <Text
+        color="#FFFFFF"
+        testID="multi-select-chip-three-label"
+      >
+        Three
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`MultiSelect snapshots default + errorText overrides helperText 1`] = `
+<View
+  accessibilityLabel="Pick"
+  accessibilityRole="list"
+  testID="multi-select"
+>
+  <Text
+    color="#0B0B0F"
+    testID="multi-select-label"
+  >
+    Pick
+  </Text>
+  <View
+    testID="multi-select-chips"
+  >
+    <View
+      accessibilityLabel="One"
+      accessibilityRole="checkbox"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": false,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      backgroundColor="#FFFFFF"
+      borderColor="#D1D5DB"
+      borderRadius={9999}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="multi-select-chip-one"
+    >
+      <Text
+        color="#374151"
+        testID="multi-select-chip-one-label"
+      >
+        One
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Two"
+      accessibilityRole="checkbox"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": false,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      backgroundColor="#FFFFFF"
+      borderColor="#D1D5DB"
+      borderRadius={9999}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="multi-select-chip-two"
+    >
+      <Text
+        color="#374151"
+        testID="multi-select-chip-two-label"
+      >
+        Two
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Three"
+      accessibilityRole="checkbox"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": false,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      backgroundColor="#FFFFFF"
+      borderColor="#D1D5DB"
+      borderRadius={9999}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="multi-select-chip-three"
+    >
+      <Text
+        color="#374151"
+        testID="multi-select-chip-three-label"
+      >
+        Three
+      </Text>
+    </View>
+  </View>
+  <Text
+    color="#DC2626"
+    testID="multi-select-error-text"
+  >
+    Please pick one
+  </Text>
+</View>
+`;
+
+exports[`MultiSelect snapshots default palette + 3 options, none selected 1`] = `
+<View
+  accessibilityLabel="Pick"
+  accessibilityRole="list"
+  testID="multi-select"
+>
+  <Text
+    color="#0B0B0F"
+    testID="multi-select-label"
+  >
+    Pick
+  </Text>
+  <View
+    testID="multi-select-chips"
+  >
+    <View
+      accessibilityLabel="One"
+      accessibilityRole="checkbox"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": false,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      backgroundColor="#FFFFFF"
+      borderColor="#D1D5DB"
+      borderRadius={9999}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="multi-select-chip-one"
+    >
+      <Text
+        color="#374151"
+        testID="multi-select-chip-one-label"
+      >
+        One
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Two"
+      accessibilityRole="checkbox"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": false,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      backgroundColor="#FFFFFF"
+      borderColor="#D1D5DB"
+      borderRadius={9999}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="multi-select-chip-two"
+    >
+      <Text
+        color="#374151"
+        testID="multi-select-chip-two-label"
+      >
+        Two
+      </Text>
+    </View>
+    <View
+      accessibilityLabel="Three"
+      accessibilityRole="checkbox"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": false,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      backgroundColor="#FFFFFF"
+      borderColor="#D1D5DB"
+      borderRadius={9999}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="multi-select-chip-three"
+    >
+      <Text
+        color="#374151"
+        testID="multi-select-chip-three-label"
+      >
+        Three
+      </Text>
+    </View>
+  </View>
+</View>
+`;

@@ -1,0 +1,133 @@
+import { useCallback } from "react";
+import type { ComponentRef } from "react";
+import { Text } from "react-native";
+
+import { IconTintOverride } from "../icon-tint-override";
+
+import { useUIKit } from "../../provider/use-ui-kit";
+import { resolvePalette } from "../../utils/resolve-palette";
+import type { ExternalLinkProps } from "./external-link-types";
+import {
+  StyledExternalLink,
+  StyledExternalLinkIconWrapper,
+  StyledExternalLinkLabel,
+  StyledExternalLinkTrailingIconWrapper,
+} from "./external-link.styled";
+import { openExternalUrl } from "./open-url";
+
+type ExternalLinkRef = ComponentRef<typeof StyledExternalLink>;
+
+/**
+ * Tappable link that opens a URL in the platform browser. Prefers an
+ * in-app browser via `expo-web-browser` when installed; falls back to
+ * RN `Linking.openURL` (system browser) otherwise. Router-agnostic —
+ * does NOT depend on `expo-router` or `react-navigation`.
+ *
+ * ```tsx
+ * <ExternalLink url="https://example.com">Read more</ExternalLink>
+ * ```
+ *
+ * Palette derived from `tokens.externalLinkColors` on the provider,
+ * overridable per-instance via the `externalLinkColors?` prop.
+ */
+export function ExternalLink({
+  url,
+  children,
+  icon,
+  trailingIcon,
+  hideTrailingIcon = false,
+  disabled = false,
+  onPress,
+  externalLinkColors,
+  testID,
+  accessibilityRole = "link",
+  accessibilityLabel,
+  ...rest
+}: ExternalLinkProps) {
+  const { tokens } = useUIKit();
+  const rootId = testID ?? "external-link";
+  const palette = resolvePalette(tokens.externalLinkColors, externalLinkColors);
+  const composedLabel = accessibilityLabel ?? (typeof children === "string" ? children : url);
+
+  const handlePress = useCallback(async () => {
+    if (onPress) {
+      const result = await onPress();
+      if (result === false) return;
+    }
+    await openExternalUrl(url);
+  }, [onPress, url]);
+
+  // Inline mode — when there are no icons on either side, render as a
+  // plain `<Text onPress>` so the link respects the parent text's
+  // baseline. RN's text-nesting only lays out `<Text>` children on the
+  // baseline; a `<View>` (which is what an `<XStack>` becomes under
+  // the hood) rendered inside `<Text>` floats above the surrounding
+  // copy, which reads as a broken layout. See external-link.tsx
+  // section "inline vs standalone" in the plan doc.
+  const isInline = icon == null && hideTrailingIcon;
+  if (isInline) {
+    return (
+      <Text
+        testID={rootId}
+        onPress={disabled ? undefined : handlePress}
+        accessibilityRole={accessibilityRole}
+        accessibilityLabel={composedLabel}
+        accessibilityState={disabled ? { disabled: true } : undefined}
+        style={{
+          color: palette.label,
+          textDecorationLine: "underline",
+          textDecorationColor: palette.label,
+          fontWeight: "500",
+          opacity: disabled ? 0.5 : 1,
+        }}
+      >
+        {children}
+      </Text>
+    );
+  }
+
+  return (
+    <StyledExternalLink
+      // Ref typing on Tamagui XStack forwards to the underlying host;
+      // ExternalLinkRef is `ComponentRef<typeof StyledExternalLink>`.
+      testID={rootId}
+      disabled={disabled}
+      onPress={handlePress}
+      accessibilityRole={accessibilityRole}
+      accessibilityLabel={composedLabel}
+      accessibilityState={disabled ? { disabled: true } : undefined}
+      {...rest}
+    >
+      {icon != null ? (
+        <StyledExternalLinkIconWrapper testID={`${rootId}-icon`}>
+          <IconTintOverride color={palette.icon}>{icon}</IconTintOverride>
+        </StyledExternalLinkIconWrapper>
+      ) : null}
+
+      {typeof children === "string" ? (
+        <StyledExternalLinkLabel
+          testID={`${rootId}-label`}
+          color={palette.label}
+          textDecorationColor={palette.label}
+        >
+          {children}
+        </StyledExternalLinkLabel>
+      ) : (
+        <IconTintOverride color={palette.label} testID={`${rootId}-label`}>
+          {children}
+        </IconTintOverride>
+      )}
+
+      {!hideTrailingIcon && (
+        <StyledExternalLinkTrailingIconWrapper testID={`${rootId}-trailing-icon`}>
+          {trailingIcon ?? <Text style={{ color: palette.icon, fontWeight: "700" }}>↗</Text>}
+        </StyledExternalLinkTrailingIconWrapper>
+      )}
+    </StyledExternalLink>
+  );
+}
+
+// Ref type re-exported for consumers who need it (e.g. focus() calls).
+export type { ExternalLinkRef };
+
+export type { ExternalLinkColorsInput, ExternalLinkProps } from "./external-link-types";

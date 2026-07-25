@@ -41,14 +41,85 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
-    title: "Card",
-    description: "Surface primitive with layered background variants.",
-    href: "/components/button",
-    status: "planned",
+    title: "Input",
+    description:
+      "Single-line text input with label, helper text, error state, and optional icon slots.",
+    href: "/components/input",
+    status: "shipped",
   },
   {
-    title: "Input",
-    description: "Text input with label, helper text, and validation slots.",
+    title: "CurrencyInput",
+    description:
+      "Numeric input formatted as currency — locale-aware, configurable decimals + prefix.",
+    href: "/components/currency-input",
+    status: "shipped",
+  },
+  {
+    title: "Surface",
+    description:
+      "Theme-bound background container with 4 elevation levels (base / raised / overlay / sunken).",
+    href: "/components/surface",
+    status: "shipped",
+  },
+  {
+    title: "RefreshControl",
+    description:
+      "Themed pull-to-refresh spinner for ScrollView / FlatList — iOS + Android props wired from one palette.",
+    href: "/components/refresh-control",
+    status: "shipped",
+  },
+  {
+    title: "Skeleton",
+    description:
+      "Animated pulse placeholder for loading states — rectangles, circles, arbitrary shapes.",
+    href: "/components/skeleton",
+    status: "shipped",
+  },
+  {
+    title: "Hint",
+    description:
+      "Inline contextual tip row — 5 tones, ghost / soft emphasis, optional icon + title.",
+    href: "/components/hint",
+    status: "shipped",
+  },
+  {
+    title: "StatCard",
+    description:
+      "Compact metric card — title + value + optional trend arrow, delta, icon, description.",
+    href: "/components/stat-card",
+    status: "shipped",
+  },
+  {
+    title: "MultiSelect",
+    description:
+      "Chip-based multi-choice picker — wrap layout, generic value type, per-option disabled.",
+    href: "/components/multi-select",
+    status: "shipped",
+  },
+  {
+    title: "SocialButton",
+    description:
+      "OAuth-provider button — Google / Apple / Facebook / GitHub / Microsoft / generic; icon via prop.",
+    href: "/components/social-button",
+    status: "shipped",
+  },
+  {
+    title: "Collapsible",
+    description:
+      "Animated expand-collapse section — header + body, chevron rotation, controlled state.",
+    href: "/components/collapsible",
+    status: "shipped",
+  },
+  {
+    title: "ExternalLink",
+    description:
+      "Tappable link that opens a URL in the platform browser. Router-agnostic; falls back to Linking.",
+    href: "/components/external-link",
+    status: "shipped",
+  },
+  {
+    title: "Card",
+    description: "Surface primitive with layered background variants.",
     href: "/components/button",
     status: "planned",
   },

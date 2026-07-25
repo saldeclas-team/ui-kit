@@ -7,12 +7,41 @@ import type { Tokens, ResolvedTokens } from "./tokens-types";
  * `useMemo`.
  */
 export function coarseToFineTokens(tokens: Tokens): ResolvedTokens {
-  const { buttonColors, textColors, alertColors, radioGroupColors, radius, spacing } = tokens;
+  const {
+    buttonColors,
+    textColors,
+    alertColors,
+    radioGroupColors,
+    inputColors,
+    currencyInputColors,
+    surfaceColors,
+    refreshControlColors,
+    skeletonColors,
+    hintColors,
+    statCardColors,
+    multiSelectColors,
+    socialButtonColors,
+    collapsibleColors,
+    externalLinkColors,
+    radius,
+    spacing,
+  } = tokens;
   return {
     buttonColors,
     textColors,
     alertColors,
     radioGroupColors,
+    inputColors,
+    currencyInputColors,
+    surfaceColors,
+    refreshControlColors,
+    skeletonColors,
+    hintColors,
+    statCardColors,
+    multiSelectColors,
+    socialButtonColors,
+    collapsibleColors,
+    externalLinkColors,
     radius: {
       sm: radius * 0.5,
       md: radius,

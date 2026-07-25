@@ -1,0 +1,532 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input snapshots dark theme 1`] = `
+<View
+  testID="input"
+>
+  <Text
+    color="#F5F5F7"
+    testID="input-label"
+  >
+    Name
+  </Text>
+  <View
+    accessibilityLabel="Name"
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#111827"
+    borderColor="#374151"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="input-wrapper"
+  >
+    <TextInput
+      editable={true}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onFocus={[Function]}
+      placeholderTextColor="#6B7280"
+      style={
+        {
+          "color": "#F5F5F7",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="input-input"
+      value="Dark"
+    />
+  </View>
+</View>
+`;
+
+exports[`Input snapshots default (no label, no icons, empty value) 1`] = `
+<View
+  testID="input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="input-wrapper"
+  >
+    <TextInput
+      editable={true}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="input-input"
+      value=""
+    />
+  </View>
+</View>
+`;
+
+exports[`Input snapshots disabled state 1`] = `
+<View
+  testID="input"
+>
+  <Text
+    color="#0B0B0F"
+    testID="input-label"
+  >
+    Name
+  </Text>
+  <View
+    accessibilityLabel="Name"
+    accessibilityState={
+      {
+        "disabled": true,
+      }
+    }
+    backgroundColor="#F3F4F6"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={true}
+    testID="input-wrapper"
+  >
+    <TextInput
+      editable={false}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#9CA3AF",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="input-input"
+      value="Locked"
+    />
+  </View>
+</View>
+`;
+
+exports[`Input snapshots per-instance inputColors override 1`] = `
+<View
+  testID="input"
+>
+  <Text
+    color="#3B0A00"
+    testID="input-label"
+  >
+    Brand
+  </Text>
+  <View
+    accessibilityLabel="Brand"
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFF7ED"
+    borderColor="#FF6B00"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="input-wrapper"
+  >
+    <TextInput
+      editable={true}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="input-input"
+      value=""
+    />
+  </View>
+</View>
+`;
+
+exports[`Input snapshots radius pill 1`] = `
+<View
+  testID="input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius={9999}
+    disabled={false}
+    testID="input-wrapper"
+  >
+    <TextInput
+      editable={true}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="input-input"
+      value=""
+    />
+  </View>
+</View>
+`;
+
+exports[`Input snapshots with both icons 1`] = `
+<View
+  testID="input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="input-wrapper"
+  >
+    <View
+      testID="input-left-icon"
+    >
+      <Text>
+        L
+      </Text>
+    </View>
+    <TextInput
+      editable={true}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="input-input"
+      value=""
+    />
+    <View
+      testID="input-right-icon"
+    >
+      <Text>
+        R
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Input snapshots with error 1`] = `
+<View
+  testID="input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#DC2626"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="input-wrapper"
+  >
+    <TextInput
+      editable={true}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="input-input"
+      value=""
+    />
+  </View>
+  <Text
+    color="#DC2626"
+    testID="input-error"
+  >
+    Required
+  </Text>
+</View>
+`;
+
+exports[`Input snapshots with helperText 1`] = `
+<View
+  testID="input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="input-wrapper"
+  >
+    <TextInput
+      editable={true}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="input-input"
+      value=""
+    />
+  </View>
+  <Text
+    color="#6B7280"
+    testID="input-helper"
+  >
+    Optional
+  </Text>
+</View>
+`;
+
+exports[`Input snapshots with label 1`] = `
+<View
+  testID="input"
+>
+  <Text
+    color="#0B0B0F"
+    testID="input-label"
+  >
+    Name
+  </Text>
+  <View
+    accessibilityLabel="Name"
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="input-wrapper"
+  >
+    <TextInput
+      editable={true}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="input-input"
+      value=""
+    />
+  </View>
+</View>
+`;
+
+exports[`Input snapshots with leftIcon 1`] = `
+<View
+  testID="input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="input-wrapper"
+  >
+    <View
+      testID="input-left-icon"
+    >
+      <Text>
+        L
+      </Text>
+    </View>
+    <TextInput
+      editable={true}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="input-input"
+      value=""
+    />
+  </View>
+</View>
+`;
+
+exports[`Input snapshots with rightIcon 1`] = `
+<View
+  testID="input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="input-wrapper"
+  >
+    <TextInput
+      editable={true}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="input-input"
+      value=""
+    />
+    <View
+      testID="input-right-icon"
+    >
+      <Text>
+        R
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Input snapshots with value 1`] = `
+<View
+  testID="input"
+>
+  <Text
+    color="#0B0B0F"
+    testID="input-label"
+  >
+    Name
+  </Text>
+  <View
+    accessibilityLabel="Name"
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="input-wrapper"
+  >
+    <TextInput
+      editable={true}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="input-input"
+      value="John Doe"
+    />
+  </View>
+</View>
+`;

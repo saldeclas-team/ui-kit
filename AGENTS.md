@@ -87,6 +87,14 @@ Filename suffixes that carry meaning:
 - Interactive elements: minimum touch target 48 × 48 px.
 - Press feedback on button-like elements: `pressStyle={{ scale: 0.98, opacity: 0.9 }}`.
 
+### Animation (library code only)
+
+- **Only `react-native-reanimated`.** RN's built-in `Animated` + `Easing` are banned in `packages/ui-kraken/src/**` (ESLint). Reanimated is a required peer dep (`>=3.6.0`); consumers already have it.
+- Use `useSharedValue` for the animated value, `useAnimatedStyle` to bind it to a style object, and `withTiming` / `withRepeat` / `withSequence` / `withSpring` for the interpolation. Import `Animated` (default) from `react-native-reanimated` for the animated view component (`<Animated.View>` / `<Animated.Text>`).
+- Cancel loops on unmount with `cancelAnimation(sharedValue)` in a `useEffect` cleanup.
+- Tests use a hand-rolled reanimated mock in `packages/ui-kraken/jest.setup.ts` that stubs the API synchronously (worklets resolve to their end value immediately). No babel-plugin setup required in jest.
+- **Why**: single animation stack across the library; better perf (worklets run on the UI thread by default); zero conflicts between components that mix RN `Animated` with reanimated in the same tree.
+
 ### Platform support
 
 - **Every component must render on iOS + Android + Web.** `react-native-web` is an optional peer (landed 2026-07-24); consumers who want web opt in by installing it. Tamagui + RN primitives translate to DOM automatically — components typically "just work" without web-specific code.
@@ -174,6 +182,7 @@ Every field is optional. Missing slots inherit from the theme. Fallback order at
 - `console.log` in library code. Use `console.warn` / `console.error` for diagnostics that must surface.
 - `require()` for source code (import instead). Allowed only for static assets — but ui-kraken currently ships none.
 - `StyleSheet.create()` (banned by ESLint).
+- `Animated` / `Easing` from `react-native` (banned by ESLint — use `react-native-reanimated` instead; see § Animation above).
 - Ad-hoc `useState`-based form validation. When form components arrive, use `react-hook-form` + `zod` as peer dependencies.
 
 ### Performance

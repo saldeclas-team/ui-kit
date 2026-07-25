@@ -98,6 +98,262 @@ export interface AlertColors {
 }
 
 /**
+ * Input color palette. Slot-based (no variants — Input has a single
+ * visual pattern with state-driven surface changes handled by the
+ * component logic itself). 11 slots cover every surface + state
+ * combination the wrapper and inner elements paint.
+ */
+export interface InputColors {
+  /** Wrapper background color in the default and focused states. */
+  background: string;
+  /** Wrapper background color in the disabled state. */
+  backgroundDisabled: string;
+  /** Border color in the default state (unfocused, no error). */
+  border: string;
+  /** Border color when the input has focus. */
+  borderFocused: string;
+  /** Border color when `error` is set. Overrides `borderFocused`. */
+  borderError: string;
+  /** Text color for the value typed in the input. */
+  text: string;
+  /** Text color when `disabled`. */
+  textDisabled: string;
+  /** Placeholder text color. */
+  placeholder: string;
+  /** Bold label text color (rendered above the input). */
+  label: string;
+  /** Muted helper text color (rendered below the input when no error). */
+  helperText: string;
+  /** Error text color (rendered below the input when `error` is set). */
+  errorText: string;
+}
+
+/**
+ * RefreshControl color palette. Slot-based, 3 slots that wire to the
+ * platform-specific `RefreshControl` props:
+ *
+ * - `spinner`    → iOS `tintColor` + Android `colors={[spinner]}`
+ * - `background` → Android `progressBackgroundColor` (no iOS equivalent)
+ * - `title`      → iOS `titleColor` (only rendered when `title` prop set)
+ */
+export interface RefreshControlColors {
+  /** The spinning ring / arrows color (iOS tintColor + Android colors[0]). */
+  spinner: string;
+  /** Android-only: circular background behind the spinner. */
+  background: string;
+  /** iOS-only: title text color (rendered when the `title` prop is set). */
+  title: string;
+}
+
+/**
+ * Surface color palette. Slot-based, 4 semantic elevation levels each
+ * with a single background color. Inspired by Material 3's
+ * SurfaceContainer scale but simpler (4 levels, no auto-tint math, no
+ * shadow bindings).
+ */
+export interface SurfaceColors {
+  /** Standard app background. */
+  base: string;
+  /** Cards, list items, elevated content on top of the base surface. */
+  raised: string;
+  /** Modals, sheets, dropdowns — highest visual layer. */
+  overlay: string;
+  /** Inset areas — form sections, code blocks, muted regions. */
+  sunken: string;
+}
+
+/**
+ * Skeleton color palette. 2 slots — the fill at rest (`base`) and the
+ * peak of the pulse animation (`highlight`). Both typically alpha-tinted
+ * grays that read as "loading" against any surface.
+ */
+export interface SkeletonColors {
+  /** Fill at rest. Also the resting color in `variant="static"`. */
+  base: string;
+  /** Peak of the pulse animation (the top of the opacity crossfade). */
+  highlight: string;
+}
+
+/**
+ * Color slots for one Hint tone. All five tones (neutral / info /
+ * success / warning / danger) fill the same 3-slot set. `text` +
+ * `icon` are used in both `emphasis="ghost"` and `"soft"` modes;
+ * `background` is only painted in `soft` mode.
+ */
+export interface HintToneColors {
+  /** Title + body text color. */
+  text: string;
+  /** Icon glyph color (applied via wrapper `color` prop). */
+  icon: string;
+  /** Row background — only rendered when `emphasis="soft"`. */
+  background: string;
+}
+
+/**
+ * All Hint tone palettes. Every field is required at the provider level
+ * so the theme is always fully populated. Consumers who only want to
+ * change some tones do `<UIKitProvider hintColors={{ danger: {...} }}>`
+ * and the missing tones merge with the defaults (see `mergeHintColors`).
+ */
+export interface HintColors {
+  neutral: HintToneColors;
+  info: HintToneColors;
+  success: HintToneColors;
+  warning: HintToneColors;
+  danger: HintToneColors;
+}
+
+/**
+ * ExternalLink color palette. Slot-based, 2 slots — text label
+ * (underline color is derived from `label` automatically via
+ * `textDecorationColor`) and icon.
+ */
+export interface ExternalLinkColors {
+  /** Label text color + underline color. */
+  label: string;
+  /** Icon color (both leading + trailing). */
+  icon: string;
+}
+
+/**
+ * Collapsible color palette. Slot-based, 6 slots — 4 for the
+ * header chrome (`headerBackground`, `title`, `icon`, `chevron`)
+ * plus `bodyBackground` for the expandable region and `border`
+ * for the outer 1 px card outline.
+ */
+export interface CollapsibleColors {
+  /** Header row background. */
+  headerBackground: string;
+  /** Header title text color. */
+  title: string;
+  /** Leading icon color (when `icon` prop passed). */
+  icon: string;
+  /** Trailing chevron color. */
+  chevron: string;
+  /** Body region background. */
+  bodyBackground: string;
+  /** Outer 1 px border around the whole card. */
+  border: string;
+}
+
+/**
+ * Color slots for one SocialButton provider (`google` / `apple` /
+ * etc.). All six providers fill the same 3-slot set. `background`
+ * paints the button fill, `label` paints the text + loader spinner,
+ * `border` paints the 1 px outline.
+ */
+export interface SocialButtonProviderColors {
+  /** Button background color. */
+  background: string;
+  /** Button label + loader spinner color. */
+  label: string;
+  /** Border color. `background === border` for solid buttons; different for outlined. */
+  border: string;
+}
+
+/**
+ * All SocialButton provider palettes. Every field is required at
+ * the provider level so the theme is always fully populated.
+ * Consumers who only want to change some providers do
+ * `<UIKitProvider socialButtonColors={{ google: {...} }}>` and the
+ * missing providers merge with the defaults (see
+ * `mergeSocialButtonColors`).
+ */
+export interface SocialButtonColors {
+  google: SocialButtonProviderColors;
+  apple: SocialButtonProviderColors;
+  facebook: SocialButtonProviderColors;
+  github: SocialButtonProviderColors;
+  microsoft: SocialButtonProviderColors;
+  generic: SocialButtonProviderColors;
+}
+
+/**
+ * MultiSelect color palette. Slot-based, 9 slots — 3 for selected
+ * chip state (`selectedBackground`, `selectedLabel`, `selectedBorder`),
+ * 3 for unselected (`unselectedBackground`, `unselectedLabel`,
+ * `unselectedBorder`), plus `groupLabel` above and `helperText` /
+ * `errorText` below.
+ */
+export interface MultiSelectColors {
+  /** Chip background when selected. */
+  selectedBackground: string;
+  /** Chip label text color when selected. */
+  selectedLabel: string;
+  /** Chip border color when selected. */
+  selectedBorder: string;
+  /** Chip background when unselected. */
+  unselectedBackground: string;
+  /** Chip label text color when unselected. */
+  unselectedLabel: string;
+  /** Chip border color when unselected. */
+  unselectedBorder: string;
+  /** Bold heading above the chip row. */
+  groupLabel: string;
+  /** Muted helper copy below the chip row. */
+  helperText: string;
+  /** Error copy below the chip row (overrides helperText when `errorText` set). */
+  errorText: string;
+}
+
+/**
+ * StatCard color palette. Slot-based, 8 slots that cover the card
+ * background, three text tiers (title / value / description), the
+ * icon-slot wrapper color, and three trend-arrow colors driven by
+ * the `trend` prop.
+ */
+export interface StatCardColors {
+  /** Card background color. */
+  background: string;
+  /** Small heading rendered above the value. */
+  title: string;
+  /** Main metric text. */
+  value: string;
+  /** Secondary caption below the delta row. */
+  description: string;
+  /** Icon-slot wrapper color (consumer's icon inherits). */
+  icon: string;
+  /** Arrow + delta text color when `trend="up"`. */
+  trendUp: string;
+  /** Arrow + delta text color when `trend="down"`. */
+  trendDown: string;
+  /** Arrow + delta text color when `trend="neutral"`. */
+  trendNeutral: string;
+}
+
+/**
+ * CurrencyInput color palette. Slot-based. Mirrors `InputColors` plus a
+ * `prefix` slot for the currency-symbol text color (the `"$"` / `"€"` /
+ * etc. that renders inside the wrapper next to the number).
+ */
+export interface CurrencyInputColors {
+  /** Wrapper background color in the default + focused states. */
+  background: string;
+  /** Wrapper background color in the disabled state. */
+  backgroundDisabled: string;
+  /** Border color in the default state (unfocused, no error). */
+  border: string;
+  /** Border color when the input has focus. */
+  borderFocused: string;
+  /** Border color when `error` is set. Overrides `borderFocused`. */
+  borderError: string;
+  /** Text color for the value typed in the input. */
+  text: string;
+  /** Text color when `disabled`. */
+  textDisabled: string;
+  /** Placeholder text color. */
+  placeholder: string;
+  /** Currency prefix text color (the "$" glyph inside the wrapper). */
+  prefix: string;
+  /** Bold label text color (rendered above the input). */
+  label: string;
+  /** Muted helper text color (rendered below the input when no error). */
+  helperText: string;
+  /** Error text color (rendered below the input when `error` is set). */
+  errorText: string;
+}
+
+/**
  * RadioGroup color palette. Slot-based (no variants — RadioGroup has a
  * single visual pattern, just different states per option).
  *
@@ -138,6 +394,17 @@ export interface Tokens {
   textColors: TextColors;
   alertColors: AlertColors;
   radioGroupColors: RadioGroupColors;
+  inputColors: InputColors;
+  currencyInputColors: CurrencyInputColors;
+  surfaceColors: SurfaceColors;
+  refreshControlColors: RefreshControlColors;
+  skeletonColors: SkeletonColors;
+  hintColors: HintColors;
+  statCardColors: StatCardColors;
+  multiSelectColors: MultiSelectColors;
+  socialButtonColors: SocialButtonColors;
+  collapsibleColors: CollapsibleColors;
+  externalLinkColors: ExternalLinkColors;
   radius: number;
   spacing: number;
 }
@@ -152,6 +419,17 @@ export interface ResolvedTokens {
   textColors: TextColors;
   alertColors: AlertColors;
   radioGroupColors: RadioGroupColors;
+  inputColors: InputColors;
+  currencyInputColors: CurrencyInputColors;
+  surfaceColors: SurfaceColors;
+  refreshControlColors: RefreshControlColors;
+  skeletonColors: SkeletonColors;
+  hintColors: HintColors;
+  statCardColors: StatCardColors;
+  multiSelectColors: MultiSelectColors;
+  socialButtonColors: SocialButtonColors;
+  collapsibleColors: CollapsibleColors;
+  externalLinkColors: ExternalLinkColors;
   radius: {
     sm: number;
     md: number;

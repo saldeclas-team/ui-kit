@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExternalLink snapshots dark palette + disabled 1`] = `
+<View
+  accessibilityLabel="Dark disabled"
+  accessibilityRole="link"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": true,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="external-link"
+>
+  <Text
+    color="#60A5FA"
+    testID="external-link-label"
+    textDecorationColor="#60A5FA"
+  >
+    Dark disabled
+  </Text>
+  <View
+    testID="external-link-trailing-icon"
+  >
+    <Text
+      style={
+        {
+          "color": "#60A5FA",
+          "fontWeight": "700",
+        }
+      }
+    >
+      ↗
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`ExternalLink snapshots default light — string children + auto trailing icon 1`] = `
+<View
+  accessibilityLabel="Read the docs"
+  accessibilityRole="link"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="external-link"
+>
+  <Text
+    color="#2563EB"
+    testID="external-link-label"
+    textDecorationColor="#2563EB"
+  >
+    Read the docs
+  </Text>
+  <View
+    testID="external-link-trailing-icon"
+  >
+    <Text
+      style={
+        {
+          "color": "#2563EB",
+          "fontWeight": "700",
+        }
+      }
+    >
+      ↗
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`ExternalLink snapshots light + leading + custom trailing icon 1`] = `
+<View
+  accessibilityLabel="With icons"
+  accessibilityRole="link"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="external-link"
+>
+  <View
+    testID="external-link-icon"
+  >
+    <Text
+      style={
+        {
+          "color": "#2563EB",
+        }
+      }
+    >
+      <Text>
+        i
+      </Text>
+    </Text>
+  </View>
+  <Text
+    color="#2563EB"
+    testID="external-link-label"
+    textDecorationColor="#2563EB"
+  >
+    With icons
+  </Text>
+  <View
+    testID="external-link-trailing-icon"
+  >
+    <Text>
+      →
+    </Text>
+  </View>
+</View>
+`;

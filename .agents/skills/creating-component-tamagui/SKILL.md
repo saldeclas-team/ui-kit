@@ -111,6 +111,91 @@ export const StyledButtonLabel = styled(Text, {
 });
 ```
 
+### 3.1 Shared `radius` prop
+
+If your component exposes a `radius?` prop, **do not write a local `resolveRadius` helper** — import the shared one from `../../utils/radius`. Every component-with-radius primitive (Button / Alert / Input / CurrencyInput / RadioGroup / MultiSelect / StatCard / SocialButton / Collapsible) uses the same `RadiusValue` union (`"none" | "sm" | "md" | "lg" | "pill" | number`) and the same resolver.
+
+```ts
+// component-types.ts
+import type { RadiusValue } from "../../utils/radius";
+
+export type MyComponentRadius = RadiusValue;
+```
+
+```tsx
+// component.tsx
+import { resolveRadius } from "../../utils/radius";
+
+const resolvedBorderRadius = resolveRadius(radius);
+```
+
+`Skeleton` is the sole exception — it renders a plain RN `<View>` (not a Tamagui styled component) and needs concrete numeric radius values from `useUIKit().tokens.radius`. Its `resolveRadius(radius, scale)` is genuinely different and stays local.
+
+### 3.2 Shared per-instance palette merge
+
+If your component's color block on the token schema is a **flat** slot-based interface (no per-variant nesting), do NOT write a local `resolvePalette(base, override)` function — import the generic one from `../../utils/resolve-palette`:
+
+```tsx
+import { resolvePalette } from "../../utils/resolve-palette";
+
+const palette = resolvePalette(tokens.<x>Colors, <x>Colors);
+```
+
+This shared helper is `<T extends object>(base: T, override: Partial<T> | undefined): T` — a spread-based merge with an early return when `override == null`. Same shape as `mergeSurfaceColors` / `mergeSkeletonColors` in `tokens/defaults/`, but for the render-time layer (per-instance override merged on the already-provider-resolved palette).
+
+Nested variant palettes (Alert / Hint / StatCard / SocialButton) keep their local `resolvePalette(variant, colors, override)` because the signature there picks the variant first and only then merges the flat sub-object. RadioGroup also keeps its local version because its optional slots need explicit `??` fall-through (spread would allow consumers to clear a slot with `undefined`, which is not the intent).
+
+### 3.3 Shared `IconTintOverride`
+
+If your component has an `icon?: ReactNode` slot and needs to tint text-glyph icons via CSS color cascade, import the shared component from `../icon-tint-override`:
+
+```tsx
+import { IconTintOverride } from "../icon-tint-override";
+
+<StyledIconWrapper>
+  <IconTintOverride color={palette.icon}>{icon}</IconTintOverride>
+</StyledIconWrapper>;
+```
+
+Renders as a plain `<Text style={{ color }}>` under the hood — text-glyph icons (`"i"`, `"✓"`, most icon-library components) inherit the color; SVG / Image icons that ignore color render at their intrinsic color. Do NOT re-export it from `components/index.ts` or `src/index.ts` — it's shared implementation, not part of the public API.
+
+### 3.4 Animation
+
+- **Only `react-native-reanimated`.** RN's built-in `Animated` + `Easing` are banned in `packages/ui-kraken/src/**` (ESLint). Reanimated is a required peer dep; consumers already have it.
+- Standard shape: `useSharedValue` for the animated value, `useAnimatedStyle` to bind it, `withTiming` / `withRepeat` / `withSequence` / `withSpring` for the interpolation, `cancelAnimation(sharedValue)` in the `useEffect` cleanup for loops. Import `Animated` (default) from `react-native-reanimated` for the animated view (`<Animated.View>`, `<Animated.Text>`).
+- Jest already has a hand-rolled reanimated mock in `packages/ui-kraken/jest.setup.ts` (worklets resolve synchronously to their end value). No component-level mock needed.
+
+```tsx
+import Animated, {
+  cancelAnimation,
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
+
+export function PulsingDot() {
+  const opacity = useSharedValue(0);
+  useEffect(() => {
+    opacity.value = withRepeat(
+      withSequence(
+        withTiming(1, { duration: 600, easing: Easing.inOut(Easing.ease) }),
+        withTiming(0, { duration: 600, easing: Easing.inOut(Easing.ease) })
+      ),
+      -1,
+      false
+    );
+    return () => cancelAnimation(opacity);
+  }, [opacity]);
+  const style = useAnimatedStyle(() => ({ opacity: opacity.value }));
+  return <Animated.View style={[baseStyle, style]} />;
+}
+```
+
+**Why single-stack**: mixing RN `Animated` (JS thread) with reanimated (UI thread worklets) in the same tree causes drop-frames and confusing debugging. Every animated component in ui-kraken uses reanimated so consumers get one predictable perf profile.
+
 ## 4. `*.tsx` — component logic
 
 The component file wires props → styled primitives, applies per-instance overrides, and handles slots (icons, loader).
@@ -483,7 +568,7 @@ Before opening the PR:
 - [ ] Component and types added to `packages/ui-kraken/src/components/index.ts` and to the public barrel `packages/ui-kraken/src/index.ts`.
 - [ ] Minimum touch target 48 × 48 px on interactive elements.
 - [ ] Dark theme validated in Storybook.
-- [ ] Example app: new screen in `apps/example/app/(pages)/components/<name>.tsx`, new `Stack.Screen` in `apps/example/app/_layout.tsx` with `headerBackTitle: "Components"`, catalog row added in `apps/example/app/(pages)/index.tsx` with `status: "shipped"` (note: the home screen is titled "Components", NOT "Catalog" — that vocabulary was retired).
+- [ ] Example app: new screen in `apps/example/app/(pages)/components/<name>.tsx`, new `Stack.Screen` in `apps/example/app/_layout.tsx` with `headerBackTitle: "Components"`, and a new row in the components home (`apps/example/app/(pages)/index.tsx`) with `status: "shipped"`.
 - [ ] `pnpm lint && pnpm typecheck && pnpm test && pnpm --filter ui-kraken build` all green locally.
 - [ ] `docs/{COMPONENT}-PLAN.md` created / flipped to `shipped on YYYY-MM-DD in ui-kraken vX.Y.Z`.
 - [ ] Changeset added (`pnpm changeset`).

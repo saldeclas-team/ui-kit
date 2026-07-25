@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { GetProps } from "tamagui";
 
 import type { ButtonVariantColors } from "../../tokens/tokens-types";
+import type { RadiusValue } from "../../utils/radius";
 import type { StyledButton } from "./button.styled";
 
 /**
@@ -18,10 +19,13 @@ export type ButtonTone = "primary" | "secondary" | "outline" | "ghost" | "destru
 export type ButtonSize = "sm" | "md" | "lg";
 
 /**
- * Border radius selector. Preset name that maps to the theme scale, an
- * explicit pixel number, or `"pill"` for a fully rounded button.
+ * Border radius selector. Alias for the shared `RadiusValue` union —
+ * every component-with-radius primitive in ui-kraken shares the same
+ * shape and the `resolveRadius` helper from `utils/radius`. Button
+ * additionally supports `undefined` at the prop level so the size
+ * variant's default radius wins when unset.
  */
-export type ButtonRadius = number | "none" | "sm" | "md" | "lg" | "pill";
+export type ButtonRadius = RadiusValue;
 
 /**
  * Shadow / elevation preset. Values are hardcoded in v0.2 — no theme knob.

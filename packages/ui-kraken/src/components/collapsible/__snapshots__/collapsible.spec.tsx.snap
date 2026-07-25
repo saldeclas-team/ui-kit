@@ -1,0 +1,382 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Collapsible snapshots animation='none' — expanded 1`] = `
+<View
+  backgroundColor="#FFFFFF"
+  borderColor="#E5E7EB"
+  borderRadius="$uiRadiusMd"
+  testID="collapsible"
+>
+  <View
+    accessibilityLabel="No animation"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": true,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    backgroundColor="#F9FAFB"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="collapsible-header"
+  >
+    <Text
+      color="#0B0B0F"
+      testID="collapsible-title"
+    >
+      No animation
+    </Text>
+    <View
+      style={
+        {
+          "transform": [
+            {
+              "rotate": "90deg",
+            },
+          ],
+        }
+      }
+      testID="collapsible-chevron"
+    >
+      <View>
+        <Text
+          style={
+            {
+              "color": "#6B7280",
+              "fontWeight": "700",
+            }
+          }
+        >
+          ▸
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    backgroundColor="#FFFFFF"
+    testID="collapsible-body"
+  >
+    <Text>
+      body
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Collapsible snapshots dark palette — expanded 1`] = `
+<View
+  backgroundColor="#0B0B0F"
+  borderColor="#1F2937"
+  borderRadius="$uiRadiusMd"
+  testID="collapsible"
+>
+  <View
+    accessibilityLabel="Dark section"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": true,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    backgroundColor="#111827"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="collapsible-header"
+  >
+    <Text
+      color="#F5F5F7"
+      testID="collapsible-title"
+    >
+      Dark section
+    </Text>
+    <View
+      style={
+        {
+          "transform": [
+            {
+              "rotate": "90deg",
+            },
+          ],
+        }
+      }
+      testID="collapsible-chevron"
+    >
+      <View>
+        <Text
+          style={
+            {
+              "color": "#9CA3AF",
+              "fontWeight": "700",
+            }
+          }
+        >
+          ▸
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      [
+        null,
+        null,
+      ]
+    }
+    testID="collapsible-body"
+  >
+    <View
+      backgroundColor="#0B0B0F"
+      onLayout={[Function]}
+      testID="collapsible-body-content"
+    >
+      <Text>
+        dark body
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Collapsible snapshots default light — collapsed 1`] = `
+<View
+  backgroundColor="#FFFFFF"
+  borderColor="#E5E7EB"
+  borderRadius="$uiRadiusMd"
+  testID="collapsible"
+>
+  <View
+    accessibilityLabel="Advanced options"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": false,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    backgroundColor="#F9FAFB"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="collapsible-header"
+  >
+    <Text
+      color="#0B0B0F"
+      testID="collapsible-title"
+    >
+      Advanced options
+    </Text>
+    <View
+      style={
+        {
+          "transform": [
+            {
+              "rotate": "0deg",
+            },
+          ],
+        }
+      }
+      testID="collapsible-chevron"
+    >
+      <View>
+        <Text
+          style={
+            {
+              "color": "#6B7280",
+              "fontWeight": "700",
+            }
+          }
+        >
+          ▸
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      [
+        null,
+        null,
+      ]
+    }
+    testID="collapsible-body"
+  >
+    <View
+      backgroundColor="#FFFFFF"
+      onLayout={[Function]}
+      testID="collapsible-body-content"
+    >
+      <Text>
+        hidden body
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Collapsible snapshots default light — expanded + icon + custom chevron 1`] = `
+<View
+  backgroundColor="#FFFFFF"
+  borderColor="#E5E7EB"
+  borderRadius="$uiRadiusMd"
+  testID="collapsible"
+>
+  <View
+    accessibilityLabel="Advanced options"
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": true,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    backgroundColor="#F9FAFB"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="collapsible-header"
+  >
+    <View
+      testID="collapsible-icon"
+    >
+      <Text
+        style={
+          {
+            "color": "#6B7280",
+          }
+        }
+      >
+        <Text>
+          i
+        </Text>
+      </Text>
+    </View>
+    <Text
+      color="#0B0B0F"
+      testID="collapsible-title"
+    >
+      Advanced options
+    </Text>
+    <View
+      style={
+        {
+          "transform": [
+            {
+              "rotate": "90deg",
+            },
+          ],
+        }
+      }
+      testID="collapsible-chevron"
+    >
+      <View>
+        <Text>
+          +
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      [
+        null,
+        null,
+      ]
+    }
+    testID="collapsible-body"
+  >
+    <View
+      backgroundColor="#FFFFFF"
+      onLayout={[Function]}
+      testID="collapsible-body-content"
+    >
+      <Text>
+        visible body
+      </Text>
+    </View>
+  </View>
+</View>
+`;

@@ -3,8 +3,9 @@ import type { ComponentRef } from "react";
 import { ActivityIndicator, View } from "react-native";
 
 import { useUIKit } from "../../provider/use-ui-kit";
+import { resolveRadius } from "../../utils/radius";
 import { StyledButton, StyledButtonLabel } from "./button.styled";
-import type { ButtonElevation, ButtonProps, ButtonRadius, ButtonTone } from "./button-types";
+import type { ButtonElevation, ButtonProps, ButtonTone } from "./button-types";
 
 type ButtonRef = ComponentRef<typeof StyledButton>;
 
@@ -176,22 +177,6 @@ const DARK_ELEVATION_BORDER: Record<Exclude<ButtonElevation, "none">, string> = 
   md: "rgba(255,255,255,0.18)",
   lg: "rgba(255,255,255,0.28)",
 };
-
-/**
- * Resolve the `radius` prop to a value the styled `borderRadius` prop accepts.
- * Numeric values pass through unchanged. Presets map to Tamagui theme tokens
- * so they respect the consumer's coarse `radius` knob on `UIKitProvider`.
- * `"pill"` is the special "fully rounded" case. Returns `undefined` when the
- * prop is not provided so the size variant's default radius wins.
- */
-function resolveRadius(radius: ButtonRadius | undefined): number | string | undefined {
-  if (radius === undefined) return undefined;
-  if (typeof radius === "number") return radius;
-  if (radius === "none") return 0;
-  if (radius === "pill") return 9999;
-  const capitalized = radius.charAt(0).toUpperCase() + radius.slice(1);
-  return `$uiRadius${capitalized}`;
-}
 
 function makeToneVariant(tone: ButtonTone) {
   return forwardRef<ButtonRef, ButtonProps>(function ToneVariant(props, ref) {
