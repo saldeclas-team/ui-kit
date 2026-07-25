@@ -59,6 +59,10 @@ export default function RootLayout() {
           name="(pages)/components/surface"
           options={{ title: "Surface", headerBackTitle: "Components" }}
         />
+        <Stack.Screen
+          name="(pages)/components/refresh-control"
+          options={{ title: "RefreshControl", headerBackTitle: "Components" }}
+        />
       </Stack>
     </UIKitProvider>
   );

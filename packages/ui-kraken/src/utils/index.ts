@@ -7,4 +7,5 @@ export {
   flattenInputColors,
   flattenCurrencyInputColors,
   flattenSurfaceColors,
+  flattenRefreshControlColors,
 } from "./flatten";

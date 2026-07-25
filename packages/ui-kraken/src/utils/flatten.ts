@@ -17,6 +17,7 @@ import type {
   CurrencyInputColors,
   InputColors,
   RadioGroupColors,
+  RefreshControlColors,
   SurfaceColors,
   TextColors,
 } from "../tokens/tokens-types";
@@ -144,6 +145,21 @@ export function flattenSurfaceColors(colors: SurfaceColors): Record<string, stri
   for (const slot of Object.keys(colors) as Array<keyof SurfaceColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiSurface${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `refreshControlColors` slot map into
+ * `$uiRefreshControl{PascalCase}` Tamagui tokens
+ * (`$uiRefreshControlSpinner`, `$uiRefreshControlBackground`,
+ * `$uiRefreshControlTitle`).
+ */
+export function flattenRefreshControlColors(colors: RefreshControlColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof RefreshControlColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiRefreshControl${capitalized}`] = colors[slot];
   }
   return out;
 }

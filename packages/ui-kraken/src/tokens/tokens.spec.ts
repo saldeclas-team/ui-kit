@@ -5,8 +5,11 @@ import {
   mergeAlertVariantColors,
   mergeButtonColors,
   mergeButtonVariantColors,
+  mergeCurrencyInputColors,
   mergeInputColors,
   mergeRadioGroupColors,
+  mergeRefreshControlColors,
+  mergeSurfaceColors,
   mergeTextColors,
 } from "./defaults";
 import { tint } from "../utils/color";
@@ -194,6 +197,58 @@ describe("mergeInputColors", () => {
     expect(merged.borderError).toBe(base.borderError);
     expect(merged.label).toBe(base.label);
     expect(merged.errorText).toBe(base.errorText);
+  });
+});
+
+describe("mergeCurrencyInputColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.currencyInputColors;
+    expect(mergeCurrencyInputColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.currencyInputColors;
+    const merged = mergeCurrencyInputColors(base, {
+      prefix: "#FF6B00",
+    });
+    expect(merged.prefix).toBe("#FF6B00");
+    expect(merged.text).toBe(base.text);
+    expect(merged.placeholder).toBe(base.placeholder);
+  });
+});
+
+describe("mergeSurfaceColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.surfaceColors;
+    expect(mergeSurfaceColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.surfaceColors;
+    const merged = mergeSurfaceColors(base, {
+      raised: "#FFF7ED",
+    });
+    expect(merged.raised).toBe("#FFF7ED");
+    expect(merged.base).toBe(base.base);
+    expect(merged.overlay).toBe(base.overlay);
+    expect(merged.sunken).toBe(base.sunken);
+  });
+});
+
+describe("mergeRefreshControlColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.refreshControlColors;
+    expect(mergeRefreshControlColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.refreshControlColors;
+    const merged = mergeRefreshControlColors(base, {
+      spinner: "#7C3AED",
+    });
+    expect(merged.spinner).toBe("#7C3AED");
+    expect(merged.background).toBe(base.background);
+    expect(merged.title).toBe(base.title);
   });
 });
 

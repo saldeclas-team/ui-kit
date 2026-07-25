@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RefreshControl snapshots dark palette 1`] = `
+<RCTRefreshControl
+  colors={
+    [
+      "#60A5FA",
+    ]
+  }
+  onRefresh={[MockFunction]}
+  progressBackgroundColor="#111827"
+  ref={null}
+  refreshing={true}
+  testID="refresh-control"
+  tintColor="#60A5FA"
+  titleColor="#9CA3AF"
+/>
+`;
+
+exports[`RefreshControl snapshots default palette 1`] = `
+<RCTRefreshControl
+  colors={
+    [
+      "#2563EB",
+    ]
+  }
+  onRefresh={[MockFunction]}
+  progressBackgroundColor="#F9FAFB"
+  ref={null}
+  refreshing={false}
+  testID="refresh-control"
+  tintColor="#2563EB"
+  titleColor="#5B6472"
+/>
+`;
+
+exports[`RefreshControl snapshots per-instance override 1`] = `
+<RCTRefreshControl
+  colors={
+    [
+      "#7C3AED",
+    ]
+  }
+  onRefresh={[MockFunction]}
+  progressBackgroundColor="#F5F3FF"
+  ref={null}
+  refreshing={false}
+  testID="refresh-control"
+  tintColor="#7C3AED"
+  titleColor="#4C1D95"
+/>
+`;
+
+exports[`RefreshControl snapshots with iOS title 1`] = `
+<RCTRefreshControl
+  colors={
+    [
+      "#2563EB",
+    ]
+  }
+  onRefresh={[MockFunction]}
+  progressBackgroundColor="#F9FAFB"
+  ref={null}
+  refreshing={true}
+  testID="refresh-control"
+  tintColor="#2563EB"
+  title="Pulling to refresh…"
+  titleColor="#5B6472"
+/>
+`;

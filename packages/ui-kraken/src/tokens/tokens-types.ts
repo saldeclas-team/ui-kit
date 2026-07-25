@@ -129,6 +129,23 @@ export interface InputColors {
 }
 
 /**
+ * RefreshControl color palette. Slot-based, 3 slots that wire to the
+ * platform-specific `RefreshControl` props:
+ *
+ * - `spinner`    → iOS `tintColor` + Android `colors={[spinner]}`
+ * - `background` → Android `progressBackgroundColor` (no iOS equivalent)
+ * - `title`      → iOS `titleColor` (only rendered when `title` prop set)
+ */
+export interface RefreshControlColors {
+  /** The spinning ring / arrows color (iOS tintColor + Android colors[0]). */
+  spinner: string;
+  /** Android-only: circular background behind the spinner. */
+  background: string;
+  /** iOS-only: title text color (rendered when the `title` prop is set). */
+  title: string;
+}
+
+/**
  * Surface color palette. Slot-based, 4 semantic elevation levels each
  * with a single background color. Inspired by Material 3's
  * SurfaceContainer scale but simpler (4 levels, no auto-tint math, no
@@ -221,6 +238,7 @@ export interface Tokens {
   inputColors: InputColors;
   currencyInputColors: CurrencyInputColors;
   surfaceColors: SurfaceColors;
+  refreshControlColors: RefreshControlColors;
   radius: number;
   spacing: number;
 }
@@ -238,6 +256,7 @@ export interface ResolvedTokens {
   inputColors: InputColors;
   currencyInputColors: CurrencyInputColors;
   surfaceColors: SurfaceColors;
+  refreshControlColors: RefreshControlColors;
   radius: {
     sm: number;
     md: number;

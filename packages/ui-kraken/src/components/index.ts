@@ -31,3 +31,6 @@ export type { CurrencyInputProps, CurrencyInputRadius } from "./currency-input";
 
 export { Surface } from "./surface";
 export type { SurfaceProps, SurfaceLevel } from "./surface";
+
+export { RefreshControl } from "./refresh-control";
+export type { RefreshControlProps, RefreshControlColorsInput } from "./refresh-control";

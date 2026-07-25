@@ -24,6 +24,10 @@ import {
   DEFAULT_DARK_CURRENCY_INPUT_COLORS,
 } from "./currency-input";
 import { DEFAULT_LIGHT_SURFACE_COLORS, DEFAULT_DARK_SURFACE_COLORS } from "./surface";
+import {
+  DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
+  DEFAULT_DARK_REFRESH_CONTROL_COLORS,
+} from "./refresh-control";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -37,6 +41,7 @@ export const DEFAULT_TOKENS: Tokens = {
   inputColors: DEFAULT_LIGHT_INPUT_COLORS,
   currencyInputColors: DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
   surfaceColors: DEFAULT_LIGHT_SURFACE_COLORS,
+  refreshControlColors: DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -53,6 +58,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   inputColors: DEFAULT_DARK_INPUT_COLORS,
   currencyInputColors: DEFAULT_DARK_CURRENCY_INPUT_COLORS,
   surfaceColors: DEFAULT_DARK_SURFACE_COLORS,
+  refreshControlColors: DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -88,3 +94,8 @@ export {
   DEFAULT_DARK_SURFACE_COLORS,
   mergeSurfaceColors,
 } from "./surface";
+export {
+  DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
+  DEFAULT_DARK_REFRESH_CONTROL_COLORS,
+  mergeRefreshControlColors,
+} from "./refresh-control";

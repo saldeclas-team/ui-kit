@@ -31,7 +31,7 @@ Ordered by complexity so the easiest ship first — no external deps, no icon sl
 | 1   | Input          | Single-line text input with label, helper text, error state, keyboard types.               | [`docs/INPUT-PLAN.md`](./INPUT-PLAN.md)                     |   ✅   |
 | 2   | CurrencyInput  | Numeric input formatted as currency (`$` prefix, thousands separator, controlled numeric). | [`docs/CURRENCY-INPUT-PLAN.md`](./CURRENCY-INPUT-PLAN.md)   |   ✅   |
 | 3   | Surface        | Theme-bound background container with elevation levels (Material-inspired).                | [`docs/SURFACE-PLAN.md`](./SURFACE-PLAN.md)                 |   ✅   |
-| 4   | RefreshControl | Themed pull-to-refresh for `ScrollView` / `FlatList` (color-scheme-aware).                 | [`docs/REFRESH-CONTROL-PLAN.md`](./REFRESH-CONTROL-PLAN.md) |   ⏳   |
+| 4   | RefreshControl | Themed pull-to-refresh for `ScrollView` / `FlatList` (color-scheme-aware).                 | [`docs/REFRESH-CONTROL-PLAN.md`](./REFRESH-CONTROL-PLAN.md) |   ✅   |
 | 5   | Skeleton       | Animated pulse placeholder for loading states (rectangle, circle, or arbitrary shape).     | [`docs/SKELETON-PLAN.md`](./SKELETON-PLAN.md)               |   ⏳   |
 
 ### Phase B — Pure UI, no external deps, icon slot via prop (4 components)

@@ -15,6 +15,8 @@ export {
   DEFAULT_DARK_CURRENCY_INPUT_COLORS,
   DEFAULT_LIGHT_SURFACE_COLORS,
   DEFAULT_DARK_SURFACE_COLORS,
+  DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
+  DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -26,6 +28,7 @@ export {
   mergeInputColors,
   mergeCurrencyInputColors,
   mergeSurfaceColors,
+  mergeRefreshControlColors,
   tint,
 } from "./tokens";
 export type { Config } from "./tokens";
@@ -39,6 +42,7 @@ export type {
   InputColors,
   CurrencyInputColors,
   SurfaceColors,
+  RefreshControlColors,
   Tokens,
   ResolvedTokens,
 } from "./tokens-types";

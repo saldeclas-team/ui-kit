@@ -20,6 +20,7 @@ export type {
   InputColorsInput,
   CurrencyInputColorsInput,
   SurfaceColorsInput,
+  RefreshControlColorsInput,
 } from "./provider";
 
 // Tokens
@@ -40,6 +41,8 @@ export {
   DEFAULT_DARK_CURRENCY_INPUT_COLORS,
   DEFAULT_LIGHT_SURFACE_COLORS,
   DEFAULT_DARK_SURFACE_COLORS,
+  DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
+  DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -51,6 +54,7 @@ export {
   mergeInputColors,
   mergeCurrencyInputColors,
   mergeSurfaceColors,
+  mergeRefreshControlColors,
   tint,
 } from "./tokens";
 export type {
@@ -64,6 +68,7 @@ export type {
   InputColors,
   CurrencyInputColors,
   SurfaceColors,
+  RefreshControlColors,
   ResolvedTokens,
   Config,
 } from "./tokens";
@@ -96,3 +101,6 @@ export type { CurrencyInputProps, CurrencyInputRadius } from "./components";
 
 export { Surface } from "./components";
 export type { SurfaceProps, SurfaceLevel } from "./components";
+
+export { RefreshControl } from "./components";
+export type { RefreshControlProps } from "./components";

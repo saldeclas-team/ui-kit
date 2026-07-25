@@ -62,6 +62,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "RefreshControl",
+    description:
+      "Themed pull-to-refresh spinner for ScrollView / FlatList — iOS + Android props wired from one palette.",
+    href: "/components/refresh-control",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",
