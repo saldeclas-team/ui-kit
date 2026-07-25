@@ -53,6 +53,10 @@ import {
   DEFAULT_LIGHT_SELECT_BOTTOM_SHEET_COLORS,
   DEFAULT_DARK_SELECT_BOTTOM_SHEET_COLORS,
 } from "./select-bottom-sheet";
+import {
+  DEFAULT_LIGHT_SEGMENTED_CONTROL_COLORS,
+  DEFAULT_DARK_SEGMENTED_CONTROL_COLORS,
+} from "./segmented-control";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -77,6 +81,7 @@ export const DEFAULT_TOKENS: Tokens = {
   selectColors: DEFAULT_LIGHT_SELECT_COLORS,
   selectNativeColors: DEFAULT_LIGHT_SELECT_NATIVE_COLORS,
   selectBottomSheetColors: DEFAULT_LIGHT_SELECT_BOTTOM_SHEET_COLORS,
+  segmentedControlColors: DEFAULT_LIGHT_SEGMENTED_CONTROL_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -104,6 +109,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   selectColors: DEFAULT_DARK_SELECT_COLORS,
   selectNativeColors: DEFAULT_DARK_SELECT_NATIVE_COLORS,
   selectBottomSheetColors: DEFAULT_DARK_SELECT_BOTTOM_SHEET_COLORS,
+  segmentedControlColors: DEFAULT_DARK_SEGMENTED_CONTROL_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -196,3 +202,8 @@ export {
   DEFAULT_DARK_SELECT_BOTTOM_SHEET_COLORS,
   mergeSelectBottomSheetColors,
 } from "./select-bottom-sheet";
+export {
+  DEFAULT_LIGHT_SEGMENTED_CONTROL_COLORS,
+  DEFAULT_DARK_SEGMENTED_CONTROL_COLORS,
+  mergeSegmentedControlColors,
+} from "./segmented-control";

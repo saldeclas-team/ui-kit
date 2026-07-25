@@ -1,5 +1,5 @@
 export { tint, clamp, hexToHsl, hslToHex, parseHex, rgbToHex } from "./color";
-export { resolveRadius } from "./radius";
+export { resolveRadius, resolveRadiusNumeric } from "./radius";
 export type { RadiusValue } from "./radius";
 export { resolvePalette } from "./resolve-palette";
 export {
@@ -21,4 +21,5 @@ export {
   flattenSelectColors,
   flattenSelectNativeColors,
   flattenSelectBottomSheetColors,
+  flattenSegmentedControlColors,
 } from "./flatten";

@@ -22,6 +22,7 @@ import type {
   MultiSelectColors,
   RadioGroupColors,
   RefreshControlColors,
+  SegmentedControlColors,
   SelectBottomSheetColors,
   SelectColors,
   SelectNativeColors,
@@ -345,6 +346,23 @@ export function flattenSelectBottomSheetColors(
   for (const slot of Object.keys(colors) as Array<keyof SelectBottomSheetColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiSelectBottomSheet${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `segmentedControlColors` slot map into
+ * `$uiSegmentedControl{PascalCase}` Tamagui tokens
+ * (`$uiSegmentedControlLabel`, `$uiSegmentedControlHelperText`,
+ * `$uiSegmentedControlErrorText`).
+ */
+export function flattenSegmentedControlColors(
+  colors: SegmentedControlColors
+): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SegmentedControlColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSegmentedControl${capitalized}`] = colors[slot];
   }
   return out;
 }

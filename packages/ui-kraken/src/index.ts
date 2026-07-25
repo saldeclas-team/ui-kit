@@ -31,6 +31,7 @@ export type {
   SelectColorsInput,
   SelectNativeColorsInput,
   SelectBottomSheetColorsInput,
+  SegmentedControlColorsInput,
 } from "./provider";
 
 // Tokens
@@ -73,6 +74,8 @@ export {
   DEFAULT_DARK_SELECT_NATIVE_COLORS,
   DEFAULT_LIGHT_SELECT_BOTTOM_SHEET_COLORS,
   DEFAULT_DARK_SELECT_BOTTOM_SHEET_COLORS,
+  DEFAULT_LIGHT_SEGMENTED_CONTROL_COLORS,
+  DEFAULT_DARK_SEGMENTED_CONTROL_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -97,6 +100,7 @@ export {
   mergeSelectColors,
   mergeSelectNativeColors,
   mergeSelectBottomSheetColors,
+  mergeSegmentedControlColors,
   tint,
 } from "./tokens";
 export type {
@@ -123,6 +127,7 @@ export type {
   SelectColors,
   SelectNativeColors,
   SelectBottomSheetColors,
+  SegmentedControlColors,
   ResolvedTokens,
   Config,
 } from "./tokens";
@@ -203,3 +208,6 @@ export type {
   SelectBottomSheetRadius,
   SelectBottomSheetSnapPoint,
 } from "./components";
+
+export { SegmentedControl } from "./components";
+export type { SegmentedControlProps, SegmentedControlOption } from "./components";

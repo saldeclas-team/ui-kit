@@ -107,6 +107,10 @@ export default function RootLayout() {
               name="(pages)/components/select-bottom-sheet"
               options={{ title: "SelectBottomSheet", headerBackTitle: "Components" }}
             />
+            <Stack.Screen
+              name="(pages)/components/segmented-control"
+              options={{ title: "SegmentedControl", headerBackTitle: "Components" }}
+            />
           </Stack>
         </UIKitProvider>
       </BottomSheetModalProvider>

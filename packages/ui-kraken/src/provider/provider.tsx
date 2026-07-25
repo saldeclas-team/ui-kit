@@ -17,6 +17,7 @@ import {
   mergeSelectColors,
   mergeSelectNativeColors,
   mergeSelectBottomSheetColors,
+  mergeSegmentedControlColors,
   mergeHintColors,
   mergeMultiSelectColors,
   mergeRefreshControlColors,
@@ -86,6 +87,10 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         DEFAULT_TOKENS.selectBottomSheetColors,
         tokens?.selectBottomSheetColors
       ),
+      segmentedControlColors: mergeSegmentedControlColors(
+        DEFAULT_TOKENS.segmentedControlColors,
+        tokens?.segmentedControlColors
+      ),
     };
     const mergedDark = {
       ...DEFAULT_DARK_TOKENS,
@@ -134,6 +139,10 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
       selectBottomSheetColors: mergeSelectBottomSheetColors(
         DEFAULT_DARK_TOKENS.selectBottomSheetColors,
         dark?.selectBottomSheetColors
+      ),
+      segmentedControlColors: mergeSegmentedControlColors(
+        DEFAULT_DARK_TOKENS.segmentedControlColors,
+        dark?.segmentedControlColors
       ),
     };
     const resolvedLight = coarseToFineTokens(mergedLight);

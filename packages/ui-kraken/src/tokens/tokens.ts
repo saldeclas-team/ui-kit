@@ -12,6 +12,7 @@ import {
   flattenHintColors,
   flattenMultiSelectColors,
   flattenRefreshControlColors,
+  flattenSegmentedControlColors,
   flattenSelectBottomSheetColors,
   flattenSelectColors,
   flattenSelectNativeColors,
@@ -65,6 +66,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
       ...flattenSelectColors(lightResolved.selectColors),
       ...flattenSelectNativeColors(lightResolved.selectNativeColors),
       ...flattenSelectBottomSheetColors(lightResolved.selectBottomSheetColors),
+      ...flattenSegmentedControlColors(lightResolved.segmentedControlColors),
     },
     radius: {
       ...baseTokens.radius,
@@ -116,6 +118,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenSelectColors(lightResolved.selectColors),
         ...flattenSelectNativeColors(lightResolved.selectNativeColors),
         ...flattenSelectBottomSheetColors(lightResolved.selectBottomSheetColors),
+        ...flattenSegmentedControlColors(lightResolved.segmentedControlColors),
       },
       dark: {
         ...(baseThemes.dark ?? {}),
@@ -137,6 +140,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenSelectColors(darkResolved.selectColors),
         ...flattenSelectNativeColors(darkResolved.selectNativeColors),
         ...flattenSelectBottomSheetColors(darkResolved.selectBottomSheetColors),
+        ...flattenSegmentedControlColors(darkResolved.segmentedControlColors),
       },
     },
   });
@@ -186,6 +190,8 @@ export {
   DEFAULT_LIGHT_SELECT_NATIVE_COLORS,
   DEFAULT_DARK_SELECT_BOTTOM_SHEET_COLORS,
   DEFAULT_LIGHT_SELECT_BOTTOM_SHEET_COLORS,
+  DEFAULT_DARK_SEGMENTED_CONTROL_COLORS,
+  DEFAULT_LIGHT_SEGMENTED_CONTROL_COLORS,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
@@ -208,6 +214,7 @@ export {
   mergeSelectColors,
   mergeSelectNativeColors,
   mergeSelectBottomSheetColors,
+  mergeSegmentedControlColors,
 } from "./defaults";
 export { coarseToFineTokens } from "./tokens-derive";
 export { tint } from "../utils/color";

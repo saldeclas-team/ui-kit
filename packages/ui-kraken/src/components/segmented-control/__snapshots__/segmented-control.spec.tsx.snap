@@ -1,0 +1,405 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SegmentedControl snapshots dark palette + selected 1`] = `
+<View
+  accessibilityLabel="View"
+  testID="segmented-control"
+>
+  <Text
+    color="#F9FAFB"
+    testID="segmented-control-label"
+  >
+    View
+  </Text>
+  <View
+    accessibilityRole="tablist"
+    data-appearance="dark"
+    data-enabled={true}
+    data-selected-index={1}
+    testID="segmented-control-control"
+  >
+    <View
+      accessibilityLabel="List"
+      accessibilityRole="tab"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="segmented-control-control-segment-0"
+    />
+    <View
+      accessibilityLabel="Grid"
+      accessibilityRole="tab"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": true,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="segmented-control-control-segment-1"
+    />
+    <View
+      accessibilityLabel="Map"
+      accessibilityRole="tab"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="segmented-control-control-segment-2"
+    />
+  </View>
+</View>
+`;
+
+exports[`SegmentedControl snapshots default + peer available + label + helper 1`] = `
+<View
+  accessibilityLabel="View"
+  testID="segmented-control"
+>
+  <Text
+    color="#111827"
+    testID="segmented-control-label"
+  >
+    View
+  </Text>
+  <View
+    accessibilityRole="tablist"
+    data-appearance="light"
+    data-enabled={true}
+    data-selected-index={0}
+    testID="segmented-control-control"
+  >
+    <View
+      accessibilityLabel="List"
+      accessibilityRole="tab"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": true,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="segmented-control-control-segment-0"
+    />
+    <View
+      accessibilityLabel="Grid"
+      accessibilityRole="tab"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="segmented-control-control-segment-1"
+    />
+    <View
+      accessibilityLabel="Map"
+      accessibilityRole="tab"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="segmented-control-control-segment-2"
+    />
+  </View>
+  <Text
+    color="#6B7280"
+    testID="segmented-control-helper-text"
+  >
+    Choose your view
+  </Text>
+</View>
+`;
+
+exports[`SegmentedControl snapshots errorText state 1`] = `
+<View
+  accessibilityLabel="View"
+  testID="segmented-control"
+>
+  <Text
+    color="#111827"
+    testID="segmented-control-label"
+  >
+    View
+  </Text>
+  <View
+    accessibilityRole="tablist"
+    data-appearance="light"
+    data-enabled={true}
+    data-selected-index={0}
+    testID="segmented-control-control"
+  >
+    <View
+      accessibilityLabel="List"
+      accessibilityRole="tab"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": true,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="segmented-control-control-segment-0"
+    />
+    <View
+      accessibilityLabel="Grid"
+      accessibilityRole="tab"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="segmented-control-control-segment-1"
+    />
+    <View
+      accessibilityLabel="Map"
+      accessibilityRole="tab"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": false,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="segmented-control-control-segment-2"
+    />
+  </View>
+  <Text
+    color="#DC2626"
+    testID="segmented-control-error-text"
+  >
+    Please pick one
+  </Text>
+</View>
+`;
+
+exports[`SegmentedControl snapshots missing peer dep fallback 1`] = `
+<View
+  accessibilityLabel="View"
+  testID="segmented-control"
+>
+  <Text
+    color="#111827"
+    testID="segmented-control-label"
+  >
+    View
+  </Text>
+  <Text
+    color="#DC2626"
+    testID="segmented-control-missing-peer"
+  >
+    Install \`@expo/ui\` to enable SegmentedControl.
+  </Text>
+</View>
+`;

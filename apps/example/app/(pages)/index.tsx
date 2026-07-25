@@ -139,6 +139,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "SegmentedControl",
+    description:
+      "Native horizontal segmented picker via @expo/ui — UISegmentedControl on iOS, Material 3 SegmentedButton on Android.",
+    href: "/components/segmented-control",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

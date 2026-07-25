@@ -83,6 +83,13 @@ export type {
   SelectBottomSheetColorsInput,
 } from "./select-bottom-sheet";
 
+export { SegmentedControl } from "./segmented-control";
+export type {
+  SegmentedControlProps,
+  SegmentedControlOption,
+  SegmentedControlColorsInput,
+} from "./segmented-control";
+
 export { SocialButton } from "./social-button";
 export type {
   SocialButtonProps,

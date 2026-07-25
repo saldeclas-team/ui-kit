@@ -14,6 +14,7 @@ import type {
   SelectColors,
   SelectNativeColors,
   SelectBottomSheetColors,
+  SegmentedControlColors,
   HintColors,
   HintToneColors,
   MultiSelectColors,
@@ -170,6 +171,13 @@ export type SelectNativeColorsInput = Partial<SelectNativeColors>;
 export type SelectBottomSheetColorsInput = Partial<SelectBottomSheetColors>;
 
 /**
+ * Partial override for `segmentedControlColors` — 3 slots.
+ * Consumers only declare what they want to change; the rest
+ * fills in from the shipped defaults.
+ */
+export type SegmentedControlColorsInput = Partial<SegmentedControlColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -192,6 +200,7 @@ export interface TokensInput {
   selectColors?: SelectColorsInput;
   selectNativeColors?: SelectNativeColorsInput;
   selectBottomSheetColors?: SelectBottomSheetColorsInput;
+  segmentedControlColors?: SegmentedControlColorsInput;
   radius?: number;
   spacing?: number;
 }

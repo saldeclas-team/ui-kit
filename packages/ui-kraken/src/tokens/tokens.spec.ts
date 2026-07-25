@@ -13,6 +13,7 @@ import {
   mergeSelectColors,
   mergeSelectNativeColors,
   mergeSelectBottomSheetColors,
+  mergeSegmentedControlColors,
   mergeHintColors,
   mergeHintToneColors,
   mergeMultiSelectColors,
@@ -427,6 +428,28 @@ describe("mergeSelectBottomSheetColors", () => {
     const dark = Object.keys(DEFAULT_DARK_TOKENS.selectBottomSheetColors).sort();
     expect(light).toEqual(dark);
     expect(light.length).toBe(15);
+  });
+});
+
+describe("mergeSegmentedControlColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.segmentedControlColors;
+    expect(mergeSegmentedControlColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.segmentedControlColors;
+    const merged = mergeSegmentedControlColors(base, { label: "#7C3AED" });
+    expect(merged.label).toBe("#7C3AED");
+    expect(merged.helperText).toBe(base.helperText);
+    expect(merged.errorText).toBe(base.errorText);
+  });
+
+  it("light + dark defaults share the same slot keys (9 slots)", () => {
+    const light = Object.keys(DEFAULT_TOKENS.segmentedControlColors).sort();
+    const dark = Object.keys(DEFAULT_DARK_TOKENS.segmentedControlColors).sort();
+    expect(light).toEqual(dark);
+    expect(light.length).toBe(9);
   });
 });
 

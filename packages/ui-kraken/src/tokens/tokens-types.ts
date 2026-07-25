@@ -251,6 +251,45 @@ export interface SelectColors {
 }
 
 /**
+ * SegmentedControl color palette. Slot-based, 9 slots. Split into
+ * shared vs. Android-only chrome:
+ *
+ * - **Shared (3)**: `label`, `helperText`, `errorText` — the
+ *   text rendered by ui-kraken around the native control.
+ *   Themable on every platform.
+ * - **Android chrome (6)**: `containerBackground`, `containerBorder`,
+ *   `selectedBackground`, `selectedLabel`, `unselectedLabel`,
+ *   `ripple` — used ONLY by the Android body (which is a pure-JS
+ *   Material 3 implementation because @expo/ui's Compose bridge
+ *   has a tap-through interop bug — see plan doc).
+ *
+ * The iOS body uses SwiftUI `UISegmentedControl` and ignores the
+ * Android-only slots (SwiftUI owns its own chrome). Slots are
+ * kept in one block per the "each component owns its color
+ * space" rule — consumers get one predictable override surface.
+ */
+export interface SegmentedControlColors {
+  /** Bold label text color rendered above the control. */
+  label: string;
+  /** Muted helper text color rendered below the control when no error. */
+  helperText: string;
+  /** Error text color rendered below the control when `errorText` is set. Also colors the missing-peer hint. */
+  errorText: string;
+  /** [Android only] Background of the outer pill container. Ignored on iOS. */
+  containerBackground: string;
+  /** [Android only] Border color of the outer pill container. Ignored on iOS. */
+  containerBorder: string;
+  /** [Android only] Fill color of the sliding selection pill. Ignored on iOS. */
+  selectedBackground: string;
+  /** [Android only] Text color for the selected segment. Ignored on iOS. */
+  selectedLabel: string;
+  /** [Android only] Text color for unselected segments. Ignored on iOS. */
+  unselectedLabel: string;
+  /** [Android only] Ripple color for the press feedback overlay. Ignored on iOS. */
+  ripple: string;
+}
+
+/**
  * SelectBottomSheet color palette. Slot-based, 15 slots. Groupings
  * mirror [[SelectColors]] except the modal-chrome triplet is
  * replaced by a sheet-chrome triplet: `sheetBackground` for the
@@ -537,6 +576,7 @@ export interface Tokens {
   selectColors: SelectColors;
   selectNativeColors: SelectNativeColors;
   selectBottomSheetColors: SelectBottomSheetColors;
+  segmentedControlColors: SegmentedControlColors;
   radius: number;
   spacing: number;
 }
@@ -565,6 +605,7 @@ export interface ResolvedTokens {
   selectColors: SelectColors;
   selectNativeColors: SelectNativeColors;
   selectBottomSheetColors: SelectBottomSheetColors;
+  segmentedControlColors: SegmentedControlColors;
   radius: {
     sm: number;
     md: number;

@@ -37,6 +37,8 @@ export {
   DEFAULT_DARK_SELECT_NATIVE_COLORS,
   DEFAULT_LIGHT_SELECT_BOTTOM_SHEET_COLORS,
   DEFAULT_DARK_SELECT_BOTTOM_SHEET_COLORS,
+  DEFAULT_LIGHT_SEGMENTED_CONTROL_COLORS,
+  DEFAULT_DARK_SEGMENTED_CONTROL_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -61,6 +63,7 @@ export {
   mergeSelectColors,
   mergeSelectNativeColors,
   mergeSelectBottomSheetColors,
+  mergeSegmentedControlColors,
   tint,
 } from "./tokens";
 export type { Config } from "./tokens";
@@ -87,6 +90,7 @@ export type {
   SelectColors,
   SelectNativeColors,
   SelectBottomSheetColors,
+  SegmentedControlColors,
   Tokens,
   ResolvedTokens,
 } from "./tokens-types";
