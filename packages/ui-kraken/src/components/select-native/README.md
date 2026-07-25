@@ -32,7 +32,9 @@ import { SelectNative } from "ui-kraken";
 | `errorText`          | `string`                      | —                 | Error copy below the frame. Overrides `helperText`.                                                                                  |
 | `placeholderLabel`   | `string`                      | `"Select…"`       | Label of the invisible placeholder item that gets injected when `value` doesn't match any option. See "Placeholder injection" below. |
 | `disabled`           | `boolean`                     | `false`           | Disable the picker — the native menu will not open.                                                                                  |
-| `radius`             | `SelectNativeRadius`          | `"md"`            | Frame border radius. `"none" \| "sm" \| "md" \| "lg" \| "pill" \| number`.                                                           |
+| `showBorderIOS`      | `boolean`                     | `false`           | Turn on the wrapper-frame chrome on iOS (background + border + padding + min-height). Off = 100% pure native picker. See below.      |
+| `showBorderAndroid`  | `boolean`                     | `false`           | Turn on the wrapper-frame chrome on Android. Independent from `showBorderIOS`.                                                       |
+| `radius`             | `SelectNativeRadius`          | `"md"`            | Frame border radius. Only applies when chrome is opted in (needs a border to render).                                                |
 | `selectNativeColors` | `Partial<SelectNativeColors>` | —                 | Per-instance color override. Missing slots fall through to the provider.                                                             |
 | `testID`             | `string`                      | `"select-native"` | Root testID. Sub-elements derive `-label`, `-frame`, `-picker`, `-helper-text`, `-error-text`, `-missing-peer`.                      |
 
@@ -83,10 +85,27 @@ You can override the placeholder label per-instance:
 
 ## Behavior
 
-- **Frame** — always visible, wraps the native picker. Background / border / border-error come from the palette.
+- **Frame chrome (background + border + padding + min-height)** is OFF by default on both platforms. The picker renders at its natural intrinsic size — SwiftUI `Menu` on iOS is just tinted text with a chevron, no background, no outline; Compose `DropdownMenu` on Android similarly renders as a bare button. This is the correct "100% native" look for most consumers.
+- Opt into the chrome per-platform with `showBorderIOS` / `showBorderAndroid`. You can enable it only on one platform if you want Cupertino-clean on iOS and Material-framed on Android (or the reverse).
 - **Native picker** — SwiftUI Menu on iOS, Compose DropdownMenu on Android. The trigger label reads the current option's `label`. Tapping opens the platform-native menu; picking fires `onChange`.
-- **Disabled** — the picker is disabled at the native level (`enabled={false}` on iOS + Android). Frame renders at reduced opacity.
-- **Missing peer dep** — the frame renders an "Install `@expo/ui`" hint instead of the picker. No crash.
+- **Disabled** — the picker is disabled at the native level (`enabled={false}` on iOS + Android). When chrome is on, the frame renders at reduced opacity.
+- **Error state** — `errorText` forces the chrome ON so the invalid state stays legible (red border, framed backdrop, error copy below).
+- **Missing peer dep** — the frame renders an "Install `@expo/ui`" hint instead of the picker. Chrome is forced ON so the hint has visual framing. No crash.
+
+### Chrome ON vs. OFF
+
+| Frame prop          | Chrome OFF (default) | Chrome ON                           |
+| ------------------- | -------------------- | ----------------------------------- |
+| `backgroundColor`   | `"transparent"`      | `background` / `backgroundDisabled` |
+| `borderWidth`       | `0`                  | `1`                                 |
+| `paddingHorizontal` | `0`                  | `$uiSpacingMd`                      |
+| `paddingTop`        | `12`                 | `$uiSpacingSm`                      |
+| `paddingBottom`     | `0`                  | `$uiSpacingSm`                      |
+| `minHeight`         | `0`                  | `48`                                |
+
+`paddingTop: 12` is the only chrome that stays in borderless mode — just enough breathing room so the label above doesn't visually glue to the picker's trigger text. No `paddingBottom` and no `minHeight` because they would leave invisible whitespace below the picker, which makes subsequent sections read as "raised" / floating (that's the exact regression we hit when we first tried `minHeight: 44` with `justifyContent: "center"`).
+
+The `label`, `helperText`, and `errorText` slots always render regardless of chrome state — those live outside the frame.
 
 ## Color model
 
@@ -133,7 +152,7 @@ import { UIKitProvider } from "ui-kraken";
 
 ## Usage
 
-Basic:
+Basic (fully native — no chrome):
 
 ```tsx
 const [country, setCountry] = useState<string | null>(null);
@@ -148,6 +167,31 @@ const [country, setCountry] = useState<string | null>(null);
   onChange={setCountry}
   label="Country"
 />;
+```
+
+Framed on both platforms (input-shaped picker):
+
+```tsx
+<SelectNative
+  options={COUNTRIES}
+  value={country}
+  onChange={setCountry}
+  label="Country"
+  showBorderIOS
+  showBorderAndroid
+/>
+```
+
+Cupertino-clean on iOS, Material-framed on Android:
+
+```tsx
+<SelectNative
+  options={COUNTRIES}
+  value={country}
+  onChange={setCountry}
+  label="Country"
+  showBorderAndroid
+/>
 ```
 
 With helper text:
@@ -217,11 +261,30 @@ Brand-tinted wrapper:
 - **Native picker owns its interior chrome** — text color of the current selection, chevron, menu row highlight, and disabled dim are all painted by the platform. Only the wrapper frame + labels are themable.
 - **No search / filter bar** — same as Select. The native menu is best for short-to-medium lists (<30 items). For long lists reach for `Select`.
 
+## Known issues
+
+### iOS: borderless picker appears "raised" when scrolled into view
+
+A borderless `<SelectNative>` (chrome off — the default) rendered OFF-SCREEN inside a scrollable container appears with extra invisible whitespace below its trigger once the user scrolls it into view. The picker itself is fully functional; only the vertical rhythm of the section that contains it is affected — the next section reads as sitting a bit further down than expected.
+
+**Reproduced with `@expo/ui@57.0.7` on iOS** with SwiftUI `Menu` (`appearance: "menu"`). Also reproduced independently in a different codebase (`duna-app`) using the same `@expo/ui` version. Not present on Android or web.
+
+Not caused by ui-kraken's frame styling — validated by:
+
+- Pinning `minHeight` on the frame (didn't help — moved the whitespace around).
+- `matchContents={false}` + `style={{ height: 28 }}` (fixed on-screen sections but centered the picker horizontally when SwiftUI stretched Host to fill width).
+- Per-axis `matchContents={{ horizontal: true, vertical: false }}` + `style.height` pin (fixed on-screen sections but off-screen ones still exhibited the bug).
+- Bypassing the repo's `<Screen>` wrapper in favor of a bare `<ScrollView>` with none of the keyboard-inset / persist-taps / dismiss props (bug persisted).
+
+Root cause appears to be `@expo/ui`'s `<Host matchContents>` reporting its SwiftUI-content size at the wrong time for off-screen views. We'll open an upstream issue and revisit.
+
+**Workaround for consumers who need pixel-perfect vertical rhythm on long iOS pages**: opt into `showBorderIOS` — the framed variant's `minHeight: 48` + `justifyContent: "center"` absorbs SwiftUI's intrinsic padding cleanly and the bug does not manifest.
+
 ## Platform support
 
 | Platform         | Status                             | Notes                                                                                                                                            |
 | ---------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| iOS              | ✅ (requires `@expo/ui`)           | SwiftUI `Menu`. Full haptic feedback + native chrome.                                                                                            |
+| iOS              | ✅ (requires `@expo/ui`)           | SwiftUI `Menu`. Full haptic feedback + native chrome. Known bug on borderless mode for off-screen pickers — see **Known issues** above.          |
 | Android          | ✅ (requires `@expo/ui`)           | Jetpack Compose `DropdownMenu`. Placeholder injection makes `value=null` open the menu reliably.                                                 |
 | Web              | ⚠️ (via `@expo/ui`'s web fallback) | `@expo/ui` renders a plain HTML `<select>`-like element on web. Not as visually integrated as the native platforms.                              |
 | Missing peer dep | ✅ safe fallback                   | Frame renders "Install `@expo/ui`" hint colored with the `errorText` slot. The app does NOT crash and other ui-kraken components are unaffected. |

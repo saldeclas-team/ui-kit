@@ -11,10 +11,14 @@ exports[`SelectNative snapshots dark palette + selected 1`] = `
     Country
   </Text>
   <View
-    backgroundColor="#111827"
+    backgroundColor="transparent"
     borderColor="#374151"
     borderRadius="$uiRadiusMd"
+    borderWidth={0}
     disabled={false}
+    minHeight={0}
+    paddingHorizontal={0}
+    paddingVertical={0}
     testID="select-native-frame"
   >
     <View
@@ -153,10 +157,14 @@ exports[`SelectNative snapshots default palette + peer available + value selecte
     Country
   </Text>
   <View
-    backgroundColor="#FFFFFF"
+    backgroundColor="transparent"
     borderColor="#D1D5DB"
     borderRadius="$uiRadiusMd"
+    borderWidth={0}
     disabled={false}
+    minHeight={0}
+    paddingHorizontal={0}
+    paddingVertical={0}
     testID="select-native-frame"
   >
     <View
@@ -298,7 +306,11 @@ exports[`SelectNative snapshots errorText state 1`] = `
     backgroundColor="#FFFFFF"
     borderColor="#DC2626"
     borderRadius="$uiRadiusMd"
+    borderWidth={1}
     disabled={false}
+    minHeight={48}
+    paddingHorizontal="$uiSpacingMd"
+    paddingVertical="$uiSpacingSm"
     testID="select-native-frame"
   >
     <View
@@ -480,7 +492,11 @@ exports[`SelectNative snapshots missing peer dep fallback 1`] = `
     backgroundColor="#FFFFFF"
     borderColor="#D1D5DB"
     borderRadius="$uiRadiusMd"
+    borderWidth={1}
     disabled={false}
+    minHeight={48}
+    paddingHorizontal="$uiSpacingMd"
+    paddingVertical="$uiSpacingSm"
     testID="select-native-frame"
   >
     <Text

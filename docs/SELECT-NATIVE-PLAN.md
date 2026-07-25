@@ -22,6 +22,7 @@ Sharing an API through a `variant` prop was rejected because the 3 variants have
 **Locked decisions:**
 
 - **Peer dep is `@expo/ui` (optional)**. When missing, the frame renders an "install `@expo/ui`" hint colored with the `errorText` slot; the app does NOT crash. Same graceful-degradation pattern as `ExternalLink` from Batch 1.
+- **Borderless by default; chrome opt-in per platform.** `showBorderIOS` and `showBorderAndroid` both default to `false` so SwiftUI `Menu` / Compose `DropdownMenu` render at their intrinsic native size (transparent, no border, no padding). Consumers who want the input-shaped wrapper opt in per platform — independent flags so Cupertino-clean on iOS + Material-framed on Android is a one-flag choice. Chrome is forced on regardless when `errorText` is set (invalid state needs framing) or when the peer dep is missing (fallback hint needs a box). `minHeight: 44` is kept even in borderless mode so the picker gets an iOS-standard touch target and the surrounding label / helper text stay at the same vertical rhythm as the framed variant.
 - **`appearance="menu"` fixed** — always the compact menu appearance. Wheel variant is for date pickers.
 - **Placeholder injection for Android** — when `value` is null (or doesn't match any option), synthesize a placeholder `Picker.Item` with empty-string value at position 0. Without this, the Android Compose Picker silently drops taps because it can't match `selectedValue` to any `Picker.Item`.
 - **Value type is `string | number`** — matches `@expo/ui`'s `PickerItemValue`. `Select` restricts to `string` only because its own list rendering doesn't need numeric key support.
@@ -133,7 +134,12 @@ packages/ui-kraken/src/components/select-native/
 - **No `variant="wheel"`** — that's what DatePicker will use.
 - **No web-specific fallback** — @expo/ui's own web fallback (a plain `<select>`) is what runs there.
 
+## Known issues
+
+**iOS, borderless mode only**: a `<SelectNative>` rendered off-screen inside a scrollable container renders slightly "raised" (extra invisible whitespace below the trigger) once scrolled into view. The picker is fully functional; only the vertical rhythm of the containing section is affected. Reproducible in duna-app with the same `@expo/ui@57.0.7` — root cause is upstream in the SwiftUI Menu + Host measurement path, not in ui-kraken. Workaround: consumers who need pixel-perfect vertical rhythm on long iOS pages opt into `showBorderIOS` (framed mode absorbs the SwiftUI padding via `minHeight: 48` + centering). Documented in the component README under **Known issues**. Full documentation of the debugging trail lives there.
+
 ## How to extend
 
 - **Add wheel appearance** as a `variant="wheel"` prop if a date-style use case emerges.
 - **Add `renderItem` slot** if @expo/ui ever exposes one.
+- **Open the upstream `@expo/ui` issue** for the borderless-off-screen measurement bug; once fixed there, our workaround note in the README can be removed.

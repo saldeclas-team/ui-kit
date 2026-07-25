@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react-native";
 import { forwardRef } from "react";
+import { Platform } from "react-native";
 
 import type { SelectNativeColors } from "../../tokens/tokens-types";
 
@@ -308,18 +309,52 @@ describe("SelectNative", () => {
     expect(screen.getByTestId("sn-picker-item-two")).toBeTruthy();
   });
 
-  it("frame paints `background` slot by default", async () => {
+  it("frame is transparent by default (no chrome — pure native look)", async () => {
     await render(
       <SelectNative testID="sn" options={[...OPTIONS]} value={null} onChange={jest.fn()} />
+    );
+    // Default: showBorderIOS=false + showBorderAndroid=false →
+    // the wrapper frame drops its background / border / padding
+    // so the native picker reads as fully-native. `minHeight` is
+    // kept at the iOS/Android 44 px touch-target minimum so the
+    // frame doesn't collapse to the picker's intrinsic height
+    // (~25 px), which would make the surrounding label + helper
+    // text read as "glued" to the trigger.
+    const frame = screen.getByTestId("sn-frame");
+    expect(frame.props.backgroundColor).toBe("transparent");
+    expect(frame.props.borderWidth).toBe(0);
+    expect(frame.props.paddingHorizontal).toBe(0);
+    expect(frame.props.paddingVertical).toBe(0);
+    expect(frame.props.minHeight).toBe(44);
+  });
+
+  it("frame paints `background` slot when the border is opted in", async () => {
+    await render(
+      <SelectNative
+        testID="sn"
+        options={[...OPTIONS]}
+        value={null}
+        onChange={jest.fn()}
+        showBorderIOS
+        showBorderAndroid
+      />
     );
     expect(screen.getByTestId("sn-frame").props.backgroundColor).toBe(
       LIGHT_SELECT_NATIVE_COLORS.background
     );
   });
 
-  it("frame paints `backgroundDisabled` slot when disabled", async () => {
+  it("frame paints `backgroundDisabled` slot when disabled + chrome on", async () => {
     await render(
-      <SelectNative testID="sn" options={[...OPTIONS]} value="one" onChange={jest.fn()} disabled />
+      <SelectNative
+        testID="sn"
+        options={[...OPTIONS]}
+        value="one"
+        onChange={jest.fn()}
+        disabled
+        showBorderIOS
+        showBorderAndroid
+      />
     );
     expect(screen.getByTestId("sn-frame").props.backgroundColor).toBe(
       LIGHT_SELECT_NATIVE_COLORS.backgroundDisabled
@@ -340,6 +375,102 @@ describe("SelectNative", () => {
     expect(screen.getByTestId("sn-frame").props.borderColor).toBe(
       LIGHT_SELECT_NATIVE_COLORS.borderError
     );
+    // Errors force the outline on regardless of the per-platform
+    // border flags — the invalid state has to stay legible.
+    expect(screen.getByTestId("sn-frame").props.borderWidth).toBe(1);
+  });
+
+  // Platform-toggle behavior. We drive `Platform.OS` + `Platform.select`
+  // via targeted mutations in `beforeEach` inside the nested describe
+  // — wholesale mocking `react-native/Libraries/Utilities/Platform`
+  // breaks jest-expo's own Platform.select usage at setup time.
+  describe("per-platform border toggles", () => {
+    const originalOS = Platform.OS;
+    const originalSelect = Platform.select;
+
+    afterEach(() => {
+      Object.defineProperty(Platform, "OS", { value: originalOS, configurable: true });
+      Platform.select = originalSelect;
+    });
+
+    function setPlatform(os: "ios" | "android" | "web") {
+      Object.defineProperty(Platform, "OS", { value: os, configurable: true });
+      Platform.select = ((obj: Record<string, unknown>) => {
+        if (os === "ios" && "ios" in obj) return obj.ios;
+        if (os === "android" && "android" in obj) return obj.android;
+        return obj.default;
+      }) as typeof Platform.select;
+    }
+
+    it("shows the border on iOS when `showBorderIOS` is true", async () => {
+      setPlatform("ios");
+      await render(
+        <SelectNative
+          testID="sn"
+          options={[...OPTIONS]}
+          value={null}
+          onChange={jest.fn()}
+          showBorderIOS
+        />
+      );
+      expect(screen.getByTestId("sn-frame").props.borderWidth).toBe(1);
+    });
+
+    it("keeps the border off on iOS when only `showBorderAndroid` is true", async () => {
+      setPlatform("ios");
+      await render(
+        <SelectNative
+          testID="sn"
+          options={[...OPTIONS]}
+          value={null}
+          onChange={jest.fn()}
+          showBorderAndroid
+        />
+      );
+      expect(screen.getByTestId("sn-frame").props.borderWidth).toBe(0);
+    });
+
+    it("shows the border on Android when `showBorderAndroid` is true", async () => {
+      setPlatform("android");
+      await render(
+        <SelectNative
+          testID="sn"
+          options={[...OPTIONS]}
+          value={null}
+          onChange={jest.fn()}
+          showBorderAndroid
+        />
+      );
+      expect(screen.getByTestId("sn-frame").props.borderWidth).toBe(1);
+    });
+
+    it("keeps the border off on Android when only `showBorderIOS` is true", async () => {
+      setPlatform("android");
+      await render(
+        <SelectNative
+          testID="sn"
+          options={[...OPTIONS]}
+          value={null}
+          onChange={jest.fn()}
+          showBorderIOS
+        />
+      );
+      expect(screen.getByTestId("sn-frame").props.borderWidth).toBe(0);
+    });
+
+    it("falls back to (showBorderIOS || showBorderAndroid) on non-mobile platforms (web)", async () => {
+      setPlatform("web");
+      await render(
+        <SelectNative
+          testID="sn"
+          options={[...OPTIONS]}
+          value={null}
+          onChange={jest.fn()}
+          showBorderIOS
+        />
+      );
+      expect(screen.getByTestId("sn-frame").props.borderWidth).toBe(1);
+    });
   });
 
   it("renders helperText when passed and no error", async () => {
@@ -399,7 +530,10 @@ describe("SelectNative", () => {
     expect(screen.getByTestId("sn-picker").props.accessibilityState).toEqual({ disabled: true });
   });
 
-  it("per-instance selectNativeColors overrides win", async () => {
+  it("per-instance selectNativeColors overrides win when chrome is opted in", async () => {
+    // Palette slots only reach the frame's `backgroundColor` /
+    // `borderColor` props when the chrome layer is on — opt into
+    // it explicitly so the color assertions are meaningful.
     await render(
       <SelectNative
         testID="sn"
@@ -407,6 +541,8 @@ describe("SelectNative", () => {
         value={null}
         onChange={jest.fn()}
         selectNativeColors={{ background: "#F5F3FF", border: "#7C3AED" }}
+        showBorderIOS
+        showBorderAndroid
       />
     );
     expect(screen.getByTestId("sn-frame").props.backgroundColor).toBe("#F5F3FF");
@@ -429,13 +565,20 @@ describe("SelectNative", () => {
     expect(screen.getByTestId("sn-frame").props.borderColor).toBe("#047857");
   });
 
-  it("uses the dark palette when activeTheme='dark'", async () => {
+  it("uses the dark palette when activeTheme='dark' + chrome opted in", async () => {
     mockUseUIKit.mockReturnValue({
       activeTheme: "dark",
       tokens: { selectNativeColors: DARK_SELECT_NATIVE_COLORS },
     });
     await render(
-      <SelectNative testID="sn" options={[...OPTIONS]} value="one" onChange={jest.fn()} />
+      <SelectNative
+        testID="sn"
+        options={[...OPTIONS]}
+        value="one"
+        onChange={jest.fn()}
+        showBorderIOS
+        showBorderAndroid
+      />
     );
     expect(screen.getByTestId("sn-frame").props.backgroundColor).toBe(
       DARK_SELECT_NATIVE_COLORS.background

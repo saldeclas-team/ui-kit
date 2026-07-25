@@ -35,11 +35,14 @@ export default function SelectNativeScreen() {
   return (
     <Screen
       title="SelectNative"
-      subtitle="Single-choice picker rendered with @expo/ui's native Picker. SwiftUI Menu on iOS + Compose DropdownMenu on Android. Optional peer dep — graceful fallback when missing."
+      subtitle="Single-choice picker rendered with @expo/ui's native Picker. SwiftUI Menu on iOS + Compose DropdownMenu on Android. Renders borderless by default for a fully-native feel — opt into the frame with `showBorderIOS` / `showBorderAndroid` per platform."
     >
-      <Section title="Basic — no value selected">
+      <Section title="Basic — 100% native, no wrapper chrome">
         <SelectNative<Country> options={[...COUNTRIES]} value={basic} onChange={setBasic} />
-        <Text style={{ color: captionColor, fontSize: 12 }}>Selected: {basic ?? "(none)"}</Text>
+        <Text style={{ color: captionColor, fontSize: 12 }}>
+          Just the native picker — no background, border, padding, or forced height. Selected:{" "}
+          {basic ?? "(none)"}
+        </Text>
       </Section>
 
       <Section title="Preselected value">
@@ -80,12 +83,36 @@ export default function SelectNativeScreen() {
         />
       </Section>
 
+      <Section title="Chrome opt-in (both platforms)">
+        <SelectNative<Country>
+          options={[...COUNTRIES]}
+          value={brand}
+          onChange={setBrand}
+          label="With framed chrome"
+          helperText="showBorderIOS + showBorderAndroid = frame wraps the picker (background + border + padding)."
+          showBorderIOS
+          showBorderAndroid
+        />
+      </Section>
+
+      <Section title="Chrome only on iOS">
+        <SelectNative<Country>
+          options={[...COUNTRIES]}
+          value={pill}
+          onChange={setPill}
+          label="Framed on iOS, pure native on Android"
+          showBorderIOS
+        />
+      </Section>
+
       <Section title="Per-instance brand frame">
         <SelectNative<Country>
           options={[...COUNTRIES]}
           value={brand}
           onChange={setBrand}
-          label="Brand-tinted"
+          label="Brand-tinted (chrome opted in)"
+          showBorderIOS
+          showBorderAndroid
           selectNativeColors={{
             border: "#7C3AED",
             background: "#F5F3FF",
@@ -93,13 +120,15 @@ export default function SelectNativeScreen() {
         />
       </Section>
 
-      <Section title="Pill radius">
+      <Section title="Pill radius (requires chrome)">
         <SelectNative<Country>
           options={[...COUNTRIES]}
           value={pill}
           onChange={setPill}
           label="Country"
           radius="pill"
+          showBorderIOS
+          showBorderAndroid
         />
       </Section>
 

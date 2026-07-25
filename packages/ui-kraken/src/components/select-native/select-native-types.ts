@@ -79,6 +79,21 @@ export interface SelectNativeProps<Value extends SelectNativeValue = string> ext
   placeholderLabel?: string;
   /** Disable the trigger — native menu will not open. */
   disabled?: boolean;
+  /**
+   * Show the wrapper-frame border on iOS. Defaults to `false` so
+   * the picker reads as fully native — SwiftUI `Menu` is normally
+   * borderless; the frame outline was a form-field-parity design
+   * choice. Opt in when you want the outline for visual grouping.
+   * An `errorText` still forces the border on regardless.
+   */
+  showBorderIOS?: boolean;
+  /**
+   * Show the wrapper-frame border on Android. Defaults to `false`
+   * for the same reason as `showBorderIOS`. Independent from the
+   * iOS flag so consumers can enable it per-platform (e.g. hide
+   * on iOS to match Cupertino, show on Android to match Material).
+   */
+  showBorderAndroid?: boolean;
   /** Frame border radius. Defaults to `"md"`. */
   radius?: SelectNativeRadius;
   /**
