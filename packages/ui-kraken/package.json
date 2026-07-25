@@ -1,6 +1,6 @@
 {
   "name": "ui-kraken",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Fully customizable React Native / Expo component library. Ships a KrakenProvider, a coarse token schema, and a compound Button (Primary / Secondary / Ghost / Destructive) with per-instance color overrides — all powered by Tamagui.",
   "keywords": [
     "react-native",
