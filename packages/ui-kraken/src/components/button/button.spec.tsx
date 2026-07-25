@@ -127,6 +127,20 @@ describe("Button", () => {
     expect(screen.getByTestId("default-button").props.tone).toBe("primary");
   });
 
+  it("falls back to primary when tone is explicitly undefined", async () => {
+    // Compound wrappers spread caller props AFTER setting tone, so passing
+    // `tone={undefined}` overrides the wrapper's default and reaches
+    // BaseButton with tone=undefined — which triggers the destructure
+    // default `tone = "primary"`. Covers that fallback branch directly.
+    await render(
+      <Button testID="undef" tone={undefined}>
+        Undef
+      </Button>
+    );
+
+    expect(screen.getByTestId("undef").props.tone).toBe("primary");
+  });
+
   it("resolves radius='pill' to 9999", async () => {
     await render(
       <Button testID="btn" radius="pill">
