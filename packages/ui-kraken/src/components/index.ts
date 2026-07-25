@@ -34,3 +34,11 @@ export type { SurfaceProps, SurfaceLevel } from "./surface";
 
 export { RefreshControl } from "./refresh-control";
 export type { RefreshControlProps, RefreshControlColorsInput } from "./refresh-control";
+
+export { Skeleton } from "./skeleton";
+export type {
+  SkeletonProps,
+  SkeletonRadius,
+  SkeletonVariant,
+  SkeletonColorsInput,
+} from "./skeleton";

@@ -18,6 +18,7 @@ import type {
   InputColors,
   RadioGroupColors,
   RefreshControlColors,
+  SkeletonColors,
   SurfaceColors,
   TextColors,
 } from "../tokens/tokens-types";
@@ -160,6 +161,19 @@ export function flattenRefreshControlColors(colors: RefreshControlColors): Recor
   for (const slot of Object.keys(colors) as Array<keyof RefreshControlColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiRefreshControl${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `skeletonColors` slot map into `$uiSkeleton{PascalCase}`
+ * Tamagui tokens (`$uiSkeletonBase`, `$uiSkeletonHighlight`).
+ */
+export function flattenSkeletonColors(colors: SkeletonColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SkeletonColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSkeleton${capitalized}`] = colors[slot];
   }
   return out;
 }

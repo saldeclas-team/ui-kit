@@ -163,6 +163,18 @@ export interface SurfaceColors {
 }
 
 /**
+ * Skeleton color palette. 2 slots — the fill at rest (`base`) and the
+ * peak of the pulse animation (`highlight`). Both typically alpha-tinted
+ * grays that read as "loading" against any surface.
+ */
+export interface SkeletonColors {
+  /** Fill at rest. Also the resting color in `variant="static"`. */
+  base: string;
+  /** Peak of the pulse animation (the top of the opacity crossfade). */
+  highlight: string;
+}
+
+/**
  * CurrencyInput color palette. Slot-based. Mirrors `InputColors` plus a
  * `prefix` slot for the currency-symbol text color (the `"$"` / `"€"` /
  * etc. that renders inside the wrapper next to the number).
@@ -239,6 +251,7 @@ export interface Tokens {
   currencyInputColors: CurrencyInputColors;
   surfaceColors: SurfaceColors;
   refreshControlColors: RefreshControlColors;
+  skeletonColors: SkeletonColors;
   radius: number;
   spacing: number;
 }
@@ -257,6 +270,7 @@ export interface ResolvedTokens {
   currencyInputColors: CurrencyInputColors;
   surfaceColors: SurfaceColors;
   refreshControlColors: RefreshControlColors;
+  skeletonColors: SkeletonColors;
   radius: {
     sm: number;
     md: number;

@@ -21,6 +21,7 @@ export type {
   CurrencyInputColorsInput,
   SurfaceColorsInput,
   RefreshControlColorsInput,
+  SkeletonColorsInput,
 } from "./provider";
 
 // Tokens
@@ -43,6 +44,8 @@ export {
   DEFAULT_DARK_SURFACE_COLORS,
   DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
   DEFAULT_DARK_REFRESH_CONTROL_COLORS,
+  DEFAULT_LIGHT_SKELETON_COLORS,
+  DEFAULT_DARK_SKELETON_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -55,6 +58,7 @@ export {
   mergeCurrencyInputColors,
   mergeSurfaceColors,
   mergeRefreshControlColors,
+  mergeSkeletonColors,
   tint,
 } from "./tokens";
 export type {
@@ -69,6 +73,7 @@ export type {
   CurrencyInputColors,
   SurfaceColors,
   RefreshControlColors,
+  SkeletonColors,
   ResolvedTokens,
   Config,
 } from "./tokens";
@@ -104,3 +109,6 @@ export type { SurfaceProps, SurfaceLevel } from "./components";
 
 export { RefreshControl } from "./components";
 export type { RefreshControlProps } from "./components";
+
+export { Skeleton } from "./components";
+export type { SkeletonProps, SkeletonRadius, SkeletonVariant } from "./components";

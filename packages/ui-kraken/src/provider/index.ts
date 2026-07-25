@@ -13,4 +13,5 @@ export type {
   CurrencyInputColorsInput,
   SurfaceColorsInput,
   RefreshControlColorsInput,
+  SkeletonColorsInput,
 } from "./provider-types";

@@ -9,6 +9,7 @@ import {
   mergeInputColors,
   mergeRadioGroupColors,
   mergeRefreshControlColors,
+  mergeSkeletonColors,
   mergeSurfaceColors,
   mergeTextColors,
 } from "./defaults";
@@ -249,6 +250,22 @@ describe("mergeRefreshControlColors", () => {
     expect(merged.spinner).toBe("#7C3AED");
     expect(merged.background).toBe(base.background);
     expect(merged.title).toBe(base.title);
+  });
+});
+
+describe("mergeSkeletonColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.skeletonColors;
+    expect(mergeSkeletonColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.skeletonColors;
+    const merged = mergeSkeletonColors(base, {
+      base: "#DBEAFE",
+    });
+    expect(merged.base).toBe("#DBEAFE");
+    expect(merged.highlight).toBe(base.highlight);
   });
 });
 

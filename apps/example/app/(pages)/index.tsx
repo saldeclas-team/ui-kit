@@ -69,6 +69,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Skeleton",
+    description:
+      "Animated pulse placeholder for loading states — rectangles, circles, arbitrary shapes.",
+    href: "/components/skeleton",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

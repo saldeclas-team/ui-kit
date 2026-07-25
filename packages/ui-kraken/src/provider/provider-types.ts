@@ -10,6 +10,7 @@ import type {
   InputColors,
   RadioGroupColors,
   RefreshControlColors,
+  SkeletonColors,
   SurfaceColors,
   TextColors,
   ResolvedTokens,
@@ -75,6 +76,13 @@ export type SurfaceColorsInput = Partial<SurfaceColors>;
 export type RefreshControlColorsInput = Partial<RefreshControlColors>;
 
 /**
+ * Partial override for `skeletonColors` — consumers only declare the
+ * slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, 2 slots (`base` + `highlight`).
+ */
+export type SkeletonColorsInput = Partial<SkeletonColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -87,6 +95,7 @@ export interface TokensInput {
   currencyInputColors?: CurrencyInputColorsInput;
   surfaceColors?: SurfaceColorsInput;
   refreshControlColors?: RefreshControlColorsInput;
+  skeletonColors?: SkeletonColorsInput;
   radius?: number;
   spacing?: number;
 }

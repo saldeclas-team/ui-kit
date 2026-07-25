@@ -16,6 +16,7 @@ export function coarseToFineTokens(tokens: Tokens): ResolvedTokens {
     currencyInputColors,
     surfaceColors,
     refreshControlColors,
+    skeletonColors,
     radius,
     spacing,
   } = tokens;
@@ -28,6 +29,7 @@ export function coarseToFineTokens(tokens: Tokens): ResolvedTokens {
     currencyInputColors,
     surfaceColors,
     refreshControlColors,
+    skeletonColors,
     radius: {
       sm: radius * 0.5,
       md: radius,

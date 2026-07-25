@@ -28,6 +28,7 @@ import {
   DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
   DEFAULT_DARK_REFRESH_CONTROL_COLORS,
 } from "./refresh-control";
+import { DEFAULT_LIGHT_SKELETON_COLORS, DEFAULT_DARK_SKELETON_COLORS } from "./skeleton";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -42,6 +43,7 @@ export const DEFAULT_TOKENS: Tokens = {
   currencyInputColors: DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
   surfaceColors: DEFAULT_LIGHT_SURFACE_COLORS,
   refreshControlColors: DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
+  skeletonColors: DEFAULT_LIGHT_SKELETON_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -59,6 +61,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   currencyInputColors: DEFAULT_DARK_CURRENCY_INPUT_COLORS,
   surfaceColors: DEFAULT_DARK_SURFACE_COLORS,
   refreshControlColors: DEFAULT_DARK_REFRESH_CONTROL_COLORS,
+  skeletonColors: DEFAULT_DARK_SKELETON_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -99,3 +102,8 @@ export {
   DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   mergeRefreshControlColors,
 } from "./refresh-control";
+export {
+  DEFAULT_LIGHT_SKELETON_COLORS,
+  DEFAULT_DARK_SKELETON_COLORS,
+  mergeSkeletonColors,
+} from "./skeleton";
