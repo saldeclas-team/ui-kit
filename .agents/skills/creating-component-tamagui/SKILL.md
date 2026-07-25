@@ -196,6 +196,47 @@ export function PulsingDot() {
 
 **Why single-stack**: mixing RN `Animated` (JS thread) with reanimated (UI thread worklets) in the same tree causes drop-frames and confusing debugging. Every animated component in ui-kraken uses reanimated so consumers get one predictable perf profile.
 
+### 3.5 Native bridges must be platform-split (mandatory)
+
+**Hard rule**: any component whose render calls into a **native bridge** MUST split the bridge-touching code into per-platform files. The signal is simple — if your component imports from any of these, split:
+
+- `@expo/ui` / `@expo/ui/community/*`
+- `@react-native-community/*`
+- `@gorhom/*`
+- `expo-*` (image-picker, av, camera, etc.)
+- Anything else that measures / renders through a native view manager
+
+Or, if the component reads `Platform.OS` inside the render to branch bridge behavior — split.
+
+**File layout**:
+
+```
+packages/ui-kraken/src/components/<name>/
+├── <name>.tsx                 # shared shell — palette, chrome, label / helper / error, peer-missing fallback
+├── <name>-body.tsx            # default fallback (usually re-exports .web)
+├── <name>-body.ios.tsx        # iOS bridge render
+├── <name>-body.android.tsx    # Android bridge render
+├── <name>-body.web.tsx        # web fallback
+├── <name>-body-types.ts       # shell → body props contract
+```
+
+Metro resolves `./<name>-body` to the right variant at bundle time. Jest-expo picks `.ios` by default in the test env (fine — most specs test the shell's contract with the body via a mocked body).
+
+**What lives where**:
+
+| File                     | Contents                                                                                                                                                                                                  |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `<name>.tsx` (shell)     | Palette resolution, chrome props (background, border, padding, minHeight), label / helper / error rendering, peer-missing fallback. **NO** native imports. **NO** `Platform.OS` branching on native APIs. |
+| `<name>-body-types.ts`   | The contract the shell hands the body. Plain TS + shared component types — no native types leak here.                                                                                                     |
+| `<name>-body.<plat>.tsx` | The bridge call — `<Host><Picker>`, `<MenuView>`, `<DatePicker>`, whatever. Reads only its props; no palette resolution.                                                                                  |
+| `<name>-body.tsx`        | Fallback for bundlers Metro doesn't recognize. Almost always: `export { NativePickerBody } from "./<name>-body.web";`.                                                                                    |
+
+**Why (mandatory)**: SelectNative burned a full session because we tried to keep one shared file across platforms. SwiftUI Menu's intrinsic-size measurement raced with off-screen layout on iOS — every fix in the shared file either failed to fix iOS OR broke Android. Only once we split (`native-picker-body.ios.tsx` / `.android.tsx` / `.web.tsx`) could we switch iOS to `MenuView` without touching the Android or web paths. The recorded pattern lives at [[native-bridges-platform-split]].
+
+**Even if v0 only supports one platform**, the split scaffolding must already exist. Create `.ios` + `.android` + `.web` + fallback from the start, even if two of them are identical — the file boundaries are what protect the platforms from each other's changes.
+
+**Not a native bridge, not a split**: pure JS + Tamagui + Reanimated components render identically per platform. Don't split them — the platform-split penalty (three test surfaces, three files to update per palette change) isn't worth it.
+
 ## 4. `*.tsx` — component logic
 
 The component file wires props → styled primitives, applies per-instance overrides, and handles slots (icons, loader).
@@ -556,6 +597,7 @@ Before opening the PR:
 - [ ] Folder `packages/ui-kraken/src/components/<name>/` exists with the seven files.
 - [ ] `*.styled.ts` uses only `$ui*` theme tokens for spacing / radius / layout — no hex literals. Color surfaces come from `<component>.tsx` at render time via `useUIKit()`.
 - [ ] Prop interface named `<ComponentName>Props`, exported from `*-types.ts`, includes `testID?: string`.
+- [ ] **If the component wraps a native bridge** (`@expo/ui`, `@gorhom/*`, `@react-native-community/*`, `expo-*`, or anything that measures / renders through a native view manager): render is split into `<name>-body.ios.tsx` + `.android.tsx` + `.web.tsx` + `.tsx` fallback, per §3.5. Shell holds palette + chrome; body holds the bridge call. Non-negotiable — even a v0 with one supported platform ships all four files.
 - [ ] Component owns its color block on the token schema (steps in Section 11). No reuse of another component's block.
 - [ ] `<X>ColorsInput` type in `provider-types.ts` for provider-level override; per-instance override in the component's `*-types.ts`.
 - [ ] `flatten<X>Colors` added to `utils/flatten.ts` and re-exported from `utils/index.ts`.
