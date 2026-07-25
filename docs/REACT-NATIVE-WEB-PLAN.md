@@ -113,7 +113,7 @@ Manual smoke test before opening the PR (documented in PR body):
 - Navigate to `/components/text` — every variant renders, every color slot resolves, custom hex passes through
 - Test `numberOfLines={2}` truncation on Text — should ellipsize on web too
 - Chrome DevTools → mobile-viewport simulation → verify layout doesn't regress
-- Lighthouse audit on the catalog page → note the initial performance score in the PR body
+- Lighthouse audit on the components home → note the initial performance score in the PR body
 
 Automated:
 

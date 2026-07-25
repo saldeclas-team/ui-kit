@@ -289,7 +289,7 @@ Mock `./alert.styled` and `../../provider/use-ui-kit` the same way Button and Te
 5. **Custom colors** — `alertColors` per-instance override examples
 6. **Long content** — a wrapping paragraph inside an Alert
 
-Catalog home row for Alert stays as `status: "shipped"`.
+Components-home row for Alert stays as `status: "shipped"`.
 
 ## Non-goals
 

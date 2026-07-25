@@ -91,7 +91,7 @@ Per component, executed in this order:
 2. **Token schema wiring** (steps in [`creating-component-tamagui` Section 11](../.agents/skills/creating-component-tamagui/SKILL.md)) — types + defaults + flatten + provider merge + barrels.
 3. **Component files** — `.tsx`, `.styled.ts`, `-types.ts`, `.spec.tsx` (targeted asserts + `describe("snapshots")` block), `.stories.tsx` (8-ish stories including dark theme), `README.md` (props table + usage + Platform support), `index.ts` (explicit named exports).
 4. **Barrels updated** — `components/index.ts` + public `src/index.ts`.
-5. **Example app** — new screen + Stack.Screen registration + catalog row flipped to `status: "shipped"`.
+5. **Example app** — new screen + Stack.Screen registration + components-home row flipped to `status: "shipped"`.
 6. **Verify green** — `pnpm typecheck && pnpm -r lint && pnpm test && pnpm --filter ui-kraken build`.
 7. **Flip status** in this doc — ⏳ → ✅ on the component's row.
 8. **Commit atomic** — rich body per `rich-commits-and-prs` memory. One commit per component.

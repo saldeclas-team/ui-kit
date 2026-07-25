@@ -299,7 +299,7 @@ Mocks `./button.styled` and `../../provider/use-ui-kit` so the tests run under j
 6. **With icons** — leftIcon, rightIcon, both, icon-only (Feather icons imported by the example app, NOT by ui-kraken).
 7. **Per-instance overrides** — an orange primary, a red ghost, a custom outline.
 
-Catalog home links to this screen at `/components/button`.
+The components home links to this screen at `/components/button`.
 
 ## Non-goals (explicitly deferred)
 
@@ -316,7 +316,7 @@ Catalog home links to this screen at `/components/button`.
 Landed across several PRs on the way to v0.2.0:
 
 1. **v0.1.0 initial cut** (`d2fd1b8`): `feat(ui-kraken): add UIKitProvider, coarse tokens, and the Button component` — three tones, single size, first pass at the token pipeline.
-2. **v0.2.0 the real deal** (`8077325`): `feat(ui-kraken): per-component token schema, Button v2 (5 tones + radius), dark mode, catalog` — refactored tokens from a flat `primaryColor: string` to the per-component grouped block (breaking, gated by the v0.2 minor), added `outline` and `ghost` tones, added the `radius` prop, added dark-mode support end-to-end (`dark` prop on provider + `defaultTheme` + `DEFAULT_DARK_TOKENS`), and shipped the example catalog home.
+2. **v0.2.0 the real deal** (`8077325`) — refactored tokens from a flat `primaryColor: string` to the per-component grouped block (breaking, gated by the v0.2 minor), added `outline` and `ghost` tones, added the `radius` prop, added dark-mode support end-to-end (`dark` prop on provider + `defaultTheme` + `DEFAULT_DARK_TOKENS`), and shipped the example components-home screen.
 3. **Testing rework** (`f7f6234`): `test(ui-kraken): realistic coverage thresholds + drop dead override helpers` — pruned utilities that testing revealed were unused.
 4. **Elevation feature** (`6b6613d`): `feat(button): add elevation prop with none / sm / md / lg presets` — added hardcoded shadow presets and the iOS shadow + Android elevation dual output.
 5. **Dark-mode shadow fix** (`23ec72e` → `9354fa0` → `3cad421`): iterative fix for invisible black shadows on dark surfaces. Landed on the "translucent-white border in dark mode" pattern; also had to null out `shadowColor` + Android `elevation` to fully suppress the invisible shadow layer.

@@ -121,7 +121,7 @@
   - **`Button`** — renders as `<button>` / `<div>` DOM elements. `pressStyle` animates via CSS transitions. `disabled` maps to `aria-disabled`. `testID` becomes `data-testid`. `elevation` uses CSS `box-shadow`. The dark-mode elevation border swap (translucent white to replace invisible black shadow) works identically to native.
   - **`Text`** — renders as `<span>` DOM element. `numberOfLines` maps to CSS `-webkit-line-clamp`. `onPress` becomes a click handler. `textAlign` and every variant's `fontSize` / `lineHeight` / `fontWeight` land as inline styles.
 
-  Both components verified via `expo export --platform web` on the example app — every screen (catalog home, Button demo, Text demo) bundles and renders correctly.
+  Both components verified via `expo export --platform web` on the example app — every screen (components home, Button demo, Text demo) bundles and renders correctly.
 
   **Non-goals for this release:**
 
@@ -211,7 +211,7 @@
 
 ### Minor Changes
 
-- d2fd1b8: Add `UIKitProvider`, per-component `Tokens` schema, and the `Button` component with five tones, `radius`, and theme-aware `elevation` — plus dark-mode support and a live catalog demo.
+- d2fd1b8: Add `UIKitProvider`, per-component `Tokens` schema, and the `Button` component with five tones, `radius`, and theme-aware `elevation` — plus dark-mode support and a live components-home demo.
 
   **Provider layer**
 
@@ -238,9 +238,9 @@
   - Per-instance color override via `buttonColors?: Partial<{ background?, label, border? }>` — variant implicit from the compound subcomponent.
   - Full accessibility: `accessibilityRole="button"`, `accessibilityState`, minimum 48 × 48 px touch target (grows to 56 for `lg`, shrinks to 36 for `sm`), `pressStyle: { scale: 0.98, opacity: 0.9 }`.
 
-  **Example app catalog**
+  **Example app components home**
 
-  - `apps/example/app/(pages)/index.tsx` is now a catalog home listing every component (with "Ready" / "Planned" badges).
+  - `apps/example/app/(pages)/index.tsx` is now a components home listing every component (with "Ready" / "Planned" badges).
   - `apps/example/app/(pages)/components/button.tsx` hosts the full Button demo — every variant, every size, states, radius presets, elevation levels, per-instance overrides.
   - New `<Screen>` wrapper forces `#000` background in dark mode / `#FFF` in light so text stays readable.
   - New `<ThemeToggle>` in the header lets you flip between light / dark / system live.

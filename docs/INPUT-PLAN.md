@@ -262,7 +262,7 @@ Example app:
 
 - `apps/example/app/(pages)/components/input.tsx` — full showcase (6 sections)
 - `apps/example/app/_layout.tsx` — register `Stack.Screen` with `headerBackTitle: "Components"`
-- `apps/example/app/(pages)/index.tsx` — add Input catalog row with `status: "shipped"`
+- `apps/example/app/(pages)/index.tsx` — add Input components-home row with `status: "shipped"`
 
 ## Testing (Jest + RTL v14 + jest-expo)
 
@@ -327,7 +327,7 @@ Mock `./input.styled` with `rn.View` / `rn.Text` stubs; mock `../../provider/use
 5. **Disabled** — pre-filled value, non-editable.
 6. **Radius presets** — 5 rows demonstrating each `radius` value.
 
-Register the route in `_layout.tsx` (`headerBackTitle: "Components"`) and add a `status: "shipped"` catalog row in `(pages)/index.tsx`.
+Register the route in `_layout.tsx` (`headerBackTitle: "Components"`) and add a `status: "shipped"` components-home row in `(pages)/index.tsx`.
 
 ## Non-goals
 
@@ -349,7 +349,7 @@ Executed on branch `feat/duna-migration-batch-1`:
 1. Token schema wiring (13 files across `tokens/` + `provider/` + `utils/` + barrels)
 2. Component files (7 files) in the order: `input-types.ts` → `input.styled.ts` → `input.tsx` → `input.spec.tsx` (+ regenerate snapshots) → `input.stories.tsx` → `README.md` → `index.ts`
 3. Barrels updated: `components/index.ts` + `src/index.ts`
-4. Example app: new screen + route registration + catalog row
+4. Example app: new screen + route registration + components-home row
 5. Flip status in this doc: `planned` → `shipped on <YYYY-MM-DD> in ui-kraken v0.8.0`
 6. Flip Batch 1 plan doc status: ⏳ → ✅ on Input's row
 7. Verify: `pnpm typecheck && pnpm -r lint && pnpm test && pnpm --filter ui-kraken build`

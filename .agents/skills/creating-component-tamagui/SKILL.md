@@ -483,7 +483,7 @@ Before opening the PR:
 - [ ] Component and types added to `packages/ui-kraken/src/components/index.ts` and to the public barrel `packages/ui-kraken/src/index.ts`.
 - [ ] Minimum touch target 48 × 48 px on interactive elements.
 - [ ] Dark theme validated in Storybook.
-- [ ] Example app: new screen in `apps/example/app/(pages)/components/<name>.tsx`, new `Stack.Screen` in `apps/example/app/_layout.tsx` with `headerBackTitle: "Components"`, catalog row added in `apps/example/app/(pages)/index.tsx` with `status: "shipped"` (note: the home screen is titled "Components", NOT "Catalog" — that vocabulary was retired).
+- [ ] Example app: new screen in `apps/example/app/(pages)/components/<name>.tsx`, new `Stack.Screen` in `apps/example/app/_layout.tsx` with `headerBackTitle: "Components"`, and a new row in the components home (`apps/example/app/(pages)/index.tsx`) with `status: "shipped"`.
 - [ ] `pnpm lint && pnpm typecheck && pnpm test && pnpm --filter ui-kraken build` all green locally.
 - [ ] `docs/{COMPONENT}-PLAN.md` created / flipped to `shipped on YYYY-MM-DD in ui-kraken vX.Y.Z`.
 - [ ] Changeset added (`pnpm changeset`).
