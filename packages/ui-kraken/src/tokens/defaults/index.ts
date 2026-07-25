@@ -30,6 +30,7 @@ import {
 } from "./refresh-control";
 import { DEFAULT_LIGHT_SKELETON_COLORS, DEFAULT_DARK_SKELETON_COLORS } from "./skeleton";
 import { DEFAULT_LIGHT_HINT_COLORS, DEFAULT_DARK_HINT_COLORS } from "./hint";
+import { DEFAULT_LIGHT_STAT_CARD_COLORS, DEFAULT_DARK_STAT_CARD_COLORS } from "./stat-card";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -46,6 +47,7 @@ export const DEFAULT_TOKENS: Tokens = {
   refreshControlColors: DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
   skeletonColors: DEFAULT_LIGHT_SKELETON_COLORS,
   hintColors: DEFAULT_LIGHT_HINT_COLORS,
+  statCardColors: DEFAULT_LIGHT_STAT_CARD_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -65,6 +67,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   refreshControlColors: DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   skeletonColors: DEFAULT_DARK_SKELETON_COLORS,
   hintColors: DEFAULT_DARK_HINT_COLORS,
+  statCardColors: DEFAULT_DARK_STAT_CARD_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -116,3 +119,8 @@ export {
   mergeHintColors,
   mergeHintToneColors,
 } from "./hint";
+export {
+  DEFAULT_LIGHT_STAT_CARD_COLORS,
+  DEFAULT_DARK_STAT_CARD_COLORS,
+  mergeStatCardColors,
+} from "./stat-card";

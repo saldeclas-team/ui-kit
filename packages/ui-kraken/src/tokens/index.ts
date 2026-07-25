@@ -21,6 +21,8 @@ export {
   DEFAULT_DARK_SKELETON_COLORS,
   DEFAULT_LIGHT_HINT_COLORS,
   DEFAULT_DARK_HINT_COLORS,
+  DEFAULT_LIGHT_STAT_CARD_COLORS,
+  DEFAULT_DARK_STAT_CARD_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -36,6 +38,7 @@ export {
   mergeSkeletonColors,
   mergeHintColors,
   mergeHintToneColors,
+  mergeStatCardColors,
   tint,
 } from "./tokens";
 export type { Config } from "./tokens";
@@ -53,6 +56,7 @@ export type {
   SkeletonColors,
   HintColors,
   HintToneColors,
+  StatCardColors,
   Tokens,
   ResolvedTokens,
 } from "./tokens-types";

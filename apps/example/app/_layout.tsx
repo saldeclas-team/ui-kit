@@ -71,6 +71,10 @@ export default function RootLayout() {
           name="(pages)/components/hint"
           options={{ title: "Hint", headerBackTitle: "Components" }}
         />
+        <Stack.Screen
+          name="(pages)/components/stat-card"
+          options={{ title: "StatCard", headerBackTitle: "Components" }}
+        />
       </Stack>
     </UIKitProvider>
   );

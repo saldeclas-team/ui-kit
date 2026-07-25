@@ -10,6 +10,7 @@ import {
   flattenHintColors,
   flattenRefreshControlColors,
   flattenSkeletonColors,
+  flattenStatCardColors,
   flattenSurfaceColors,
   flattenTextColors,
 } from "../utils/flatten";
@@ -49,6 +50,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
       ...flattenRefreshControlColors(lightResolved.refreshControlColors),
       ...flattenSkeletonColors(lightResolved.skeletonColors),
       ...flattenHintColors(lightResolved.hintColors),
+      ...flattenStatCardColors(lightResolved.statCardColors),
     },
     radius: {
       ...baseTokens.radius,
@@ -92,6 +94,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenRefreshControlColors(lightResolved.refreshControlColors),
         ...flattenSkeletonColors(lightResolved.skeletonColors),
         ...flattenHintColors(lightResolved.hintColors),
+        ...flattenStatCardColors(lightResolved.statCardColors),
       },
       dark: {
         ...(baseThemes.dark ?? {}),
@@ -105,6 +108,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenRefreshControlColors(darkResolved.refreshControlColors),
         ...flattenSkeletonColors(darkResolved.skeletonColors),
         ...flattenHintColors(darkResolved.hintColors),
+        ...flattenStatCardColors(darkResolved.statCardColors),
       },
     },
   });
@@ -138,6 +142,8 @@ export {
   DEFAULT_LIGHT_SKELETON_COLORS,
   DEFAULT_DARK_HINT_COLORS,
   DEFAULT_LIGHT_HINT_COLORS,
+  DEFAULT_DARK_STAT_CARD_COLORS,
+  DEFAULT_LIGHT_STAT_CARD_COLORS,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
@@ -151,6 +157,7 @@ export {
   mergeSkeletonColors,
   mergeHintColors,
   mergeHintToneColors,
+  mergeStatCardColors,
 } from "./defaults";
 export { coarseToFineTokens } from "./tokens-derive";
 export { tint } from "../utils/color";

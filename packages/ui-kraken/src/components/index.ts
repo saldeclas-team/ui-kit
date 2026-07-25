@@ -45,3 +45,11 @@ export type {
 
 export { Hint } from "./hint";
 export type { HintProps, HintTone, HintEmphasis, HintColorsInput } from "./hint";
+
+export { StatCard } from "./stat-card";
+export type {
+  StatCardProps,
+  StatCardTrend,
+  StatCardRadius,
+  StatCardColorsInput,
+} from "./stat-card";

@@ -83,6 +83,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "StatCard",
+    description:
+      "Compact metric card — title + value + optional trend arrow, delta, icon, description.",
+    href: "/components/stat-card",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

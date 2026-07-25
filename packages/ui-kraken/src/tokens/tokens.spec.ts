@@ -12,6 +12,7 @@ import {
   mergeHintToneColors,
   mergeRefreshControlColors,
   mergeSkeletonColors,
+  mergeStatCardColors,
   mergeSurfaceColors,
   mergeTextColors,
 } from "./defaults";
@@ -304,6 +305,29 @@ describe("mergeHintColors", () => {
     expect(merged.success).toBe(base.success);
     expect(merged.warning).toBe(base.warning);
     expect(merged.neutral).toBe(base.neutral);
+  });
+});
+
+describe("mergeStatCardColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.statCardColors;
+    expect(mergeStatCardColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.statCardColors;
+    const merged = mergeStatCardColors(base, {
+      background: "#F5F3FF",
+      value: "#4C1D95",
+    });
+    expect(merged.background).toBe("#F5F3FF");
+    expect(merged.value).toBe("#4C1D95");
+    expect(merged.title).toBe(base.title);
+    expect(merged.description).toBe(base.description);
+    expect(merged.icon).toBe(base.icon);
+    expect(merged.trendUp).toBe(base.trendUp);
+    expect(merged.trendDown).toBe(base.trendDown);
+    expect(merged.trendNeutral).toBe(base.trendNeutral);
   });
 });
 

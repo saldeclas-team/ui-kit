@@ -10,4 +10,5 @@ export {
   flattenRefreshControlColors,
   flattenSkeletonColors,
   flattenHintColors,
+  flattenStatCardColors,
 } from "./flatten";

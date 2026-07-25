@@ -23,6 +23,7 @@ export type {
   RefreshControlColorsInput,
   SkeletonColorsInput,
   HintColorsInput,
+  StatCardColorsInput,
 } from "./provider";
 
 // Tokens
@@ -49,6 +50,8 @@ export {
   DEFAULT_DARK_SKELETON_COLORS,
   DEFAULT_LIGHT_HINT_COLORS,
   DEFAULT_DARK_HINT_COLORS,
+  DEFAULT_LIGHT_STAT_CARD_COLORS,
+  DEFAULT_DARK_STAT_CARD_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -64,6 +67,7 @@ export {
   mergeSkeletonColors,
   mergeHintColors,
   mergeHintToneColors,
+  mergeStatCardColors,
   tint,
 } from "./tokens";
 export type {
@@ -81,6 +85,7 @@ export type {
   SkeletonColors,
   HintColors,
   HintToneColors,
+  StatCardColors,
   ResolvedTokens,
   Config,
 } from "./tokens";
@@ -122,3 +127,6 @@ export type { SkeletonProps, SkeletonRadius, SkeletonVariant } from "./component
 
 export { Hint } from "./components";
 export type { HintProps, HintTone, HintEmphasis } from "./components";
+
+export { StatCard } from "./components";
+export type { StatCardProps, StatCardTrend, StatCardRadius } from "./components";

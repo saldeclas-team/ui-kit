@@ -39,7 +39,7 @@ Ordered by complexity so the easiest ship first — no external deps, no icon sl
 | #   | Component    | 1-line                                                                                | Plan doc                                                | Status |
 | --- | ------------ | ------------------------------------------------------------------------------------- | ------------------------------------------------------- | :----: |
 | 6   | Hint         | Inline hint / tip row with optional leading icon and semantic tone.                   | [`docs/HINT-PLAN.md`](./HINT-PLAN.md)                   |   ✅   |
-| 7   | StatCard     | Metric card with title, value, and optional delta indicator (up / down / neutral).    | [`docs/STAT-CARD-PLAN.md`](./STAT-CARD-PLAN.md)         |   ⏳   |
+| 7   | StatCard     | Metric card with title, value, and optional delta indicator (up / down / neutral).    | [`docs/STAT-CARD-PLAN.md`](./STAT-CARD-PLAN.md)         |   ✅   |
 | 8   | MultiSelect  | Chip-based multi-choice selector with wrap layout, generic in the value type.         | [`docs/MULTI-SELECT-PLAN.md`](./MULTI-SELECT-PLAN.md)   |   ⏳   |
 | 9   | SocialButton | Button for OAuth providers (Google / Apple / etc.) — provider icon received via prop. | [`docs/SOCIAL-BUTTON-PLAN.md`](./SOCIAL-BUTTON-PLAN.md) |   ⏳   |
 

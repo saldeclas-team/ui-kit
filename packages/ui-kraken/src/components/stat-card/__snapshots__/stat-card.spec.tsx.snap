@@ -1,0 +1,216 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StatCard snapshots dark palette + all slots populated 1`] = `
+<View
+  accessibilityLabel="Revenue, $12,340, up +8.2%, vs last week"
+  accessibilityRole="summary"
+  backgroundColor="#111827"
+  borderRadius="$uiRadiusLg"
+  testID="stat-card"
+>
+  <View>
+    <Text
+      color="#9CA3AF"
+      testID="stat-card-title"
+    >
+      Revenue
+    </Text>
+    <View
+      testID="stat-card-icon"
+    >
+      <Text
+        color="#9CA3AF"
+      >
+        <Text>
+          ◉
+        </Text>
+      </Text>
+    </View>
+  </View>
+  <Text
+    color="#F5F5F7"
+    testID="stat-card-value"
+  >
+    $12,340
+  </Text>
+  <View>
+    <View>
+      <Text
+        color="#34D399"
+        testID="stat-card-trend-icon"
+      >
+        ▲
+      </Text>
+      <Text
+        color="#34D399"
+        testID="stat-card-delta"
+      >
+        +8.2%
+      </Text>
+    </View>
+    <Text
+      color="#9CA3AF"
+      testID="stat-card-description"
+    >
+      vs last week
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`StatCard snapshots light + icon + description 1`] = `
+<View
+  accessibilityLabel="Revenue, $12,340, vs last week"
+  accessibilityRole="summary"
+  backgroundColor="#F9FAFB"
+  borderRadius="$uiRadiusLg"
+  testID="stat-card"
+>
+  <View>
+    <Text
+      color="#6B7280"
+      testID="stat-card-title"
+    >
+      Revenue
+    </Text>
+    <View
+      testID="stat-card-icon"
+    >
+      <Text
+        color="#6B7280"
+      >
+        <Text>
+          ◉
+        </Text>
+      </Text>
+    </View>
+  </View>
+  <Text
+    color="#0B0B0F"
+    testID="stat-card-value"
+  >
+    $12,340
+  </Text>
+  <View>
+    <Text
+      color="#6B7280"
+      testID="stat-card-description"
+    >
+      vs last week
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`StatCard snapshots light + trend='down' + delta 1`] = `
+<View
+  accessibilityLabel="Bounce rate, 42.3%, down -2.1%"
+  accessibilityRole="summary"
+  backgroundColor="#F9FAFB"
+  borderRadius="$uiRadiusLg"
+  testID="stat-card"
+>
+  <View>
+    <Text
+      color="#6B7280"
+      testID="stat-card-title"
+    >
+      Bounce rate
+    </Text>
+  </View>
+  <Text
+    color="#0B0B0F"
+    testID="stat-card-value"
+  >
+    42.3%
+  </Text>
+  <View>
+    <View>
+      <Text
+        color="#DC2626"
+        testID="stat-card-trend-icon"
+      >
+        ▼
+      </Text>
+      <Text
+        color="#DC2626"
+        testID="stat-card-delta"
+      >
+        -2.1%
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`StatCard snapshots light + trend='up' + delta + description 1`] = `
+<View
+  accessibilityLabel="Revenue, $12,340, up +8.2%, vs last week"
+  accessibilityRole="summary"
+  backgroundColor="#F9FAFB"
+  borderRadius="$uiRadiusLg"
+  testID="stat-card"
+>
+  <View>
+    <Text
+      color="#6B7280"
+      testID="stat-card-title"
+    >
+      Revenue
+    </Text>
+  </View>
+  <Text
+    color="#0B0B0F"
+    testID="stat-card-value"
+  >
+    $12,340
+  </Text>
+  <View>
+    <View>
+      <Text
+        color="#059669"
+        testID="stat-card-trend-icon"
+      >
+        ▲
+      </Text>
+      <Text
+        color="#059669"
+        testID="stat-card-delta"
+      >
+        +8.2%
+      </Text>
+    </View>
+    <Text
+      color="#6B7280"
+      testID="stat-card-description"
+    >
+      vs last week
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`StatCard snapshots minimal — title + value only 1`] = `
+<View
+  accessibilityLabel="Users, 1200"
+  accessibilityRole="summary"
+  backgroundColor="#F9FAFB"
+  borderRadius="$uiRadiusLg"
+  testID="stat-card"
+>
+  <View>
+    <Text
+      color="#6B7280"
+      testID="stat-card-title"
+    >
+      Users
+    </Text>
+  </View>
+  <Text
+    color="#0B0B0F"
+    testID="stat-card-value"
+  >
+    1200
+  </Text>
+</View>
+`;

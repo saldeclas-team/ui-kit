@@ -20,6 +20,7 @@ import type {
   RadioGroupColors,
   RefreshControlColors,
   SkeletonColors,
+  StatCardColors,
   SurfaceColors,
   TextColors,
 } from "../tokens/tokens-types";
@@ -204,6 +205,20 @@ export function flattenHintColors(colors: HintColors): Record<string, string> {
     out[`uiHint${capitalized}Text`] = slots.text;
     out[`uiHint${capitalized}Icon`] = slots.icon;
     out[`uiHint${capitalized}Background`] = slots.background;
+  }
+  return out;
+}
+
+/**
+ * Flatten the `statCardColors` slot map into `$uiStatCard{PascalCase}`
+ * Tamagui tokens (`$uiStatCardBackground`, `$uiStatCardTitle`,
+ * `$uiStatCardValue`, ...).
+ */
+export function flattenStatCardColors(colors: StatCardColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof StatCardColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiStatCard${capitalized}`] = colors[slot];
   }
   return out;
 }

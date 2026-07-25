@@ -204,6 +204,31 @@ export interface HintColors {
 }
 
 /**
+ * StatCard color palette. Slot-based, 8 slots that cover the card
+ * background, three text tiers (title / value / description), the
+ * icon-slot wrapper color, and three trend-arrow colors driven by
+ * the `trend` prop.
+ */
+export interface StatCardColors {
+  /** Card background color. */
+  background: string;
+  /** Small heading rendered above the value. */
+  title: string;
+  /** Main metric text. */
+  value: string;
+  /** Secondary caption below the delta row. */
+  description: string;
+  /** Icon-slot wrapper color (consumer's icon inherits). */
+  icon: string;
+  /** Arrow + delta text color when `trend="up"`. */
+  trendUp: string;
+  /** Arrow + delta text color when `trend="down"`. */
+  trendDown: string;
+  /** Arrow + delta text color when `trend="neutral"`. */
+  trendNeutral: string;
+}
+
+/**
  * CurrencyInput color palette. Slot-based. Mirrors `InputColors` plus a
  * `prefix` slot for the currency-symbol text color (the `"$"` / `"€"` /
  * etc. that renders inside the wrapper next to the number).
@@ -282,6 +307,7 @@ export interface Tokens {
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;
+  statCardColors: StatCardColors;
   radius: number;
   spacing: number;
 }
@@ -302,6 +328,7 @@ export interface ResolvedTokens {
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;
+  statCardColors: StatCardColors;
   radius: {
     sm: number;
     md: number;

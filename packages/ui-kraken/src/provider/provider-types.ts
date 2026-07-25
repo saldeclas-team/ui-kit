@@ -13,6 +13,7 @@ import type {
   HintToneColors,
   RefreshControlColors,
   SkeletonColors,
+  StatCardColors,
   SurfaceColors,
   TextColors,
   ResolvedTokens,
@@ -93,6 +94,14 @@ export type SkeletonColorsInput = Partial<SkeletonColors>;
 export type HintColorsInput = Partial<Record<keyof HintColors, Partial<HintToneColors>>>;
 
 /**
+ * Partial override for `statCardColors` — consumers only declare the
+ * slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, 8 slots (background / title / value /
+ * description / icon / trendUp / trendDown / trendNeutral).
+ */
+export type StatCardColorsInput = Partial<StatCardColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -107,6 +116,7 @@ export interface TokensInput {
   refreshControlColors?: RefreshControlColorsInput;
   skeletonColors?: SkeletonColorsInput;
   hintColors?: HintColorsInput;
+  statCardColors?: StatCardColorsInput;
   radius?: number;
   spacing?: number;
 }
