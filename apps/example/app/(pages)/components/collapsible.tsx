@@ -35,9 +35,11 @@ export default function CollapsibleScreen() {
     >
       <Section title="Basic toggle">
         <Collapsible title="Advanced options" expanded={basicOpen} onExpandedChange={setBasicOpen}>
-          <Text style={{ color: bodyColor }}>
-            Body content lives here. Any ReactNode works — text, form fields, nested Collapsibles.
-          </Text>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: bodyColor }}>
+              Body content lives here. Any ReactNode works — text, form fields, nested Collapsibles.
+            </Text>
+          </View>
         </Collapsible>
       </Section>
 
@@ -69,9 +71,11 @@ export default function CollapsibleScreen() {
           onExpandedChange={setNoneOpen}
           animation="none"
         >
-          <Text style={{ color: bodyColor }}>
-            No slide. Good for long lists and reduced-motion users.
-          </Text>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: bodyColor }}>
+              No slide. Good for long lists and reduced-motion users.
+            </Text>
+          </View>
         </Collapsible>
       </Section>
 
@@ -87,7 +91,9 @@ export default function CollapsibleScreen() {
               expanded={accordionIndex === idx}
               onExpandedChange={(next) => setAccordionIndex(next ? idx : null)}
             >
-              <Text style={{ color: bodyColor }}>{item.body}</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={{ color: bodyColor }}>{item.body}</Text>
+              </View>
             </Collapsible>
           ))}
         </View>
@@ -106,7 +112,9 @@ export default function CollapsibleScreen() {
             bodyBackground: "#FAF5FF",
           }}
         >
-          <Text style={{ color: "#4C1D95" }}>Custom-tinted section via collapsibleColors.</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={{ color: "#4C1D95" }}>Custom-tinted section via collapsibleColors.</Text>
+          </View>
         </Collapsible>
       </Section>
 
