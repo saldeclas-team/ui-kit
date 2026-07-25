@@ -1,8 +1,11 @@
 import {
   DEFAULT_DARK_TOKENS,
   DEFAULT_TOKENS,
+  mergeAlertColors,
+  mergeAlertVariantColors,
   mergeButtonColors,
   mergeButtonVariantColors,
+  mergeRadioGroupColors,
   mergeTextColors,
 } from "./defaults";
 import { tint } from "../utils/color";
@@ -32,6 +35,23 @@ describe("tint", () => {
 
   it("throws on malformed hex", () => {
     expect(() => tint("not-a-hex", 0)).toThrow(/expected a #RRGGBB/);
+  });
+
+  // Exercise the `max === g` and `max === b` branches inside `hexToHsl`
+  // that the blue-only tests above miss. Round-tripping a color through
+  // `tint(color, 0)` reads the hex through hexToHsl and writes it back
+  // through hslToHex, so both sides get hit.
+  it("round-trips a green-dominant color through the HSL cycle", () => {
+    expect(tint("#22C55E", 0)).toBe("#22C55E");
+  });
+
+  it("round-trips a red-dominant color through the HSL cycle", () => {
+    expect(tint("#EF4444", 0)).toBe("#EF4444");
+  });
+
+  it("round-trips a grayscale color (saturation = 0) through the HSL cycle", () => {
+    // Hits the `s === 0` early return inside hslToHex.
+    expect(tint("#808080", 0)).toBe("#808080");
   });
 });
 
@@ -95,6 +115,63 @@ describe("mergeTextColors", () => {
     expect(merged.danger).toBe("#FF0000");
     expect(merged.secondary).toBe(base.secondary);
     expect(merged.onPrimary).toBe(base.onPrimary);
+  });
+});
+
+describe("mergeAlertVariantColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = { background: "#EFF6FF", text: "#0284C7", icon: "#0284C7" };
+    expect(mergeAlertVariantColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const merged = mergeAlertVariantColors(
+      { background: "#EFF6FF", text: "#0284C7", icon: "#0284C7" },
+      { background: "#4A0000", border: "#FCA5A5" }
+    );
+    expect(merged).toEqual({
+      background: "#4A0000",
+      text: "#0284C7",
+      icon: "#0284C7",
+      border: "#FCA5A5",
+    });
+  });
+});
+
+describe("mergeAlertColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.alertColors;
+    expect(mergeAlertColors(base, undefined)).toBe(base);
+  });
+
+  it("only touches the variants the caller passed", () => {
+    const base = DEFAULT_TOKENS.alertColors;
+    const merged = mergeAlertColors(base, { danger: { background: "#4A0000" } });
+    expect(merged.danger.background).toBe("#4A0000");
+    expect(merged.danger.text).toBe(base.danger.text);
+    expect(merged.info).toEqual(base.info);
+    expect(merged.success).toEqual(base.success);
+    expect(merged.warning).toEqual(base.warning);
+  });
+});
+
+describe("mergeRadioGroupColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.radioGroupColors;
+    expect(mergeRadioGroupColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.radioGroupColors;
+    const merged = mergeRadioGroupColors(base, {
+      selectedBorder: "#FF6B00",
+      dot: "#FF6B00",
+    });
+    expect(merged.selectedBorder).toBe("#FF6B00");
+    expect(merged.dot).toBe("#FF6B00");
+    expect(merged.unselectedBorder).toBe(base.unselectedBorder);
+    expect(merged.label).toBe(base.label);
+    expect(merged.groupLabel).toBe(base.groupLabel);
   });
 });
 
