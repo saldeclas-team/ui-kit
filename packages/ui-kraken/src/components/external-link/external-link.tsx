@@ -55,6 +55,35 @@ export function ExternalLink({
     await openExternalUrl(url);
   }, [onPress, url]);
 
+  // Inline mode — when there are no icons on either side, render as a
+  // plain `<Text onPress>` so the link respects the parent text's
+  // baseline. RN's text-nesting only lays out `<Text>` children on the
+  // baseline; a `<View>` (which is what an `<XStack>` becomes under
+  // the hood) rendered inside `<Text>` floats above the surrounding
+  // copy, which reads as a broken layout. See external-link.tsx
+  // section "inline vs standalone" in the plan doc.
+  const isInline = icon == null && hideTrailingIcon;
+  if (isInline) {
+    return (
+      <Text
+        testID={rootId}
+        onPress={disabled ? undefined : handlePress}
+        accessibilityRole={accessibilityRole}
+        accessibilityLabel={composedLabel}
+        accessibilityState={disabled ? { disabled: true } : undefined}
+        style={{
+          color: palette.label,
+          textDecorationLine: "underline",
+          textDecorationColor: palette.label,
+          fontWeight: "500",
+          opacity: disabled ? 0.5 : 1,
+        }}
+      >
+        {children}
+      </Text>
+    );
+  }
+
   return (
     <StyledExternalLink
       // Ref typing on Tamagui XStack forwards to the underlying host;

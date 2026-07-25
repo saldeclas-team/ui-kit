@@ -119,13 +119,71 @@ describe("ExternalLink", () => {
     expect(screen.getByTestId("el-trailing-icon")).not.toHaveTextContent("↗");
   });
 
-  it("hideTrailingIcon unmounts the trailing icon entirely", async () => {
+  it("hideTrailingIcon unmounts the trailing icon entirely (collapses to inline Text)", async () => {
     await render(
       <ExternalLink url="https://x.com" testID="el" hideTrailingIcon>
         Read more
       </ExternalLink>
     );
+    // Inline mode collapses to a single <Text> root — trailing icon
+    // wrapper doesn't exist and the -label sub-testID also collapses.
     expect(screen.queryByTestId("el-trailing-icon")).toBeNull();
+    expect(screen.queryByTestId("el-label")).toBeNull();
+    // The root Text carries the label content directly.
+    expect(screen.getByTestId("el")).toHaveTextContent("Read more");
+  });
+
+  it("inline mode renders as a single <Text> with underline styling on the baseline", async () => {
+    // When neither an icon nor a trailing arrow renders, ExternalLink
+    // collapses to a plain `<Text onPress>` so it plays nice inside a
+    // parent `<Text>` — RN's text-nesting only baselines <Text>
+    // children; a <View> floats above the surrounding copy.
+    await render(
+      <ExternalLink url="https://x.com" testID="el" hideTrailingIcon>
+        Read more
+      </ExternalLink>
+    );
+    const root = screen.getByTestId("el");
+    const styleArray = Array.isArray(root.props.style) ? root.props.style : [root.props.style];
+    const merged = Object.assign({}, ...styleArray.filter(Boolean));
+    expect(merged.textDecorationLine).toBe("underline");
+    expect(merged.color).toBe(LIGHT_EXTERNAL_LINK_COLORS.label);
+    expect(merged.textDecorationColor).toBe(LIGHT_EXTERNAL_LINK_COLORS.label);
+  });
+
+  it("inline mode tap fires openExternalUrl", async () => {
+    await render(
+      <ExternalLink url="https://example.com" testID="el" hideTrailingIcon>
+        Inline
+      </ExternalLink>
+    );
+    fireEvent.press(screen.getByTestId("el"));
+    await Promise.resolve();
+    expect(mockOpenExternalUrl).toHaveBeenCalledWith("https://example.com");
+  });
+
+  it("inline mode disabled unwires onPress and dims the label", async () => {
+    await render(
+      <ExternalLink url="https://x.com" testID="el" hideTrailingIcon disabled>
+        Disabled inline
+      </ExternalLink>
+    );
+    const root = screen.getByTestId("el");
+    expect(root.props.onPress).toBeUndefined();
+    const styleArray = Array.isArray(root.props.style) ? root.props.style : [root.props.style];
+    const merged = Object.assign({}, ...styleArray.filter(Boolean));
+    expect(merged.opacity).toBe(0.5);
+  });
+
+  it("inline mode is skipped when an icon prop is passed (XStack layout wins)", async () => {
+    await render(
+      <ExternalLink url="https://x.com" testID="el" hideTrailingIcon icon={<Text>i</Text>}>
+        With icon
+      </ExternalLink>
+    );
+    // Icon present → inline mode inactive → -label + -icon wrappers exist.
+    expect(screen.getByTestId("el-icon")).toBeTruthy();
+    expect(screen.getByTestId("el-label")).toBeTruthy();
   });
 
   it("icon slot mounts only when icon is passed", async () => {

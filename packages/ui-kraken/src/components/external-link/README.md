@@ -26,6 +26,15 @@ import { ExternalLink } from "ui-kraken";
 
 Every Tamagui `XStackProps` flows through the spread — `padding`, `margin`, `hitSlop`, `pressRetentionOffset`, every accessibility prop, etc.
 
+## Inline vs standalone layout
+
+ExternalLink picks its render mode automatically based on the props:
+
+- **Inline** — when the link has **no leading icon** AND `hideTrailingIcon=true`, it renders as a single `<Text onPress>` node. React Native's text-nesting only baselines `<Text>` children — a `<View>` (which an `<XStack>` becomes under the hood) rendered inside `<Text>` would float above the surrounding copy. Inline mode is what you want when the link sits inside a paragraph.
+- **Standalone** — when the link has a leading `icon`, a trailing icon, or both, it renders as an `<XStack>` with fixed-size wrappers. Best for CTAs, dedicated rows, and card compositions.
+
+Consumers don't pick the mode explicitly — set / don't set `icon` + `hideTrailingIcon` and the primitive routes automatically. In inline mode the `-icon`, `-label`, and `-trailing-icon` sub-testIDs collapse away (the root `testID` carries the label directly).
+
 ## Backend selection
 
 At module import time, `open-url.ts` runs a `try { require("expo-web-browser") } catch {}` probe:
