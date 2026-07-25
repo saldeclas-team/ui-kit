@@ -12,6 +12,9 @@ import {
   flattenHintColors,
   flattenMultiSelectColors,
   flattenRefreshControlColors,
+  flattenSelectBottomSheetColors,
+  flattenSelectColors,
+  flattenSelectNativeColors,
   flattenSkeletonColors,
   flattenSocialButtonColors,
   flattenStatCardColors,
@@ -59,6 +62,9 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
       ...flattenSocialButtonColors(lightResolved.socialButtonColors),
       ...flattenCollapsibleColors(lightResolved.collapsibleColors),
       ...flattenExternalLinkColors(lightResolved.externalLinkColors),
+      ...flattenSelectColors(lightResolved.selectColors),
+      ...flattenSelectNativeColors(lightResolved.selectNativeColors),
+      ...flattenSelectBottomSheetColors(lightResolved.selectBottomSheetColors),
     },
     radius: {
       ...baseTokens.radius,
@@ -107,6 +113,9 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenSocialButtonColors(lightResolved.socialButtonColors),
         ...flattenCollapsibleColors(lightResolved.collapsibleColors),
         ...flattenExternalLinkColors(lightResolved.externalLinkColors),
+        ...flattenSelectColors(lightResolved.selectColors),
+        ...flattenSelectNativeColors(lightResolved.selectNativeColors),
+        ...flattenSelectBottomSheetColors(lightResolved.selectBottomSheetColors),
       },
       dark: {
         ...(baseThemes.dark ?? {}),
@@ -125,6 +134,9 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenSocialButtonColors(darkResolved.socialButtonColors),
         ...flattenCollapsibleColors(darkResolved.collapsibleColors),
         ...flattenExternalLinkColors(darkResolved.externalLinkColors),
+        ...flattenSelectColors(darkResolved.selectColors),
+        ...flattenSelectNativeColors(darkResolved.selectNativeColors),
+        ...flattenSelectBottomSheetColors(darkResolved.selectBottomSheetColors),
       },
     },
   });
@@ -168,6 +180,12 @@ export {
   DEFAULT_LIGHT_COLLAPSIBLE_COLORS,
   DEFAULT_DARK_EXTERNAL_LINK_COLORS,
   DEFAULT_LIGHT_EXTERNAL_LINK_COLORS,
+  DEFAULT_DARK_SELECT_COLORS,
+  DEFAULT_LIGHT_SELECT_COLORS,
+  DEFAULT_DARK_SELECT_NATIVE_COLORS,
+  DEFAULT_LIGHT_SELECT_NATIVE_COLORS,
+  DEFAULT_DARK_SELECT_BOTTOM_SHEET_COLORS,
+  DEFAULT_LIGHT_SELECT_BOTTOM_SHEET_COLORS,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
@@ -187,6 +205,9 @@ export {
   mergeSocialButtonProviderColors,
   mergeCollapsibleColors,
   mergeExternalLinkColors,
+  mergeSelectColors,
+  mergeSelectNativeColors,
+  mergeSelectBottomSheetColors,
 } from "./defaults";
 export { coarseToFineTokens } from "./tokens-derive";
 export { tint } from "../utils/color";

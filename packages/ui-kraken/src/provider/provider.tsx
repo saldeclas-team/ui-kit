@@ -14,6 +14,9 @@ import {
   mergeRadioGroupColors,
   mergeCollapsibleColors,
   mergeExternalLinkColors,
+  mergeSelectColors,
+  mergeSelectNativeColors,
+  mergeSelectBottomSheetColors,
   mergeHintColors,
   mergeMultiSelectColors,
   mergeRefreshControlColors,
@@ -74,6 +77,15 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         DEFAULT_TOKENS.externalLinkColors,
         tokens?.externalLinkColors
       ),
+      selectColors: mergeSelectColors(DEFAULT_TOKENS.selectColors, tokens?.selectColors),
+      selectNativeColors: mergeSelectNativeColors(
+        DEFAULT_TOKENS.selectNativeColors,
+        tokens?.selectNativeColors
+      ),
+      selectBottomSheetColors: mergeSelectBottomSheetColors(
+        DEFAULT_TOKENS.selectBottomSheetColors,
+        tokens?.selectBottomSheetColors
+      ),
     };
     const mergedDark = {
       ...DEFAULT_DARK_TOKENS,
@@ -113,6 +125,15 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
       externalLinkColors: mergeExternalLinkColors(
         DEFAULT_DARK_TOKENS.externalLinkColors,
         dark?.externalLinkColors
+      ),
+      selectColors: mergeSelectColors(DEFAULT_DARK_TOKENS.selectColors, dark?.selectColors),
+      selectNativeColors: mergeSelectNativeColors(
+        DEFAULT_DARK_TOKENS.selectNativeColors,
+        dark?.selectNativeColors
+      ),
+      selectBottomSheetColors: mergeSelectBottomSheetColors(
+        DEFAULT_DARK_TOKENS.selectBottomSheetColors,
+        dark?.selectBottomSheetColors
       ),
     };
     const resolvedLight = coarseToFineTokens(mergedLight);

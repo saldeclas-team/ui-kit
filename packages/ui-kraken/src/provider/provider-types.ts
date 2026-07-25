@@ -11,6 +11,9 @@ import type {
   RadioGroupColors,
   CollapsibleColors,
   ExternalLinkColors,
+  SelectColors,
+  SelectNativeColors,
+  SelectBottomSheetColors,
   HintColors,
   HintToneColors,
   MultiSelectColors,
@@ -140,6 +143,33 @@ export type CollapsibleColorsInput = Partial<CollapsibleColors>;
 export type ExternalLinkColorsInput = Partial<ExternalLinkColors>;
 
 /**
+ * Partial override for `selectColors` — consumers only declare the
+ * slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, 16 slots (trigger chrome + label / helper /
+ * error text + modal chrome + option-selected background).
+ */
+export type SelectColorsInput = Partial<SelectColors>;
+
+/**
+ * Partial override for `selectNativeColors` — consumers only
+ * declare the slots they want to change; the rest fills in from
+ * the shipped defaults. Slot-based, 7 slots (label + frame
+ * background/backgroundDisabled/border/borderError + helperText
+ * + errorText). Smaller than `SelectColorsInput` because the
+ * native `@expo/ui` `Picker` owns most of its own chrome.
+ */
+export type SelectNativeColorsInput = Partial<SelectNativeColors>;
+
+/**
+ * Partial override for `selectBottomSheetColors` — consumers only
+ * declare the slots they want to change; the rest fills in from
+ * the shipped defaults. Slot-based, 15 slots (trigger chrome +
+ * label / helper / error text + sheet chrome + option-selected
+ * background).
+ */
+export type SelectBottomSheetColorsInput = Partial<SelectBottomSheetColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -159,6 +189,9 @@ export interface TokensInput {
   socialButtonColors?: SocialButtonColorsInput;
   collapsibleColors?: CollapsibleColorsInput;
   externalLinkColors?: ExternalLinkColorsInput;
+  selectColors?: SelectColorsInput;
+  selectNativeColors?: SelectNativeColorsInput;
+  selectBottomSheetColors?: SelectBottomSheetColorsInput;
   radius?: number;
   spacing?: number;
 }

@@ -118,6 +118,27 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Select",
+    description:
+      "Single-choice picker — trigger + centered modal card, generic value type, zero peer deps.",
+    href: "/components/select",
+    status: "shipped",
+  },
+  {
+    title: "SelectNative",
+    description:
+      "Native single-choice picker via @expo/ui — SwiftUI Menu on iOS, Compose DropdownMenu on Android.",
+    href: "/components/select-native",
+    status: "shipped",
+  },
+  {
+    title: "SelectBottomSheet",
+    description:
+      "Single-choice picker via @gorhom/bottom-sheet — draggable panel with backdrop, graceful peer-dep fallback.",
+    href: "/components/select-bottom-sheet",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

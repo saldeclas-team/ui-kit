@@ -18,4 +18,7 @@ export {
   flattenSocialButtonColors,
   flattenCollapsibleColors,
   flattenExternalLinkColors,
+  flattenSelectColors,
+  flattenSelectNativeColors,
+  flattenSelectBottomSheetColors,
 } from "./flatten";

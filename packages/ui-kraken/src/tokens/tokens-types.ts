@@ -204,6 +204,126 @@ export interface HintColors {
 }
 
 /**
+ * Select color palette. Slot-based, 16 slots. Groupings:
+ *
+ * - Trigger chrome (9): background + backgroundDisabled + border +
+ *   borderFocused (painted while the modal is open) + borderError +
+ *   text + textDisabled + placeholder + chevron.
+ * - Surrounding labels (3): label / helperText / errorText.
+ * - Modal chrome (3): overlayBackground (backdrop) + menuBackground
+ *   (card panel) + menuTitle.
+ * - Options shared (1): optionSelectedBackground (row highlight for
+ *   the currently-selected option).
+ */
+export interface SelectColors {
+  /** Trigger background in default + focused states. */
+  background: string;
+  /** Trigger background when `disabled`. */
+  backgroundDisabled: string;
+  /** Trigger border in default state. */
+  border: string;
+  /** Trigger border while the modal is open. */
+  borderFocused: string;
+  /** Trigger border when `errorText` is set. Overrides borderFocused. */
+  borderError: string;
+  /** Selected-value text color. */
+  text: string;
+  /** Text color when the trigger is `disabled`. */
+  textDisabled: string;
+  /** Placeholder text color (shown when value is null). */
+  placeholder: string;
+  /** Trailing chevron color. */
+  chevron: string;
+  /** Bold label text color (rendered above the trigger). */
+  label: string;
+  /** Muted helper text color (rendered below the trigger when no error). */
+  helperText: string;
+  /** Error text color (rendered below the trigger when `errorText` is set). */
+  errorText: string;
+  /** Backdrop color behind the modal panel. */
+  overlayBackground: string;
+  /** Modal card panel background. */
+  menuBackground: string;
+  /** Optional modal title text color. */
+  menuTitle: string;
+  /** Row highlight for the currently-selected option in the modal list. */
+  optionSelectedBackground: string;
+}
+
+/**
+ * SelectBottomSheet color palette. Slot-based, 15 slots. Groupings
+ * mirror [[SelectColors]] except the modal-chrome triplet is
+ * replaced by a sheet-chrome triplet: `sheetBackground` for the
+ * panel, `sheetHandle` for the drag-affordance, `sheetTitle` for
+ * the optional title row.
+ *
+ * - Trigger chrome (9): background + backgroundDisabled + border +
+ *   borderFocused (painted while the sheet is open) + borderError +
+ *   text + textDisabled + placeholder + chevron.
+ * - Surrounding labels (3): label / helperText / errorText.
+ * - Sheet chrome (3): sheetBackground + sheetHandle + sheetTitle.
+ */
+export interface SelectBottomSheetColors {
+  /** Trigger background in default + focused states. */
+  background: string;
+  /** Trigger background when `disabled`. */
+  backgroundDisabled: string;
+  /** Trigger border in default state. */
+  border: string;
+  /** Trigger border while the sheet is open. */
+  borderFocused: string;
+  /** Trigger border when `errorText` is set. Overrides borderFocused. */
+  borderError: string;
+  /** Selected-value text color. */
+  text: string;
+  /** Text color when the trigger is `disabled`. */
+  textDisabled: string;
+  /** Placeholder text color (shown when value is null). */
+  placeholder: string;
+  /** Trailing chevron color. */
+  chevron: string;
+  /** Bold label text color (rendered above the trigger). */
+  label: string;
+  /** Muted helper text color (rendered below the trigger when no error). */
+  helperText: string;
+  /** Error text color (rendered below the trigger when `errorText` is set). */
+  errorText: string;
+  /** Sheet panel background. */
+  sheetBackground: string;
+  /** Drag-handle indicator bar at the top of the sheet. */
+  sheetHandle: string;
+  /** Row highlight for the currently-selected option in the sheet list. */
+  optionSelectedBackground: string;
+}
+
+/**
+ * SelectNative color palette. Slot-based, 7 slots. Deliberately
+ * smaller than [[SelectColors]] because the native `@expo/ui`
+ * `Picker` owns its own chrome — text color of the current value,
+ * chevron, menu background, selected-row highlight, disabled dim
+ * are all painted by SwiftUI / Compose, not by us.
+ *
+ * The slots we still own are the wrapper frame (background + border
+ * in three states) and the surrounding label + helper / error text.
+ */
+export interface SelectNativeColors {
+  /** Bold label text color rendered above the trigger frame. */
+  label: string;
+  /** Wrapper frame background in default state. */
+  background: string;
+  /** Wrapper frame background when `disabled`. */
+  backgroundDisabled: string;
+  /** Wrapper frame border in default state. */
+  border: string;
+  /** Wrapper frame border when `errorText` is set. */
+  borderError: string;
+  /** Muted helper text color rendered below the frame when no error. */
+  helperText: string;
+  /** Error text color rendered below the frame when `errorText` is set. */
+  errorText: string;
+}
+
+/**
  * ExternalLink color palette. Slot-based, 2 slots — text label
  * (underline color is derived from `label` automatically via
  * `textDecorationColor`) and icon.
@@ -405,6 +525,9 @@ export interface Tokens {
   socialButtonColors: SocialButtonColors;
   collapsibleColors: CollapsibleColors;
   externalLinkColors: ExternalLinkColors;
+  selectColors: SelectColors;
+  selectNativeColors: SelectNativeColors;
+  selectBottomSheetColors: SelectBottomSheetColors;
   radius: number;
   spacing: number;
 }
@@ -430,6 +553,9 @@ export interface ResolvedTokens {
   socialButtonColors: SocialButtonColors;
   collapsibleColors: CollapsibleColors;
   externalLinkColors: ExternalLinkColors;
+  selectColors: SelectColors;
+  selectNativeColors: SelectNativeColors;
+  selectBottomSheetColors: SelectBottomSheetColors;
   radius: {
     sm: number;
     md: number;

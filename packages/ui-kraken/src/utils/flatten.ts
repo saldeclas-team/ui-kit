@@ -22,6 +22,9 @@ import type {
   MultiSelectColors,
   RadioGroupColors,
   RefreshControlColors,
+  SelectBottomSheetColors,
+  SelectColors,
+  SelectNativeColors,
   SkeletonColors,
   SocialButtonColors,
   StatCardColors,
@@ -296,6 +299,52 @@ export function flattenExternalLinkColors(colors: ExternalLinkColors): Record<st
   for (const slot of Object.keys(colors) as Array<keyof ExternalLinkColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiExternalLink${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `selectColors` slot map into `$uiSelect{PascalCase}`
+ * Tamagui tokens (`$uiSelectBackground`, `$uiSelectBorderFocused`,
+ * `$uiSelectMenuBackground`, ...).
+ */
+export function flattenSelectColors(colors: SelectColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SelectColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSelect${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `selectNativeColors` slot map into
+ * `$uiSelectNative{PascalCase}` Tamagui tokens
+ * (`$uiSelectNativeBackground`, `$uiSelectNativeBorderError`,
+ * `$uiSelectNativeErrorText`, ...).
+ */
+export function flattenSelectNativeColors(colors: SelectNativeColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SelectNativeColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSelectNative${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `selectBottomSheetColors` slot map into
+ * `$uiSelectBottomSheet{PascalCase}` Tamagui tokens
+ * (`$uiSelectBottomSheetBackground`, `$uiSelectBottomSheetSheetHandle`,
+ * ...).
+ */
+export function flattenSelectBottomSheetColors(
+  colors: SelectBottomSheetColors
+): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SelectBottomSheetColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSelectBottomSheet${capitalized}`] = colors[slot];
   }
   return out;
 }

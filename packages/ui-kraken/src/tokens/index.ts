@@ -31,6 +31,12 @@ export {
   DEFAULT_DARK_COLLAPSIBLE_COLORS,
   DEFAULT_LIGHT_EXTERNAL_LINK_COLORS,
   DEFAULT_DARK_EXTERNAL_LINK_COLORS,
+  DEFAULT_LIGHT_SELECT_COLORS,
+  DEFAULT_DARK_SELECT_COLORS,
+  DEFAULT_LIGHT_SELECT_NATIVE_COLORS,
+  DEFAULT_DARK_SELECT_NATIVE_COLORS,
+  DEFAULT_LIGHT_SELECT_BOTTOM_SHEET_COLORS,
+  DEFAULT_DARK_SELECT_BOTTOM_SHEET_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -52,6 +58,9 @@ export {
   mergeSocialButtonProviderColors,
   mergeCollapsibleColors,
   mergeExternalLinkColors,
+  mergeSelectColors,
+  mergeSelectNativeColors,
+  mergeSelectBottomSheetColors,
   tint,
 } from "./tokens";
 export type { Config } from "./tokens";
@@ -75,6 +84,9 @@ export type {
   SocialButtonProviderColors,
   CollapsibleColors,
   ExternalLinkColors,
+  SelectColors,
+  SelectNativeColors,
+  SelectBottomSheetColors,
   Tokens,
   ResolvedTokens,
 } from "./tokens-types";

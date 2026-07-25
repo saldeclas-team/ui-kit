@@ -10,6 +10,9 @@ import {
   mergeRadioGroupColors,
   mergeCollapsibleColors,
   mergeExternalLinkColors,
+  mergeSelectColors,
+  mergeSelectNativeColors,
+  mergeSelectBottomSheetColors,
   mergeHintColors,
   mergeHintToneColors,
   mergeMultiSelectColors,
@@ -345,6 +348,85 @@ describe("mergeExternalLinkColors", () => {
     const merged = mergeExternalLinkColors(base, { label: "#7C3AED" });
     expect(merged.label).toBe("#7C3AED");
     expect(merged.icon).toBe(base.icon);
+  });
+});
+
+describe("mergeSelectColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.selectColors;
+    expect(mergeSelectColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.selectColors;
+    const merged = mergeSelectColors(base, {
+      borderFocused: "#7C3AED",
+      optionSelectedBackground: "#F5F3FF",
+    });
+    expect(merged.borderFocused).toBe("#7C3AED");
+    expect(merged.optionSelectedBackground).toBe("#F5F3FF");
+    // Unchanged slots still fall through to base.
+    expect(merged.background).toBe(base.background);
+    expect(merged.errorText).toBe(base.errorText);
+  });
+
+  it("light + dark defaults share the same slot keys (16 slots)", () => {
+    const light = Object.keys(DEFAULT_TOKENS.selectColors).sort();
+    const dark = Object.keys(DEFAULT_DARK_TOKENS.selectColors).sort();
+    expect(light).toEqual(dark);
+    expect(light.length).toBe(16);
+  });
+});
+
+describe("mergeSelectNativeColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.selectNativeColors;
+    expect(mergeSelectNativeColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.selectNativeColors;
+    const merged = mergeSelectNativeColors(base, {
+      background: "#F5F3FF",
+      border: "#7C3AED",
+    });
+    expect(merged.background).toBe("#F5F3FF");
+    expect(merged.border).toBe("#7C3AED");
+    expect(merged.label).toBe(base.label);
+    expect(merged.errorText).toBe(base.errorText);
+  });
+
+  it("light + dark defaults share the same slot keys (7 slots)", () => {
+    const light = Object.keys(DEFAULT_TOKENS.selectNativeColors).sort();
+    const dark = Object.keys(DEFAULT_DARK_TOKENS.selectNativeColors).sort();
+    expect(light).toEqual(dark);
+    expect(light.length).toBe(7);
+  });
+});
+
+describe("mergeSelectBottomSheetColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.selectBottomSheetColors;
+    expect(mergeSelectBottomSheetColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.selectBottomSheetColors;
+    const merged = mergeSelectBottomSheetColors(base, {
+      sheetBackground: "#F5F3FF",
+      sheetHandle: "#7C3AED",
+    });
+    expect(merged.sheetBackground).toBe("#F5F3FF");
+    expect(merged.sheetHandle).toBe("#7C3AED");
+    expect(merged.background).toBe(base.background);
+    expect(merged.optionSelectedBackground).toBe(base.optionSelectedBackground);
+  });
+
+  it("light + dark defaults share the same slot keys (15 slots)", () => {
+    const light = Object.keys(DEFAULT_TOKENS.selectBottomSheetColors).sort();
+    const dark = Object.keys(DEFAULT_DARK_TOKENS.selectBottomSheetColors).sort();
+    expect(light).toEqual(dark);
+    expect(light.length).toBe(15);
   });
 });
 

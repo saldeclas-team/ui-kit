@@ -14,14 +14,16 @@ Eight components across three phases. Every component ships with the same recipe
 
 New for Batch 2: each component carries **at least one peer dependency** — the whole point of deferring these was so consumers who don't need them don't have to install them. Every peer is registered as `optional: true` in `packages/ui-kraken/peerDependenciesMeta`, and the component falls back gracefully (or gates behind a runtime check) when the peer isn't present.
 
-### Phase A — Form controls (4 components)
+### Phase A — Form controls (6 components)
 
-| #   | Component        | 1-line                                                                     | Peer dep(s)                                               | Plan doc                                                        | Status |
-| --- | ---------------- | -------------------------------------------------------------------------- | --------------------------------------------------------- | --------------------------------------------------------------- | :----: |
-| 1   | Select           | Dropdown picker with modal / native sheet. Generic in the value type.      | `@expo/ui` (or pure JS + `Modal`)                         | [`docs/SELECT-PLAN.md`](./SELECT-PLAN.md)                       |   ⏳   |
-| 2   | SegmentedControl | Horizontal segmented picker — iOS-native affordance with Android fallback. | `@expo/ui` (or pure JS `Pressable` row)                   | [`docs/SEGMENTED-CONTROL-PLAN.md`](./SEGMENTED-CONTROL-PLAN.md) |   ⏳   |
-| 3   | DatePicker       | Native date picker (iOS spinner / Android calendar). Controlled `Date`.    | `@react-native-community/datetimepicker`                  | [`docs/DATE-PICKER-PLAN.md`](./DATE-PICKER-PLAN.md)             |   ⏳   |
-| 4   | DateRangePicker  | Two-input range picker built on `DatePicker` (start + end).                | `@react-native-community/datetimepicker` (reused from #3) | [`docs/DATE-RANGE-PICKER-PLAN.md`](./DATE-RANGE-PICKER-PLAN.md) |   ⏳   |
+| #   | Component         | 1-line                                                                     | Peer dep(s)                                                             | Plan doc                                                            | Status |
+| --- | ----------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------- | :----: |
+| 1   | Select            | Dropdown picker with pure-JS RN `Modal`. Generic in the value type.        | none (RN built-in `Modal`)                                              | [`docs/SELECT-PLAN.md`](./SELECT-PLAN.md)                           |   ✅   |
+| 1a  | SelectNative      | Native single-choice picker via `@expo/ui` — SwiftUI Menu / Compose.       | `@expo/ui` (optional)                                                   | [`docs/SELECT-NATIVE-PLAN.md`](./SELECT-NATIVE-PLAN.md)             |   ✅   |
+| 1b  | SelectBottomSheet | Single-choice picker with draggable bottom-sheet popup.                    | `@gorhom/bottom-sheet` + `react-native-gesture-handler` (both optional) | [`docs/SELECT-BOTTOM-SHEET-PLAN.md`](./SELECT-BOTTOM-SHEET-PLAN.md) |   ✅   |
+| 2   | SegmentedControl  | Horizontal segmented picker — iOS-native affordance with Android fallback. | `@expo/ui` (or pure JS `Pressable` row)                                 | [`docs/SEGMENTED-CONTROL-PLAN.md`](./SEGMENTED-CONTROL-PLAN.md)     |   ⏳   |
+| 3   | DatePicker        | Native date picker (iOS spinner / Android calendar). Controlled `Date`.    | `@react-native-community/datetimepicker`                                | [`docs/DATE-PICKER-PLAN.md`](./DATE-PICKER-PLAN.md)                 |   ⏳   |
+| 4   | DateRangePicker   | Two-input range picker built on `DatePicker` (start + end).                | `@react-native-community/datetimepicker` (reused from #3)               | [`docs/DATE-RANGE-PICKER-PLAN.md`](./DATE-RANGE-PICKER-PLAN.md)     |   ⏳   |
 
 ### Phase B — Overlays & notifications (3 components)
 

@@ -20,4 +20,7 @@ export type {
   SocialButtonColorsInput,
   CollapsibleColorsInput,
   ExternalLinkColorsInput,
+  SelectColorsInput,
+  SelectNativeColorsInput,
+  SelectBottomSheetColorsInput,
 } from "./provider-types";

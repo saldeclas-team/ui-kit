@@ -1,0 +1,494 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectNative snapshots dark palette + selected 1`] = `
+<View
+  testID="select-native"
+>
+  <Text
+    color="#F9FAFB"
+    testID="select-native-label"
+  >
+    Country
+  </Text>
+  <View
+    backgroundColor="#111827"
+    borderColor="#374151"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="select-native-frame"
+  >
+    <View
+      testID="expo-ui-host"
+    >
+      <View
+        accessibilityRole="combobox"
+        accessibilityState={
+          {
+            "disabled": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "text": "two",
+          }
+        }
+        testID="select-native-picker"
+      >
+        <View
+          accessibilityLabel="One"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-native-picker-item-one"
+        />
+        <View
+          accessibilityLabel="Two"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-native-picker-item-two"
+        />
+        <View
+          accessibilityLabel="Three"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-native-picker-item-three"
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`SelectNative snapshots default palette + peer available + value selected 1`] = `
+<View
+  testID="select-native"
+>
+  <Text
+    color="#111827"
+    testID="select-native-label"
+  >
+    Country
+  </Text>
+  <View
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="select-native-frame"
+  >
+    <View
+      testID="expo-ui-host"
+    >
+      <View
+        accessibilityRole="combobox"
+        accessibilityState={
+          {
+            "disabled": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "text": "two",
+          }
+        }
+        testID="select-native-picker"
+      >
+        <View
+          accessibilityLabel="One"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-native-picker-item-one"
+        />
+        <View
+          accessibilityLabel="Two"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-native-picker-item-two"
+        />
+        <View
+          accessibilityLabel="Three"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-native-picker-item-three"
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`SelectNative snapshots errorText state 1`] = `
+<View
+  testID="select-native"
+>
+  <Text
+    color="#111827"
+    testID="select-native-label"
+  >
+    Country
+  </Text>
+  <View
+    backgroundColor="#FFFFFF"
+    borderColor="#DC2626"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="select-native-frame"
+  >
+    <View
+      testID="expo-ui-host"
+    >
+      <View
+        accessibilityRole="combobox"
+        accessibilityState={
+          {
+            "disabled": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "text": "",
+          }
+        }
+        testID="select-native-picker"
+      >
+        <View
+          accessibilityLabel="Select…"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-native-picker-item-"
+        />
+        <View
+          accessibilityLabel="One"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-native-picker-item-one"
+        />
+        <View
+          accessibilityLabel="Two"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-native-picker-item-two"
+        />
+        <View
+          accessibilityLabel="Three"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-native-picker-item-three"
+        />
+      </View>
+    </View>
+  </View>
+  <Text
+    color="#DC2626"
+    testID="select-native-error-text"
+  >
+    Please pick a country
+  </Text>
+</View>
+`;
+
+exports[`SelectNative snapshots missing peer dep fallback 1`] = `
+<View
+  testID="select-native"
+>
+  <Text
+    color="#111827"
+    testID="select-native-label"
+  >
+    Country
+  </Text>
+  <View
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="select-native-frame"
+  >
+    <Text
+      color="#DC2626"
+      testID="select-native-missing-peer"
+    >
+      Install \`@expo/ui\` to enable SelectNative.
+    </Text>
+  </View>
+</View>
+`;

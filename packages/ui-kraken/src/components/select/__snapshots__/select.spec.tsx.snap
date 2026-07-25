@@ -1,0 +1,485 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Select snapshots dark palette + selected 1`] = `
+<View
+  testID="select"
+>
+  <Text
+    color="#F9FAFB"
+    testID="select-label"
+  >
+    Country
+  </Text>
+  <View
+    accessibilityLabel="Country"
+    accessibilityRole="combobox"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": false,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    backgroundColor="#111827"
+    borderColor="#374151"
+    borderRadius="$uiRadiusMd"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="select-trigger"
+  >
+    <Text
+      color="#F9FAFB"
+      testID="select-trigger-text"
+    >
+      Two
+    </Text>
+    <Text
+      color="#9CA3AF"
+    >
+      ▼
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Select snapshots default + selected + errorText 1`] = `
+<View
+  testID="select"
+>
+  <Text
+    color="#111827"
+    testID="select-label"
+  >
+    Country
+  </Text>
+  <View
+    accessibilityLabel="Country"
+    accessibilityRole="combobox"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": false,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    backgroundColor="#FFFFFF"
+    borderColor="#DC2626"
+    borderRadius="$uiRadiusMd"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="select-trigger"
+  >
+    <Text
+      color="#111827"
+      testID="select-trigger-text"
+    >
+      Two
+    </Text>
+    <Text
+      color="#6B7280"
+    >
+      ▼
+    </Text>
+  </View>
+  <Text
+    color="#DC2626"
+    testID="select-error-text"
+  >
+    Please pick a country
+  </Text>
+</View>
+`;
+
+exports[`Select snapshots default palette + closed 1`] = `
+<View
+  testID="select"
+>
+  <Text
+    color="#111827"
+    testID="select-label"
+  >
+    Country
+  </Text>
+  <View
+    accessibilityLabel="Country"
+    accessibilityRole="combobox"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": false,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="select-trigger"
+  >
+    <Text
+      color="#9CA3AF"
+      testID="select-trigger-text"
+    >
+      Select…
+    </Text>
+    <Text
+      color="#6B7280"
+    >
+      ▼
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Select snapshots default palette + open with modal title 1`] = `
+<View
+  testID="s"
+>
+  <Text
+    color="#111827"
+    testID="s-label"
+  >
+    Country
+  </Text>
+  <View
+    accessibilityLabel="Country"
+    accessibilityRole="combobox"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": true,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    backgroundColor="#FFFFFF"
+    borderColor="#2563EB"
+    borderRadius="$uiRadiusMd"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="s-trigger"
+  >
+    <Text
+      color="#111827"
+      testID="s-trigger-text"
+    >
+      One
+    </Text>
+    <Text
+      color="#6B7280"
+    >
+      ▲
+    </Text>
+  </View>
+  <View
+    animationType="fade"
+    onRequestClose={[Function]}
+    testID="s-modal"
+    transparent={true}
+  >
+    <View
+      accessibilityLabel="Close"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "flex": 1,
+        }
+      }
+      testID="s-modal-overlay"
+    >
+      <View
+        backgroundColor="rgba(17, 24, 39, 0.55)"
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "width": "100%",
+            }
+          }
+        >
+          <View
+            backgroundColor="#FFFFFF"
+          >
+            <Text
+              color="#111827"
+              testID="s-modal-title"
+            >
+              Choose a country
+            </Text>
+            <RCTScrollView
+              testID="s-modal-list"
+            >
+              <View>
+                <View
+                  accessibilityLabel="One"
+                  accessibilityRole="menuitem"
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": false,
+                      "expanded": undefined,
+                      "selected": true,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  backgroundColor="#EEF2FF"
+                  collapsable={false}
+                  focusable={true}
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  testID="s-option-one"
+                >
+                  <Text
+                    color="#111827"
+                    testID="s-option-one-label"
+                  >
+                    One
+                  </Text>
+                </View>
+                <View
+                  accessibilityLabel="Two"
+                  accessibilityRole="menuitem"
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": false,
+                      "expanded": undefined,
+                      "selected": false,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  backgroundColor="transparent"
+                  collapsable={false}
+                  focusable={true}
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  testID="s-option-two"
+                >
+                  <Text
+                    color="#111827"
+                    testID="s-option-two-label"
+                  >
+                    Two
+                  </Text>
+                </View>
+                <View
+                  accessibilityLabel="Three"
+                  accessibilityRole="menuitem"
+                  accessibilityState={
+                    {
+                      "busy": undefined,
+                      "checked": undefined,
+                      "disabled": false,
+                      "expanded": undefined,
+                      "selected": false,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  backgroundColor="transparent"
+                  collapsable={false}
+                  focusable={true}
+                  onBlur={[Function]}
+                  onClick={[Function]}
+                  onFocus={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  testID="s-option-three"
+                >
+                  <Text
+                    color="#111827"
+                    testID="s-option-three-label"
+                  >
+                    Three
+                  </Text>
+                </View>
+              </View>
+            </RCTScrollView>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
