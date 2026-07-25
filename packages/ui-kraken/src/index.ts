@@ -7,7 +7,7 @@
  */
 
 // Provider
-export { KrakenProvider, useUIKit } from "./provider";
+export { UIKitProvider, useUIKit } from "./provider";
 export type {
   ProviderProps,
   ContextValue,
@@ -15,6 +15,8 @@ export type {
   TokensInput,
   ButtonColorsInput,
   TextColorsInput,
+  AlertColorsInput,
+  RadioGroupColorsInput,
 } from "./provider";
 
 // Tokens
@@ -25,11 +27,18 @@ export {
   DEFAULT_DARK_BUTTON_COLORS,
   DEFAULT_LIGHT_TEXT_COLORS,
   DEFAULT_DARK_TEXT_COLORS,
+  DEFAULT_LIGHT_ALERT_COLORS,
+  DEFAULT_DARK_ALERT_COLORS,
+  DEFAULT_LIGHT_RADIO_GROUP_COLORS,
+  DEFAULT_DARK_RADIO_GROUP_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
+  mergeAlertColors,
+  mergeAlertVariantColors,
+  mergeRadioGroupColors,
   tint,
 } from "./tokens";
 export type {
@@ -37,6 +46,9 @@ export type {
   ButtonColors,
   ButtonVariantColors,
   TextColors,
+  AlertColors,
+  AlertVariantColors,
+  RadioGroupColors,
   ResolvedTokens,
   Config,
 } from "./tokens";
@@ -56,10 +68,7 @@ export { Text } from "./components";
 export type { TextProps, TextVariant, TextColor, TextIntensity } from "./components";
 
 export { Alert } from "./components";
-export type {
-  AlertProps,
-  AlertVariant,
-  AlertRadius,
-  AlertColors,
-  AlertColorsInput,
-} from "./components";
+export type { AlertProps, AlertVariant, AlertRadius, AlertVariantColorsInput } from "./components";
+
+export { RadioGroup } from "./components";
+export type { RadioGroupProps, RadioOption, RadioOrientation, RadioRadius } from "./components";

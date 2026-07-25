@@ -1,0 +1,725 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RadioGroup snapshots dark theme, one selected 1`] = `
+<View
+  accessibilityRole="radiogroup"
+  orientation="vertical"
+  testID="rg"
+>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": true,
+      }
+    }
+    backgroundColor="#1E3A8A33"
+    borderColor="#60A5FA"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-yes"
+  >
+    <View
+      borderColor="#60A5FA"
+      testID="rg-option-yes-circle"
+    >
+      <View
+        backgroundColor="#60A5FA"
+        testID="rg-option-yes-dot"
+      />
+    </View>
+    <Text
+      color="#F5F5F7"
+      testID="rg-option-yes-label"
+    >
+      Sí
+    </Text>
+  </View>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#6B7280"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-no"
+  >
+    <View
+      borderColor="#6B7280"
+      testID="rg-option-no-circle"
+    />
+    <Text
+      color="#F5F5F7"
+      testID="rg-option-no-label"
+    >
+      No
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`RadioGroup snapshots disabled group 1`] = `
+<View
+  accessibilityRole="radiogroup"
+  orientation="vertical"
+  testID="rg"
+>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": true,
+        "selected": true,
+      }
+    }
+    backgroundColor="#EFF6FF"
+    borderColor="#2563EB"
+    borderRadius="$uiRadiusMd"
+    disabled={true}
+    onPress={[Function]}
+    testID="rg-option-yes"
+  >
+    <View
+      borderColor="#2563EB"
+      testID="rg-option-yes-circle"
+    >
+      <View
+        backgroundColor="#2563EB"
+        testID="rg-option-yes-dot"
+      />
+    </View>
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-yes-label"
+    >
+      Sí
+    </Text>
+  </View>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": true,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={true}
+    onPress={[Function]}
+    testID="rg-option-no"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-no-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-no-label"
+    >
+      No
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`RadioGroup snapshots horizontal S/M/L 1`] = `
+<View
+  accessibilityRole="radiogroup"
+  orientation="horizontal"
+  testID="rg"
+>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-sm"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-sm-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-sm-label"
+    >
+      S
+    </Text>
+  </View>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": true,
+      }
+    }
+    backgroundColor="#EFF6FF"
+    borderColor="#2563EB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-md"
+  >
+    <View
+      borderColor="#2563EB"
+      testID="rg-option-md-circle"
+    >
+      <View
+        backgroundColor="#2563EB"
+        testID="rg-option-md-dot"
+      />
+    </View>
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-md-label"
+    >
+      M
+    </Text>
+  </View>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-lg"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-lg-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-lg-label"
+    >
+      L
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`RadioGroup snapshots horizontal group, nothing selected 1`] = `
+<View
+  accessibilityRole="radiogroup"
+  orientation="horizontal"
+  testID="rg"
+>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-yes"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-yes-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-yes-label"
+    >
+      Sí
+    </Text>
+  </View>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-no"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-no-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-no-label"
+    >
+      No
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`RadioGroup snapshots per-instance radioGroupColors override, all slots set 1`] = `
+<View
+  accessibilityLabel="Custom"
+  accessibilityRole="radiogroup"
+  orientation="vertical"
+  testID="rg"
+>
+  <Text
+    color="#3B0A00"
+    testID="rg-label"
+  >
+    Custom
+  </Text>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": true,
+      }
+    }
+    backgroundColor="#FFF7ED"
+    borderColor="#FF6B00"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-yes"
+  >
+    <View
+      borderColor="#FF6B00"
+      testID="rg-option-yes-circle"
+    >
+      <View
+        backgroundColor="#FF6B00"
+        testID="rg-option-yes-dot"
+      />
+    </View>
+    <Text
+      color="#3B0A00"
+      testID="rg-option-yes-label"
+    >
+      Sí
+    </Text>
+  </View>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#FFC58F"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-no"
+  >
+    <View
+      borderColor="#FFC58F"
+      testID="rg-option-no-circle"
+    />
+    <Text
+      color="#3B0A00"
+      testID="rg-option-no-label"
+    >
+      No
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`RadioGroup snapshots pill radius 1`] = `
+<View
+  accessibilityRole="radiogroup"
+  orientation="vertical"
+  testID="rg"
+>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": true,
+      }
+    }
+    backgroundColor="#EFF6FF"
+    borderColor="#2563EB"
+    borderRadius={9999}
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-yes"
+  >
+    <View
+      borderColor="#2563EB"
+      testID="rg-option-yes-circle"
+    >
+      <View
+        backgroundColor="#2563EB"
+        testID="rg-option-yes-dot"
+      />
+    </View>
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-yes-label"
+    >
+      Sí
+    </Text>
+  </View>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius={9999}
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-no"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-no-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-no-label"
+    >
+      No
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`RadioGroup snapshots vertical group, nothing selected 1`] = `
+<View
+  accessibilityRole="radiogroup"
+  orientation="vertical"
+  testID="rg"
+>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-yes"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-yes-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-yes-label"
+    >
+      Sí
+    </Text>
+  </View>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-no"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-no-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-no-label"
+    >
+      No
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`RadioGroup snapshots with 'yes' selected 1`] = `
+<View
+  accessibilityRole="radiogroup"
+  orientation="vertical"
+  testID="rg"
+>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": true,
+      }
+    }
+    backgroundColor="#EFF6FF"
+    borderColor="#2563EB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-yes"
+  >
+    <View
+      borderColor="#2563EB"
+      testID="rg-option-yes-circle"
+    >
+      <View
+        backgroundColor="#2563EB"
+        testID="rg-option-yes-dot"
+      />
+    </View>
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-yes-label"
+    >
+      Sí
+    </Text>
+  </View>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-no"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-no-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-no-label"
+    >
+      No
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`RadioGroup snapshots with label 1`] = `
+<View
+  accessibilityLabel="Owner"
+  accessibilityRole="radiogroup"
+  orientation="vertical"
+  testID="rg"
+>
+  <Text
+    color="#0B0B0F"
+    testID="rg-label"
+  >
+    Owner
+  </Text>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-yes"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-yes-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-yes-label"
+    >
+      Sí
+    </Text>
+  </View>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-no"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-no-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-no-label"
+    >
+      No
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`RadioGroup snapshots with nothing selected 1`] = `
+<View
+  accessibilityRole="radiogroup"
+  orientation="vertical"
+  testID="rg"
+>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-yes"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-yes-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-yes-label"
+    >
+      Sí
+    </Text>
+  </View>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-no"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-no-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-no-label"
+    >
+      No
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`RadioGroup snapshots without label 1`] = `
+<View
+  accessibilityRole="radiogroup"
+  orientation="vertical"
+  testID="rg"
+>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-yes"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-yes-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-yes-label"
+    >
+      Sí
+    </Text>
+  </View>
+  <View
+    accessibilityRole="radio"
+    accessibilityState={
+      {
+        "disabled": false,
+        "selected": false,
+      }
+    }
+    borderColor="#9CA3AF"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    onPress={[Function]}
+    testID="rg-option-no"
+  >
+    <View
+      borderColor="#9CA3AF"
+      testID="rg-option-no-circle"
+    />
+    <Text
+      color="#0B0B0F"
+      testID="rg-option-no-label"
+    >
+      No
+    </Text>
+  </View>
+</View>
+`;

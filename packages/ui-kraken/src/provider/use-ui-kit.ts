@@ -7,7 +7,7 @@ export function useUIKit(): ContextValue {
   const value = useContext(UIKitContext);
   if (value === null) {
     throw new Error(
-      "useUIKit must be called inside <KrakenProvider>. Wrap your app root with KrakenProvider before rendering ui-kraken components."
+      "useUIKit must be called inside <UIKitProvider>. Wrap your app root with UIKitProvider before rendering ui-kraken components."
     );
   }
   return value;

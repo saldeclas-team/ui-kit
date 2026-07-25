@@ -1,14 +1,21 @@
 import { createTamagui, createTokens } from "tamagui";
 import { defaultConfig } from "@tamagui/config/v4";
 
-import { DEFAULT_DARK_TOKENS, DEFAULT_TOKENS, coarseToFineTokens } from "./tokens-derive";
-import type { ButtonColors, TextColors, Tokens, ResolvedTokens } from "./tokens-types";
+import {
+  flattenAlertColors,
+  flattenButtonColors,
+  flattenRadioGroupColors,
+  flattenTextColors,
+} from "../utils/flatten";
+import { DEFAULT_DARK_TOKENS, DEFAULT_TOKENS } from "./defaults";
+import { coarseToFineTokens } from "./tokens-derive";
+import type { Tokens, ResolvedTokens } from "./tokens-types";
 
 /**
  * Build a Tamagui config that carries the ui-kraken tokens under a `ui*`
  * prefix (so we never clobber the defaults from `@tamagui/config/v4`) AND
  * wires the same token names into both the `light` and `dark` themes so
- * `<Theme name="dark">` (or a KrakenProvider mounted in dark mode) flips
+ * `<Theme name="dark">` (or a UIKitProvider mounted in dark mode) flips
  * every `$uiButtonPrimaryBackground` / `$uiTextPrimary` etc.
  * reference automatically.
  *
@@ -28,6 +35,8 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
       ...(baseTokens as { color?: Record<string, string> }).color,
       ...flattenButtonColors(lightResolved.buttonColors),
       ...flattenTextColors(lightResolved.textColors),
+      ...flattenAlertColors(lightResolved.alertColors),
+      ...flattenRadioGroupColors(lightResolved.radioGroupColors),
     },
     radius: {
       ...baseTokens.radius,
@@ -63,56 +72,25 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...(baseThemes.light ?? {}),
         ...flattenButtonColors(lightResolved.buttonColors),
         ...flattenTextColors(lightResolved.textColors),
+        ...flattenAlertColors(lightResolved.alertColors),
+        ...flattenRadioGroupColors(lightResolved.radioGroupColors),
       },
       dark: {
         ...(baseThemes.dark ?? {}),
         ...flattenButtonColors(darkResolved.buttonColors),
         ...flattenTextColors(darkResolved.textColors),
+        ...flattenAlertColors(darkResolved.alertColors),
+        ...flattenRadioGroupColors(darkResolved.radioGroupColors),
       },
     },
   });
 }
 
-/**
- * Flatten the nested `buttonColors` shape into a flat `$ui*` token map:
- *
- * ```
- * { primary: { background: "#2563EB", label: "#FFFFFF" } }
- * ```
- *
- * becomes
- *
- * ```
- * { uiButtonPrimaryBackground: "#2563EB", uiButtonPrimaryLabel: "#FFFFFF" }
- * ```
- */
-function flattenButtonColors(colors: ButtonColors): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const variant of Object.keys(colors) as Array<keyof ButtonColors>) {
-    const slots = colors[variant];
-    const capitalized = variant.charAt(0).toUpperCase() + variant.slice(1);
-    if (slots.background != null) out[`uiButton${capitalized}Background`] = slots.background;
-    if (slots.border != null) out[`uiButton${capitalized}Border`] = slots.border;
-    out[`uiButton${capitalized}Label`] = slots.label;
-  }
-  return out;
-}
-
-/**
- * Flatten the `textColors` map into `$uiText{PascalCase}` Tamagui tokens.
- */
-function flattenTextColors(colors: TextColors): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const slot of Object.keys(colors) as Array<keyof TextColors>) {
-    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
-    out[`uiText${capitalized}`] = colors[slot];
-  }
-  return out;
-}
-
 export type Config = ReturnType<typeof buildConfig>;
 
-// Re-export the pure derive helpers so consumers get a single entry point.
+// Re-export defaults + merge helpers (from `./defaults/`) alongside the
+// pure derive helper (from `./tokens-derive`) and the color utilities
+// (from `../utils/color`) so consumers get a single entry point.
 export {
   DEFAULT_DARK_TOKENS,
   DEFAULT_TOKENS,
@@ -120,10 +98,17 @@ export {
   DEFAULT_LIGHT_BUTTON_COLORS,
   DEFAULT_DARK_TEXT_COLORS,
   DEFAULT_LIGHT_TEXT_COLORS,
-  coarseToFineTokens,
+  DEFAULT_DARK_ALERT_COLORS,
+  DEFAULT_LIGHT_ALERT_COLORS,
+  DEFAULT_DARK_RADIO_GROUP_COLORS,
+  DEFAULT_LIGHT_RADIO_GROUP_COLORS,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
-  tint,
-} from "./tokens-derive";
+  mergeAlertColors,
+  mergeAlertVariantColors,
+  mergeRadioGroupColors,
+} from "./defaults";
+export { coarseToFineTokens } from "./tokens-derive";
+export { tint } from "../utils/color";
 export type { ResolvedTokens };

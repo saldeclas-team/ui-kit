@@ -7,7 +7,9 @@ import {
   DEFAULT_TOKENS,
   buildConfig,
   coarseToFineTokens,
+  mergeAlertColors,
   mergeButtonColors,
+  mergeRadioGroupColors,
   mergeTextColors,
 } from "../tokens/tokens";
 import { UIKitContext } from "./provider-context";
@@ -18,7 +20,7 @@ import type { ProviderProps } from "./provider-types";
 // PortalProvider with shouldAddRootHost" warning and can cause hydration
 // mismatches. Consumers who need a portal can still use `<Portal>` from
 // `tamagui` — the root host from TamaguiProvider is sufficient.
-export function KrakenProvider({ children, tokens, dark, defaultTheme = "light" }: ProviderProps) {
+export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }: ProviderProps) {
   const systemScheme = useColorScheme();
 
   const contextValue = useMemo(() => {
@@ -27,12 +29,22 @@ export function KrakenProvider({ children, tokens, dark, defaultTheme = "light" 
       ...tokens,
       buttonColors: mergeButtonColors(DEFAULT_TOKENS.buttonColors, tokens?.buttonColors),
       textColors: mergeTextColors(DEFAULT_TOKENS.textColors, tokens?.textColors),
+      alertColors: mergeAlertColors(DEFAULT_TOKENS.alertColors, tokens?.alertColors),
+      radioGroupColors: mergeRadioGroupColors(
+        DEFAULT_TOKENS.radioGroupColors,
+        tokens?.radioGroupColors
+      ),
     };
     const mergedDark = {
       ...DEFAULT_DARK_TOKENS,
       ...dark,
       buttonColors: mergeButtonColors(DEFAULT_DARK_TOKENS.buttonColors, dark?.buttonColors),
       textColors: mergeTextColors(DEFAULT_DARK_TOKENS.textColors, dark?.textColors),
+      alertColors: mergeAlertColors(DEFAULT_DARK_TOKENS.alertColors, dark?.alertColors),
+      radioGroupColors: mergeRadioGroupColors(
+        DEFAULT_DARK_TOKENS.radioGroupColors,
+        dark?.radioGroupColors
+      ),
     };
     const resolvedLight = coarseToFineTokens(mergedLight);
     const resolvedDark = coarseToFineTokens(mergedDark);

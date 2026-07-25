@@ -1,6 +1,6 @@
 # Alert — design record
 
-**Status:** shipped on 2026-07-24 in ui-kraken v0.6.0.
+**Status:** shipped as v0.6.0 (initial API) → refactored on 2026-07-25 in v0.7.0 to own its color block on the token schema (the v0.6.0 palette-derivation from `textColors` was tech debt).
 
 Living design doc for the `Alert` primitive. Kept post-shipping so future contributors can understand the decisions behind the shape of the API, not just what it does today.
 
@@ -8,15 +8,18 @@ Living design doc for the `Alert` primitive. Kept post-shipping so future contri
 
 ## Overview
 
-Contextual feedback surface for informational, success, warning, and destructive states. Common uses: form errors, empty-state hints, success confirmations, deprecation notices, inline callouts. Locked decisions:
+Contextual feedback surface for informational, success, warning, and destructive states. Common uses: form errors, empty-state hints, success confirmations, deprecation notices, inline callouts.
 
-- **Naming**: `Alert` — matches every mature RN/React design system (MUI, Chakra, Radix, Ant, NativeBase).
-- **Variant set**: 4 semantic variants — `info`, `success`, `warning`, `danger`. The vocabulary matches `KrakenTextColors` (`.danger`, not `.error`) so one semantic slot has one name across the kit.
+**Locked decisions:**
+
+- **Naming**: `Alert` — matches every mature RN / React design system (MUI, Chakra, Radix, Ant, NativeBase).
+- **Variant set**: 4 semantic variants — `info`, `success`, `warning`, `danger`. `danger` (not `error`) so the vocabulary matches `TextColors.danger` across the kit — one semantic slot, one name.
 - **Content model**: optional `title` (bold, single line) + `children` (body, any ReactNode). `children` not `message: string` because Alert body content is often more than plain text — nested `<Text>` for inline links, code snippets, etc.
 - **Icon**: `icon?: ReactNode` slot. Consumer brings their own icon system; ui-kraken does NOT ship an Icon component. Same pattern as `Button.leftIcon`.
 - **Compound API**: `Alert.Info`, `Alert.Success`, `Alert.Warning`, `Alert.Danger` — PascalCase shortcuts, same pattern as `Button.Primary` and `Text.H1`.
-- **Colors**: reuses the existing `textColors` block on `KrakenProvider`. Variants map to slots (info → `textColors.info`, danger → `textColors.danger`, etc.). No new token schema.
-- **Per-instance override**: `alertColors?: Partial<{ background, border, text, icon }>` — scoped to the resolved variant. Missing slots fall through to the variant palette.
+- **Colors — own token block**: Alert defines its own `alertColors` on the token schema. Provider-level overrides + per-instance overrides. Zero coupling to `textColors` or any other component's palette (per the [each-component-owns-color-space](../.claude/…/each-component-owns-color-space.md) rule).
+- **Per-instance override**: `alertColors?: AlertColorsInput` prop. Every slot optional; missing slots fall through to the provider-resolved palette for the resolved variant.
+- **Accessibility**: `accessibilityRole="alert"` on all variants; `accessibilityLiveRegion` is `"assertive"` for `danger` (screen reader interrupts) and `"polite"` for the other three.
 
 ## API
 
@@ -36,30 +39,30 @@ export interface AlertProps extends Omit<GetProps<typeof StyledAlert>, "children
 }
 ```
 
-### Variant × color-slot mapping
+### Variant × slot mapping (per-variant color palette)
 
-Every variant maps to one slot in the existing `KrakenTextColors` block:
+Every variant is a full 4-slot palette. All 4 variants coexist in the provider's `alertColors` block; the `variant` prop picks which palette is applied.
 
-| Variant   | Slot on `textColors` | Icon + text color                                  | Background                 |
-| --------- | -------------------- | -------------------------------------------------- | -------------------------- |
-| `info`    | `info`               | `textColors.info` (Blue-600 light / Blue-400 dark) | Same color at ~15% opacity |
-| `success` | `success`            | `textColors.success` (Emerald-600 / Emerald-400)   | Same color at ~15% opacity |
-| `warning` | `warning`            | `textColors.warning` (Amber-600 / Amber-400)       | Same color at ~15% opacity |
-| `danger`  | `danger`             | `textColors.danger` (Red-600 / Red-400)            | Same color at ~15% opacity |
+| Variant   | Slot: `background`                             | Slot: `text`      | Slot: `icon`      | Slot: `border`                   |
+| --------- | ---------------------------------------------- | ----------------- | ----------------- | -------------------------------- |
+| `info`    | Blue tint (`#EFF6FF` / `rgba(56,189,248,.15)`) | Blue 600 / 400    | Blue 600 / 400    | undefined (no border by default) |
+| `success` | Green tint                                     | Emerald 600 / 400 | Emerald 600 / 400 | undefined                        |
+| `warning` | Amber tint                                     | Amber 600 / 400   | Amber 600 / 400   | undefined                        |
+| `danger`  | Red tint                                       | Red 600 / 400     | Red 600 / 400     | undefined                        |
 
-Background is computed at runtime via `withAlpha(variantColor, 0.15)` — a small helper in `alert.tsx` that appends an `AA` alpha channel to a `#RRGGBB` hex, or returns the color as-is for `rgb(...)` / named inputs.
+Consumer overrides at the provider level to re-theme all alerts of a variant at once, or per-instance for a one-off paint.
 
 ### Sizes + radius
 
-No `size` prop in v1 — Alert is inline content, not chrome. Content-driven height (icon dictates the row height at 24px min; body wraps).
+No `size` prop in v1 — Alert is inline content, not chrome. Content-driven height (icon dictates the row height at 24 px min; body wraps).
 
-`radius?: AlertRadius` — same shape as `ButtonRadius`. Default `"md"` (`$uiRadiusMd`). Preset names resolve to the theme scale, `"pill"` is 9999, a raw number is passed through as pixels.
+`radius?: AlertRadius` — same shape as `ButtonRadius` / `RadioRadius`. Default `"md"` (`$uiRadiusMd`). Preset names resolve to the theme scale, `"pill"` is 9999, a raw number is passed through as pixels.
 
 ### Per-instance color override
 
 ```tsx
 <Alert.Info alertColors={{ background: "#FFEEDD" }}>
-  Custom background, other slots still use the variant defaults.
+  Custom background, other slots still use the resolved info palette.
 </Alert.Info>
 
 <Alert.Danger alertColors={{ background: "#4A0000", text: "#FFFFFF", icon: "#FFFFFF" }}>
@@ -67,11 +70,11 @@ No `size` prop in v1 — Alert is inline content, not chrome. Content-driven hei
 </Alert.Danger>
 ```
 
-Every field on `AlertColorsInput` is optional. Missing slots fall through to the palette derived from `variant`. Variant itself is implicit because you already picked one (`Alert.Info` selected it).
+Every field on `AlertColorsInput` is optional. Missing slots fall through to the palette for the resolved `variant`. Variant itself is implicit because you already picked one (`Alert.Info` selected it).
 
 ### A11y
 
-Every variant sets `accessibilityRole="alert"` and `accessibilityLiveRegion` — `assertive` for `danger` (screen reader interrupts current announcement), `polite` for the other three (announced when the reader finishes what it's saying). Follows MDN + Radix guidance.
+Every variant sets `accessibilityRole="alert"` and `accessibilityLiveRegion` — `"assertive"` for `danger` (screen reader interrupts current announcement), `"polite"` for the other three (announced when the reader finishes what it's saying). Follows MDN + Radix guidance.
 
 ### Compound namespace
 
@@ -99,43 +102,152 @@ Consumer tests query by these deterministic IDs instead of by text.
 
 ## Token schema
 
-**No changes.** Alert reuses the existing `textColors` block that shipped in ui-kraken v0.3.0 with the Text component. The 4 variant slots (`info`, `success`, `warning`, `danger`) are already there in both `DEFAULT_LIGHT_TEXT_COLORS` and `DEFAULT_DARK_TEXT_COLORS`.
+Alert introduces its own **`alertColors`** block on `Tokens`. Zero reuse of other component palettes. Consumers override at the provider level:
 
-Rationale for reuse (not introducing `alertColors`): the semantic surface an Alert paints (info / success / warning / danger text + icon) is the same semantic surface Text.color slots paint. Two schemas for the same intent would fragment the palette API — consumers overriding `textColors.info` to their brand blue would rightly expect their alerts to use it too.
+```tsx
+<UIKitProvider
+  tokens={{
+    alertColors: {
+      info: { background: "#EFF6FF", text: "#2563EB", icon: "#2563EB" },
+      danger: { background: "#FEF2F2", text: "#DC2626", icon: "#DC2626", border: "#FCA5A5" },
+    },
+  }}
+  dark={{
+    alertColors: {
+      info: { background: "#1E3A8A33", text: "#60A5FA", icon: "#60A5FA" },
+    },
+  }}
+>
+  <App />
+</UIKitProvider>
+```
 
-Per-instance override (`alertColors` prop on `<Alert>`) fills the gap when a specific instance needs a custom paint without touching the provider palette.
+### `AlertVariantColors` + `AlertColors` interfaces
+
+```ts
+export interface AlertVariantColors {
+  /** Row background color. */
+  background: string;
+  /** Title + body text color. */
+  text: string;
+  /** Icon glyph color (applied via wrapper `color` prop). */
+  icon: string;
+  /** Optional border color. When set, a 1px border renders. */
+  border?: string;
+}
+
+export interface AlertColors {
+  info: AlertVariantColors;
+  success: AlertVariantColors;
+  warning: AlertVariantColors;
+  danger: AlertVariantColors;
+}
+```
+
+### Default light palette
+
+Tuned for WCAG AA contrast on white / near-white surfaces. Backgrounds are the variant color at ~10-15% opacity (baked into the hex).
+
+```ts
+export const DEFAULT_LIGHT_ALERT_COLORS: AlertColors = {
+  info: { background: "#EFF6FF", text: "#0284C7", icon: "#0284C7" },
+  success: { background: "#F0FDF4", text: "#059669", icon: "#059669" },
+  warning: { background: "#FFFBEB", text: "#D97706", icon: "#D97706" },
+  danger: { background: "#FEF2F2", text: "#DC2626", icon: "#DC2626" },
+};
+```
+
+### Default dark palette
+
+Lighter variant colors so they pop on a dark surface; backgrounds are a darker tint that reads well against the near-black app surface.
+
+```ts
+export const DEFAULT_DARK_ALERT_COLORS: AlertColors = {
+  info: { background: "#0C4A6E33", text: "#38BDF8", icon: "#38BDF8" },
+  success: { background: "#064E3B33", text: "#34D399", icon: "#34D399" },
+  warning: { background: "#78350F33", text: "#FBBF24", icon: "#FBBF24" },
+  danger: { background: "#7F1D1D33", text: "#F87171", icon: "#F87171" },
+};
+```
+
+### Flatten to Tamagui tokens
+
+`flattenAlertColors()` produces the flat `$ui*` token map wired into `buildConfig()`:
+
+```
+uiAlertInfoBackground
+uiAlertInfoText
+uiAlertInfoIcon
+uiAlertInfoBorder             // omitted when the slot is undefined
+uiAlertSuccessBackground
+uiAlertSuccessText
+uiAlertSuccessIcon
+uiAlertWarningBackground
+uiAlertWarningText
+uiAlertWarningIcon
+uiAlertDangerBackground
+uiAlertDangerText
+uiAlertDangerIcon
+```
+
+Wired into both `themes.light` and `themes.dark` so `<Theme name="dark">` flips every reference automatically.
+
+### Merge helpers
+
+```ts
+export function mergeAlertVariantColors(
+  base: AlertVariantColors,
+  override?: Partial<AlertVariantColors>
+): AlertVariantColors;
+
+export function mergeAlertColors(
+  base: AlertColors,
+  override?: Partial<Record<keyof AlertColors, Partial<AlertVariantColors>>>
+): AlertColors;
+```
+
+Same signatures as `mergeButtonColors()` / `mergeButtonVariantColors()`. Called inside `UIKitProvider` for both light and dark passes.
 
 ## File structure
 
 ```
 packages/ui-kraken/src/components/alert/
-├── alert.tsx              # component logic + compound export + resolvePalette / withAlpha helpers
+├── alert.tsx              # component logic + compound export + resolvePalette helper
 ├── alert.styled.ts        # StyledAlert (root row) + StyledAlertIconWrapper + StyledAlertContent + StyledAlertTitle + StyledAlertBody
-├── alert-types.ts         # AlertVariant, AlertRadius, AlertColors, AlertColorsInput, AlertProps
+├── alert-types.ts         # AlertVariant, AlertRadius, AlertVariantColors, AlertColors, AlertColorsInput, AlertProps
 ├── alert.spec.tsx         # unit tests + describe("snapshots") block
 ├── alert.stories.tsx      # Storybook (~8 stories)
 ├── README.md              # props table + usage + Platform support (iOS · Android · Web)
-└── index.ts               # explicit named exports (Alert + 5 types)
+└── index.ts               # explicit named exports (Alert + 6 types)
 ```
+
+Token / provider wiring (v0.7.0 refactor delta vs v0.6.0):
+
+- `packages/ui-kraken/src/tokens/tokens-types.ts` — add `AlertVariantColors` + `AlertColors` + add `alertColors: AlertColors` field to `Tokens`
+- `packages/ui-kraken/src/tokens/tokens-derive.ts` — add `DEFAULT_LIGHT_ALERT_COLORS` + `DEFAULT_DARK_ALERT_COLORS` + `mergeAlertColors()` + `mergeAlertVariantColors()`; update `DEFAULT_TOKENS` + `DEFAULT_DARK_TOKENS`
+- `packages/ui-kraken/src/tokens/tokens.ts` — add `flattenAlertColors()`; wire into `buildConfig()` `tokens.color`, `themes.light`, `themes.dark`; re-export defaults + merge helpers
+- `packages/ui-kraken/src/provider/provider-types.ts` — add `AlertColorsInput` type + optional `alertColors?` field to `TokensInput`
+- `packages/ui-kraken/src/provider/provider.tsx` — extend `useMemo` merge to call `mergeAlertColors()` for both `mergedLight` and `mergedDark`
+- `packages/ui-kraken/src/components/alert/alert.tsx` — refactor: replace the runtime derivation from `textColors` with a lookup into `tokens.alertColors[variant]`; keep the `alertColors?` per-instance override merging on top
 
 Barrel updates:
 
-- `packages/ui-kraken/src/components/index.ts` — re-export `Alert` + all 5 types
+- `packages/ui-kraken/src/components/index.ts` — re-export `Alert` + 6 types (add `AlertVariantColors`)
 - `packages/ui-kraken/src/index.ts` — public barrel
 
 Example app:
 
-- `apps/example/app/(pages)/components/alert.tsx` — full showcase
-- `apps/example/app/_layout.tsx` — register `Stack.Screen`
-- `apps/example/app/(pages)/index.tsx` — flip Alert row from "Planned" → "Ready"
+- `apps/example/app/(pages)/components/alert.tsx` — subtitle updated to describe the `alertColors` provider block (already fixed in this PR)
 
 ## Testing (Jest + RTL v14 + jest-expo)
 
-Mock `./alert.styled` and `../../provider/use-ui-kit` the same way Button and Text do so the tests run without a live Tamagui / provider tree. ~10 specs + a `describe("snapshots")` block:
+Mock `./alert.styled` and `../../provider/use-ui-kit` the same way Button and Text do so the tests run without a live Tamagui / provider tree. The `useUIKit` mock now returns `tokens.alertColors` with the 4 variant palettes populated (matching `DEFAULT_LIGHT_ALERT_COLORS`).
+
+**Behavioral coverage** (~22 targeted tests, extends the v0.6.0 set):
 
 1. Renders body (`children`) when provided.
 2. Renders `title` when provided; omits the title element when not.
-3. Every variant maps to the correct color slot (parametrized across 4).
+3. Every variant maps to the correct `alertColors` slot (parametrized across 4).
 4. Every compound shortcut sets the correct `variant`.
 5. `icon` slot renders when provided; omits the wrapper when not.
 6. `radius` prop resolves: preset name → theme token, `"pill"` → 9999, `"none"` → 0, raw number → itself.
@@ -143,15 +255,17 @@ Mock `./alert.styled` and `../../provider/use-ui-kit` the same way Button and Te
 8. `testID` propagates to `-title`, `-body`, `-icon` sub-elements deterministically.
 9. `accessibilityRole="alert"` on every variant; `accessibilityLiveRegion` is `"assertive"` for `danger` and `"polite"` for others.
 10. Every Tamagui style prop flow-through works (padding / margin / style array).
+11. **v0.7.0 additions**: provider-level `alertColors` override propagates through `useUIKit()` — mock returns a custom `info.background`, assert `Alert.Info` uses it.
+12. Border slot renders only when `alertColors[variant].border` is set.
 
-### Snapshot block (~18 snapshots)
+**Snapshot block** (~19 snapshots):
 
-- Every variant × default title + body (4).
-- `title` + body vs body-only (2).
-- With / without `icon` slot (2).
-- Radius presets: `none`, `sm`, `md`, `lg`, `pill`, and one raw number (6).
-- Dark theme × each variant (4).
-- Per-instance `alertColors` override with all 4 slots set (1).
+- Every variant × default title + body (4)
+- `title` + body vs body-only (2)
+- With / without `icon` slot (2)
+- Radius presets: `none`, `sm`, `md`, `lg`, `pill`, and one raw number (6)
+- Dark theme × each variant (4)
+- Per-instance `alertColors` override with all 4 slots set (1)
 
 ## Storybook (~8 stories)
 
@@ -162,7 +276,7 @@ Mock `./alert.styled` and `../../provider/use-ui-kit` the same way Button and Te
 - `LongContent` — multi-line body, wrap behavior
 - `RadiusPresets` — one alert per preset
 - `CustomColors` — 3 alerts using `alertColors` to override into brand palettes
-- `DarkTheme` — 4 variants wrapped in `<Theme name="dark">` for the elevation-border cross-check
+- `DarkTheme` — 4 variants wrapped in `<Theme name="dark">` for the cross-check
 
 ## Example app screen
 
@@ -170,54 +284,41 @@ Mock `./alert.styled` and `../../provider/use-ui-kit` the same way Button and Te
 
 1. **Variants** — the 4 semantic variants with title + body + icon
 2. **Title vs body-only** — same variant, side-by-side
-3. **With icon vs without** — showing the icon slot at work (using a plain `<Text>` glyph or a Feather icon from the example app's icon set)
+3. **With icon vs without** — showing the icon slot at work
 4. **Radius presets** — every radius option
-5. **Custom colors** — `alertColors` override examples
+5. **Custom colors** — `alertColors` per-instance override examples
 6. **Long content** — a wrapping paragraph inside an Alert
 
-Catalog home flips the Alert row from `status: "planned"` → `status: "shipped"` and wires it to `/components/alert`.
+Catalog home row for Alert stays as `status: "shipped"`.
 
-## AGENTS.md / skill updates
+## Non-goals
 
-No skill or AGENTS.md change needed — Alert follows the existing conventions exactly:
-
-- kebab-case files ✅
-- named exports only ✅
-- `*.styled.ts` for Tamagui primitives ✅
-- `*-types.ts` for types ✅
-- `*.spec.tsx` co-located ✅
-- `*.stories.tsx` co-located ✅
-- `README.md` per component ✅
-- `testID` propagates ✅
-- No new tokens ✅
-- Compound API pattern ✅
-
-## Non-goals (deferred)
+Documented so future contributors know these were considered and deliberately deferred:
 
 - **Dismissible / `onClose` prop** — v1 is display-only. A close button + slide-out animation deserves its own PR. Consumer wraps `<Alert>` in a stateful parent to conditionally render.
 - **`action` slot** (e.g. inline "Retry" button) — composable today via `children` (`<Alert><Text>Payment failed. <Button.Ghost>Retry</Button.Ghost></Text></Alert>`). If a first-class `actions` prop turns out to be common, add later.
 - **Auto-dismiss / toast conversion** — separate `Toast` component in a future PR. Alert stays inline.
 - **`error` variant name** — deliberately `"danger"` for consistency with `TextColors.danger`. Not exposing `"error"` as an alias.
 - **Icon library dependency** — Alert takes `icon?: ReactNode`; consumer brings their own icon system. When ui-kraken eventually ships `Icon`, no Alert change needed.
-- **Fixed-height `size` prop** — Alert is inline content; height is content-driven. If a "compact" or "banner-full-width" variant surfaces demand, add later.
+- **Fixed-height `size` prop** — Alert is inline content; height is content-driven.
 
 ## How to ship
 
-Executed in this order on branch `feat/alert-component`:
+**v0.7.0 refactor** (bundled in the RadioGroup + provider rename PR):
 
-1. Types + styled + tsx.
-2. Spec + snapshot block.
-3. Storybook stories.
-4. README.
-5. index.ts + wire into public barrels (`components/index.ts`, `src/index.ts`).
-6. Example screen + register `Stack.Screen` + flip catalog row.
-7. Verify: `pnpm typecheck && pnpm lint && pnpm test && pnpm --filter ui-kraken build`. Expect 122 → ~140 tests, 66 → ~84 snapshots.
-8. Changeset for the `0.6.0` minor bump.
-9. This plan doc flips Status to `shipped on <date> (ui-kraken v0.6.0)`.
-10. Commit atomically. Handoff PR title + body per [`drafting-pr-descriptions`](../.agents/skills/drafting-pr-descriptions/SKILL.md).
+1. **Token schema** — extend `tokens-types.ts`, `tokens-derive.ts`, `tokens.ts` with `AlertVariantColors` + `AlertColors` + defaults + merge helpers + flatten
+2. **Provider wiring** — extend `provider-types.ts` `TokensInput` + `provider.tsx` `useMemo` merge (both light + dark)
+3. **Component refactor** — `alert.tsx`: replace `resolvePalette(variant, tokens.textColors, override)` with `resolvePalette(variant, tokens.alertColors, override)`; delete the `withAlpha` helper (backgrounds now come pre-tinted from defaults or provider override, not derived at runtime)
+4. **Update tests** — `alert.spec.tsx`: mock `useUIKit` to return `tokens.alertColors`; add provider-override test; regenerate snapshots
+5. **Barrels** — expose `AlertVariantColors` from `components/alert/index.ts` + `components/index.ts` + `src/index.ts`
+6. **README** — swap the "Color model" section to document `alertColors` on the provider + per-instance
+7. **Flip status** in this doc: append the v0.7.0 refactor date
+8. **Verify**: `pnpm typecheck && pnpm -r lint && pnpm test && pnpm --filter ui-kraken build`
+9. **Changeset** — bundled with the RadioGroup + `UIKitProvider` rename into a single `0.7.0` minor bump
 
 ## How to extend
 
-- **New variant** — add to `AlertVariant` in `alert-types.ts`, extend `VARIANT_TO_TEXT_SLOT` in `alert.tsx`, extend `ACCESSIBILITY_ROLE` if the a11y role differs, add a row to the README variant table, add a compound shortcut in the `Object.assign` map, and add a story to `alert.stories.tsx`.
-- **New color slot** (e.g. `borderWidth` semantics) — extend `AlertColors` + `AlertColorsInput` in `alert-types.ts`, extend `resolvePalette` in `alert.tsx`, thread the new prop through `alert.tsx`'s render.
+- **New variant** — add to `AlertVariant` in `alert-types.ts`, add a key to `AlertColors` + both defaults in `tokens-derive.ts`, extend `flattenAlertColors` naming, add a compound shortcut in the `Object.assign` map, add a story, extend the a11y role map if the role differs.
+- **New color slot** on the variant palette (e.g. `borderWidth` semantics) — extend `AlertVariantColors`, extend `mergeAlertVariantColors`, extend `flattenAlertColors`, thread the new prop through `alert.tsx`'s render.
 - **Dismissible** — new file `alert-dismissible.tsx` wrapping `Alert` with `onClose` + close-button state. Do not add `onClose` to the base `AlertProps` — keeps the base component simple, dismissible is a distinct primitive.
+- **Provider-level slot overrides for brand theming** — already supported today via `<UIKitProvider tokens={{ alertColors: {...} }}>`. No API change needed.

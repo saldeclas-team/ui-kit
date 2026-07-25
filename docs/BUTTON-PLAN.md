@@ -220,7 +220,7 @@ $uiButtonDestructiveBackground
 $uiButtonDestructiveLabel
 ```
 
-These land in both the `light_kraken` and `dark_kraken` themes so a Tamagui `<Theme name="dark">` block flips them all at once.
+These land in both the `light` and `dark` themes so a Tamagui `<Theme name="dark">` block flips them all at once.
 
 ## File structure
 
@@ -242,15 +242,15 @@ Barrel updates that landed with Button:
 
 Tokens layer (established by Button, extended later by Text):
 
-- `kraken-tokens-types.ts` — `ButtonColors`, `ButtonVariantColors`, `Tokens`, `ResolvedTokens`
-- `kraken-tokens-derive.ts` — `DEFAULT_LIGHT_BUTTON_COLORS`, `DEFAULT_DARK_BUTTON_COLORS`, `DEFAULT_TOKENS`, `DEFAULT_DARK_TOKENS`, `mergeButtonColors`, `mergeButtonVariantColors`, `coarseToFineTokens`
-- `kraken-tokens.ts` — `buildConfig` that flattens the palette and installs it under both themes
+- `tokens-types.ts` — `ButtonColors`, `ButtonVariantColors`, `Tokens`, `ResolvedTokens`
+- `tokens-derive.ts` — `DEFAULT_LIGHT_BUTTON_COLORS`, `DEFAULT_DARK_BUTTON_COLORS`, `DEFAULT_TOKENS`, `DEFAULT_DARK_TOKENS`, `mergeButtonColors`, `mergeButtonVariantColors`, `coarseToFineTokens`
+- `tokens.ts` — `buildConfig` that flattens the palette and installs it under both themes
 
 Provider (established by Button):
 
-- `kraken-provider-types.ts` — `TokensInput`, `ButtonColorsInput`, `ProviderProps`, `ThemeMode`
-- `kraken-provider.tsx` — `KrakenProvider` mounting `TamaguiProvider` + `UIKitContext`, merging light/dark overrides via `useMemo`
-- `use-kraken.ts` — hook returning `{ activeTheme, tokens, tamaguiConfig }` — the raw Tamagui config is intentionally reachable as an escape hatch for power users
+- `provider-types.ts` — `TokensInput`, `ButtonColorsInput`, `ProviderProps`, `ThemeMode`
+- `provider.tsx` — `UIKitProvider` mounting `TamaguiProvider` + `UIKitContext`, merging light/dark overrides via `useMemo`
+- `use-ui-kit.ts` — hook returning `{ activeTheme, tokens, tamaguiConfig }` — the raw Tamagui config is intentionally reachable as an escape hatch for power users
 
 Example app:
 
@@ -258,7 +258,7 @@ Example app:
 
 ## Testing (Jest + RTL v14 + jest-expo)
 
-Mocks `./button.styled` and `../../provider/use-kraken` so the tests run under jest-expo without a live Tamagui/provider tree. Coverage spans the full API:
+Mocks `./button.styled` and `../../provider/use-ui-kit` so the tests run under jest-expo without a live Tamagui/provider tree. Coverage spans the full API:
 
 - Renders label (`children`) when provided.
 - Icon-only mode (no `children`) doesn't render the label wrapper.
@@ -315,7 +315,7 @@ Catalog home links to this screen at `/components/button`.
 
 Landed across several PRs on the way to v0.2.0:
 
-1. **v0.1.0 initial cut** (`d2fd1b8`): `feat(ui-kraken): add KrakenProvider, coarse tokens, and the Button component` — three tones, single size, first pass at the token pipeline.
+1. **v0.1.0 initial cut** (`d2fd1b8`): `feat(ui-kraken): add UIKitProvider, coarse tokens, and the Button component` — three tones, single size, first pass at the token pipeline.
 2. **v0.2.0 the real deal** (`8077325`): `feat(ui-kraken): per-component token schema, Button v2 (5 tones + radius), dark mode, catalog` — refactored tokens from a flat `primaryColor: string` to the per-component grouped block (breaking, gated by the v0.2 minor), added `outline` and `ghost` tones, added the `radius` prop, added dark-mode support end-to-end (`dark` prop on provider + `defaultTheme` + `DEFAULT_DARK_TOKENS`), and shipped the example catalog home.
 3. **Testing rework** (`f7f6234`): `test(ui-kraken): realistic coverage thresholds + drop dead override helpers` — pruned utilities that testing revealed were unused.
 4. **Elevation feature** (`6b6613d`): `feat(button): add elevation prop with none / sm / md / lg presets` — added hardcoded shadow presets and the iOS shadow + Android elevation dual output.
@@ -323,7 +323,7 @@ Landed across several PRs on the way to v0.2.0:
 
 ## How to extend
 
-- **New tone** — add to `ButtonTone` in `button-types.ts`, add a variant entry to `variants.tone` in `button.styled.ts` referencing the new palette tokens, extend `ButtonColors` in `kraken-tokens-types.ts`, add defaults to both `DEFAULT_LIGHT_BUTTON_COLORS` and `DEFAULT_DARK_BUTTON_COLORS`, add a compound shortcut in `button.tsx` (register in `Object.assign` map), and add a row to the README table.
+- **New tone** — add to `ButtonTone` in `button-types.ts`, add a variant entry to `variants.tone` in `button.styled.ts` referencing the new palette tokens, extend `ButtonColors` in `tokens-types.ts`, add defaults to both `DEFAULT_LIGHT_BUTTON_COLORS` and `DEFAULT_DARK_BUTTON_COLORS`, add a compound shortcut in `button.tsx` (register in `Object.assign` map), and add a row to the README table.
 - **New size** — add to `ButtonSize`, add the variant entry in `button.styled.ts` (height + horizontalPadding + label size), pick a sensible default `radius`, and update the README size table.
 - **New radius preset** — extend `ButtonRadius`, add the mapping branch to `resolveRadius` in `button.tsx`, and document it.
 - **New elevation level** — extend `ButtonElevation`, add an entry to `LIGHT_ELEVATION` and `DARK_ELEVATION_BORDER` in `button.tsx`, and add a Storybook row.

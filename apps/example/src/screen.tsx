@@ -10,7 +10,7 @@ export interface ScreenProps {
 
 /**
  * Demo screen wrapper for `apps/example`. Reads the current theme from
- * KrakenProvider and forces a black background in dark mode / white in light.
+ * UIKitProvider and forces a black background in dark mode / white in light.
  * The title and subtitle also flip color per theme. This is app-only glue —
  * NOT part of ui-kraken itself.
  */

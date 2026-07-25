@@ -2,8 +2,11 @@ import type { ReactNode } from "react";
 
 import type { Config } from "../tokens/tokens";
 import type {
+  AlertColors,
+  AlertVariantColors,
   ButtonColors,
   ButtonVariantColors,
+  RadioGroupColors,
   TextColors,
   ResolvedTokens,
 } from "../tokens/tokens-types";
@@ -24,12 +27,29 @@ export type ButtonColorsInput = Partial<Record<keyof ButtonColors, Partial<Butto
 export type TextColorsInput = Partial<TextColors>;
 
 /**
- * The input shape accepted by `<KrakenProvider tokens={...}>` — every field
+ * A partial-of-partials for `alertColors`: same shape as `ButtonColorsInput`.
+ * Consumers can override just one variant (e.g. `danger`), or just one slot
+ * within a variant (e.g. `danger.background`), and the rest fills in from
+ * the shipped defaults.
+ */
+export type AlertColorsInput = Partial<Record<keyof AlertColors, Partial<AlertVariantColors>>>;
+
+/**
+ * Partial override for `radioGroupColors` — consumers only declare the
+ * slots they want to change; the rest fills in from the shipped defaults.
+ * Slot-based (no variants), so the shape mirrors `TextColorsInput`.
+ */
+export type RadioGroupColorsInput = Partial<RadioGroupColors>;
+
+/**
+ * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
 export interface TokensInput {
   buttonColors?: ButtonColorsInput;
   textColors?: TextColorsInput;
+  alertColors?: AlertColorsInput;
+  radioGroupColors?: RadioGroupColorsInput;
   radius?: number;
   spacing?: number;
 }

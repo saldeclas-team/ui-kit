@@ -8,13 +8,13 @@
 
   Contextual feedback surface for informational, success, warning, and destructive states. Common uses: form errors, empty-state hints, success confirmations, deprecation notices, inline callouts.
 
-  **4 semantic variants:** `info` / `success` / `warning` / `danger` — vocabulary matches `KrakenTextColors` so one semantic slot has one name across the kit.
+  **4 semantic variants:** `info` / `success` / `warning` / `danger` — vocabulary matches `TextColors` so one semantic slot has one name across the kit.
 
   **Compound API:** `Alert.Info`, `Alert.Success`, `Alert.Warning`, `Alert.Danger` — PascalCase shortcuts, same pattern as `Button.Primary` and `Text.H1`. The plain `<Alert>` still works with the `variant` prop and defaults to `"info"`.
 
   **Content model:** optional `title` + `children` (any ReactNode — plain string or nested `<Text>` for rich content like inline links) + optional `icon` slot (consumer brings their own icon system; no dep on an icon library).
 
-  **Colors:** reuses the existing `textColors` block on `KrakenProvider` — no new token schema. Each variant maps to a `textColors` slot (info → `textColors.info`, danger → `textColors.danger`, etc.). Background is computed at runtime as the variant color at ~15% opacity.
+  **Colors:** reuses the existing `textColors` block on `UIKitProvider` — no new token schema. Each variant maps to a `textColors` slot (info → `textColors.info`, danger → `textColors.danger`, etc.). Background is computed at runtime as the variant color at ~15% opacity.
 
   **Per-instance override:** `alertColors?: Partial<{ background?, border?, text, icon }>` — scoped to the resolved variant. Missing slots fall through to the palette. Enables brand-color alerts without extending the provider palette.
 
@@ -67,44 +67,44 @@
 
 ### Minor Changes
 
-- f7c7842: refactor(api): drop the `Kraken` prefix from the public API — every export except `KrakenProvider` (BREAKING)
+- f7c7842: refactor(api): drop the legacy prefix from the public API (BREAKING)
 
-  The `Kraken` prefix on every type / hook / constant was noise. The package name (`ui-kraken`) already namespaces the imports, so `KrakenTokens` inside `import type { KrakenTokens } from "ui-kraken"` was just repeating the namespace. Types now read like they came from any modern React library.
+  The library-prefix on every type / hook / constant was noise. The package name (`ui-kraken`) already namespaces the imports, so repeating it inside the identifiers was redundant. Types now read like they came from any modern React library.
 
   **Kept (brand identity):**
 
   - Package name `ui-kraken`.
-  - Component: `KrakenProvider` — follows the standard pattern (`<ChakraProvider>`, `<TamaguiProvider>`, `<QueryClientProvider>`).
+  - Component: `UIKitProvider` — follows the standard pattern (`<ChakraProvider>`, `<TamaguiProvider>`, `<QueryClientProvider>`). (Post-v0.7.0 name — see the v0.7.0 entry for the second-stage provider rename.)
 
   **Renamed identifiers:**
 
-  - Hook: `useKraken` → `useUIKit`.
-  - Types: `KrakenTokens` → `Tokens`, `KrakenButtonColors` → `ButtonColors`, `KrakenButtonVariantColors` → `ButtonVariantColors`, `KrakenTextColors` → `TextColors`, `KrakenTokensInput` → `TokensInput`, `KrakenButtonColorsInput` → `ButtonColorsInput`, `KrakenTextColorsInput` → `TextColorsInput`, `KrakenThemeMode` → `ThemeMode`, `KrakenProviderProps` → `ProviderProps`, `KrakenContextValue` → `ContextValue`, `ResolvedKrakenTokens` → `ResolvedTokens`, `KrakenConfig` → `Config`.
-  - Constants: `DEFAULT_KRAKEN_TOKENS` → `DEFAULT_TOKENS`, `DEFAULT_DARK_KRAKEN_TOKENS` → `DEFAULT_DARK_TOKENS`.
-  - Function: `buildKrakenConfig` → `buildConfig`.
-  - Disambiguation collision: the component-level `ButtonColorsInput` (per-instance override on `<Button>`, was `Partial<KrakenButtonVariantColors>`) collided with the provider-level `KrakenButtonColorsInput` after both lost their prefix. Renamed the component one to **`ButtonVariantColorsInput`** — matches what it actually is (input for one variant's slots, not the whole palette). Provider-level `ButtonColorsInput` (= `Partial<ButtonColors>`) is unchanged.
+  - Hook: `useUIKit`.
+  - Types: `Tokens`, `ButtonColors`, `ButtonVariantColors`, `TextColors`, `TokensInput`, `ButtonColorsInput`, `TextColorsInput`, `ThemeMode`, `ProviderProps`, `ContextValue`, `ResolvedTokens`, `Config`.
+  - Constants: `DEFAULT_TOKENS`, `DEFAULT_DARK_TOKENS`.
+  - Function: `buildConfig`.
+  - Disambiguation: the component-level per-instance override input (was previously colliding with the provider-level input) is now `ButtonVariantColorsInput` — matches what it actually is (input for one variant's slots, not the whole palette). Provider-level `ButtonColorsInput` (= `Partial<ButtonColors>`) is the outer one.
 
   **Renamed Tamagui theme tokens:**
 
-  The short `$ui` prefix replaces `$kraken` — a prefix is still needed to avoid clobbering Tamagui built-ins (`$radius`, `$space`, `$size`).
+  The short `$ui` prefix now covers every library token — a prefix is still needed to avoid clobbering Tamagui built-ins (`$radius`, `$space`, `$size`).
 
-  - `$krakenButtonPrimaryBackground` → `$uiButtonPrimaryBackground` (and every other button slot).
-  - `$krakenTextPrimary` → `$uiTextPrimary` (and every other text slot).
-  - `$krakenRadiusMd` → `$uiRadiusMd` (and Sm / Lg / Pill).
-  - `$krakenSpacingMd` → `$uiSpacingMd` (and Xs / Sm / Lg / Xl).
-  - `$krakenSizeMd` → `$uiSizeMd` (and Xs / Sm / Lg / Xl).
+  - `$uiButtonPrimaryBackground` and every other button slot.
+  - `$uiTextPrimary` and every other text slot.
+  - `$uiRadiusMd` (and Sm / Lg / Pill).
+  - `$uiSpacingMd` (and Xs / Sm / Lg / Xl).
+  - `$uiSizeMd` (and Xs / Sm / Lg / Xl).
 
   **Renamed files:**
 
-  - `packages/ui-kraken/src/tokens/kraken-tokens.ts` → `tokens.ts` (also `-types.ts`, `-derive.ts`, `.spec.ts`).
-  - `packages/ui-kraken/src/provider/kraken-provider.tsx` → `provider.tsx` (also `-types.ts`, `-context.tsx`, `.spec.tsx`).
-  - `packages/ui-kraken/src/provider/use-kraken.ts` → `use-ui-kit.ts` (and `.spec.tsx`).
+  - `packages/ui-kraken/src/tokens/tokens.ts` (plus `-types.ts`, `-derive.ts`, `.spec.ts`).
+  - `packages/ui-kraken/src/provider/provider.tsx` (plus `-types.ts`, `-context.tsx`, `.spec.tsx`).
+  - `packages/ui-kraken/src/provider/use-ui-kit.ts` (and `.spec.tsx`).
 
   **Renamed Tamagui `styled()` `name:` fields** (internal, but visible via component displayName):
 
-  - `"KrakenButton"` → `"UIKitButton"`, `"KrakenButtonLabel"` → `"UIKitButtonLabel"`, `"KrakenText"` → `"UIKitText"`.
+  - `"UIKitButton"`, `"UIKitButtonLabel"`, `"UIKitText"`.
 
-  **Migration path:** find-and-replace the identifiers above in consumer code. Every rename is 1:1, no behavioural change. The maintainer confirmed nobody has installed v0.3.0 externally, so no live consumers to migrate.
+  **Migration path:** find-and-replace on consumer code. Every rename is 1:1, no behavioural change. The maintainer confirmed nobody had installed v0.3.0 externally, so no live consumers to migrate.
 
   Tests: 56 passing (unchanged from v0.3.0), lint clean, build clean.
 
@@ -131,11 +131,11 @@
 
 ### Minor Changes
 
-- d2fd1b8: Add `KrakenProvider`, per-component `Tokens` schema, and the `Button` component with five tones, `radius`, and theme-aware `elevation` — plus dark-mode support and a live catalog demo.
+- d2fd1b8: Add `UIKitProvider`, per-component `Tokens` schema, and the `Button` component with five tones, `radius`, and theme-aware `elevation` — plus dark-mode support and a live catalog demo.
 
   **Provider layer**
 
-  - `KrakenProvider` wraps Tamagui's `TamaguiProvider` (which already includes a `PortalProvider` root host — we do not double-mount one).
+  - `UIKitProvider` wraps Tamagui's `TamaguiProvider` (which already includes a `PortalProvider` root host — we do not double-mount one).
   - Accepts a per-component token schema via context.
   - `useUIKit()` returns both the resolved tokens for the active theme AND the raw Tamagui config as an escape hatch.
   - `defaultTheme` accepts `"light" | "dark" | "system"`; the `"system"` mode follows RN's `useColorScheme()`.
@@ -175,5 +175,5 @@
   No components ship in this release yet — this cuts the first version of the
   build/publish pipeline so that subsequent versions can focus on adding
   components without setup churn. The next release will add the first real
-  component (probably `Button`) together with the `KrakenProvider` and the
+  component (probably `Button`) together with the `UIKitProvider` and the
   token schema decisions tracked in `docs/PLAN.md`.

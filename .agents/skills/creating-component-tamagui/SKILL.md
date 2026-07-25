@@ -37,59 +37,30 @@ packages/ui-kraken/src/components/<component-name>/
 
 ## 2. Color-override props (project-wide convention)
 
-Every component with any styleable color surface exposes overrides as **grouped object props**, one per semantic role. **Do NOT expose flat props** like `primaryColor` / `textPrimaryColor`.
+**Hard rule** (see `each-component-owns-color-space` memory): every component with any styleable color surface owns its own color block on the token schema. NEVER reuse another component's block. Consumers get overrides at BOTH the provider level (re-theme every instance) AND per-instance level (one-off paint).
 
-Shape: `<something>Colors` where `<something>` is the role (`button`, `text`, `icon`, `border`, `background`, ...). Each object maps variant/state names to color strings.
+Naming pattern — mirror what Button + Text + Alert + RadioGroup do:
 
-```tsx
-// GOOD — grouped by role, scales as the component gets more surfaces
-<Button.Primary
-  buttonColors={{ primary: "#2563EB", secondary: "#1E40AF", disabled: "#93C5FD" }}
-  textColors={{ primary: "#FFFFFF", secondary: "#E0E7FF", disabled: "#DBEAFE" }}
-  iconColors={{ primary: "#FFFFFF" }}
->
-  Save
-</Button.Primary>
+| Type name                              | Lives in                     | Shape                                                                                                                                          |
+| -------------------------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `<X>VariantColors` (if variants)       | `tokens/tokens-types.ts`     | The slot set for ONE variant, e.g. `{ background, label, border? }`.                                                                           |
+| `<X>Colors` (aggregate)                | `tokens/tokens-types.ts`     | The full palette. Variant-based (`{ primary: <X>VariantColors, ... }`) OR slot-based (`{ primary: string, ... }`).                             |
+| `<X>ColorsInput` (provider)            | `provider/provider-types.ts` | Partial. `Partial<Record<keyof <X>Colors, Partial<<X>VariantColors>>>` for variant-based, `Partial<<X>Colors>` for slot-based.                 |
+| `<X>VariantColorsInput` (per-instance) | Component's `*-types.ts`     | `Partial<<X>VariantColors>` — the variant is implicit (already picked by compound or `variant` prop). Only exists on variant-based components. |
 
-// BAD — flat props explode combinatorially and are painful to type
-<Button.Primary
-  primaryColor="#2563EB"
-  textPrimaryColor="#FFFFFF"
-  disabledColor="#93C5FD"
-  disabledTextColor="#DBEAFE"
-  ...
-/>
-```
-
-Types go in the component's `*-types.ts`, one interface per role:
-
-```ts
-// packages/ui-kraken/src/components/button/button-types.ts
-export interface ButtonColors {
-  primary?: string;
-  secondary?: string;
-  disabled?: string;
-  loading?: string;
-}
-
-export interface TextColors {
-  primary?: string;
-  secondary?: string;
-  disabled?: string;
-}
-```
+For slot-based components (like Text, RadioGroup — no variants) the per-instance override type is the same shape as the provider input (`Partial<<X>Colors>`), so one type is enough.
 
 Fallback order at render time:
 
-1. Per-instance override prop (`buttonColors.primary`).
-2. Theme token derived from `Tokens` (e.g. `$krakenPrimary9`) — provided by whatever provider is mounted above the component.
+1. Per-instance override prop (`<x>Colors={{ ... }}` on the component instance).
+2. Provider-resolved palette (`tokens.<x>Colors` from `useUIKit()`), which merges the consumer's `<UIKitProvider tokens={{ <x>Colors: ... }}>` on top of `DEFAULT_TOKENS`.
 
-The component knows nothing about how the theme tokens were produced. It just reads `$kraken*` tokens from Tamagui.
+The component reads `useUIKit().tokens.<x>Colors` at render time and merges the per-instance override on top. Do NOT reference `$ui*` Tamagui tokens directly in `<component>.tsx` for color slots — use the hook so per-instance overrides work correctly. `.styled.ts` files MAY reference `$ui*` tokens for static styling (spacing, radius, layout).
 
 ## 3. `*.styled.ts` — Tamagui primitives only
 
 - Styled files contain ONLY calls to `styled()`, `getTokens()`, and Tamagui type helpers. No hooks. No React components. No business logic.
-- Use `$kraken*` theme tokens for every color, spacing, radius. **No hex literals inside `.styled.ts`.**
+- Use `$ui*` theme tokens for every color, spacing, radius. **No hex literals inside `.styled.ts`.**
 - Variants live in `styled(Base, { variants: { ... } as const, defaultVariants: { ... } })`.
 - Press feedback on button-like elements: `pressStyle={{ scale: 0.98, opacity: 0.9 }}`.
 - Minimum touch target 48 × 48 px on interactive elements.
@@ -99,7 +70,7 @@ The component knows nothing about how the theme tokens were produced. It just re
 import { styled, Stack, Text } from "tamagui";
 
 export const StyledButton = styled(Stack, {
-  name: "KrakenButton",
+  name: "UIKitButton",
   tag: "button",
   role: "button",
   flexDirection: "row",
@@ -112,10 +83,14 @@ export const StyledButton = styled(Stack, {
 
   variants: {
     tone: {
-      primary: { backgroundColor: "$krakenPrimary9" },
-      secondary: { backgroundColor: "$krakenSecondary9" },
-      ghost: { backgroundColor: "transparent", borderWidth: 1, borderColor: "$krakenPrimary9" },
-      destructive: { backgroundColor: "$krakenDanger9" },
+      primary: { backgroundColor: "$uiButtonPrimaryBackground" },
+      secondary: { backgroundColor: "$uiButtonSecondaryBackground" },
+      ghost: {
+        backgroundColor: "transparent",
+        borderWidth: 1,
+        borderColor: "$uiButtonOutlineBorder",
+      },
+      destructive: { backgroundColor: "$uiButtonDestructiveBackground" },
     },
     size: {
       sm: { minHeight: 36, paddingHorizontal: "$uiSpacingSm" },
@@ -129,10 +104,10 @@ export const StyledButton = styled(Stack, {
 });
 
 export const StyledButtonLabel = styled(Text, {
-  name: "KrakenButtonLabel",
+  name: "UIKitButtonLabel",
   fontFamily: "$body",
   fontWeight: "600",
-  color: "$uiTextOnPrimary",
+  color: "$uiButtonPrimaryLabel",
 });
 ```
 
@@ -273,8 +248,8 @@ import { Button } from "./button";
 
 jest.mock("@tamagui/core", () => ({
   useTheme: () => ({
-    krakenPrimary9: { val: "#2563EB" },
-    uiTextOnPrimary: { val: "#FFFFFF" },
+    uiButtonPrimaryBackground: { val: "#2563EB" },
+    uiButtonPrimaryLabel: { val: "#FFFFFF" },
   }),
   getConfig: () => ({ fonts: { body: { family: { val: "Inter" } } } }),
 }));
@@ -446,26 +421,69 @@ Custom brand
 ```ts
 // packages/ui-kraken/src/components/button/index.ts
 export { Button } from "./button";
-export type { ButtonProps, ButtonColors, TextColors, IconColors } from "./button-types";
+export type {
+  ButtonProps,
+  ButtonVariantColorsInput,
+  ButtonTone,
+  ButtonSize,
+  ButtonRadius,
+  ButtonElevation,
+} from "./button-types";
 ```
 
 Then add the component to `packages/ui-kraken/src/components/index.ts` (also explicit) and to the public barrel `packages/ui-kraken/src/index.ts`.
 
-## 11. Checklist
+## 11. Wiring a color-using component to the token schema
+
+Every color-using component owns its own block on `Tokens`. Adding a new one is 7 edits — always in this order so intermediate steps typecheck. See `each-component-owns-color-space` memory for rationale.
+
+1. **`packages/ui-kraken/src/tokens/tokens-types.ts`** — declare the interfaces:
+   - `<X>VariantColors` (only if the component has variants) with the slot set for one variant.
+   - `<X>Colors` — the aggregate palette (variant-based or slot-based).
+   - Add `<x>Colors: <X>Colors` to `Tokens` AND `ResolvedTokens`.
+2. **`packages/ui-kraken/src/tokens/defaults/<x>.ts`** — new file with:
+   - `DEFAULT_LIGHT_<X>_COLORS` + `DEFAULT_DARK_<X>_COLORS` — fully populated palettes.
+   - `merge<X>Colors()` (+ `merge<X>VariantColors()` if variants).
+3. **`packages/ui-kraken/src/tokens/defaults/index.ts`**:
+   - Import the two defaults and add `<x>Colors` to `DEFAULT_TOKENS` + `DEFAULT_DARK_TOKENS`.
+   - Re-export the defaults + merge helpers.
+4. **`packages/ui-kraken/src/utils/flatten.ts`** — add `flatten<X>Colors(colors: <X>Colors): Record<string, string>` that emits `ui<X><Variant><Slot>` (variant-based) or `ui<X><Slot>` (slot-based) keys. Optional slots are omitted when `undefined`.
+5. **`packages/ui-kraken/src/utils/index.ts`** — re-export the new flatten function.
+6. **`packages/ui-kraken/src/tokens/tokens.ts`**:
+   - Import `flatten<X>Colors` from `../utils/flatten`.
+   - Spread `flatten<X>Colors(lightResolved.<x>Colors)` into `tokens.color` inside `createTokens(...)`.
+   - Spread into `themes.light` and `themes.dark` inside `createTamagui(...)` (using `lightResolved` / `darkResolved` respectively).
+   - Re-export the defaults + merge helpers at the bottom of this file.
+7. **`packages/ui-kraken/src/tokens/tokens-derive.ts`** — destructure `<x>Colors` from `tokens` inside `coarseToFineTokens` and pass it through in the returned `ResolvedTokens`.
+8. **`packages/ui-kraken/src/provider/provider-types.ts`**:
+   - Add `<X>ColorsInput` — `Partial<Record<keyof <X>Colors, Partial<<X>VariantColors>>>` for variant-based, `Partial<<X>Colors>` for slot-based.
+   - Add optional `<x>Colors?: <X>ColorsInput` to `TokensInput`.
+9. **`packages/ui-kraken/src/provider/provider.tsx`** — import `merge<X>Colors`; extend both `mergedLight` and `mergedDark` in the `useMemo` to call `merge<X>Colors(DEFAULT_[DARK_]TOKENS.<x>Colors, tokens?.<x>Colors)`.
+10. **`packages/ui-kraken/src/provider/index.ts`** — re-export `<X>ColorsInput`.
+11. **`packages/ui-kraken/src/tokens/index.ts`** — re-export the new type + defaults + merge helpers.
+12. **`packages/ui-kraken/src/index.ts`** — re-export from the public barrel.
+13. **Component consumption**: read `useUIKit().tokens.<x>Colors` inside `<component>.tsx` and merge the per-instance `<x>Colors?` prop on top. Do NOT reference `$ui*` tokens directly for color slots.
+
+## 12. Checklist
 
 Before opening the PR:
 
 - [ ] Folder `packages/ui-kraken/src/components/<name>/` exists with the seven files.
-- [ ] `*.styled.ts` uses only `$kraken*` theme tokens — no hex literals.
+- [ ] `*.styled.ts` uses only `$ui*` theme tokens for spacing / radius / layout — no hex literals. Color surfaces come from `<component>.tsx` at render time via `useUIKit()`.
 - [ ] Prop interface named `<ComponentName>Props`, exported from `*-types.ts`, includes `testID?: string`.
-- [ ] Color overrides ship as **grouped object props** (`buttonColors`, `textColors`, `iconColors`) — no flat `primaryColor`-style props.
+- [ ] Component owns its color block on the token schema (steps in Section 11). No reuse of another component's block.
+- [ ] `<X>ColorsInput` type in `provider-types.ts` for provider-level override; per-instance override in the component's `*-types.ts`.
+- [ ] `flatten<X>Colors` added to `utils/flatten.ts` and re-exported from `utils/index.ts`.
+- [ ] Provider merge extended for both light + dark.
 - [ ] `testID` propagates to every measurable/interactive subelement with kebab-case suffixes.
-- [ ] `*.spec.tsx` covers each variant, each interactive state, at least one grouped-color override, and `onPress`.
+- [ ] `*.spec.tsx` mocks `useUIKit` to return the component's `<x>Colors` block; covers each variant, each interactive state, at least one per-instance override, one provider-level override (assert consumer palette flows through), and `onPress` if interactive.
 - [ ] `*.stories.tsx` includes every variant × size, one override story, one dark-theme story.
-- [ ] `README.md` has the full props table and at least three usage examples (default, with slots, with overrides).
+- [ ] `README.md` has the full props table + at least three usage examples (default, with slots, with overrides) + a Platform support table (iOS · Android · Web).
 - [ ] `index.ts` re-exports every public symbol explicitly. No `export *`.
 - [ ] Component and types added to `packages/ui-kraken/src/components/index.ts` and to the public barrel `packages/ui-kraken/src/index.ts`.
 - [ ] Minimum touch target 48 × 48 px on interactive elements.
 - [ ] Dark theme validated in Storybook.
-- [ ] `pnpm lint && pnpm typecheck && pnpm test` all green locally.
+- [ ] Example app: new screen in `apps/example/app/(pages)/components/<name>.tsx`, new `Stack.Screen` in `apps/example/app/_layout.tsx` with `headerBackTitle: "Components"`, catalog row added in `apps/example/app/(pages)/index.tsx` with `status: "shipped"` (note: the home screen is titled "Components", NOT "Catalog" — that vocabulary was retired).
+- [ ] `pnpm lint && pnpm typecheck && pnpm test && pnpm --filter ui-kraken build` all green locally.
+- [ ] `docs/{COMPONENT}-PLAN.md` created / flipped to `shipped on YYYY-MM-DD in ui-kraken vX.Y.Z`.
 - [ ] Changeset added (`pnpm changeset`).

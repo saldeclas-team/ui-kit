@@ -180,7 +180,7 @@ const DARK_ELEVATION_BORDER: Record<Exclude<ButtonElevation, "none">, string> = 
 /**
  * Resolve the `radius` prop to a value the styled `borderRadius` prop accepts.
  * Numeric values pass through unchanged. Presets map to Tamagui theme tokens
- * so they respect the consumer's coarse `radius` knob on `KrakenProvider`.
+ * so they respect the consumer's coarse `radius` knob on `UIKitProvider`.
  * `"pill"` is the special "fully rounded" case. Returns `undefined` when the
  * prop is not provided so the size variant's default radius wins.
  */

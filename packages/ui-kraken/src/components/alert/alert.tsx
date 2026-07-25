@@ -3,7 +3,7 @@ import type { ComponentRef } from "react";
 import type { AccessibilityRole } from "react-native";
 
 import { useUIKit } from "../../provider/use-ui-kit";
-import type { TextColors } from "../../tokens/tokens-types";
+import type { AlertColors, AlertVariantColors } from "../../tokens/tokens-types";
 import {
   StyledAlert,
   StyledAlertBody,
@@ -11,7 +11,7 @@ import {
   StyledAlertIconWrapper,
   StyledAlertTitle,
 } from "./alert.styled";
-import type { AlertColors, AlertProps, AlertRadius, AlertVariant } from "./alert-types";
+import type { AlertProps, AlertRadius, AlertVariant, AlertVariantColorsInput } from "./alert-types";
 
 type AlertRef = ComponentRef<typeof StyledAlert>;
 
@@ -31,7 +31,7 @@ const BaseAlert = forwardRef<AlertRef, AlertProps>(function BaseAlert(
 ) {
   const { tokens } = useUIKit();
   const rootId = testID ?? "alert";
-  const palette = resolvePalette(variant, tokens.textColors, alertColors);
+  const palette = resolvePalette(variant, tokens.alertColors, alertColors);
   const resolvedBorderRadius = resolveRadius(radius);
 
   return (
@@ -69,31 +69,25 @@ const BaseAlert = forwardRef<AlertRef, AlertProps>(function BaseAlert(
 });
 
 /**
- * Resolve the effective 4-slot palette for a given variant + optional
- * per-instance override. Missing override fields fall through to the
- * variant-derived defaults (variant color at full opacity for
- * text/icon, at ~15% opacity for background).
+ * Resolve the effective 4-slot palette for a given variant. Starts from
+ * the provider-resolved `alertColors[variant]` block, then applies the
+ * per-instance `alertColors?` override on top. Missing per-instance
+ * fields fall through to the provider palette.
  */
 function resolvePalette(
   variant: AlertVariant,
-  textColors: TextColors,
-  override: AlertProps["alertColors"]
-): AlertColors {
-  const variantColor = textColors[VARIANT_TO_TEXT_SLOT[variant]];
+  alertColors: AlertColors,
+  override: AlertVariantColorsInput | undefined
+): AlertVariantColors {
+  const base = alertColors[variant];
+  if (override == null) return base;
   return {
-    background: override?.background ?? withAlpha(variantColor, 0.15),
-    border: override?.border,
-    text: override?.text ?? variantColor,
-    icon: override?.icon ?? variantColor,
+    background: override.background ?? base.background,
+    text: override.text ?? base.text,
+    icon: override.icon ?? base.icon,
+    border: override.border ?? base.border,
   };
 }
-
-const VARIANT_TO_TEXT_SLOT: Record<AlertVariant, keyof TextColors> = {
-  info: "info",
-  success: "success",
-  warning: "warning",
-  danger: "danger",
-};
 
 const ACCESSIBILITY_ROLE: Record<AlertVariant, AccessibilityRole> = {
   info: "alert",
@@ -101,32 +95,6 @@ const ACCESSIBILITY_ROLE: Record<AlertVariant, AccessibilityRole> = {
   warning: "alert",
   danger: "alert",
 };
-
-/**
- * Apply an alpha channel to a hex color. Supports `#RGB`, `#RRGGBB`,
- * and `#RRGGBBAA`. Non-hex inputs (rgb(), rgba(), named colors) are
- * returned as-is on the assumption the consumer already encoded any
- * desired alpha there.
- */
-function withAlpha(color: string, alpha: number): string {
-  const hexMatch = color.match(/^#([0-9a-f]{3,8})$/i);
-  const raw = hexMatch?.[1];
-  if (raw == null) return color;
-  const clamped = Math.max(0, Math.min(1, alpha));
-  const alphaHex = Math.round(clamped * 255)
-    .toString(16)
-    .padStart(2, "0");
-  const normalized =
-    raw.length === 3
-      ? raw
-          .split("")
-          .map((ch) => ch + ch)
-          .join("")
-      : raw.length === 6
-        ? raw
-        : raw.slice(0, 6);
-  return `#${normalized}${alphaHex}`;
-}
 
 function resolveRadius(radius: AlertRadius): number | string | undefined {
   if (radius === "none") return 0;
@@ -182,10 +150,4 @@ export const Alert = Object.assign(BaseAlert, {
   Danger: AlertDanger,
 });
 
-export type {
-  AlertColors,
-  AlertColorsInput,
-  AlertProps,
-  AlertRadius,
-  AlertVariant,
-} from "./alert-types";
+export type { AlertProps, AlertRadius, AlertVariant, AlertVariantColorsInput } from "./alert-types";

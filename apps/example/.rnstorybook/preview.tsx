@@ -1,12 +1,12 @@
 import type { Preview } from "@storybook/react-native";
-import { KrakenProvider } from "ui-kraken";
+import { UIKitProvider } from "ui-kraken";
 
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <KrakenProvider defaultTheme="light">
+      <UIKitProvider defaultTheme="light">
         <Story />
-      </KrakenProvider>
+      </UIKitProvider>
     ),
   ],
   parameters: {

@@ -52,7 +52,7 @@ Every segment is **kebab-case**, lowercase, ASCII only. No underscores, no camel
 
 - `chore/actions-node-bump` — type + scope + specific change
 - `chore/npm-oidc-publish` — type + scope + what shipped
-- `feat/kraken-provider-and-button` — type + scope + deliverables
+- `feat/ui-kit-provider-and-button` — type + scope + deliverables
 
 ### Historically under-named (do not repeat)
 

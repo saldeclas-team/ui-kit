@@ -1,6 +1,6 @@
 # Button
 
-Interactive button with five tones (`primary` / `secondary` / `outline` / `ghost` / `destructive`), three sizes, disabled / loading states, per-instance color overrides, and a configurable `radius` prop. Colors come from the `buttonColors` block on `KrakenProvider`.
+Interactive button with five tones (`primary` / `secondary` / `outline` / `ghost` / `destructive`), three sizes, disabled / loading states, per-instance color overrides, and a configurable `radius` prop. Colors come from the `buttonColors` block on `UIKitProvider`.
 
 ## Import
 
@@ -25,12 +25,12 @@ import { Button } from "ui-kraken";
 
 ## Color model
 
-Colors for every Button variant are configured **at the `KrakenProvider` level** under the `buttonColors` block:
+Colors for every Button variant are configured **at the `UIKitProvider` level** under the `buttonColors` block:
 
 ```tsx
-import { KrakenProvider } from "ui-kraken";
+import { UIKitProvider } from "ui-kraken";
 
-<KrakenProvider
+<UIKitProvider
   tokens={{
     buttonColors: {
       primary: { background: "#2563EB", label: "#FFFFFF" },
@@ -51,7 +51,7 @@ import { KrakenProvider } from "ui-kraken";
   defaultTheme="system"
 >
   <App />
-</KrakenProvider>;
+</UIKitProvider>;
 ```
 
 Each variant fills only the slots it needs — `outline` uses `border` (not `background`); `ghost` uses `label` only (no background, no border).

@@ -5,11 +5,18 @@ export {
   DEFAULT_DARK_BUTTON_COLORS,
   DEFAULT_LIGHT_TEXT_COLORS,
   DEFAULT_DARK_TEXT_COLORS,
+  DEFAULT_LIGHT_ALERT_COLORS,
+  DEFAULT_DARK_ALERT_COLORS,
+  DEFAULT_LIGHT_RADIO_GROUP_COLORS,
+  DEFAULT_DARK_RADIO_GROUP_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
+  mergeAlertColors,
+  mergeAlertVariantColors,
+  mergeRadioGroupColors,
   tint,
 } from "./tokens";
 export type { Config } from "./tokens";
@@ -17,6 +24,9 @@ export type {
   ButtonColors,
   ButtonVariantColors,
   TextColors,
+  AlertColors,
+  AlertVariantColors,
+  RadioGroupColors,
   Tokens,
   ResolvedTokens,
 } from "./tokens-types";

@@ -28,12 +28,12 @@ const config: StorybookConfig = {
     // import components via relative paths ("./button"), so their
     // `useUIKit()` call reaches the Context defined at
     // `packages/ui-kraken/src/provider/provider-context.tsx`.
-    // Meanwhile `.storybook/preview.tsx` imports `KrakenProvider` via
+    // Meanwhile `.storybook/preview.tsx` imports `UIKitProvider` via
     // the package name `"ui-kraken"`, which Vite resolves through the
     // exports map to a DIFFERENT module (either `dist/index.js` or a
     // fresh compilation of `src/index.ts` under a different resolver
     // path). Two module instances = two React Contexts = "must be
-    // called inside <KrakenProvider>" error at render time, even when
+    // called inside <UIKitProvider>" error at render time, even when
     // the decorator IS wrapping the Story.
     //
     // Aliasing the bare specifier to the exact source entry

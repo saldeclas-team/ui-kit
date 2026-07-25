@@ -15,7 +15,7 @@ export default function AlertScreen() {
   return (
     <Screen
       title="Alert"
-      subtitle="Contextual feedback surface with 4 semantic variants (info / success / warning / danger). Optional title + body + icon slot. Per-instance color overrides. Uses textColors from KrakenProvider — no new tokens."
+      subtitle="Contextual feedback surface with 4 semantic variants (info / success / warning / danger). Optional title + body + icon slot. Provider-level + per-instance color overrides via alertColors."
     >
       <Section title="Variants (title + body + icon)">
         <View style={{ gap: 12 }}>
