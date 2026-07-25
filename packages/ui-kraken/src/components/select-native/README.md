@@ -258,33 +258,14 @@ Brand-tinted wrapper:
 
 - **Controlled only** — no `defaultValue` / uncontrolled mode.
 - **`appearance="menu"` fixed** — SelectNative always uses the compact menu appearance. If you need the iOS wheel picker for date-style interactions, use `DatePicker` (also Batch 2).
-- **Native picker owns its interior chrome** — text color of the current selection, chevron, menu row highlight, and disabled dim are all painted by the platform. Only the wrapper frame + labels are themable.
+- **Trigger is a Tamagui `Text` inside `MenuView`** — we own the trigger visual so RN layout is deterministic. Menu popup interior (checkmark, popup background, row hover) is still painted by the platform (SwiftUI / Compose). Every trigger color slot is themable: `text`, `textDisabled`, `placeholder`, `chevron`.
 - **No search / filter bar** — same as Select. The native menu is best for short-to-medium lists (<30 items). For long lists reach for `Select`.
-
-## Known issues
-
-### iOS: borderless picker appears "raised" when scrolled into view
-
-A borderless `<SelectNative>` (chrome off — the default) rendered OFF-SCREEN inside a scrollable container appears with extra invisible whitespace below its trigger once the user scrolls it into view. The picker itself is fully functional; only the vertical rhythm of the section that contains it is affected — the next section reads as sitting a bit further down than expected.
-
-**Reproduced with `@expo/ui@57.0.7` on iOS** with SwiftUI `Menu` (`appearance: "menu"`). Also reproduced independently in a different codebase (`duna-app`) using the same `@expo/ui` version. Not present on Android or web.
-
-Not caused by ui-kraken's frame styling — validated by:
-
-- Pinning `minHeight` on the frame (didn't help — moved the whitespace around).
-- `matchContents={false}` + `style={{ height: 28 }}` (fixed on-screen sections but centered the picker horizontally when SwiftUI stretched Host to fill width).
-- Per-axis `matchContents={{ horizontal: true, vertical: false }}` + `style.height` pin (fixed on-screen sections but off-screen ones still exhibited the bug).
-- Bypassing the repo's `<Screen>` wrapper in favor of a bare `<ScrollView>` with none of the keyboard-inset / persist-taps / dismiss props (bug persisted).
-
-Root cause appears to be `@expo/ui`'s `<Host matchContents>` reporting its SwiftUI-content size at the wrong time for off-screen views. We'll open an upstream issue and revisit.
-
-**Workaround for consumers who need pixel-perfect vertical rhythm on long iOS pages**: opt into `showBorderIOS` — the framed variant's `minHeight: 48` + `justifyContent: "center"` absorbs SwiftUI's intrinsic padding cleanly and the bug does not manifest.
 
 ## Platform support
 
-| Platform         | Status                             | Notes                                                                                                                                            |
-| ---------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| iOS              | ✅ (requires `@expo/ui`)           | SwiftUI `Menu`. Full haptic feedback + native chrome. Known bug on borderless mode for off-screen pickers — see **Known issues** above.          |
-| Android          | ✅ (requires `@expo/ui`)           | Jetpack Compose `DropdownMenu`. Placeholder injection makes `value=null` open the menu reliably.                                                 |
-| Web              | ⚠️ (via `@expo/ui`'s web fallback) | `@expo/ui` renders a plain HTML `<select>`-like element on web. Not as visually integrated as the native platforms.                              |
-| Missing peer dep | ✅ safe fallback                   | Frame renders "Install `@expo/ui`" hint colored with the `errorText` slot. The app does NOT crash and other ui-kraken components are unaffected. |
+| Platform         | Status                          | Notes                                                                                                                                            |
+| ---------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| iOS              | ✅ (requires `@expo/ui`)        | SwiftUI `Menu` via `MenuView` from `@expo/ui/community/menu`. Selected option renders a native checkmark.                                        |
+| Android          | ✅ (requires `@expo/ui`)        | Jetpack Compose `DropdownMenu` via the same `MenuView`. Selected option renders a native checkmark.                                              |
+| Web              | ⚠️ (`Host` + `Picker` fallback) | `MenuView` doesn't fire actions on web; we fall back to `@expo/ui`'s `Host + Picker` which renders a plain HTML `<select>`-like element.         |
+| Missing peer dep | ✅ safe fallback                | Frame renders "Install `@expo/ui`" hint colored with the `errorText` slot. The app does NOT crash and other ui-kraken components are unaffected. |

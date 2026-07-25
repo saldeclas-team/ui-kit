@@ -1,10 +1,10 @@
-import { useMemo } from "react";
 import { Platform } from "react-native";
 
 import { useUIKit } from "../../provider/use-ui-kit";
 import { resolveRadius } from "../../utils/radius";
 import { resolvePalette } from "../../utils/resolve-palette";
-import { getExpoUIHost, getExpoUIPicker, isExpoUIAvailable } from "./expo-ui-probe";
+import { isExpoUIAvailable } from "./expo-ui-probe";
+import { NativePickerBody } from "./native-picker-body";
 import {
   StyledSelectNative,
   StyledSelectNativeErrorText,
@@ -16,10 +16,10 @@ import {
 import type { SelectNativeProps, SelectNativeValue } from "./select-native-types";
 
 /**
- * Single-choice picker rendered with the fully-native
- * `@expo/ui` `Picker`. SwiftUI `Menu` on iOS + Jetpack Compose
- * `DropdownMenu` on Android — the trigger and the option list
- * are painted by the platform, not by us.
+ * Single-choice picker rendered with a fully-native menu — SwiftUI
+ * `Menu` on iOS (via `@expo/ui/community/menu`'s `MenuView`),
+ * Jetpack Compose `DropdownMenu` on Android (same `MenuView`), and
+ * `@expo/ui`'s `<Host><Picker>` HTML-select on web.
  *
  * ```tsx
  * const [country, setCountry] = useState<Country | null>(null);
@@ -32,14 +32,24 @@ import type { SelectNativeProps, SelectNativeValue } from "./select-native-types
  * ```
  *
  * Because `@expo/ui` is an optional peer dep, ui-kraken doesn't
- * fail to import when the consumer omits it. Instead the frame
- * renders a helpful "install @expo/ui" hint inline so consumers
- * see the problem and can fix it without a crash.
+ * fail to import when the consumer omits it — the frame renders a
+ * helpful "install @expo/ui" hint inline instead.
  *
- * Palette is `tokens.selectNativeColors` on the provider,
- * overridable per-instance via `selectNativeColors?`. Only the
- * wrapper chrome is themed — the interior of the picker (button
- * text, chevron, menu row highlight) is painted by the platform.
+ * ### Architecture — platform-split rendering
+ *
+ * This top-level file is the SHARED shell — palette resolution,
+ * frame styling, chrome opt-in, label / helper / error rendering,
+ * peer-missing fallback. The actual menu rendering lives in
+ * `./native-picker-body.{ios,android,web,tsx}` — Metro picks the
+ * right variant at bundle time. That way an iOS-only tweak to the
+ * SwiftUI Menu integration can't regress Android, and vice versa.
+ *
+ * ### Chrome opt-in per platform
+ *
+ * Both `showBorderIOS` and `showBorderAndroid` default to `false`
+ * — the picker renders as the fully-native native menu affordance
+ * with no wrapper background / border / padding. Opt into the
+ * framed look with either flag; each platform is independent.
  */
 export function SelectNative<Value extends SelectNativeValue = string>({
   options,
@@ -63,28 +73,17 @@ export function SelectNative<Value extends SelectNativeValue = string>({
   const resolvedRadius = resolveRadius(radius);
   const isInvalid = errorText != null && errorText.length > 0;
 
-  // Chrome visibility gates per-platform. Both flags default to
-  // `false` so the picker reads as 100% native — SwiftUI `Menu` /
-  // Compose `DropdownMenu` are borderless AND transparent by
-  // default; the frame outline + background + padding + minHeight
-  // were a form-field-parity choice for consumers who prefer
-  // "input-shaped" pickers. Opt in when you want it.
-  //
-  // "Chrome" is all-or-nothing per platform — background, border,
-  // padding, and minHeight travel together so the frame either
-  // fully wraps the picker like an Input OR disappears entirely
-  // and lets the native picker render at its intrinsic size.
-  //
-  // Two states force the chrome on regardless of the flags,
-  // because both need visual framing to read as invalid:
-  // - `errorText` set (invalid state).
-  // - peer dep missing (fallback "install X" hint needs a box).
+  // Chrome visibility per platform. See `select-native-types.ts`
+  // for the full rationale; short version: default off (100%
+  // native look), errorText or missing-peer force it on so the
+  // invalid / fallback state has visual framing.
   const showChromeForPlatform = Platform.select({
     ios: showBorderIOS,
     android: showBorderAndroid,
     default: showBorderIOS || showBorderAndroid,
   });
-  const showChrome = Boolean(showChromeForPlatform) || isInvalid || !isExpoUIAvailable();
+  const peerAvailable = isExpoUIAvailable();
+  const showChrome = Boolean(showChromeForPlatform) || isInvalid || !peerAvailable;
 
   const frameBackground = showChrome
     ? disabled
@@ -95,35 +94,21 @@ export function SelectNative<Value extends SelectNativeValue = string>({
   const frameBorderWidth = showChrome ? 1 : 0;
   const framePaddingHorizontal = showChrome ? "$uiSpacingMd" : 0;
   const framePaddingVertical = showChrome ? "$uiSpacingSm" : 0;
-  // Keep the frame at the iOS/Android minimum touch target (44 px)
-  // even when the chrome is off, so the native picker gets vertical
-  // breathing room and the surrounding label + helper text sit at
-  // the same rhythm as the framed variant. Without this the frame
-  // collapses to the picker's intrinsic ~25 px and the label reads
-  // as "glued" to the trigger. When chrome is on, bump to 48 px to
-  // match Input / CurrencyInput for form-field parity.
-  const frameMinHeight = showChrome ? 48 : 44;
+  const frameMinHeight = showChrome ? 48 : 0;
 
-  // If `value` doesn't match any option (typical null / initial state),
-  // synthesize a placeholder item so the native Picker has a matching
-  // selectedValue on both iOS + Android. Without this the Android
-  // Compose picker silently drops taps because it can't resolve
-  // `selectedValue` to a `Picker.Item`.
-  const { displayOptions, effectiveValue } = useMemo(() => {
-    const hasMatch = value != null && options.some((o) => o.value === value);
-    if (hasMatch) {
-      return { displayOptions: options, effectiveValue: value as Value };
-    }
-    const synthetic: Value = (value ?? ("" as unknown as Value)) as Value;
-    return {
-      displayOptions: [{ value: synthetic, label: placeholderLabel }, ...options],
-      effectiveValue: synthetic,
-    };
-  }, [options, value, placeholderLabel]);
+  const selectedOption = value != null ? (options.find((o) => o.value === value) ?? null) : null;
+  const triggerTextColor = disabled
+    ? palette.textDisabled
+    : selectedOption != null
+      ? palette.text
+      : palette.placeholder;
+  const chevronColor = disabled ? palette.textDisabled : palette.chevron;
 
-  const Host = getExpoUIHost();
-  const Picker = getExpoUIPicker();
-  const peerAvailable = isExpoUIAvailable();
+  const fallback = !peerAvailable ? (
+    <StyledSelectNativeMissingPeer testID={`${rootId}-missing-peer`} color={palette.errorText}>
+      Install `@expo/ui` to enable SelectNative.
+    </StyledSelectNativeMissingPeer>
+  ) : undefined;
 
   return (
     <StyledSelectNative testID={rootId} {...rest}>
@@ -144,32 +129,19 @@ export function SelectNative<Value extends SelectNativeValue = string>({
         paddingVertical={framePaddingVertical}
         minHeight={frameMinHeight}
       >
-        {peerAvailable && Host != null && Picker != null ? (
-          <Host matchContents>
-            <Picker
-              testID={`${rootId}-picker`}
-              selectedValue={effectiveValue as string | number}
-              onValueChange={(next: string | number) => onChange(next as Value)}
-              appearance="menu"
-              enabled={!disabled}
-            >
-              {displayOptions.map((opt) => (
-                <Picker.Item
-                  key={String(opt.value)}
-                  value={opt.value as string | number}
-                  label={opt.label}
-                />
-              ))}
-            </Picker>
-          </Host>
-        ) : (
-          <StyledSelectNativeMissingPeer
-            testID={`${rootId}-missing-peer`}
-            color={palette.errorText}
-          >
-            Install `@expo/ui` to enable SelectNative.
-          </StyledSelectNativeMissingPeer>
-        )}
+        <NativePickerBody<Value>
+          options={options}
+          value={value}
+          onChange={onChange}
+          menuTitle={label}
+          placeholderLabel={placeholderLabel}
+          disabled={disabled}
+          triggerTextColor={triggerTextColor}
+          chevronColor={chevronColor}
+          triggerAccessibilityLabel={label}
+          testID={rootId}
+          fallback={fallback}
+        />
       </StyledSelectNativeFrame>
 
       {isInvalid ? (

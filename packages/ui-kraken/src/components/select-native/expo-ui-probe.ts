@@ -14,7 +14,14 @@
 
 interface ExpoUIModule {
   Host: React.ComponentType<{
-    matchContents?: boolean;
+    /**
+     * Ask the RN → SwiftUI / Compose bridge to size the Host to
+     * the platform content's intrinsic size. Accepts a `boolean`
+     * (both axes) OR a per-axis toggle (matches @expo/ui's real
+     * signature — needed so callers can e.g. match horizontal
+     * but pin vertical via `style.height`).
+     */
+    matchContents?: boolean | { horizontal?: boolean; vertical?: boolean };
     children?: React.ReactNode;
     style?: unknown;
   }>;
@@ -30,7 +37,32 @@ interface ExpoUIModule {
   };
 }
 
+/**
+ * `MenuView` action shape — mirrors `@expo/ui/community/menu`'s
+ * `MenuAction` type. Kept inline so we don't pull `@expo/ui`
+ * types into ui-kraken's public surface.
+ */
+interface MenuActionInput {
+  id?: string;
+  title: string;
+  state?: "on" | "off";
+  attributes?: { destructive?: boolean; disabled?: boolean; hidden?: boolean };
+}
+
+interface MenuViewComponent {
+  MenuView: React.ComponentType<{
+    title?: string;
+    actions: MenuActionInput[];
+    onPressAction?: (event: { nativeEvent: { event: string } }) => void;
+    shouldOpenOnLongPress?: boolean;
+    style?: unknown;
+    testID?: string;
+    children?: React.ReactNode;
+  }>;
+}
+
 let expoUI: ExpoUIModule | null = null;
+let expoUIMenu: MenuViewComponent | null = null;
 
 try {
   // Attempted at import time; if @expo/ui isn't installed the
@@ -38,6 +70,15 @@ try {
   expoUI = require("@expo/ui") as ExpoUIModule;
 } catch {
   expoUI = null;
+}
+
+try {
+  // `MenuView` lives in a separate @expo/ui subpath. Fails
+  // independently — some environments may have @expo/ui but not
+  // the community submodule.
+  expoUIMenu = require("@expo/ui/community/menu") as MenuViewComponent;
+} catch {
+  expoUIMenu = null;
 }
 
 /**
@@ -65,4 +106,17 @@ export function getExpoUIHost(): ExpoUIModule["Host"] | null {
  */
 export function getExpoUIPicker(): ExpoUIModule["Picker"] | null {
   return expoUI?.Picker ?? null;
+}
+
+/**
+ * Return the `MenuView` component from `@expo/ui/community/menu`,
+ * or `null` when the peer / submodule isn't available. The iOS
+ * and Android `SelectNative` variants prefer this over
+ * `Host + Picker` because it wraps a consumer-provided trigger
+ * (avoiding the SwiftUI Menu intrinsic-size measurement race
+ * that causes the "raised" bug on off-screen borderless
+ * pickers).
+ */
+export function getExpoUIMenuView(): MenuViewComponent["MenuView"] | null {
+  return expoUIMenu?.MenuView ?? null;
 }

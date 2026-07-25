@@ -396,11 +396,11 @@ describe("mergeSelectNativeColors", () => {
     expect(merged.errorText).toBe(base.errorText);
   });
 
-  it("light + dark defaults share the same slot keys (7 slots)", () => {
+  it("light + dark defaults share the same slot keys (11 slots)", () => {
     const light = Object.keys(DEFAULT_TOKENS.selectNativeColors).sort();
     const dark = Object.keys(DEFAULT_DARK_TOKENS.selectNativeColors).sort();
     expect(light).toEqual(dark);
-    expect(light.length).toBe(7);
+    expect(light.length).toBe(11);
   });
 });
 

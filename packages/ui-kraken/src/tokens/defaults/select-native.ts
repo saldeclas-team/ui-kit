@@ -14,6 +14,14 @@ export const DEFAULT_LIGHT_SELECT_NATIVE_COLORS: SelectNativeColors = {
   backgroundDisabled: "#F3F4F6",
   border: "#D1D5DB",
   borderError: "#DC2626",
+  // Trigger text uses iOS system blue so the picker reads as a
+  // tinted actionable control (matches what SwiftUI Menu paints
+  // out of the box). Consumers who want a design-system-primary
+  // tone override `text` on the provider or per-instance.
+  text: "#007AFF",
+  textDisabled: "#9CA3AF",
+  placeholder: "#007AFF",
+  chevron: "#007AFF",
   helperText: "#6B7280",
   errorText: "#DC2626",
 };
@@ -29,6 +37,12 @@ export const DEFAULT_DARK_SELECT_NATIVE_COLORS: SelectNativeColors = {
   backgroundDisabled: "#1F2937",
   border: "#374151",
   borderError: "#F87171",
+  // Lifted iOS system blue for dark mode — same tint role as
+  // light but with the higher-luminance variant Apple ships.
+  text: "#0A84FF",
+  textDisabled: "#6B7280",
+  placeholder: "#0A84FF",
+  chevron: "#0A84FF",
   helperText: "#9CA3AF",
   errorText: "#F87171",
 };

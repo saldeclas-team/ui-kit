@@ -1,13 +1,26 @@
 import { fireEvent, render, screen } from "@testing-library/react-native";
-import { forwardRef } from "react";
 import { Platform } from "react-native";
 
 import type { SelectNativeColors } from "../../tokens/tokens-types";
 
-// Mock the styled file with rn.View / rn.Text stubs so the component
-// logic (palette resolution, placeholder synthesis, disabled gating,
-// testID propagation, peer-dep fallback) stays testable without
-// booting Tamagui.
+// `tamagui`'s ESM entry point can't be parsed by jest out of the
+// box — the `.ios.tsx` picker body pulls `Text` + `XStack`
+// directly from tamagui. Stub the two symbols we use with plain
+// RN equivalents so the spec doesn't try to load the Tamagui
+// runtime.
+jest.mock("tamagui", () => {
+  const rn = jest.requireActual("react-native");
+  const React = jest.requireActual("react");
+  return {
+    Text: (props: Record<string, unknown>) => React.createElement(rn.Text, props),
+    XStack: (props: Record<string, unknown>) => React.createElement(rn.View, props),
+    styled: () => () => null,
+  };
+});
+
+// Mock the styled file with rn.View / rn.Text stubs so the shell
+// (palette resolution, disabled gating, testID propagation,
+// peer-dep fallback) stays testable without booting Tamagui.
 jest.mock("./select-native.styled", () => {
   const rn = jest.requireActual("react-native");
   const forwardRefActual = jest.requireActual("react").forwardRef;
@@ -27,17 +40,68 @@ jest.mock("./select-native.styled", () => {
   };
 });
 
-// Toggle-controlled mock of the peer-dep probe — every test can
-// flip peer availability on / off (default: on).
+// Toggle-controlled mocks of the peer-dep probe.
 const mockIsAvailable = jest.fn(() => true);
 const mockHost = jest.fn();
 const mockPicker = jest.fn();
+const mockMenuView = jest.fn();
 
 jest.mock("./expo-ui-probe", () => ({
   isExpoUIAvailable: () => mockIsAvailable(),
   getExpoUIHost: () => mockHost(),
   getExpoUIPicker: () => mockPicker(),
+  getExpoUIMenuView: () => mockMenuView(),
 }));
+
+/**
+ * Fake `MenuView` from `@expo/ui/community/menu`. Records the
+ * actions array + onPressAction callback so tests can verify
+ * what the shell forwarded, and exposes a `-menu` testID +
+ * `-action-<id>` testIDs so tests can simulate action taps
+ * without going through the real native menu.
+ */
+type FakeMenuActions = Array<{
+  id?: string;
+  title: string;
+  state?: "on" | "off";
+  attributes?: { destructive?: boolean; disabled?: boolean; hidden?: boolean };
+}>;
+
+function makeFakeMenuView() {
+  const rn = jest.requireActual("react-native");
+  const React = jest.requireActual("react");
+  return function FakeMenuView(props: {
+    title?: string;
+    actions: FakeMenuActions;
+    onPressAction?: (event: { nativeEvent: { event: string } }) => void;
+    shouldOpenOnLongPress?: boolean;
+    testID?: string;
+    children?: React.ReactNode;
+  }) {
+    return React.createElement(
+      rn.View,
+      { testID: props.testID, "data-menu-title": props.title },
+      props.children,
+      props.actions.map((action) =>
+        React.createElement(rn.Pressable, {
+          key: action.id ?? action.title,
+          testID: `${props.testID}-action-${action.id ?? action.title}`,
+          accessibilityRole: "menuitem",
+          accessibilityLabel: action.title,
+          accessibilityState: {
+            selected: action.state === "on",
+            disabled: action.attributes?.disabled === true,
+          },
+          onPress: () => {
+            props.onPressAction?.({
+              nativeEvent: { event: action.id ?? action.title },
+            });
+          },
+        })
+      )
+    );
+  };
+}
 
 const LIGHT_SELECT_NATIVE_COLORS: SelectNativeColors = {
   label: "#111827",
@@ -45,6 +109,10 @@ const LIGHT_SELECT_NATIVE_COLORS: SelectNativeColors = {
   backgroundDisabled: "#F3F4F6",
   border: "#D1D5DB",
   borderError: "#DC2626",
+  text: "#007AFF",
+  textDisabled: "#9CA3AF",
+  placeholder: "#007AFF",
+  chevron: "#007AFF",
   helperText: "#6B7280",
   errorText: "#DC2626",
 };
@@ -55,6 +123,10 @@ const DARK_SELECT_NATIVE_COLORS: SelectNativeColors = {
   backgroundDisabled: "#1F2937",
   border: "#374151",
   borderError: "#F87171",
+  text: "#0A84FF",
+  textDisabled: "#6B7280",
+  placeholder: "#0A84FF",
+  chevron: "#0A84FF",
   helperText: "#9CA3AF",
   errorText: "#F87171",
 };
@@ -73,75 +145,6 @@ jest.mock("../../provider/use-ui-kit", () => ({
   useUIKit: () => mockUseUIKit(),
 }));
 
-// Fake Host / Picker that behave like `@expo/ui` — the Picker
-// renders every Item so the test can assert their labels + values
-// were forwarded, and it exposes an `onValueChange` hook the test
-// invokes to simulate the user picking a menu row.
-type FakePickerItem = {
-  props: { label: string; value: string | number };
-};
-
-const RealPicker: React.ComponentType<{
-  selectedValue: string | number;
-  onValueChange: (v: string | number) => void;
-  appearance?: "menu" | "wheel";
-  enabled?: boolean;
-  children?: React.ReactNode;
-  testID?: string;
-}> & { Item: React.ComponentType<{ label: string; value: string | number }> } = forwardRef(
-  function FakePicker(
-    props: {
-      selectedValue: string | number;
-      onValueChange: (v: string | number) => void;
-      appearance?: "menu" | "wheel";
-      enabled?: boolean;
-      children?: React.ReactNode;
-      testID?: string;
-    },
-    _ref: unknown
-  ) {
-    const rn = jest.requireActual("react-native");
-    const React = jest.requireActual("react");
-    const items = (React.Children.toArray(props.children ?? []) as FakePickerItem[]).filter(
-      (child) => child && typeof child === "object" && "props" in child
-    );
-    return React.createElement(
-      rn.View,
-      {
-        testID: props.testID,
-        accessibilityRole: "combobox",
-        accessibilityValue: { text: String(props.selectedValue) },
-        accessibilityState: { disabled: props.enabled === false },
-      },
-      items.map((item) =>
-        React.createElement(rn.Pressable, {
-          key: String(item.props.value),
-          testID: `${props.testID}-item-${item.props.value}`,
-          accessibilityRole: "menuitem",
-          accessibilityLabel: item.props.label,
-          onPress: () => props.onValueChange(item.props.value),
-        })
-      )
-    );
-  }
-) as unknown as never;
-
-(
-  RealPicker as unknown as { Item: React.ComponentType<{ label: string; value: string | number }> }
-).Item = function FakePickerItem() {
-  // Data-only marker; the FakePicker walks children.props directly.
-  return null;
-};
-
-const RealHost: React.ComponentType<{
-  matchContents?: boolean;
-  children?: React.ReactNode;
-}> = ({ children }) => {
-  const rn = jest.requireActual("react-native");
-  const React = jest.requireActual("react");
-  return React.createElement(rn.View, { testID: "expo-ui-host" }, children);
-};
-
 import { SelectNative } from "./select-native";
 
 const OPTIONS = [
@@ -157,8 +160,9 @@ describe("SelectNative", () => {
       tokens: { selectNativeColors: LIGHT_SELECT_NATIVE_COLORS },
     });
     mockIsAvailable.mockReturnValue(true);
-    mockHost.mockReturnValue(RealHost);
-    mockPicker.mockReturnValue(RealPicker);
+    mockHost.mockReturnValue(null);
+    mockPicker.mockReturnValue(null);
+    mockMenuView.mockReturnValue(makeFakeMenuView());
   });
 
   it("renders the label above the frame when `label` is passed", async () => {
@@ -196,66 +200,62 @@ describe("SelectNative", () => {
     expect(screen.getByTestId("select-native-label")).toBeTruthy();
   });
 
-  it("renders the native picker when the peer dep is available", async () => {
+  it("renders the MenuView trigger + trigger text when peer is available", async () => {
+    await render(
+      <SelectNative testID="sn" options={[...OPTIONS]} value="two" onChange={jest.fn()} />
+    );
+    expect(screen.getByTestId("sn-menu")).toBeTruthy();
+    expect(screen.getByTestId("sn-trigger")).toBeTruthy();
+    expect(screen.getByTestId("sn-trigger-text")).toHaveTextContent("Two");
+    expect(screen.queryByTestId("sn-missing-peer")).toBeNull();
+  });
+
+  it("trigger shows the placeholderLabel when value is null", async () => {
     await render(
       <SelectNative
         testID="sn"
         options={[...OPTIONS]}
-        value="two"
+        value={null}
         onChange={jest.fn()}
-        label="Country"
+        placeholderLabel="— Pick one —"
       />
     );
-    expect(screen.getByTestId("sn-picker")).toBeTruthy();
-    expect(screen.queryByTestId("sn-missing-peer")).toBeNull();
+    expect(screen.getByTestId("sn-trigger-text")).toHaveTextContent("— Pick one —");
   });
 
-  it("renders the missing-peer hint (and no picker) when `@expo/ui` isn't available", async () => {
-    mockIsAvailable.mockReturnValue(false);
-    mockHost.mockReturnValue(null);
-    mockPicker.mockReturnValue(null);
+  it("uses the default placeholderLabel 'Select…' when none is passed", async () => {
     await render(
       <SelectNative testID="sn" options={[...OPTIONS]} value={null} onChange={jest.fn()} />
     );
-    const hint = screen.getByTestId("sn-missing-peer");
-    expect(hint).toHaveTextContent(/install .+@expo\/ui/i);
-    expect(hint.props.color).toBe(LIGHT_SELECT_NATIVE_COLORS.errorText);
-    expect(screen.queryByTestId("sn-picker")).toBeNull();
+    expect(screen.getByTestId("sn-trigger-text")).toHaveTextContent("Select…");
   });
 
-  it("does not crash when only Host is present but Picker is missing", async () => {
-    mockIsAvailable.mockReturnValue(true);
-    mockHost.mockReturnValue(RealHost);
-    mockPicker.mockReturnValue(null);
+  it("renders one MenuView action per option", async () => {
     await render(
       <SelectNative testID="sn" options={[...OPTIONS]} value={null} onChange={jest.fn()} />
     );
-    expect(screen.getByTestId("sn-missing-peer")).toBeTruthy();
-    expect(screen.queryByTestId("sn-picker")).toBeNull();
+    expect(screen.getByTestId("sn-menu-action-one")).toBeTruthy();
+    expect(screen.getByTestId("sn-menu-action-two")).toBeTruthy();
+    expect(screen.getByTestId("sn-menu-action-three")).toBeTruthy();
   });
 
-  it("forwards every option to the picker as a menu row", async () => {
-    await render(
-      <SelectNative testID="sn" options={[...OPTIONS]} value="one" onChange={jest.fn()} />
-    );
-    expect(screen.getByTestId("sn-picker-item-one")).toBeTruthy();
-    expect(screen.getByTestId("sn-picker-item-two")).toBeTruthy();
-    expect(screen.getByTestId("sn-picker-item-three")).toBeTruthy();
-  });
-
-  it("propagates the current value to the picker's selectedValue", async () => {
+  it("marks the selected option's action with `state: 'on'` (checkmark)", async () => {
     await render(
       <SelectNative testID="sn" options={[...OPTIONS]} value="two" onChange={jest.fn()} />
     );
-    expect(screen.getByTestId("sn-picker").props.accessibilityValue).toEqual({ text: "two" });
+    // Checkmark surfaces via accessibilityState.selected on the
+    // fake MenuView action. `state: "on"` at the shell layer →
+    // `accessibilityState.selected: true` on the mocked action.
+    expect(screen.getByTestId("sn-menu-action-two").props.accessibilityState.selected).toBe(true);
+    expect(screen.getByTestId("sn-menu-action-one").props.accessibilityState.selected).toBe(false);
   });
 
-  it("picking a menu row fires onChange with that option's value", async () => {
+  it("picking a menu action fires onChange with the option's value", async () => {
     const onChange = jest.fn();
     await render(
       <SelectNative testID="sn" options={[...OPTIONS]} value={null} onChange={onChange} />
     );
-    fireEvent.press(screen.getByTestId("sn-picker-item-two"));
+    fireEvent.press(screen.getByTestId("sn-menu-action-two"));
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenCalledWith("two");
   });
@@ -269,63 +269,44 @@ describe("SelectNative", () => {
     await render(
       <SelectNative<number> testID="sn" options={[...NUM_OPTIONS]} value={1} onChange={onChange} />
     );
-    fireEvent.press(screen.getByTestId("sn-picker-item-2"));
+    // Numeric ids stringified to build the testID.
+    fireEvent.press(screen.getByTestId("sn-menu-action-2"));
     expect(onChange).toHaveBeenCalledWith(2);
-    // selectedValue was forwarded as a number, not a string.
-    expect(screen.getByTestId("sn-picker").props.accessibilityValue).toEqual({ text: "1" });
+    expect(screen.getByTestId("sn-menu-action-1").props.accessibilityState.selected).toBe(true);
   });
 
-  it("injects a placeholder item when value=null (so Android's Picker still opens)", async () => {
+  it("disabled prop marks every action as disabled and swallows presses", async () => {
+    const onChange = jest.fn();
     await render(
-      <SelectNative
-        testID="sn"
-        options={[...OPTIONS]}
-        value={null}
-        onChange={jest.fn()}
-        placeholderLabel="Pick one"
-      />
+      <SelectNative testID="sn" options={[...OPTIONS]} value="one" onChange={onChange} disabled />
     );
-    // The placeholder is inserted at position 0 with value=""; the real options come after.
-    expect(screen.getByTestId("sn-picker-item-")).toBeTruthy();
-    expect(screen.getByTestId("sn-picker-item-one")).toBeTruthy();
-    expect(screen.getByTestId("sn-picker").props.accessibilityValue).toEqual({ text: "" });
+    expect(screen.getByTestId("sn-menu-action-two").props.accessibilityState.disabled).toBe(true);
+    fireEvent.press(screen.getByTestId("sn-menu-action-two"));
+    expect(onChange).not.toHaveBeenCalled();
   });
 
-  it("uses the default placeholderLabel 'Select…' when none is passed", async () => {
+  it("renders the missing-peer hint when @expo/ui is not available", async () => {
+    mockIsAvailable.mockReturnValue(false);
+    mockMenuView.mockReturnValue(null);
     await render(
       <SelectNative testID="sn" options={[...OPTIONS]} value={null} onChange={jest.fn()} />
     );
-    // Placeholder item was still injected; its label prop is the default.
-    // (We assert the item testID exists — the label prop is not queryable
-    // through RTL on the FakePicker Item since it's a data-only marker.)
-    expect(screen.getByTestId("sn-picker-item-")).toBeTruthy();
-  });
-
-  it("skips the placeholder injection when value matches one of the options", async () => {
-    await render(
-      <SelectNative testID="sn" options={[...OPTIONS]} value="two" onChange={jest.fn()} />
-    );
-    expect(screen.queryByTestId("sn-picker-item-")).toBeNull();
-    expect(screen.getByTestId("sn-picker-item-two")).toBeTruthy();
+    const hint = screen.getByTestId("sn-missing-peer");
+    expect(hint).toHaveTextContent(/install .+@expo\/ui/i);
+    expect(hint.props.color).toBe(LIGHT_SELECT_NATIVE_COLORS.errorText);
+    expect(screen.queryByTestId("sn-menu")).toBeNull();
   });
 
   it("frame is transparent by default (no chrome — pure native look)", async () => {
     await render(
       <SelectNative testID="sn" options={[...OPTIONS]} value={null} onChange={jest.fn()} />
     );
-    // Default: showBorderIOS=false + showBorderAndroid=false →
-    // the wrapper frame drops its background / border / padding
-    // so the native picker reads as fully-native. `minHeight` is
-    // kept at the iOS/Android 44 px touch-target minimum so the
-    // frame doesn't collapse to the picker's intrinsic height
-    // (~25 px), which would make the surrounding label + helper
-    // text read as "glued" to the trigger.
     const frame = screen.getByTestId("sn-frame");
     expect(frame.props.backgroundColor).toBe("transparent");
     expect(frame.props.borderWidth).toBe(0);
     expect(frame.props.paddingHorizontal).toBe(0);
     expect(frame.props.paddingVertical).toBe(0);
-    expect(frame.props.minHeight).toBe(44);
+    expect(frame.props.minHeight).toBe(0);
   });
 
   it("frame paints `background` slot when the border is opted in", async () => {
@@ -375,15 +356,11 @@ describe("SelectNative", () => {
     expect(screen.getByTestId("sn-frame").props.borderColor).toBe(
       LIGHT_SELECT_NATIVE_COLORS.borderError
     );
-    // Errors force the outline on regardless of the per-platform
-    // border flags — the invalid state has to stay legible.
+    // Errors force the chrome on regardless of the per-platform
+    // flags — the invalid state has to stay legible.
     expect(screen.getByTestId("sn-frame").props.borderWidth).toBe(1);
   });
 
-  // Platform-toggle behavior. We drive `Platform.OS` + `Platform.select`
-  // via targeted mutations in `beforeEach` inside the nested describe
-  // — wholesale mocking `react-native/Libraries/Utilities/Platform`
-  // breaks jest-expo's own Platform.select usage at setup time.
   describe("per-platform border toggles", () => {
     const originalOS = Platform.OS;
     const originalSelect = Platform.select;
@@ -458,7 +435,7 @@ describe("SelectNative", () => {
       expect(screen.getByTestId("sn-frame").props.borderWidth).toBe(0);
     });
 
-    it("falls back to (showBorderIOS || showBorderAndroid) on non-mobile platforms (web)", async () => {
+    it("falls back to (showBorderIOS || showBorderAndroid) on web", async () => {
       setPlatform("web");
       await render(
         <SelectNative
@@ -523,17 +500,7 @@ describe("SelectNative", () => {
     expect(screen.queryByTestId("sn-error-text")).toBeNull();
   });
 
-  it("disables the picker when the `disabled` prop is set", async () => {
-    await render(
-      <SelectNative testID="sn" options={[...OPTIONS]} value="one" onChange={jest.fn()} disabled />
-    );
-    expect(screen.getByTestId("sn-picker").props.accessibilityState).toEqual({ disabled: true });
-  });
-
   it("per-instance selectNativeColors overrides win when chrome is opted in", async () => {
-    // Palette slots only reach the frame's `backgroundColor` /
-    // `borderColor` props when the chrome layer is on — opt into
-    // it explicitly so the color assertions are meaningful.
     await render(
       <SelectNative
         testID="sn"
@@ -547,6 +514,36 @@ describe("SelectNative", () => {
     );
     expect(screen.getByTestId("sn-frame").props.backgroundColor).toBe("#F5F3FF");
     expect(screen.getByTestId("sn-frame").props.borderColor).toBe("#7C3AED");
+  });
+
+  it("per-instance trigger `text` color overrides the palette default when a value is selected", async () => {
+    // Consumers can retint the trigger away from the iOS-
+    // system-blue default without opting into the frame chrome
+    // — the trigger text is a Tamagui Text painted from the
+    // palette, so overriding `text` flows through.
+    await render(
+      <SelectNative
+        testID="sn"
+        options={[...OPTIONS]}
+        value="one"
+        onChange={jest.fn()}
+        selectNativeColors={{ text: "#7C3AED" }}
+      />
+    );
+    expect(screen.getByTestId("sn-trigger-text").props.color).toBe("#7C3AED");
+  });
+
+  it("per-instance trigger `placeholder` color overrides the palette default when value is null", async () => {
+    await render(
+      <SelectNative
+        testID="sn"
+        options={[...OPTIONS]}
+        value={null}
+        onChange={jest.fn()}
+        selectNativeColors={{ placeholder: "#A78BFA" }}
+      />
+    );
+    expect(screen.getByTestId("sn-trigger-text").props.color).toBe("#A78BFA");
   });
 
   it("propagates provider palette overrides through useUIKit", async () => {
@@ -632,8 +629,7 @@ describe("SelectNative", () => {
 
     it("missing peer dep fallback", async () => {
       mockIsAvailable.mockReturnValue(false);
-      mockHost.mockReturnValue(null);
-      mockPicker.mockReturnValue(null);
+      mockMenuView.mockReturnValue(null);
       await render(
         <SelectNative options={[...OPTIONS]} value={null} onChange={jest.fn()} label="Country" />
       );

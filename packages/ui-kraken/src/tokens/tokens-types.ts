@@ -297,14 +297,15 @@ export interface SelectBottomSheetColors {
 }
 
 /**
- * SelectNative color palette. Slot-based, 7 slots. Deliberately
- * smaller than [[SelectColors]] because the native `@expo/ui`
- * `Picker` owns its own chrome — text color of the current value,
- * chevron, menu background, selected-row highlight, disabled dim
- * are all painted by SwiftUI / Compose, not by us.
+ * SelectNative color palette. Slot-based, 11 slots. Smaller than
+ * [[SelectColors]] because the native menu popup (SwiftUI `Menu`
+ * on iOS, Compose `DropdownMenu` on Android) still owns its own
+ * interior chrome — checkmark tint, popup background, row hover.
  *
- * The slots we still own are the wrapper frame (background + border
- * in three states) and the surrounding label + helper / error text.
+ * We own the wrapper frame + surrounding text + the trigger
+ * itself (we render our own `Text` + chevron inside `MenuView`
+ * so RN layout stays deterministic and doesn't hit the
+ * SwiftUI-Menu measurement race).
  */
 export interface SelectNativeColors {
   /** Bold label text color rendered above the trigger frame. */
@@ -317,6 +318,14 @@ export interface SelectNativeColors {
   border: string;
   /** Wrapper frame border when `errorText` is set. */
   borderError: string;
+  /** Selected-value text color inside the trigger. */
+  text: string;
+  /** Trigger text color when `disabled`. */
+  textDisabled: string;
+  /** Placeholder text color inside the trigger (when value is null). */
+  placeholder: string;
+  /** Trailing chevron color. */
+  chevron: string;
   /** Muted helper text color rendered below the frame when no error. */
   helperText: string;
   /** Error text color rendered below the frame when `errorText` is set. */

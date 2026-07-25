@@ -134,12 +134,21 @@ packages/ui-kraken/src/components/select-native/
 - **No `variant="wheel"`** — that's what DatePicker will use.
 - **No web-specific fallback** — @expo/ui's own web fallback (a plain `<select>`) is what runs there.
 
-## Known issues
+## History — off-screen "raised" bug (fixed by MenuView switch)
 
-**iOS, borderless mode only**: a `<SelectNative>` rendered off-screen inside a scrollable container renders slightly "raised" (extra invisible whitespace below the trigger) once scrolled into view. The picker is fully functional; only the vertical rhythm of the containing section is affected. Reproducible in duna-app with the same `@expo/ui@57.0.7` — root cause is upstream in the SwiftUI Menu + Host measurement path, not in ui-kraken. Workaround: consumers who need pixel-perfect vertical rhythm on long iOS pages opt into `showBorderIOS` (framed mode absorbs the SwiftUI padding via `minHeight: 48` + centering). Documented in the component README under **Known issues**. Full documentation of the debugging trail lives there.
+The first cut of `SelectNative` used `<Host><Picker>` from `@expo/ui`. That combo hit a SwiftUI Menu intrinsic-size measurement race on iOS: borderless pickers rendered off-screen appeared "raised" once scrolled into view (extra invisible whitespace below the trigger, pushing the next section down). Reproduced in duna-app too — genuinely upstream, not our layer.
+
+Switched the mobile backend to `MenuView` from `@expo/ui/community/menu`. `MenuView` wraps a consumer-provided trigger (our own Tamagui `Text` + chevron) instead of asking @expo/ui to paint both the trigger AND the menu. RN layout is deterministic because the trigger is a plain RN view. Bug gone on-device.
+
+Attempts we made before switching (documented so future contributors don't retry the same dead ends):
+
+- Pinning `minHeight` on the frame — moved the whitespace around, didn't remove it.
+- `matchContents={false}` + `style.height` pin — fixed on-screen sections but centered the picker horizontally.
+- Per-axis `matchContents={{ horizontal: true, vertical: false }}` — fixed on-screen sections but off-screen ones still had the bug.
+- Swapping our `<Screen>` wrapper for a bare `<ScrollView>` — bug persisted, so it wasn't our scroll config.
 
 ## How to extend
 
-- **Add wheel appearance** as a `variant="wheel"` prop if a date-style use case emerges.
-- **Add `renderItem` slot** if @expo/ui ever exposes one.
-- **Open the upstream `@expo/ui` issue** for the borderless-off-screen measurement bug; once fixed there, our workaround note in the README can be removed.
+- **Add wheel appearance** as a `variant="wheel"` prop if a date-style use case emerges (DatePicker will use it first).
+- **Add `disabledOptions`** — `MenuView`'s per-action `attributes.disabled` supports it natively; wire it up when a consumer needs it.
+- **Add controlled-open API** (`open` / `onOpenChange`) — `MenuView` fires `onOpenMenu` / `onCloseMenu` on Android; iOS SwiftUI Menu doesn't. Would need a per-platform strategy if we ever support it.
