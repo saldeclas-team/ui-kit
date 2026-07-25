@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Surface snapshots dark theme × raised 1`] = `
+<View
+  backgroundColor="#111827"
+  borderRadius={8}
+  padding={12}
+  testID="surface"
+>
+  <Text>
+    Dark raised
+  </Text>
+</View>
+`;
+
+exports[`Surface snapshots level=base 1`] = `
+<View
+  backgroundColor="#FFFFFF"
+  borderRadius={8}
+  padding={12}
+  testID="surface"
+>
+  <Text>
+    level=
+    base
+  </Text>
+</View>
+`;
+
+exports[`Surface snapshots level=overlay 1`] = `
+<View
+  backgroundColor="#FFFFFF"
+  borderRadius={8}
+  padding={12}
+  testID="surface"
+>
+  <Text>
+    level=
+    overlay
+  </Text>
+</View>
+`;
+
+exports[`Surface snapshots level=raised 1`] = `
+<View
+  backgroundColor="#F9FAFB"
+  borderRadius={8}
+  padding={12}
+  testID="surface"
+>
+  <Text>
+    level=
+    raised
+  </Text>
+</View>
+`;
+
+exports[`Surface snapshots level=sunken 1`] = `
+<View
+  backgroundColor="#F3F4F6"
+  borderRadius={8}
+  padding={12}
+  testID="surface"
+>
+  <Text>
+    level=
+    sunken
+  </Text>
+</View>
+`;
+
+exports[`Surface snapshots per-instance surfaceColors override 1`] = `
+<View
+  backgroundColor="#FFF7ED"
+  borderRadius={8}
+  padding={12}
+  testID="surface"
+>
+  <Text>
+    Custom tint
+  </Text>
+</View>
+`;

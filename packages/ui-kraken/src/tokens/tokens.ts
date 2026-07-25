@@ -7,6 +7,7 @@ import {
   flattenCurrencyInputColors,
   flattenInputColors,
   flattenRadioGroupColors,
+  flattenSurfaceColors,
   flattenTextColors,
 } from "../utils/flatten";
 import { DEFAULT_DARK_TOKENS, DEFAULT_TOKENS } from "./defaults";
@@ -41,6 +42,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
       ...flattenRadioGroupColors(lightResolved.radioGroupColors),
       ...flattenInputColors(lightResolved.inputColors),
       ...flattenCurrencyInputColors(lightResolved.currencyInputColors),
+      ...flattenSurfaceColors(lightResolved.surfaceColors),
     },
     radius: {
       ...baseTokens.radius,
@@ -80,6 +82,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenRadioGroupColors(lightResolved.radioGroupColors),
         ...flattenInputColors(lightResolved.inputColors),
         ...flattenCurrencyInputColors(lightResolved.currencyInputColors),
+        ...flattenSurfaceColors(lightResolved.surfaceColors),
       },
       dark: {
         ...(baseThemes.dark ?? {}),
@@ -89,6 +92,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenRadioGroupColors(darkResolved.radioGroupColors),
         ...flattenInputColors(darkResolved.inputColors),
         ...flattenCurrencyInputColors(darkResolved.currencyInputColors),
+        ...flattenSurfaceColors(darkResolved.surfaceColors),
       },
     },
   });
@@ -114,6 +118,8 @@ export {
   DEFAULT_LIGHT_INPUT_COLORS,
   DEFAULT_DARK_CURRENCY_INPUT_COLORS,
   DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
+  DEFAULT_DARK_SURFACE_COLORS,
+  DEFAULT_LIGHT_SURFACE_COLORS,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
@@ -122,6 +128,7 @@ export {
   mergeRadioGroupColors,
   mergeInputColors,
   mergeCurrencyInputColors,
+  mergeSurfaceColors,
 } from "./defaults";
 export { coarseToFineTokens } from "./tokens-derive";
 export { tint } from "../utils/color";

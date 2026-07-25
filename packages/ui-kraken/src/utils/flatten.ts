@@ -17,6 +17,7 @@ import type {
   CurrencyInputColors,
   InputColors,
   RadioGroupColors,
+  SurfaceColors,
   TextColors,
 } from "../tokens/tokens-types";
 
@@ -129,6 +130,20 @@ export function flattenCurrencyInputColors(colors: CurrencyInputColors): Record<
   for (const slot of Object.keys(colors) as Array<keyof CurrencyInputColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiCurrencyInput${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `surfaceColors` slot map into `$uiSurface{PascalCase}`
+ * Tamagui tokens (`$uiSurfaceBase`, `$uiSurfaceRaised`, `$uiSurfaceOverlay`,
+ * `$uiSurfaceSunken`).
+ */
+export function flattenSurfaceColors(colors: SurfaceColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SurfaceColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSurface${capitalized}`] = colors[slot];
   }
   return out;
 }

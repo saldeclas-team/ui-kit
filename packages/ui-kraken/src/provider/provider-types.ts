@@ -9,6 +9,7 @@ import type {
   CurrencyInputColors,
   InputColors,
   RadioGroupColors,
+  SurfaceColors,
   TextColors,
   ResolvedTokens,
 } from "../tokens/tokens-types";
@@ -59,6 +60,13 @@ export type InputColorsInput = Partial<InputColors>;
 export type CurrencyInputColorsInput = Partial<CurrencyInputColors>;
 
 /**
+ * Partial override for `surfaceColors` — consumers only declare the
+ * slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, mirrors `TextColorsInput`.
+ */
+export type SurfaceColorsInput = Partial<SurfaceColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -69,6 +77,7 @@ export interface TokensInput {
   radioGroupColors?: RadioGroupColorsInput;
   inputColors?: InputColorsInput;
   currencyInputColors?: CurrencyInputColorsInput;
+  surfaceColors?: SurfaceColorsInput;
   radius?: number;
   spacing?: number;
 }

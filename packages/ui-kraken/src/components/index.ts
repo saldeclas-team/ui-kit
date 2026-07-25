@@ -28,3 +28,6 @@ export type { InputProps, InputRadius } from "./input";
 
 export { CurrencyInput } from "./currency-input";
 export type { CurrencyInputProps, CurrencyInputRadius } from "./currency-input";
+
+export { Surface } from "./surface";
+export type { SurfaceProps, SurfaceLevel } from "./surface";

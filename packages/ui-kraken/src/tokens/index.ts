@@ -13,6 +13,8 @@ export {
   DEFAULT_DARK_INPUT_COLORS,
   DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
   DEFAULT_DARK_CURRENCY_INPUT_COLORS,
+  DEFAULT_LIGHT_SURFACE_COLORS,
+  DEFAULT_DARK_SURFACE_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -23,6 +25,7 @@ export {
   mergeRadioGroupColors,
   mergeInputColors,
   mergeCurrencyInputColors,
+  mergeSurfaceColors,
   tint,
 } from "./tokens";
 export type { Config } from "./tokens";
@@ -35,6 +38,7 @@ export type {
   RadioGroupColors,
   InputColors,
   CurrencyInputColors,
+  SurfaceColors,
   Tokens,
   ResolvedTokens,
 } from "./tokens-types";

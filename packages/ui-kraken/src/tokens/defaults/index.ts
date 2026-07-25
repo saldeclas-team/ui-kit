@@ -23,6 +23,7 @@ import {
   DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
   DEFAULT_DARK_CURRENCY_INPUT_COLORS,
 } from "./currency-input";
+import { DEFAULT_LIGHT_SURFACE_COLORS, DEFAULT_DARK_SURFACE_COLORS } from "./surface";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -35,6 +36,7 @@ export const DEFAULT_TOKENS: Tokens = {
   radioGroupColors: DEFAULT_LIGHT_RADIO_GROUP_COLORS,
   inputColors: DEFAULT_LIGHT_INPUT_COLORS,
   currencyInputColors: DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
+  surfaceColors: DEFAULT_LIGHT_SURFACE_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -50,6 +52,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   radioGroupColors: DEFAULT_DARK_RADIO_GROUP_COLORS,
   inputColors: DEFAULT_DARK_INPUT_COLORS,
   currencyInputColors: DEFAULT_DARK_CURRENCY_INPUT_COLORS,
+  surfaceColors: DEFAULT_DARK_SURFACE_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -80,3 +83,8 @@ export {
   DEFAULT_DARK_CURRENCY_INPUT_COLORS,
   mergeCurrencyInputColors,
 } from "./currency-input";
+export {
+  DEFAULT_LIGHT_SURFACE_COLORS,
+  DEFAULT_DARK_SURFACE_COLORS,
+  mergeSurfaceColors,
+} from "./surface";

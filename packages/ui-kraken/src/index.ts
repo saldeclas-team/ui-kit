@@ -18,6 +18,8 @@ export type {
   AlertColorsInput,
   RadioGroupColorsInput,
   InputColorsInput,
+  CurrencyInputColorsInput,
+  SurfaceColorsInput,
 } from "./provider";
 
 // Tokens
@@ -34,6 +36,10 @@ export {
   DEFAULT_DARK_RADIO_GROUP_COLORS,
   DEFAULT_LIGHT_INPUT_COLORS,
   DEFAULT_DARK_INPUT_COLORS,
+  DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
+  DEFAULT_DARK_CURRENCY_INPUT_COLORS,
+  DEFAULT_LIGHT_SURFACE_COLORS,
+  DEFAULT_DARK_SURFACE_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -43,6 +49,8 @@ export {
   mergeAlertVariantColors,
   mergeRadioGroupColors,
   mergeInputColors,
+  mergeCurrencyInputColors,
+  mergeSurfaceColors,
   tint,
 } from "./tokens";
 export type {
@@ -54,6 +62,8 @@ export type {
   AlertVariantColors,
   RadioGroupColors,
   InputColors,
+  CurrencyInputColors,
+  SurfaceColors,
   ResolvedTokens,
   Config,
 } from "./tokens";
@@ -83,3 +93,6 @@ export type { InputProps, InputRadius } from "./components";
 
 export { CurrencyInput } from "./components";
 export type { CurrencyInputProps, CurrencyInputRadius } from "./components";
+
+export { Surface } from "./components";
+export type { SurfaceProps, SurfaceLevel } from "./components";

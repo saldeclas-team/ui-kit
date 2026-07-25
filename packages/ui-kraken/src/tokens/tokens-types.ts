@@ -129,6 +129,23 @@ export interface InputColors {
 }
 
 /**
+ * Surface color palette. Slot-based, 4 semantic elevation levels each
+ * with a single background color. Inspired by Material 3's
+ * SurfaceContainer scale but simpler (4 levels, no auto-tint math, no
+ * shadow bindings).
+ */
+export interface SurfaceColors {
+  /** Standard app background. */
+  base: string;
+  /** Cards, list items, elevated content on top of the base surface. */
+  raised: string;
+  /** Modals, sheets, dropdowns — highest visual layer. */
+  overlay: string;
+  /** Inset areas — form sections, code blocks, muted regions. */
+  sunken: string;
+}
+
+/**
  * CurrencyInput color palette. Slot-based. Mirrors `InputColors` plus a
  * `prefix` slot for the currency-symbol text color (the `"$"` / `"€"` /
  * etc. that renders inside the wrapper next to the number).
@@ -203,6 +220,7 @@ export interface Tokens {
   radioGroupColors: RadioGroupColors;
   inputColors: InputColors;
   currencyInputColors: CurrencyInputColors;
+  surfaceColors: SurfaceColors;
   radius: number;
   spacing: number;
 }
@@ -219,6 +237,7 @@ export interface ResolvedTokens {
   radioGroupColors: RadioGroupColors;
   inputColors: InputColors;
   currencyInputColors: CurrencyInputColors;
+  surfaceColors: SurfaceColors;
   radius: {
     sm: number;
     md: number;
