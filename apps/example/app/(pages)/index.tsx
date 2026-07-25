@@ -53,12 +53,6 @@ const COMPONENTS: ComponentItem[] = [
     href: "/components/button",
     status: "planned",
   },
-  {
-    title: "Input",
-    description: "Text input with label, helper text, and validation slots.",
-    href: "/components/button",
-    status: "planned",
-  },
 ];
 
 export default function ComponentsHome() {
