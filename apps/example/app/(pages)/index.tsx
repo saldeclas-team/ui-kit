@@ -76,6 +76,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Hint",
+    description:
+      "Inline contextual tip row — 5 tones, ghost / soft emphasis, optional icon + title.",
+    href: "/components/hint",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

@@ -15,6 +15,7 @@ import type {
   AlertColors,
   ButtonColors,
   CurrencyInputColors,
+  HintColors,
   InputColors,
   RadioGroupColors,
   RefreshControlColors,
@@ -174,6 +175,35 @@ export function flattenSkeletonColors(colors: SkeletonColors): Record<string, st
   for (const slot of Object.keys(colors) as Array<keyof SkeletonColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiSkeleton${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the nested `hintColors` shape into a flat `$ui*` token map:
+ *
+ * ```
+ * { info: { text: "#1E40AF", icon: "#2563EB", background: "#EFF6FF" } }
+ * ```
+ *
+ * becomes
+ *
+ * ```
+ * {
+ *   uiHintInfoText: "#1E40AF",
+ *   uiHintInfoIcon: "#2563EB",
+ *   uiHintInfoBackground: "#EFF6FF",
+ * }
+ * ```
+ */
+export function flattenHintColors(colors: HintColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const tone of Object.keys(colors) as Array<keyof HintColors>) {
+    const slots = colors[tone];
+    const capitalized = tone.charAt(0).toUpperCase() + tone.slice(1);
+    out[`uiHint${capitalized}Text`] = slots.text;
+    out[`uiHint${capitalized}Icon`] = slots.icon;
+    out[`uiHint${capitalized}Background`] = slots.background;
   }
   return out;
 }

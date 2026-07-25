@@ -9,6 +9,8 @@ import type {
   CurrencyInputColors,
   InputColors,
   RadioGroupColors,
+  HintColors,
+  HintToneColors,
   RefreshControlColors,
   SkeletonColors,
   SurfaceColors,
@@ -83,6 +85,14 @@ export type RefreshControlColorsInput = Partial<RefreshControlColors>;
 export type SkeletonColorsInput = Partial<SkeletonColors>;
 
 /**
+ * A partial-of-partials for `hintColors`: consumers can override just
+ * one tone (e.g. `danger`), or just one slot within a tone (e.g.
+ * `danger.background`), and the rest fills in from the shipped
+ * defaults. Same shape as `AlertColorsInput`.
+ */
+export type HintColorsInput = Partial<Record<keyof HintColors, Partial<HintToneColors>>>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -96,6 +106,7 @@ export interface TokensInput {
   surfaceColors?: SurfaceColorsInput;
   refreshControlColors?: RefreshControlColorsInput;
   skeletonColors?: SkeletonColorsInput;
+  hintColors?: HintColorsInput;
   radius?: number;
   spacing?: number;
 }

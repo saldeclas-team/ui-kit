@@ -12,6 +12,7 @@ import {
   mergeCurrencyInputColors,
   mergeInputColors,
   mergeRadioGroupColors,
+  mergeHintColors,
   mergeRefreshControlColors,
   mergeSkeletonColors,
   mergeSurfaceColors,
@@ -50,6 +51,7 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         tokens?.refreshControlColors
       ),
       skeletonColors: mergeSkeletonColors(DEFAULT_TOKENS.skeletonColors, tokens?.skeletonColors),
+      hintColors: mergeHintColors(DEFAULT_TOKENS.hintColors, tokens?.hintColors),
     };
     const mergedDark = {
       ...DEFAULT_DARK_TOKENS,
@@ -72,6 +74,7 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         dark?.refreshControlColors
       ),
       skeletonColors: mergeSkeletonColors(DEFAULT_DARK_TOKENS.skeletonColors, dark?.skeletonColors),
+      hintColors: mergeHintColors(DEFAULT_DARK_TOKENS.hintColors, dark?.hintColors),
     };
     const resolvedLight = coarseToFineTokens(mergedLight);
     const resolvedDark = coarseToFineTokens(mergedDark);

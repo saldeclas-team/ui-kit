@@ -22,6 +22,7 @@ export type {
   SurfaceColorsInput,
   RefreshControlColorsInput,
   SkeletonColorsInput,
+  HintColorsInput,
 } from "./provider";
 
 // Tokens
@@ -46,6 +47,8 @@ export {
   DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   DEFAULT_LIGHT_SKELETON_COLORS,
   DEFAULT_DARK_SKELETON_COLORS,
+  DEFAULT_LIGHT_HINT_COLORS,
+  DEFAULT_DARK_HINT_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -59,6 +62,8 @@ export {
   mergeSurfaceColors,
   mergeRefreshControlColors,
   mergeSkeletonColors,
+  mergeHintColors,
+  mergeHintToneColors,
   tint,
 } from "./tokens";
 export type {
@@ -74,6 +79,8 @@ export type {
   SurfaceColors,
   RefreshControlColors,
   SkeletonColors,
+  HintColors,
+  HintToneColors,
   ResolvedTokens,
   Config,
 } from "./tokens";
@@ -112,3 +119,6 @@ export type { RefreshControlProps } from "./components";
 
 export { Skeleton } from "./components";
 export type { SkeletonProps, SkeletonRadius, SkeletonVariant } from "./components";
+
+export { Hint } from "./components";
+export type { HintProps, HintTone, HintEmphasis } from "./components";

@@ -14,4 +14,5 @@ export type {
   SurfaceColorsInput,
   RefreshControlColorsInput,
   SkeletonColorsInput,
+  HintColorsInput,
 } from "./provider-types";

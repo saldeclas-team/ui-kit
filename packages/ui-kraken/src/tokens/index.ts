@@ -19,6 +19,8 @@ export {
   DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   DEFAULT_LIGHT_SKELETON_COLORS,
   DEFAULT_DARK_SKELETON_COLORS,
+  DEFAULT_LIGHT_HINT_COLORS,
+  DEFAULT_DARK_HINT_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -32,6 +34,8 @@ export {
   mergeSurfaceColors,
   mergeRefreshControlColors,
   mergeSkeletonColors,
+  mergeHintColors,
+  mergeHintToneColors,
   tint,
 } from "./tokens";
 export type { Config } from "./tokens";
@@ -47,6 +51,8 @@ export type {
   SurfaceColors,
   RefreshControlColors,
   SkeletonColors,
+  HintColors,
+  HintToneColors,
   Tokens,
   ResolvedTokens,
 } from "./tokens-types";

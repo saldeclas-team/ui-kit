@@ -29,6 +29,7 @@ import {
   DEFAULT_DARK_REFRESH_CONTROL_COLORS,
 } from "./refresh-control";
 import { DEFAULT_LIGHT_SKELETON_COLORS, DEFAULT_DARK_SKELETON_COLORS } from "./skeleton";
+import { DEFAULT_LIGHT_HINT_COLORS, DEFAULT_DARK_HINT_COLORS } from "./hint";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -44,6 +45,7 @@ export const DEFAULT_TOKENS: Tokens = {
   surfaceColors: DEFAULT_LIGHT_SURFACE_COLORS,
   refreshControlColors: DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
   skeletonColors: DEFAULT_LIGHT_SKELETON_COLORS,
+  hintColors: DEFAULT_LIGHT_HINT_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -62,6 +64,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   surfaceColors: DEFAULT_DARK_SURFACE_COLORS,
   refreshControlColors: DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   skeletonColors: DEFAULT_DARK_SKELETON_COLORS,
+  hintColors: DEFAULT_DARK_HINT_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -107,3 +110,9 @@ export {
   DEFAULT_DARK_SKELETON_COLORS,
   mergeSkeletonColors,
 } from "./skeleton";
+export {
+  DEFAULT_LIGHT_HINT_COLORS,
+  DEFAULT_DARK_HINT_COLORS,
+  mergeHintColors,
+  mergeHintToneColors,
+} from "./hint";

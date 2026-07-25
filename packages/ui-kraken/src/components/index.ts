@@ -42,3 +42,6 @@ export type {
   SkeletonVariant,
   SkeletonColorsInput,
 } from "./skeleton";
+
+export { Hint } from "./hint";
+export type { HintProps, HintTone, HintEmphasis, HintColorsInput } from "./hint";

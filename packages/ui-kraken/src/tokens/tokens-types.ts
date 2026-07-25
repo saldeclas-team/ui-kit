@@ -175,6 +175,35 @@ export interface SkeletonColors {
 }
 
 /**
+ * Color slots for one Hint tone. All five tones (neutral / info /
+ * success / warning / danger) fill the same 3-slot set. `text` +
+ * `icon` are used in both `emphasis="ghost"` and `"soft"` modes;
+ * `background` is only painted in `soft` mode.
+ */
+export interface HintToneColors {
+  /** Title + body text color. */
+  text: string;
+  /** Icon glyph color (applied via wrapper `color` prop). */
+  icon: string;
+  /** Row background — only rendered when `emphasis="soft"`. */
+  background: string;
+}
+
+/**
+ * All Hint tone palettes. Every field is required at the provider level
+ * so the theme is always fully populated. Consumers who only want to
+ * change some tones do `<UIKitProvider hintColors={{ danger: {...} }}>`
+ * and the missing tones merge with the defaults (see `mergeHintColors`).
+ */
+export interface HintColors {
+  neutral: HintToneColors;
+  info: HintToneColors;
+  success: HintToneColors;
+  warning: HintToneColors;
+  danger: HintToneColors;
+}
+
+/**
  * CurrencyInput color palette. Slot-based. Mirrors `InputColors` plus a
  * `prefix` slot for the currency-symbol text color (the `"$"` / `"€"` /
  * etc. that renders inside the wrapper next to the number).
@@ -252,6 +281,7 @@ export interface Tokens {
   surfaceColors: SurfaceColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
+  hintColors: HintColors;
   radius: number;
   spacing: number;
 }
@@ -271,6 +301,7 @@ export interface ResolvedTokens {
   surfaceColors: SurfaceColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
+  hintColors: HintColors;
   radius: {
     sm: number;
     md: number;
