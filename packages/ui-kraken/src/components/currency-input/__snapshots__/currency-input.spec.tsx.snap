@@ -1,0 +1,656 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CurrencyInput snapshots COP prefix + es-CO locale 1`] = `
+<View
+  testID="currency-input"
+>
+  <Text
+    color="#0B0B0F"
+    testID="currency-input-label"
+  >
+    Monto
+  </Text>
+  <View
+    accessibilityLabel="Monto"
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="currency-input-wrapper"
+  >
+    <Text
+      color="#6B7280"
+      testID="currency-input-prefix"
+    >
+      COP $
+    </Text>
+    <TextInput
+      accessibilityValue={
+        {
+          "text": "1.234.000",
+        }
+      }
+      editable={true}
+      keyboardType="number-pad"
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="currency-input-input"
+      value="1.234.000"
+    />
+  </View>
+</View>
+`;
+
+exports[`CurrencyInput snapshots dark theme 1`] = `
+<View
+  testID="currency-input"
+>
+  <Text
+    color="#F5F5F7"
+    testID="currency-input-label"
+  >
+    Dark
+  </Text>
+  <View
+    accessibilityLabel="Dark"
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#111827"
+    borderColor="#374151"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="currency-input-wrapper"
+  >
+    <Text
+      color="#9CA3AF"
+      testID="currency-input-prefix"
+    >
+      $
+    </Text>
+    <TextInput
+      accessibilityValue={
+        {
+          "text": "1,234",
+        }
+      }
+      editable={true}
+      keyboardType="number-pad"
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholderTextColor="#6B7280"
+      style={
+        {
+          "color": "#F5F5F7",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="currency-input-input"
+      value="1,234"
+    />
+  </View>
+</View>
+`;
+
+exports[`CurrencyInput snapshots default (empty, $ prefix) 1`] = `
+<View
+  testID="currency-input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="currency-input-wrapper"
+  >
+    <Text
+      color="#6B7280"
+      testID="currency-input-prefix"
+    >
+      $
+    </Text>
+    <TextInput
+      accessibilityValue={
+        {
+          "text": "",
+        }
+      }
+      editable={true}
+      keyboardType="number-pad"
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="currency-input-input"
+      value=""
+    />
+  </View>
+</View>
+`;
+
+exports[`CurrencyInput snapshots disabled state 1`] = `
+<View
+  testID="currency-input"
+>
+  <Text
+    color="#0B0B0F"
+    testID="currency-input-label"
+  >
+    Locked
+  </Text>
+  <View
+    accessibilityLabel="Locked"
+    accessibilityState={
+      {
+        "disabled": true,
+      }
+    }
+    backgroundColor="#F3F4F6"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={true}
+    testID="currency-input-wrapper"
+  >
+    <Text
+      color="#6B7280"
+      testID="currency-input-prefix"
+    >
+      $
+    </Text>
+    <TextInput
+      accessibilityValue={
+        {
+          "text": "100",
+        }
+      }
+      editable={false}
+      keyboardType="number-pad"
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#9CA3AF",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="currency-input-input"
+      value="100"
+    />
+  </View>
+</View>
+`;
+
+exports[`CurrencyInput snapshots es-CO locale with decimals=2 1`] = `
+<View
+  testID="currency-input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="currency-input-wrapper"
+  >
+    <Text
+      color="#6B7280"
+      testID="currency-input-prefix"
+    >
+      $
+    </Text>
+    <TextInput
+      accessibilityValue={
+        {
+          "text": "1.234,56",
+        }
+      }
+      editable={true}
+      keyboardType="decimal-pad"
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="currency-input-input"
+      value="1.234,56"
+    />
+  </View>
+</View>
+`;
+
+exports[`CurrencyInput snapshots per-instance currencyInputColors override 1`] = `
+<View
+  testID="currency-input"
+>
+  <Text
+    color="#3B0A00"
+    testID="currency-input-label"
+  >
+    Brand
+  </Text>
+  <View
+    accessibilityLabel="Brand"
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFF7ED"
+    borderColor="#FF6B00"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="currency-input-wrapper"
+  >
+    <Text
+      color="#FF6B00"
+      testID="currency-input-prefix"
+    >
+      $
+    </Text>
+    <TextInput
+      accessibilityValue={
+        {
+          "text": "",
+        }
+      }
+      editable={true}
+      keyboardType="number-pad"
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="currency-input-input"
+      value=""
+    />
+  </View>
+</View>
+`;
+
+exports[`CurrencyInput snapshots radius pill 1`] = `
+<View
+  testID="currency-input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius={9999}
+    disabled={false}
+    testID="currency-input-wrapper"
+  >
+    <Text
+      color="#6B7280"
+      testID="currency-input-prefix"
+    >
+      $
+    </Text>
+    <TextInput
+      accessibilityValue={
+        {
+          "text": "",
+        }
+      }
+      editable={true}
+      keyboardType="number-pad"
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="currency-input-input"
+      value=""
+    />
+  </View>
+</View>
+`;
+
+exports[`CurrencyInput snapshots with both icons 1`] = `
+<View
+  testID="currency-input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="currency-input-wrapper"
+  >
+    <View
+      testID="currency-input-left-icon"
+    >
+      <Text>
+        L
+      </Text>
+    </View>
+    <Text
+      color="#6B7280"
+      testID="currency-input-prefix"
+    >
+      $
+    </Text>
+    <TextInput
+      accessibilityValue={
+        {
+          "text": "",
+        }
+      }
+      editable={true}
+      keyboardType="number-pad"
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="currency-input-input"
+      value=""
+    />
+    <View
+      testID="currency-input-right-icon"
+    >
+      <Text>
+        R
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`CurrencyInput snapshots with error 1`] = `
+<View
+  testID="currency-input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#DC2626"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="currency-input-wrapper"
+  >
+    <Text
+      color="#6B7280"
+      testID="currency-input-prefix"
+    >
+      $
+    </Text>
+    <TextInput
+      accessibilityValue={
+        {
+          "text": "",
+        }
+      }
+      editable={true}
+      keyboardType="number-pad"
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="currency-input-input"
+      value=""
+    />
+  </View>
+  <Text
+    color="#DC2626"
+    testID="currency-input-error"
+  >
+    Required
+  </Text>
+</View>
+`;
+
+exports[`CurrencyInput snapshots with helperText 1`] = `
+<View
+  testID="currency-input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="currency-input-wrapper"
+  >
+    <Text
+      color="#6B7280"
+      testID="currency-input-prefix"
+    >
+      $
+    </Text>
+    <TextInput
+      accessibilityValue={
+        {
+          "text": "",
+        }
+      }
+      editable={true}
+      keyboardType="number-pad"
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="currency-input-input"
+      value=""
+    />
+  </View>
+  <Text
+    color="#6B7280"
+    testID="currency-input-helper"
+  >
+    Enter USD
+  </Text>
+</View>
+`;
+
+exports[`CurrencyInput snapshots with label + value 1`] = `
+<View
+  testID="currency-input"
+>
+  <Text
+    color="#0B0B0F"
+    testID="currency-input-label"
+  >
+    Amount
+  </Text>
+  <View
+    accessibilityLabel="Amount"
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="currency-input-wrapper"
+  >
+    <Text
+      color="#6B7280"
+      testID="currency-input-prefix"
+    >
+      $
+    </Text>
+    <TextInput
+      accessibilityValue={
+        {
+          "text": "1,234",
+        }
+      }
+      editable={true}
+      keyboardType="number-pad"
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="currency-input-input"
+      value="1,234"
+    />
+  </View>
+</View>
+`;
+
+exports[`CurrencyInput snapshots without prefix 1`] = `
+<View
+  testID="currency-input"
+>
+  <View
+    accessibilityState={
+      {
+        "disabled": false,
+      }
+    }
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    disabled={false}
+    testID="currency-input-wrapper"
+  >
+    <TextInput
+      accessibilityValue={
+        {
+          "text": "1,234",
+        }
+      }
+      editable={true}
+      keyboardType="number-pad"
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholderTextColor="#9CA3AF"
+      style={
+        {
+          "color": "#0B0B0F",
+          "flex": 1,
+          "fontSize": 16,
+          "margin": 0,
+          "padding": 0,
+        }
+      }
+      testID="currency-input-input"
+      value="1,234"
+    />
+  </View>
+</View>
+`;

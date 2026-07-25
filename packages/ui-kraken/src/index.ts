@@ -80,3 +80,6 @@ export type { RadioGroupProps, RadioOption, RadioOrientation, RadioRadius } from
 
 export { Input } from "./components";
 export type { InputProps, InputRadius } from "./components";
+
+export { CurrencyInput } from "./components";
+export type { CurrencyInputProps, CurrencyInputRadius } from "./components";

@@ -48,6 +48,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "CurrencyInput",
+    description:
+      "Numeric input formatted as currency — locale-aware, configurable decimals + prefix.",
+    href: "/components/currency-input",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

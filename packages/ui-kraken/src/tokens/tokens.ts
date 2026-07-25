@@ -4,6 +4,7 @@ import { defaultConfig } from "@tamagui/config/v4";
 import {
   flattenAlertColors,
   flattenButtonColors,
+  flattenCurrencyInputColors,
   flattenInputColors,
   flattenRadioGroupColors,
   flattenTextColors,
@@ -39,6 +40,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
       ...flattenAlertColors(lightResolved.alertColors),
       ...flattenRadioGroupColors(lightResolved.radioGroupColors),
       ...flattenInputColors(lightResolved.inputColors),
+      ...flattenCurrencyInputColors(lightResolved.currencyInputColors),
     },
     radius: {
       ...baseTokens.radius,
@@ -77,6 +79,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenAlertColors(lightResolved.alertColors),
         ...flattenRadioGroupColors(lightResolved.radioGroupColors),
         ...flattenInputColors(lightResolved.inputColors),
+        ...flattenCurrencyInputColors(lightResolved.currencyInputColors),
       },
       dark: {
         ...(baseThemes.dark ?? {}),
@@ -85,6 +88,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenAlertColors(darkResolved.alertColors),
         ...flattenRadioGroupColors(darkResolved.radioGroupColors),
         ...flattenInputColors(darkResolved.inputColors),
+        ...flattenCurrencyInputColors(darkResolved.currencyInputColors),
       },
     },
   });
@@ -108,6 +112,8 @@ export {
   DEFAULT_LIGHT_RADIO_GROUP_COLORS,
   DEFAULT_DARK_INPUT_COLORS,
   DEFAULT_LIGHT_INPUT_COLORS,
+  DEFAULT_DARK_CURRENCY_INPUT_COLORS,
+  DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
@@ -115,6 +121,7 @@ export {
   mergeAlertVariantColors,
   mergeRadioGroupColors,
   mergeInputColors,
+  mergeCurrencyInputColors,
 } from "./defaults";
 export { coarseToFineTokens } from "./tokens-derive";
 export { tint } from "../utils/color";

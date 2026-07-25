@@ -19,6 +19,10 @@ import { DEFAULT_LIGHT_TEXT_COLORS, DEFAULT_DARK_TEXT_COLORS } from "./text";
 import { DEFAULT_LIGHT_ALERT_COLORS, DEFAULT_DARK_ALERT_COLORS } from "./alert";
 import { DEFAULT_LIGHT_RADIO_GROUP_COLORS, DEFAULT_DARK_RADIO_GROUP_COLORS } from "./radio-group";
 import { DEFAULT_LIGHT_INPUT_COLORS, DEFAULT_DARK_INPUT_COLORS } from "./input";
+import {
+  DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
+  DEFAULT_DARK_CURRENCY_INPUT_COLORS,
+} from "./currency-input";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -30,6 +34,7 @@ export const DEFAULT_TOKENS: Tokens = {
   alertColors: DEFAULT_LIGHT_ALERT_COLORS,
   radioGroupColors: DEFAULT_LIGHT_RADIO_GROUP_COLORS,
   inputColors: DEFAULT_LIGHT_INPUT_COLORS,
+  currencyInputColors: DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -44,6 +49,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   alertColors: DEFAULT_DARK_ALERT_COLORS,
   radioGroupColors: DEFAULT_DARK_RADIO_GROUP_COLORS,
   inputColors: DEFAULT_DARK_INPUT_COLORS,
+  currencyInputColors: DEFAULT_DARK_CURRENCY_INPUT_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -69,3 +75,8 @@ export {
   mergeRadioGroupColors,
 } from "./radio-group";
 export { DEFAULT_LIGHT_INPUT_COLORS, DEFAULT_DARK_INPUT_COLORS, mergeInputColors } from "./input";
+export {
+  DEFAULT_LIGHT_CURRENCY_INPUT_COLORS,
+  DEFAULT_DARK_CURRENCY_INPUT_COLORS,
+  mergeCurrencyInputColors,
+} from "./currency-input";

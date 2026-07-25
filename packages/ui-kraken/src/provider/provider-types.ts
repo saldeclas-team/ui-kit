@@ -6,6 +6,7 @@ import type {
   AlertVariantColors,
   ButtonColors,
   ButtonVariantColors,
+  CurrencyInputColors,
   InputColors,
   RadioGroupColors,
   TextColors,
@@ -50,6 +51,14 @@ export type RadioGroupColorsInput = Partial<RadioGroupColors>;
 export type InputColorsInput = Partial<InputColors>;
 
 /**
+ * Partial override for `currencyInputColors` — consumers only declare
+ * the slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, same shape as `InputColorsInput` plus a
+ * `prefix` slot for the currency-symbol text color.
+ */
+export type CurrencyInputColorsInput = Partial<CurrencyInputColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -59,6 +68,7 @@ export interface TokensInput {
   alertColors?: AlertColorsInput;
   radioGroupColors?: RadioGroupColorsInput;
   inputColors?: InputColorsInput;
+  currencyInputColors?: CurrencyInputColorsInput;
   radius?: number;
   spacing?: number;
 }

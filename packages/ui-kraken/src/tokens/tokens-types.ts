@@ -129,6 +129,38 @@ export interface InputColors {
 }
 
 /**
+ * CurrencyInput color palette. Slot-based. Mirrors `InputColors` plus a
+ * `prefix` slot for the currency-symbol text color (the `"$"` / `"€"` /
+ * etc. that renders inside the wrapper next to the number).
+ */
+export interface CurrencyInputColors {
+  /** Wrapper background color in the default + focused states. */
+  background: string;
+  /** Wrapper background color in the disabled state. */
+  backgroundDisabled: string;
+  /** Border color in the default state (unfocused, no error). */
+  border: string;
+  /** Border color when the input has focus. */
+  borderFocused: string;
+  /** Border color when `error` is set. Overrides `borderFocused`. */
+  borderError: string;
+  /** Text color for the value typed in the input. */
+  text: string;
+  /** Text color when `disabled`. */
+  textDisabled: string;
+  /** Placeholder text color. */
+  placeholder: string;
+  /** Currency prefix text color (the "$" glyph inside the wrapper). */
+  prefix: string;
+  /** Bold label text color (rendered above the input). */
+  label: string;
+  /** Muted helper text color (rendered below the input when no error). */
+  helperText: string;
+  /** Error text color (rendered below the input when `error` is set). */
+  errorText: string;
+}
+
+/**
  * RadioGroup color palette. Slot-based (no variants — RadioGroup has a
  * single visual pattern, just different states per option).
  *
@@ -170,6 +202,7 @@ export interface Tokens {
   alertColors: AlertColors;
   radioGroupColors: RadioGroupColors;
   inputColors: InputColors;
+  currencyInputColors: CurrencyInputColors;
   radius: number;
   spacing: number;
 }
@@ -185,6 +218,7 @@ export interface ResolvedTokens {
   alertColors: AlertColors;
   radioGroupColors: RadioGroupColors;
   inputColors: InputColors;
+  currencyInputColors: CurrencyInputColors;
   radius: {
     sm: number;
     md: number;

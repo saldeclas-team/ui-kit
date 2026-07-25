@@ -25,3 +25,6 @@ export type {
 
 export { Input } from "./input";
 export type { InputProps, InputRadius } from "./input";
+
+export { CurrencyInput } from "./currency-input";
+export type { CurrencyInputProps, CurrencyInputRadius } from "./currency-input";
