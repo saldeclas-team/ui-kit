@@ -11,6 +11,7 @@ import {
   flattenMultiSelectColors,
   flattenRefreshControlColors,
   flattenSkeletonColors,
+  flattenSocialButtonColors,
   flattenStatCardColors,
   flattenSurfaceColors,
   flattenTextColors,
@@ -53,6 +54,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
       ...flattenHintColors(lightResolved.hintColors),
       ...flattenStatCardColors(lightResolved.statCardColors),
       ...flattenMultiSelectColors(lightResolved.multiSelectColors),
+      ...flattenSocialButtonColors(lightResolved.socialButtonColors),
     },
     radius: {
       ...baseTokens.radius,
@@ -98,6 +100,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenHintColors(lightResolved.hintColors),
         ...flattenStatCardColors(lightResolved.statCardColors),
         ...flattenMultiSelectColors(lightResolved.multiSelectColors),
+        ...flattenSocialButtonColors(lightResolved.socialButtonColors),
       },
       dark: {
         ...(baseThemes.dark ?? {}),
@@ -113,6 +116,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenHintColors(darkResolved.hintColors),
         ...flattenStatCardColors(darkResolved.statCardColors),
         ...flattenMultiSelectColors(darkResolved.multiSelectColors),
+        ...flattenSocialButtonColors(darkResolved.socialButtonColors),
       },
     },
   });
@@ -150,6 +154,8 @@ export {
   DEFAULT_LIGHT_STAT_CARD_COLORS,
   DEFAULT_DARK_MULTI_SELECT_COLORS,
   DEFAULT_LIGHT_MULTI_SELECT_COLORS,
+  DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
+  DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
@@ -165,6 +171,8 @@ export {
   mergeHintToneColors,
   mergeStatCardColors,
   mergeMultiSelectColors,
+  mergeSocialButtonColors,
+  mergeSocialButtonProviderColors,
 } from "./defaults";
 export { coarseToFineTokens } from "./tokens-derive";
 export { tint } from "../utils/color";

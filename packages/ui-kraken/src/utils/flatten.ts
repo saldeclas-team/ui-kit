@@ -21,6 +21,7 @@ import type {
   RadioGroupColors,
   RefreshControlColors,
   SkeletonColors,
+  SocialButtonColors,
   StatCardColors,
   SurfaceColors,
   TextColors,
@@ -235,6 +236,36 @@ export function flattenMultiSelectColors(colors: MultiSelectColors): Record<stri
   for (const slot of Object.keys(colors) as Array<keyof MultiSelectColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiMultiSelect${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the nested `socialButtonColors` shape into a flat `$ui*`
+ * token map:
+ *
+ * ```
+ * { google: { background: "#FFFFFF", label: "#1F1F1F", border: "#DADCE0" } }
+ * ```
+ *
+ * becomes
+ *
+ * ```
+ * {
+ *   uiSocialButtonGoogleBackground: "#FFFFFF",
+ *   uiSocialButtonGoogleLabel: "#1F1F1F",
+ *   uiSocialButtonGoogleBorder: "#DADCE0",
+ * }
+ * ```
+ */
+export function flattenSocialButtonColors(colors: SocialButtonColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const provider of Object.keys(colors) as Array<keyof SocialButtonColors>) {
+    const slots = colors[provider];
+    const capitalized = provider.charAt(0).toUpperCase() + provider.slice(1);
+    out[`uiSocialButton${capitalized}Background`] = slots.background;
+    out[`uiSocialButton${capitalized}Label`] = slots.label;
+    out[`uiSocialButton${capitalized}Border`] = slots.border;
   }
   return out;
 }

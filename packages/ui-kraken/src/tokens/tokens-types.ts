@@ -204,6 +204,38 @@ export interface HintColors {
 }
 
 /**
+ * Color slots for one SocialButton provider (`google` / `apple` /
+ * etc.). All six providers fill the same 3-slot set. `background`
+ * paints the button fill, `label` paints the text + loader spinner,
+ * `border` paints the 1 px outline.
+ */
+export interface SocialButtonProviderColors {
+  /** Button background color. */
+  background: string;
+  /** Button label + loader spinner color. */
+  label: string;
+  /** Border color. `background === border` for solid buttons; different for outlined. */
+  border: string;
+}
+
+/**
+ * All SocialButton provider palettes. Every field is required at
+ * the provider level so the theme is always fully populated.
+ * Consumers who only want to change some providers do
+ * `<UIKitProvider socialButtonColors={{ google: {...} }}>` and the
+ * missing providers merge with the defaults (see
+ * `mergeSocialButtonColors`).
+ */
+export interface SocialButtonColors {
+  google: SocialButtonProviderColors;
+  apple: SocialButtonProviderColors;
+  facebook: SocialButtonProviderColors;
+  github: SocialButtonProviderColors;
+  microsoft: SocialButtonProviderColors;
+  generic: SocialButtonProviderColors;
+}
+
+/**
  * MultiSelect color palette. Slot-based, 9 slots — 3 for selected
  * chip state (`selectedBackground`, `selectedLabel`, `selectedBorder`),
  * 3 for unselected (`unselectedBackground`, `unselectedLabel`,
@@ -337,6 +369,7 @@ export interface Tokens {
   hintColors: HintColors;
   statCardColors: StatCardColors;
   multiSelectColors: MultiSelectColors;
+  socialButtonColors: SocialButtonColors;
   radius: number;
   spacing: number;
 }
@@ -359,6 +392,7 @@ export interface ResolvedTokens {
   hintColors: HintColors;
   statCardColors: StatCardColors;
   multiSelectColors: MultiSelectColors;
+  socialButtonColors: SocialButtonColors;
   radius: {
     sm: number;
     md: number;

@@ -17,4 +17,5 @@ export type {
   HintColorsInput,
   StatCardColorsInput,
   MultiSelectColorsInput,
+  SocialButtonColorsInput,
 } from "./provider-types";

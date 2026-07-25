@@ -25,6 +25,7 @@ export type {
   HintColorsInput,
   StatCardColorsInput,
   MultiSelectColorsInput,
+  SocialButtonColorsInput,
 } from "./provider";
 
 // Tokens
@@ -55,6 +56,8 @@ export {
   DEFAULT_DARK_STAT_CARD_COLORS,
   DEFAULT_LIGHT_MULTI_SELECT_COLORS,
   DEFAULT_DARK_MULTI_SELECT_COLORS,
+  DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
+  DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -72,6 +75,8 @@ export {
   mergeHintToneColors,
   mergeStatCardColors,
   mergeMultiSelectColors,
+  mergeSocialButtonColors,
+  mergeSocialButtonProviderColors,
   tint,
 } from "./tokens";
 export type {
@@ -91,6 +96,8 @@ export type {
   HintToneColors,
   StatCardColors,
   MultiSelectColors,
+  SocialButtonColors,
+  SocialButtonProviderColors,
   ResolvedTokens,
   Config,
 } from "./tokens";
@@ -138,3 +145,11 @@ export type { StatCardProps, StatCardTrend, StatCardRadius } from "./components"
 
 export { MultiSelect } from "./components";
 export type { MultiSelectProps, MultiSelectOption, MultiSelectRadius } from "./components";
+
+export { SocialButton } from "./components";
+export type {
+  SocialButtonProps,
+  SocialButtonProvider,
+  SocialButtonRadius,
+  SocialButtonSize,
+} from "./components";

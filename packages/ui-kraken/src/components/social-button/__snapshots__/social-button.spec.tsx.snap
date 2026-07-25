@@ -1,0 +1,318 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SocialButton snapshots apple + md + light 1`] = `
+<View
+  accessibilityLabel="Sign in with Apple"
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  backgroundColor="#000000"
+  borderColor="#000000"
+  borderRadius="$uiRadiusMd"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  size="md"
+  testID="social-button"
+>
+  <View
+    size="md"
+    testID="social-button-icon"
+  >
+    <View
+      style={
+        {
+          "color": "#FFFFFF",
+        }
+      }
+    >
+      <Text>
+        A
+      </Text>
+    </View>
+  </View>
+  <Text
+    color="#FFFFFF"
+    size="md"
+    testID="social-button-label"
+  >
+    Sign in with Apple
+  </Text>
+</View>
+`;
+
+exports[`SocialButton snapshots dark palette (google) 1`] = `
+<View
+  accessibilityLabel="Continue with Google"
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  backgroundColor="#1F1F1F"
+  borderColor="#3C4043"
+  borderRadius="$uiRadiusMd"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  size="md"
+  testID="social-button"
+>
+  <View
+    size="md"
+    testID="social-button-icon"
+  >
+    <View
+      style={
+        {
+          "color": "#F5F5F7",
+        }
+      }
+    >
+      <Text>
+        G
+      </Text>
+    </View>
+  </View>
+  <Text
+    color="#F5F5F7"
+    size="md"
+    testID="social-button-label"
+  >
+    Continue with Google
+  </Text>
+</View>
+`;
+
+exports[`SocialButton snapshots facebook + lg + light 1`] = `
+<View
+  accessibilityLabel="Continue with Facebook"
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  backgroundColor="#1877F2"
+  borderColor="#1877F2"
+  borderRadius="$uiRadiusMd"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  size="lg"
+  testID="social-button"
+>
+  <View
+    size="lg"
+    testID="social-button-icon"
+  >
+    <View
+      style={
+        {
+          "color": "#FFFFFF",
+        }
+      }
+    >
+      <Text>
+        f
+      </Text>
+    </View>
+  </View>
+  <Text
+    color="#FFFFFF"
+    size="lg"
+    testID="social-button-label"
+  >
+    Continue with Facebook
+  </Text>
+</View>
+`;
+
+exports[`SocialButton snapshots google + md + light 1`] = `
+<View
+  accessibilityLabel="Continue with Google"
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": false,
+      "checked": undefined,
+      "disabled": false,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  backgroundColor="#FFFFFF"
+  borderColor="#DADCE0"
+  borderRadius="$uiRadiusMd"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  size="md"
+  testID="social-button"
+>
+  <View
+    size="md"
+    testID="social-button-icon"
+  >
+    <View
+      style={
+        {
+          "color": "#1F1F1F",
+        }
+      }
+    >
+      <Text>
+        G
+      </Text>
+    </View>
+  </View>
+  <Text
+    color="#1F1F1F"
+    size="md"
+    testID="social-button-label"
+  >
+    Continue with Google
+  </Text>
+</View>
+`;
+
+exports[`SocialButton snapshots loading state (google) 1`] = `
+<View
+  accessibilityLabel="Continue with Google"
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": true,
+      "checked": undefined,
+      "disabled": true,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  backgroundColor="#FFFFFF"
+  borderColor="#DADCE0"
+  borderRadius="$uiRadiusMd"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  size="md"
+  testID="social-button"
+>
+  <View
+    size="md"
+    testID="social-button-loader"
+  >
+    <ActivityIndicator
+      color="#1F1F1F"
+    />
+  </View>
+  <Text
+    color="#1F1F1F"
+    size="md"
+    testID="social-button-label"
+  >
+    Continue with Google
+  </Text>
+</View>
+`;

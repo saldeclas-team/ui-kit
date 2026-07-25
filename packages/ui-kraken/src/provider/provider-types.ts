@@ -14,6 +14,8 @@ import type {
   MultiSelectColors,
   RefreshControlColors,
   SkeletonColors,
+  SocialButtonColors,
+  SocialButtonProviderColors,
   StatCardColors,
   SurfaceColors,
   TextColors,
@@ -111,6 +113,16 @@ export type StatCardColorsInput = Partial<StatCardColors>;
 export type MultiSelectColorsInput = Partial<MultiSelectColors>;
 
 /**
+ * A partial-of-partials for `socialButtonColors`: consumers can
+ * override just one provider (e.g. `google`), or just one slot
+ * within a provider (e.g. `google.background`), and the rest fills
+ * in from the shipped defaults. Same shape as `ButtonColorsInput`.
+ */
+export type SocialButtonColorsInput = Partial<
+  Record<keyof SocialButtonColors, Partial<SocialButtonProviderColors>>
+>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -127,6 +139,7 @@ export interface TokensInput {
   hintColors?: HintColorsInput;
   statCardColors?: StatCardColorsInput;
   multiSelectColors?: MultiSelectColorsInput;
+  socialButtonColors?: SocialButtonColorsInput;
   radius?: number;
   spacing?: number;
 }

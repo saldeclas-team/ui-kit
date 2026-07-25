@@ -79,6 +79,10 @@ export default function RootLayout() {
           name="(pages)/components/multi-select"
           options={{ title: "MultiSelect", headerBackTitle: "Components" }}
         />
+        <Stack.Screen
+          name="(pages)/components/social-button"
+          options={{ title: "SocialButton", headerBackTitle: "Components" }}
+        />
       </Stack>
     </UIKitProvider>
   );

@@ -35,6 +35,10 @@ import {
   DEFAULT_LIGHT_MULTI_SELECT_COLORS,
   DEFAULT_DARK_MULTI_SELECT_COLORS,
 } from "./multi-select";
+import {
+  DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
+  DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
+} from "./social-button";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -53,6 +57,7 @@ export const DEFAULT_TOKENS: Tokens = {
   hintColors: DEFAULT_LIGHT_HINT_COLORS,
   statCardColors: DEFAULT_LIGHT_STAT_CARD_COLORS,
   multiSelectColors: DEFAULT_LIGHT_MULTI_SELECT_COLORS,
+  socialButtonColors: DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -74,6 +79,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   hintColors: DEFAULT_DARK_HINT_COLORS,
   statCardColors: DEFAULT_DARK_STAT_CARD_COLORS,
   multiSelectColors: DEFAULT_DARK_MULTI_SELECT_COLORS,
+  socialButtonColors: DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -135,3 +141,9 @@ export {
   DEFAULT_DARK_MULTI_SELECT_COLORS,
   mergeMultiSelectColors,
 } from "./multi-select";
+export {
+  DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
+  DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
+  mergeSocialButtonColors,
+  mergeSocialButtonProviderColors,
+} from "./social-button";

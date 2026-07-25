@@ -61,3 +61,12 @@ export type {
   MultiSelectRadius,
   MultiSelectColorsInput,
 } from "./multi-select";
+
+export { SocialButton } from "./social-button";
+export type {
+  SocialButtonProps,
+  SocialButtonProvider,
+  SocialButtonRadius,
+  SocialButtonSize,
+  SocialButtonColorsInput,
+} from "./social-button";

@@ -12,4 +12,5 @@ export {
   flattenHintColors,
   flattenStatCardColors,
   flattenMultiSelectColors,
+  flattenSocialButtonColors,
 } from "./flatten";

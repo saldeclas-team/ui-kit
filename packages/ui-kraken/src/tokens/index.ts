@@ -25,6 +25,8 @@ export {
   DEFAULT_DARK_STAT_CARD_COLORS,
   DEFAULT_LIGHT_MULTI_SELECT_COLORS,
   DEFAULT_DARK_MULTI_SELECT_COLORS,
+  DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
+  DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -42,6 +44,8 @@ export {
   mergeHintToneColors,
   mergeStatCardColors,
   mergeMultiSelectColors,
+  mergeSocialButtonColors,
+  mergeSocialButtonProviderColors,
   tint,
 } from "./tokens";
 export type { Config } from "./tokens";
@@ -61,6 +65,8 @@ export type {
   HintToneColors,
   StatCardColors,
   MultiSelectColors,
+  SocialButtonColors,
+  SocialButtonProviderColors,
   Tokens,
   ResolvedTokens,
 } from "./tokens-types";

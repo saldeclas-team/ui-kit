@@ -16,6 +16,7 @@ import {
   mergeMultiSelectColors,
   mergeRefreshControlColors,
   mergeSkeletonColors,
+  mergeSocialButtonColors,
   mergeStatCardColors,
   mergeSurfaceColors,
   mergeTextColors,
@@ -59,6 +60,10 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         DEFAULT_TOKENS.multiSelectColors,
         tokens?.multiSelectColors
       ),
+      socialButtonColors: mergeSocialButtonColors(
+        DEFAULT_TOKENS.socialButtonColors,
+        tokens?.socialButtonColors
+      ),
     };
     const mergedDark = {
       ...DEFAULT_DARK_TOKENS,
@@ -86,6 +91,10 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
       multiSelectColors: mergeMultiSelectColors(
         DEFAULT_DARK_TOKENS.multiSelectColors,
         dark?.multiSelectColors
+      ),
+      socialButtonColors: mergeSocialButtonColors(
+        DEFAULT_DARK_TOKENS.socialButtonColors,
+        dark?.socialButtonColors
       ),
     };
     const resolvedLight = coarseToFineTokens(mergedLight);

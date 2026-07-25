@@ -97,6 +97,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "SocialButton",
+    description:
+      "OAuth-provider button — Google / Apple / Facebook / GitHub / Microsoft / generic; icon via prop.",
+    href: "/components/social-button",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",
