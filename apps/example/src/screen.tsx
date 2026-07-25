@@ -25,6 +25,13 @@ export function Screen({ children, title, subtitle }: ScreenProps) {
     <ScrollView
       style={{ flex: 1, backgroundColor }}
       contentContainerStyle={[styles.content, { backgroundColor }]}
+      // Auto-scroll focused inputs into view + drop the keyboard when
+      // the user taps outside a text field. Both are app-level concerns
+      // (ui-kraken's Input is a leaf primitive with no keyboard chrome);
+      // set here so every demo screen behaves like a real app form.
+      automaticallyAdjustKeyboardInsets
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="interactive"
     >
       {title != null && <Text style={[styles.title, { color: titleColor }]}>{title}</Text>}
       {subtitle != null && (
