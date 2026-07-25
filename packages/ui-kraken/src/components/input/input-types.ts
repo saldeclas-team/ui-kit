@@ -2,14 +2,15 @@ import type { ComponentType, ReactNode, Ref } from "react";
 import type { TextInput, TextInputProps } from "react-native";
 
 import type { InputColors } from "../../tokens/tokens-types";
+import type { RadiusValue } from "../../utils/radius";
 
 /**
- * Border radius selector. Same shape as `ButtonRadius` / `AlertRadius` /
- * `RadioRadius` for consistency across the kit: preset names resolve to
- * the theme scale, `"pill"` is fully rounded, a raw number is passed
- * through as pixels. Applies to the input wrapper.
+ * Border radius selector. Alias for the shared `RadiusValue` union —
+ * every component-with-radius primitive in ui-kraken uses the same
+ * shape (`"none" | "sm" | "md" | "lg" | "pill" | number`) and shares
+ * the `resolveRadius` helper from `utils/radius`.
  */
-export type InputRadius = number | "none" | "sm" | "md" | "lg" | "pill";
+export type InputRadius = RadiusValue;
 
 /**
  * Per-instance override input for `<Input>`. Partial of the full

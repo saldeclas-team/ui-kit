@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 
 import { useUIKit } from "../../provider/use-ui-kit";
+import { resolveRadius } from "../../utils/radius";
 import type { MultiSelectColors } from "../../tokens/tokens-types";
 import {
   StyledMultiSelect,
@@ -11,11 +12,7 @@ import {
   StyledMultiSelectGroupLabel,
   StyledMultiSelectHelperText,
 } from "./multi-select.styled";
-import type {
-  MultiSelectColorsInput,
-  MultiSelectProps,
-  MultiSelectRadius,
-} from "./multi-select-types";
+import type { MultiSelectColorsInput, MultiSelectProps } from "./multi-select-types";
 
 /**
  * Multi-choice selector rendered as a wrap of pill chips. Controlled:
@@ -144,17 +141,6 @@ function resolvePalette(
  * `"pill"` pass through directly; named preset values map onto the
  * theme's `$uiRadius*` token scale.
  */
-function resolveRadius(radius: MultiSelectRadius): number | string {
-  if (typeof radius === "number") return radius;
-  if (radius === "none") return 0;
-  if (radius === "pill") return 9999;
-  const map: Record<Exclude<MultiSelectRadius, "none" | "pill" | number>, string> = {
-    sm: "$uiRadiusSm",
-    md: "$uiRadiusMd",
-    lg: "$uiRadiusLg",
-  };
-  return map[radius];
-}
 
 export type {
   MultiSelectColorsInput,

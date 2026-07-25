@@ -16,6 +16,7 @@ import type {
   ButtonColors,
   CollapsibleColors,
   CurrencyInputColors,
+  ExternalLinkColors,
   HintColors,
   InputColors,
   MultiSelectColors,
@@ -281,6 +282,20 @@ export function flattenCollapsibleColors(colors: CollapsibleColors): Record<stri
   for (const slot of Object.keys(colors) as Array<keyof CollapsibleColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiCollapsible${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `externalLinkColors` slot map into
+ * `$uiExternalLink{PascalCase}` Tamagui tokens
+ * (`$uiExternalLinkLabel`, `$uiExternalLinkIcon`).
+ */
+export function flattenExternalLinkColors(colors: ExternalLinkColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof ExternalLinkColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiExternalLink${capitalized}`] = colors[slot];
   }
   return out;
 }

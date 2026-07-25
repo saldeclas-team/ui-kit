@@ -5,6 +5,7 @@ import { Text } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { useUIKit } from "../../provider/use-ui-kit";
+import { resolveRadius } from "../../utils/radius";
 import type { CollapsibleColors } from "../../tokens/tokens-types";
 import {
   StyledCollapsible,
@@ -14,11 +15,7 @@ import {
   StyledCollapsibleIconWrapper,
   StyledCollapsibleTitle,
 } from "./collapsible.styled";
-import type {
-  CollapsibleColorsInput,
-  CollapsibleProps,
-  CollapsibleRadius,
-} from "./collapsible-types";
+import type { CollapsibleColorsInput, CollapsibleProps } from "./collapsible-types";
 
 const DEFAULT_DURATION_MS = 200;
 const CHEVRON_MAX_DURATION_MS = 150;
@@ -192,17 +189,6 @@ function resolvePalette(
  * and `"pill"` pass through directly; named preset values map onto
  * the theme's `$uiRadius*` token scale.
  */
-function resolveRadius(radius: CollapsibleRadius): number | string {
-  if (typeof radius === "number") return radius;
-  if (radius === "none") return 0;
-  if (radius === "pill") return 9999;
-  const map: Record<Exclude<CollapsibleRadius, "none" | "pill" | number>, string> = {
-    sm: "$uiRadiusSm",
-    md: "$uiRadiusMd",
-    lg: "$uiRadiusLg",
-  };
-  return map[radius];
-}
 
 /**
  * The icon slot is `ReactNode` (consumer brings any icon component)

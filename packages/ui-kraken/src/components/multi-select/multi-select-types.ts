@@ -1,6 +1,7 @@
 import type { GetProps } from "tamagui";
 
 import type { MultiSelectColors } from "../../tokens/tokens-types";
+import type { RadiusValue } from "../../utils/radius";
 import type { StyledMultiSelect } from "./multi-select.styled";
 
 /**
@@ -19,12 +20,11 @@ export interface MultiSelectOption<Value extends string = string> {
 }
 
 /**
- * Chip border-radius selector. Same shape as `RadioRadius` /
- * `AlertRadius` for consistency across the kit: preset names resolve
- * to the theme scale, `"pill"` is fully rounded, a raw number passes
- * through as pixels.
+ * Chip border-radius selector. Alias for the shared `RadiusValue`
+ * union — every component-with-radius primitive in ui-kraken shares
+ * the same shape and the `resolveRadius` helper from `utils/radius`.
  */
-export type MultiSelectRadius = number | "none" | "sm" | "md" | "lg" | "pill";
+export type MultiSelectRadius = RadiusValue;
 
 /**
  * Per-instance override input for `<MultiSelect>`. Partial of the

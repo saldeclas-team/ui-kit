@@ -204,6 +204,18 @@ export interface HintColors {
 }
 
 /**
+ * ExternalLink color palette. Slot-based, 2 slots — text label
+ * (underline color is derived from `label` automatically via
+ * `textDecorationColor`) and icon.
+ */
+export interface ExternalLinkColors {
+  /** Label text color + underline color. */
+  label: string;
+  /** Icon color (both leading + trailing). */
+  icon: string;
+}
+
+/**
  * Collapsible color palette. Slot-based, 6 slots — 4 for the
  * header chrome (`headerBackground`, `title`, `icon`, `chevron`)
  * plus `bodyBackground` for the expandable region and `border`
@@ -392,6 +404,7 @@ export interface Tokens {
   multiSelectColors: MultiSelectColors;
   socialButtonColors: SocialButtonColors;
   collapsibleColors: CollapsibleColors;
+  externalLinkColors: ExternalLinkColors;
   radius: number;
   spacing: number;
 }
@@ -416,6 +429,7 @@ export interface ResolvedTokens {
   multiSelectColors: MultiSelectColors;
   socialButtonColors: SocialButtonColors;
   collapsibleColors: CollapsibleColors;
+  externalLinkColors: ExternalLinkColors;
   radius: {
     sm: number;
     md: number;

@@ -4,6 +4,7 @@ import { ActivityIndicator, View } from "react-native";
 
 import { useUIKit } from "../../provider/use-ui-kit";
 import type { SocialButtonColors, SocialButtonProviderColors } from "../../tokens/tokens-types";
+import { resolveRadius } from "../../utils/radius";
 import {
   StyledSocialButton,
   StyledSocialButtonIconWrapper,
@@ -13,7 +14,6 @@ import type {
   SocialButtonColorsInput,
   SocialButtonProps,
   SocialButtonProvider,
-  SocialButtonRadius,
 } from "./social-button-types";
 
 type SocialButtonRef = ComponentRef<typeof StyledSocialButton>;
@@ -120,17 +120,6 @@ function resolvePalette(
  * and `"pill"` pass through directly; named preset values map onto
  * the theme's `$uiRadius*` token scale.
  */
-function resolveRadius(radius: SocialButtonRadius): number | string {
-  if (typeof radius === "number") return radius;
-  if (radius === "none") return 0;
-  if (radius === "pill") return 9999;
-  const map: Record<Exclude<SocialButtonRadius, "none" | "pill" | number>, string> = {
-    sm: "$uiRadiusSm",
-    md: "$uiRadiusMd",
-    lg: "$uiRadiusLg",
-  };
-  return map[radius];
-}
 
 /**
  * The icon slot is `ReactNode` (consumer brings any icon component)

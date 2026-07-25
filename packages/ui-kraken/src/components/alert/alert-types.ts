@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { GetProps } from "tamagui";
 
 import type { AlertVariantColors } from "../../tokens/tokens-types";
+import type { RadiusValue } from "../../utils/radius";
 import type { StyledAlert } from "./alert.styled";
 
 /**
@@ -21,7 +22,7 @@ export type AlertVariant = "info" | "success" | "warning" | "danger";
  * across the kit: preset names resolve to the theme scale, `"pill"` is
  * fully rounded, a raw number is passed through as pixels.
  */
-export type AlertRadius = number | "none" | "sm" | "md" | "lg" | "pill";
+export type AlertRadius = RadiusValue;
 
 /**
  * Per-instance override input for `<Alert>`. Partial of one variant's

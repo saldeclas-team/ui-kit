@@ -13,6 +13,7 @@ import {
   mergeInputColors,
   mergeRadioGroupColors,
   mergeCollapsibleColors,
+  mergeExternalLinkColors,
   mergeHintColors,
   mergeMultiSelectColors,
   mergeRefreshControlColors,
@@ -69,6 +70,10 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         DEFAULT_TOKENS.collapsibleColors,
         tokens?.collapsibleColors
       ),
+      externalLinkColors: mergeExternalLinkColors(
+        DEFAULT_TOKENS.externalLinkColors,
+        tokens?.externalLinkColors
+      ),
     };
     const mergedDark = {
       ...DEFAULT_DARK_TOKENS,
@@ -104,6 +109,10 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
       collapsibleColors: mergeCollapsibleColors(
         DEFAULT_DARK_TOKENS.collapsibleColors,
         dark?.collapsibleColors
+      ),
+      externalLinkColors: mergeExternalLinkColors(
+        DEFAULT_DARK_TOKENS.externalLinkColors,
+        dark?.externalLinkColors
       ),
     };
     const resolvedLight = coarseToFineTokens(mergedLight);

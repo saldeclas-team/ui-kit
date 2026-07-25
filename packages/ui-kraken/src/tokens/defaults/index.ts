@@ -40,6 +40,10 @@ import {
   DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
 } from "./social-button";
 import { DEFAULT_LIGHT_COLLAPSIBLE_COLORS, DEFAULT_DARK_COLLAPSIBLE_COLORS } from "./collapsible";
+import {
+  DEFAULT_LIGHT_EXTERNAL_LINK_COLORS,
+  DEFAULT_DARK_EXTERNAL_LINK_COLORS,
+} from "./external-link";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -60,6 +64,7 @@ export const DEFAULT_TOKENS: Tokens = {
   multiSelectColors: DEFAULT_LIGHT_MULTI_SELECT_COLORS,
   socialButtonColors: DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
   collapsibleColors: DEFAULT_LIGHT_COLLAPSIBLE_COLORS,
+  externalLinkColors: DEFAULT_LIGHT_EXTERNAL_LINK_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -83,6 +88,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   multiSelectColors: DEFAULT_DARK_MULTI_SELECT_COLORS,
   socialButtonColors: DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
   collapsibleColors: DEFAULT_DARK_COLLAPSIBLE_COLORS,
+  externalLinkColors: DEFAULT_DARK_EXTERNAL_LINK_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -155,3 +161,8 @@ export {
   DEFAULT_DARK_COLLAPSIBLE_COLORS,
   mergeCollapsibleColors,
 } from "./collapsible";
+export {
+  DEFAULT_LIGHT_EXTERNAL_LINK_COLORS,
+  DEFAULT_DARK_EXTERNAL_LINK_COLORS,
+  mergeExternalLinkColors,
+} from "./external-link";

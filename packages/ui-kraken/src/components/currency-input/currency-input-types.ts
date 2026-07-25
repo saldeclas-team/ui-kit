@@ -2,12 +2,14 @@ import type { ComponentType, ReactNode, Ref } from "react";
 import type { TextInput, TextInputProps } from "react-native";
 
 import type { CurrencyInputColors } from "../../tokens/tokens-types";
+import type { RadiusValue } from "../../utils/radius";
 
 /**
- * Border radius selector. Same shape as `ButtonRadius` / `AlertRadius` /
- * `RadioRadius` / `InputRadius`.
+ * Border radius selector. Alias for the shared `RadiusValue` union —
+ * every component-with-radius primitive in ui-kraken shares the same
+ * shape and the `resolveRadius` helper from `utils/radius`.
  */
-export type CurrencyInputRadius = number | "none" | "sm" | "md" | "lg" | "pill";
+export type CurrencyInputRadius = RadiusValue;
 
 /**
  * Per-instance override input. Partial of the full `CurrencyInputColors`

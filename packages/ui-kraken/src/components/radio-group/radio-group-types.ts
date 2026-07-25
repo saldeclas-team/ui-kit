@@ -1,6 +1,7 @@
 import type { GetProps } from "tamagui";
 
 import type { RadioGroupColors } from "../../tokens/tokens-types";
+import type { RadiusValue } from "../../utils/radius";
 import type { StyledRadioGroup } from "./radio-group.styled";
 
 /**
@@ -20,13 +21,13 @@ export interface RadioOption<T extends string = string> {
 export type RadioOrientation = "vertical" | "horizontal";
 
 /**
- * Border radius selector. Same shape as `ButtonRadius` / `AlertRadius`
- * for consistency across the kit: preset names resolve to the theme
- * scale, `"pill"` is fully rounded, a raw number is passed through as
- * pixels. Applies to each option ROW, not to the ring around the dot
- * (that stays perfectly circular).
+ * Border radius selector. Alias for the shared `RadiusValue` union —
+ * every component-with-radius primitive in ui-kraken shares the same
+ * shape and the `resolveRadius` helper from `utils/radius`. Applies
+ * to each option ROW, not to the ring around the dot (that stays
+ * perfectly circular).
  */
-export type RadioRadius = number | "none" | "sm" | "md" | "lg" | "pill";
+export type RadioRadius = RadiusValue;
 
 /**
  * Per-instance override input for `<RadioGroup>`. Partial of the full

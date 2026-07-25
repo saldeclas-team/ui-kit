@@ -2,6 +2,7 @@ import { useCallback } from "react";
 
 import { useUIKit } from "../../provider/use-ui-kit";
 import type { RadioGroupColors } from "../../tokens/tokens-types";
+import { resolveRadius } from "../../utils/radius";
 import {
   StyledRadioGroup,
   StyledRadioGroupLabel,
@@ -10,7 +11,7 @@ import {
   StyledRadioOptionLabel,
   StyledRadioOptionRow,
 } from "./radio-group.styled";
-import type { RadioGroupColorsInput, RadioGroupProps, RadioRadius } from "./radio-group-types";
+import type { RadioGroupColorsInput, RadioGroupProps } from "./radio-group-types";
 
 /**
  * Group of mutually-exclusive selectable options (single-choice
@@ -122,18 +123,6 @@ function resolvePalette(
     selectedBackground: override.selectedBackground ?? base.selectedBackground,
     unselectedBackground: override.unselectedBackground ?? base.unselectedBackground,
   };
-}
-
-function resolveRadius(radius: RadioRadius): number | string | undefined {
-  if (radius === "none") return 0;
-  if (radius === "pill") return 9999;
-  if (typeof radius === "number") return radius;
-  const map: Record<Exclude<RadioRadius, "none" | "pill" | number>, string> = {
-    sm: "$uiRadiusSm",
-    md: "$uiRadiusMd",
-    lg: "$uiRadiusLg",
-  };
-  return map[radius];
 }
 
 export type {

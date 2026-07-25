@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { GetProps } from "tamagui";
 
 import type { SocialButtonProviderColors } from "../../tokens/tokens-types";
+import type { RadiusValue } from "../../utils/radius";
 import type { StyledSocialButton } from "./social-button.styled";
 
 /**
@@ -23,11 +24,11 @@ export type SocialButtonProvider =
 export type SocialButtonSize = "sm" | "md" | "lg";
 
 /**
- * Border radius selector. Same shape as `ButtonRadius`: preset names
- * resolve to the theme scale, `"pill"` is fully rounded, a raw
- * number is passed through as pixels.
+ * Border radius selector. Alias for the shared `RadiusValue` union —
+ * every component-with-radius primitive in ui-kraken shares the same
+ * shape and the `resolveRadius` helper from `utils/radius`.
  */
-export type SocialButtonRadius = number | "none" | "sm" | "md" | "lg" | "pill";
+export type SocialButtonRadius = RadiusValue;
 
 /**
  * Per-instance override input for `<SocialButton>`. Partial of one

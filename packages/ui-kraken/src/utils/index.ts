@@ -1,4 +1,6 @@
 export { tint, clamp, hexToHsl, hslToHex, parseHex, rgbToHex } from "./color";
+export { resolveRadius } from "./radius";
+export type { RadiusValue } from "./radius";
 export {
   flattenButtonColors,
   flattenTextColors,
@@ -14,4 +16,5 @@ export {
   flattenMultiSelectColors,
   flattenSocialButtonColors,
   flattenCollapsibleColors,
+  flattenExternalLinkColors,
 } from "./flatten";

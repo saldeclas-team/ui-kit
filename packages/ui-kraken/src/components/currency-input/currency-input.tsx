@@ -4,6 +4,7 @@ import { TextInput } from "react-native";
 import type { TextInputProps } from "react-native";
 
 import { useUIKit } from "../../provider/use-ui-kit";
+import { resolveRadius } from "../../utils/radius";
 import type { CurrencyInputColors } from "../../tokens/tokens-types";
 import {
   StyledCurrencyInputContainer,
@@ -14,11 +15,7 @@ import {
   StyledCurrencyInputPrefix,
   StyledCurrencyInputWrapper,
 } from "./currency-input.styled";
-import type {
-  CurrencyInputColorsInput,
-  CurrencyInputProps,
-  CurrencyInputRadius,
-} from "./currency-input-types";
+import type { CurrencyInputColorsInput, CurrencyInputProps } from "./currency-input-types";
 import { formatCurrency } from "./format-currency";
 import { parseCurrency } from "./parse-currency";
 
@@ -191,18 +188,6 @@ function resolvePalette(
 ): CurrencyInputColors {
   if (override == null) return base;
   return { ...base, ...override };
-}
-
-function resolveRadius(radius: CurrencyInputRadius): number | string | undefined {
-  if (radius === "none") return 0;
-  if (radius === "pill") return 9999;
-  if (typeof radius === "number") return radius;
-  const map: Record<Exclude<CurrencyInputRadius, "none" | "pill" | number>, string> = {
-    sm: "$uiRadiusSm",
-    md: "$uiRadiusMd",
-    lg: "$uiRadiusLg",
-  };
-  return map[radius];
 }
 
 export type {

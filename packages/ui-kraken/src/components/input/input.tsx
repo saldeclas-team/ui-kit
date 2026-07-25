@@ -7,6 +7,7 @@ type FocusHandlerArg = Parameters<NonNullable<TextInputProps["onFocus"]>>[0];
 
 import { useUIKit } from "../../provider/use-ui-kit";
 import type { InputColors } from "../../tokens/tokens-types";
+import { resolveRadius } from "../../utils/radius";
 import {
   StyledInputContainer,
   StyledInputError,
@@ -15,7 +16,7 @@ import {
   StyledInputLabel,
   StyledInputWrapper,
 } from "./input.styled";
-import type { InputColorsInput, InputProps, InputRadius } from "./input-types";
+import type { InputColorsInput, InputProps } from "./input-types";
 
 type InputRef = ComponentRef<typeof TextInput>;
 
@@ -144,18 +145,6 @@ export const Input = forwardRef<InputRef, InputProps>(function Input(
 function resolvePalette(base: InputColors, override: InputColorsInput | undefined): InputColors {
   if (override == null) return base;
   return { ...base, ...override };
-}
-
-function resolveRadius(radius: InputRadius): number | string | undefined {
-  if (radius === "none") return 0;
-  if (radius === "pill") return 9999;
-  if (typeof radius === "number") return radius;
-  const map: Record<Exclude<InputRadius, "none" | "pill" | number>, string> = {
-    sm: "$uiRadiusSm",
-    md: "$uiRadiusMd",
-    lg: "$uiRadiusLg",
-  };
-  return map[radius];
 }
 
 export type { InputColorsInput, InputProps, InputRadius } from "./input-types";

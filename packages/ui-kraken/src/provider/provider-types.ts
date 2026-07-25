@@ -10,6 +10,7 @@ import type {
   InputColors,
   RadioGroupColors,
   CollapsibleColors,
+  ExternalLinkColors,
   HintColors,
   HintToneColors,
   MultiSelectColors,
@@ -132,6 +133,13 @@ export type SocialButtonColorsInput = Partial<
 export type CollapsibleColorsInput = Partial<CollapsibleColors>;
 
 /**
+ * Partial override for `externalLinkColors` — consumers only
+ * declare the slots they want to change; the rest fills in from the
+ * shipped defaults. Slot-based, 2 slots (`label` + `icon`).
+ */
+export type ExternalLinkColorsInput = Partial<ExternalLinkColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -150,6 +158,7 @@ export interface TokensInput {
   multiSelectColors?: MultiSelectColorsInput;
   socialButtonColors?: SocialButtonColorsInput;
   collapsibleColors?: CollapsibleColorsInput;
+  externalLinkColors?: ExternalLinkColorsInput;
   radius?: number;
   spacing?: number;
 }

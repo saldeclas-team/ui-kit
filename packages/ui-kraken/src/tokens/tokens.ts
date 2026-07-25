@@ -8,6 +8,7 @@ import {
   flattenInputColors,
   flattenRadioGroupColors,
   flattenCollapsibleColors,
+  flattenExternalLinkColors,
   flattenHintColors,
   flattenMultiSelectColors,
   flattenRefreshControlColors,
@@ -57,6 +58,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
       ...flattenMultiSelectColors(lightResolved.multiSelectColors),
       ...flattenSocialButtonColors(lightResolved.socialButtonColors),
       ...flattenCollapsibleColors(lightResolved.collapsibleColors),
+      ...flattenExternalLinkColors(lightResolved.externalLinkColors),
     },
     radius: {
       ...baseTokens.radius,
@@ -104,6 +106,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenMultiSelectColors(lightResolved.multiSelectColors),
         ...flattenSocialButtonColors(lightResolved.socialButtonColors),
         ...flattenCollapsibleColors(lightResolved.collapsibleColors),
+        ...flattenExternalLinkColors(lightResolved.externalLinkColors),
       },
       dark: {
         ...(baseThemes.dark ?? {}),
@@ -121,6 +124,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenMultiSelectColors(darkResolved.multiSelectColors),
         ...flattenSocialButtonColors(darkResolved.socialButtonColors),
         ...flattenCollapsibleColors(darkResolved.collapsibleColors),
+        ...flattenExternalLinkColors(darkResolved.externalLinkColors),
       },
     },
   });
@@ -162,6 +166,8 @@ export {
   DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
   DEFAULT_DARK_COLLAPSIBLE_COLORS,
   DEFAULT_LIGHT_COLLAPSIBLE_COLORS,
+  DEFAULT_DARK_EXTERNAL_LINK_COLORS,
+  DEFAULT_LIGHT_EXTERNAL_LINK_COLORS,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
@@ -180,6 +186,7 @@ export {
   mergeSocialButtonColors,
   mergeSocialButtonProviderColors,
   mergeCollapsibleColors,
+  mergeExternalLinkColors,
 } from "./defaults";
 export { coarseToFineTokens } from "./tokens-derive";
 export { tint } from "../utils/color";

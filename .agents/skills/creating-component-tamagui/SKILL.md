@@ -111,7 +111,27 @@ export const StyledButtonLabel = styled(Text, {
 });
 ```
 
-### 3.1 Animation
+### 3.1 Shared `radius` prop
+
+If your component exposes a `radius?` prop, **do not write a local `resolveRadius` helper** — import the shared one from `../../utils/radius`. Every component-with-radius primitive (Button / Alert / Input / CurrencyInput / RadioGroup / MultiSelect / StatCard / SocialButton / Collapsible) uses the same `RadiusValue` union (`"none" | "sm" | "md" | "lg" | "pill" | number`) and the same resolver.
+
+```ts
+// component-types.ts
+import type { RadiusValue } from "../../utils/radius";
+
+export type MyComponentRadius = RadiusValue;
+```
+
+```tsx
+// component.tsx
+import { resolveRadius } from "../../utils/radius";
+
+const resolvedBorderRadius = resolveRadius(radius);
+```
+
+`Skeleton` is the sole exception — it renders a plain RN `<View>` (not a Tamagui styled component) and needs concrete numeric radius values from `useUIKit().tokens.radius`. Its `resolveRadius(radius, scale)` is genuinely different and stays local.
+
+### 3.2 Animation
 
 - **Only `react-native-reanimated`.** RN's built-in `Animated` + `Easing` are banned in `packages/ui-kraken/src/**` (ESLint). Reanimated is a required peer dep; consumers already have it.
 - Standard shape: `useSharedValue` for the animated value, `useAnimatedStyle` to bind it, `withTiming` / `withRepeat` / `withSequence` / `withSpring` for the interpolation, `cancelAnimation(sharedValue)` in the `useEffect` cleanup for loops. Import `Animated` (default) from `react-native-reanimated` for the animated view (`<Animated.View>`, `<Animated.Text>`).

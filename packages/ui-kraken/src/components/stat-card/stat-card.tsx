@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import type { ComponentRef, ReactNode } from "react";
 
 import { useUIKit } from "../../provider/use-ui-kit";
+import { resolveRadius } from "../../utils/radius";
 import type { StatCardColors } from "../../tokens/tokens-types";
 import {
   StyledStatCard,
@@ -15,12 +16,7 @@ import {
   StyledStatCardTrendIcon,
   StyledStatCardValue,
 } from "./stat-card.styled";
-import type {
-  StatCardColorsInput,
-  StatCardProps,
-  StatCardRadius,
-  StatCardTrend,
-} from "./stat-card-types";
+import type { StatCardColorsInput, StatCardProps, StatCardTrend } from "./stat-card-types";
 
 type StatCardRef = ComponentRef<typeof StyledStatCard>;
 
@@ -127,17 +123,6 @@ function resolvePalette(
  * `"pill"` pass through directly; named preset values map onto the
  * theme's `$uiRadius*` token scale.
  */
-function resolveRadius(radius: StatCardRadius): number | string {
-  if (typeof radius === "number") return radius;
-  if (radius === "none") return 0;
-  if (radius === "pill") return 9999;
-  const map: Record<Exclude<StatCardRadius, "none" | "pill" | number>, string> = {
-    sm: "$uiRadiusSm",
-    md: "$uiRadiusMd",
-    lg: "$uiRadiusLg",
-  };
-  return map[radius];
-}
 
 /**
  * Map trend → palette slot key. Extracted to keep `resolvePalette` and

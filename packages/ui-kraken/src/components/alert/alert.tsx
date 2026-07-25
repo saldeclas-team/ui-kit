@@ -4,6 +4,7 @@ import type { AccessibilityRole } from "react-native";
 
 import { useUIKit } from "../../provider/use-ui-kit";
 import type { AlertColors, AlertVariantColors } from "../../tokens/tokens-types";
+import { resolveRadius } from "../../utils/radius";
 import {
   StyledAlert,
   StyledAlertBody,
@@ -11,7 +12,7 @@ import {
   StyledAlertIconWrapper,
   StyledAlertTitle,
 } from "./alert.styled";
-import type { AlertProps, AlertRadius, AlertVariant, AlertVariantColorsInput } from "./alert-types";
+import type { AlertProps, AlertVariant, AlertVariantColorsInput } from "./alert-types";
 
 type AlertRef = ComponentRef<typeof StyledAlert>;
 
@@ -95,18 +96,6 @@ const ACCESSIBILITY_ROLE: Record<AlertVariant, AccessibilityRole> = {
   warning: "alert",
   danger: "alert",
 };
-
-function resolveRadius(radius: AlertRadius): number | string | undefined {
-  if (radius === "none") return 0;
-  if (radius === "pill") return 9999;
-  if (typeof radius === "number") return radius;
-  const map: Record<Exclude<AlertRadius, "none" | "pill" | number>, string> = {
-    sm: "$uiRadiusSm",
-    md: "$uiRadiusMd",
-    lg: "$uiRadiusLg",
-  };
-  return map[radius];
-}
 
 /**
  * The icon slot is `ReactNode` (consumer brings any icon component)

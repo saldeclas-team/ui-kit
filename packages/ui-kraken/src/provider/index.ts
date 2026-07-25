@@ -19,4 +19,5 @@ export type {
   MultiSelectColorsInput,
   SocialButtonColorsInput,
   CollapsibleColorsInput,
+  ExternalLinkColorsInput,
 } from "./provider-types";

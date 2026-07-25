@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { GetProps } from "tamagui";
 
 import type { CollapsibleColors } from "../../tokens/tokens-types";
+import type { RadiusValue } from "../../utils/radius";
 import type { StyledCollapsible } from "./collapsible.styled";
 
 /**
@@ -16,12 +17,11 @@ import type { StyledCollapsible } from "./collapsible.styled";
 export type CollapsibleAnimation = "height" | "none";
 
 /**
- * Border radius selector. Same shape as `AlertRadius` /
- * `ButtonRadius`: preset names resolve to the theme scale,
- * `"pill"` is fully rounded, a raw number is passed through as
- * pixels.
+ * Border radius selector. Alias for the shared `RadiusValue` union —
+ * every component-with-radius primitive in ui-kraken shares the same
+ * shape and the `resolveRadius` helper from `utils/radius`.
  */
-export type CollapsibleRadius = number | "none" | "sm" | "md" | "lg" | "pill";
+export type CollapsibleRadius = RadiusValue;
 
 /**
  * Per-instance override input for `<Collapsible>`. Partial of the

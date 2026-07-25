@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { GetProps } from "tamagui";
 
 import type { StatCardColors } from "../../tokens/tokens-types";
+import type { RadiusValue } from "../../utils/radius";
 import type { StyledStatCard } from "./stat-card.styled";
 
 /**
@@ -12,12 +13,12 @@ import type { StyledStatCard } from "./stat-card.styled";
 export type StatCardTrend = "up" | "down" | "neutral";
 
 /**
- * Border radius selector. Same shape as `ButtonRadius` / `AlertRadius`
- * for consistency across the kit: preset names resolve to the theme
- * scale, `"pill"` is fully rounded, a raw number is passed through as
- * pixels.
+ * Border radius selector. Alias for the shared `RadiusValue` union —
+ * every component-with-radius primitive in ui-kraken uses the same
+ * shape (`"none" | "sm" | "md" | "lg" | "pill" | number`) and shares
+ * the `resolveRadius` helper from `utils/radius`.
  */
-export type StatCardRadius = number | "none" | "sm" | "md" | "lg" | "pill";
+export type StatCardRadius = RadiusValue;
 
 /**
  * Per-instance override input for `<StatCard>`. Partial of the full
