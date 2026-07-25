@@ -14,6 +14,7 @@
 import type {
   AlertColors,
   ButtonColors,
+  CollapsibleColors,
   CurrencyInputColors,
   HintColors,
   InputColors,
@@ -266,6 +267,20 @@ export function flattenSocialButtonColors(colors: SocialButtonColors): Record<st
     out[`uiSocialButton${capitalized}Background`] = slots.background;
     out[`uiSocialButton${capitalized}Label`] = slots.label;
     out[`uiSocialButton${capitalized}Border`] = slots.border;
+  }
+  return out;
+}
+
+/**
+ * Flatten the `collapsibleColors` slot map into
+ * `$uiCollapsible{PascalCase}` Tamagui tokens
+ * (`$uiCollapsibleHeaderBackground`, `$uiCollapsibleTitle`, ...).
+ */
+export function flattenCollapsibleColors(colors: CollapsibleColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof CollapsibleColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiCollapsible${capitalized}`] = colors[slot];
   }
   return out;
 }

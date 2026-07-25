@@ -104,6 +104,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Collapsible",
+    description:
+      "Animated expand-collapse section — header + body, chevron rotation, controlled state.",
+    href: "/components/collapsible",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

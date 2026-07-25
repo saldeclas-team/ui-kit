@@ -18,4 +18,5 @@ export type {
   StatCardColorsInput,
   MultiSelectColorsInput,
   SocialButtonColorsInput,
+  CollapsibleColorsInput,
 } from "./provider-types";

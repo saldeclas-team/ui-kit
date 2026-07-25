@@ -9,6 +9,7 @@ import type {
   CurrencyInputColors,
   InputColors,
   RadioGroupColors,
+  CollapsibleColors,
   HintColors,
   HintToneColors,
   MultiSelectColors,
@@ -123,6 +124,14 @@ export type SocialButtonColorsInput = Partial<
 >;
 
 /**
+ * Partial override for `collapsibleColors` — consumers only declare
+ * the slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, 6 slots (4 header chrome + body background +
+ * outer border).
+ */
+export type CollapsibleColorsInput = Partial<CollapsibleColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -140,6 +149,7 @@ export interface TokensInput {
   statCardColors?: StatCardColorsInput;
   multiSelectColors?: MultiSelectColorsInput;
   socialButtonColors?: SocialButtonColorsInput;
+  collapsibleColors?: CollapsibleColorsInput;
   radius?: number;
   spacing?: number;
 }

@@ -47,7 +47,7 @@ Ordered by complexity so the easiest ship first — no external deps, no icon sl
 
 | #   | Component    | 1-line                                                                      | New optional peer                                                     | Plan doc                                                | Status |
 | --- | ------------ | --------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------- | :----: |
-| 10  | Collapsible  | Animated expand-collapse section with header + body, chevron slot via prop. | none (`react-native-reanimated` already a peer)                       | [`docs/COLLAPSIBLE-PLAN.md`](./COLLAPSIBLE-PLAN.md)     |   ⏳   |
+| 10  | Collapsible  | Animated expand-collapse section with header + body, chevron slot via prop. | none (`react-native-reanimated` already a peer)                       | [`docs/COLLAPSIBLE-PLAN.md`](./COLLAPSIBLE-PLAN.md)     |   ✅   |
 | 11  | ExternalLink | Text / element that opens a URL in the platform browser. Router-agnostic.   | `expo-web-browser` (optional; falls back to RN `Linking` when absent) | [`docs/EXTERNAL-LINK-PLAN.md`](./EXTERNAL-LINK-PLAN.md) |   ⏳   |
 
 **Status legend:** ⏳ planned · 🟡 in progress · ✅ shipped

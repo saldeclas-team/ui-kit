@@ -27,6 +27,8 @@ export {
   DEFAULT_DARK_MULTI_SELECT_COLORS,
   DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
   DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
+  DEFAULT_LIGHT_COLLAPSIBLE_COLORS,
+  DEFAULT_DARK_COLLAPSIBLE_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -46,6 +48,7 @@ export {
   mergeMultiSelectColors,
   mergeSocialButtonColors,
   mergeSocialButtonProviderColors,
+  mergeCollapsibleColors,
   tint,
 } from "./tokens";
 export type { Config } from "./tokens";
@@ -67,6 +70,7 @@ export type {
   MultiSelectColors,
   SocialButtonColors,
   SocialButtonProviderColors,
+  CollapsibleColors,
   Tokens,
   ResolvedTokens,
 } from "./tokens-types";

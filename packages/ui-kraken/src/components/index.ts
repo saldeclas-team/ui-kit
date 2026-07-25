@@ -70,3 +70,11 @@ export type {
   SocialButtonSize,
   SocialButtonColorsInput,
 } from "./social-button";
+
+export { Collapsible } from "./collapsible";
+export type {
+  CollapsibleProps,
+  CollapsibleAnimation,
+  CollapsibleRadius,
+  CollapsibleColorsInput,
+} from "./collapsible";

@@ -83,6 +83,10 @@ export default function RootLayout() {
           name="(pages)/components/social-button"
           options={{ title: "SocialButton", headerBackTitle: "Components" }}
         />
+        <Stack.Screen
+          name="(pages)/components/collapsible"
+          options={{ title: "Collapsible", headerBackTitle: "Components" }}
+        />
       </Stack>
     </UIKitProvider>
   );

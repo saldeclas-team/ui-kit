@@ -204,6 +204,27 @@ export interface HintColors {
 }
 
 /**
+ * Collapsible color palette. Slot-based, 6 slots — 4 for the
+ * header chrome (`headerBackground`, `title`, `icon`, `chevron`)
+ * plus `bodyBackground` for the expandable region and `border`
+ * for the outer 1 px card outline.
+ */
+export interface CollapsibleColors {
+  /** Header row background. */
+  headerBackground: string;
+  /** Header title text color. */
+  title: string;
+  /** Leading icon color (when `icon` prop passed). */
+  icon: string;
+  /** Trailing chevron color. */
+  chevron: string;
+  /** Body region background. */
+  bodyBackground: string;
+  /** Outer 1 px border around the whole card. */
+  border: string;
+}
+
+/**
  * Color slots for one SocialButton provider (`google` / `apple` /
  * etc.). All six providers fill the same 3-slot set. `background`
  * paints the button fill, `label` paints the text + loader spinner,
@@ -370,6 +391,7 @@ export interface Tokens {
   statCardColors: StatCardColors;
   multiSelectColors: MultiSelectColors;
   socialButtonColors: SocialButtonColors;
+  collapsibleColors: CollapsibleColors;
   radius: number;
   spacing: number;
 }
@@ -393,6 +415,7 @@ export interface ResolvedTokens {
   statCardColors: StatCardColors;
   multiSelectColors: MultiSelectColors;
   socialButtonColors: SocialButtonColors;
+  collapsibleColors: CollapsibleColors;
   radius: {
     sm: number;
     md: number;

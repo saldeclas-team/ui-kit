@@ -39,6 +39,7 @@ import {
   DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
   DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
 } from "./social-button";
+import { DEFAULT_LIGHT_COLLAPSIBLE_COLORS, DEFAULT_DARK_COLLAPSIBLE_COLORS } from "./collapsible";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -58,6 +59,7 @@ export const DEFAULT_TOKENS: Tokens = {
   statCardColors: DEFAULT_LIGHT_STAT_CARD_COLORS,
   multiSelectColors: DEFAULT_LIGHT_MULTI_SELECT_COLORS,
   socialButtonColors: DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
+  collapsibleColors: DEFAULT_LIGHT_COLLAPSIBLE_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -80,6 +82,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   statCardColors: DEFAULT_DARK_STAT_CARD_COLORS,
   multiSelectColors: DEFAULT_DARK_MULTI_SELECT_COLORS,
   socialButtonColors: DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
+  collapsibleColors: DEFAULT_DARK_COLLAPSIBLE_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -147,3 +150,8 @@ export {
   mergeSocialButtonColors,
   mergeSocialButtonProviderColors,
 } from "./social-button";
+export {
+  DEFAULT_LIGHT_COLLAPSIBLE_COLORS,
+  DEFAULT_DARK_COLLAPSIBLE_COLORS,
+  mergeCollapsibleColors,
+} from "./collapsible";

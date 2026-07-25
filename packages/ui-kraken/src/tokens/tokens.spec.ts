@@ -8,6 +8,7 @@ import {
   mergeCurrencyInputColors,
   mergeInputColors,
   mergeRadioGroupColors,
+  mergeCollapsibleColors,
   mergeHintColors,
   mergeHintToneColors,
   mergeMultiSelectColors,
@@ -308,6 +309,27 @@ describe("mergeHintColors", () => {
     expect(merged.success).toBe(base.success);
     expect(merged.warning).toBe(base.warning);
     expect(merged.neutral).toBe(base.neutral);
+  });
+});
+
+describe("mergeCollapsibleColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.collapsibleColors;
+    expect(mergeCollapsibleColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.collapsibleColors;
+    const merged = mergeCollapsibleColors(base, {
+      headerBackground: "#F5F3FF",
+      chevron: "#7C3AED",
+    });
+    expect(merged.headerBackground).toBe("#F5F3FF");
+    expect(merged.chevron).toBe("#7C3AED");
+    expect(merged.title).toBe(base.title);
+    expect(merged.icon).toBe(base.icon);
+    expect(merged.bodyBackground).toBe(base.bodyBackground);
+    expect(merged.border).toBe(base.border);
   });
 });
 
