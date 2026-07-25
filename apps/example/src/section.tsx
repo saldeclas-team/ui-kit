@@ -8,7 +8,7 @@ export interface SectionProps {
 }
 
 /**
- * Titled section wrapper used inside catalog demo screens. Theme-aware
+ * Titled section wrapper used inside component demo screens. Theme-aware
  * heading color so labels stay readable in both light and dark. App-only.
  */
 export function Section({ title, children }: SectionProps) {

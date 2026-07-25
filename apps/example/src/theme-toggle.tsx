@@ -15,7 +15,7 @@ const OPTIONS: Array<{ value: ThemeMode; label: string }> = [
 
 /**
  * Simple segmented toggle for switching between light / dark / system in the
- * example catalog. App-only glue — the toggle state lives in RootLayout so
+ * example app. App-only glue — the toggle state lives in RootLayout so
  * the value it drives is passed as `defaultTheme` back into KrakenProvider.
  */
 export function ThemeToggle({ value, onChange }: ThemeToggleProps) {

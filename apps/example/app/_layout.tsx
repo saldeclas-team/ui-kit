@@ -30,18 +30,18 @@ export default function RootLayout() {
           <Stack.Screen name="(storybook)/index" options={{ headerShown: false }} />
         </Stack.Protected>
 
-        <Stack.Screen name="(pages)/index" options={{ title: "ui-kraken catalog" }} />
+        <Stack.Screen name="(pages)/index" options={{ title: "ui-kraken components" }} />
         <Stack.Screen
           name="(pages)/components/button"
-          options={{ title: "Button", headerBackTitle: "Catalog" }}
+          options={{ title: "Button", headerBackTitle: "Components" }}
         />
         <Stack.Screen
           name="(pages)/components/text"
-          options={{ title: "Text", headerBackTitle: "Catalog" }}
+          options={{ title: "Text", headerBackTitle: "Components" }}
         />
         <Stack.Screen
           name="(pages)/components/alert"
-          options={{ title: "Alert", headerBackTitle: "Catalog" }}
+          options={{ title: "Alert", headerBackTitle: "Components" }}
         />
       </Stack>
     </KrakenProvider>

@@ -5,14 +5,14 @@ import { useUIKit } from "ui-kraken";
 
 import { Screen } from "../../src/screen";
 
-interface CatalogItem {
+interface ComponentItem {
   title: string;
   description: string;
   href: Href;
   status: "shipped" | "planned";
 }
 
-const CATALOG: CatalogItem[] = [
+const COMPONENTS: ComponentItem[] = [
   {
     title: "Button",
     description: "Interactive button — primary / secondary / outline / ghost / destructive.",
@@ -47,22 +47,22 @@ const CATALOG: CatalogItem[] = [
   },
 ];
 
-export default function CatalogHome() {
+export default function ComponentsHome() {
   return (
     <Screen
-      title="ui-kraken catalog"
+      title="ui-kraken components"
       subtitle="Tap a component to open its live demo. Use the theme toggle in the header to flip between light, dark, and system."
     >
       <View style={styles.list}>
-        {CATALOG.map((item) => (
-          <CatalogRow key={item.title} item={item} />
+        {COMPONENTS.map((item) => (
+          <ComponentRow key={item.title} item={item} />
         ))}
       </View>
     </Screen>
   );
 }
 
-function CatalogRow({ item }: { item: CatalogItem }) {
+function ComponentRow({ item }: { item: ComponentItem }) {
   const { activeTheme } = useUIKit();
   const isDark = activeTheme === "dark";
   const shipped = item.status === "shipped";
