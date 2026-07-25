@@ -5,6 +5,7 @@ import {
   mergeAlertVariantColors,
   mergeButtonColors,
   mergeButtonVariantColors,
+  mergeInputColors,
   mergeRadioGroupColors,
   mergeTextColors,
 } from "./defaults";
@@ -172,6 +173,27 @@ describe("mergeRadioGroupColors", () => {
     expect(merged.unselectedBorder).toBe(base.unselectedBorder);
     expect(merged.label).toBe(base.label);
     expect(merged.groupLabel).toBe(base.groupLabel);
+  });
+});
+
+describe("mergeInputColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.inputColors;
+    expect(mergeInputColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.inputColors;
+    const merged = mergeInputColors(base, {
+      borderFocused: "#FF6B00",
+      background: "#FFF7ED",
+    });
+    expect(merged.borderFocused).toBe("#FF6B00");
+    expect(merged.background).toBe("#FFF7ED");
+    expect(merged.border).toBe(base.border);
+    expect(merged.borderError).toBe(base.borderError);
+    expect(merged.label).toBe(base.label);
+    expect(merged.errorText).toBe(base.errorText);
   });
 });
 
