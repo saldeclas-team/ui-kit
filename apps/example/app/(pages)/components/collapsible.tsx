@@ -51,7 +51,7 @@ export default function CollapsibleScreen() {
             <Text style={{ fontWeight: "700", color: captionColor }}>{iconOpen ? "−" : "+"}</Text>
           }
         >
-          <View style={{ gap: 6 }}>
+          <View style={{ gap: 6, flex: 1 }}>
             <Text style={{ color: bodyColor }}>Push notifications: on</Text>
             <Text style={{ color: bodyColor }}>Email digest: weekly</Text>
             <Text style={{ color: bodyColor }}>In-app banners: on</Text>

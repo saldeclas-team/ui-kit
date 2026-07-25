@@ -161,10 +161,10 @@ exports[`Collapsible snapshots dark palette — expanded 1`] = `
   </View>
   <View
     style={
-      {
-        "height": undefined,
-        "overflow": "hidden",
-      }
+      [
+        null,
+        null,
+      ]
     }
     testID="collapsible-body"
   >
@@ -257,10 +257,10 @@ exports[`Collapsible snapshots default light — collapsed 1`] = `
   </View>
   <View
     style={
-      {
-        "height": undefined,
-        "overflow": "hidden",
-      }
+      [
+        null,
+        null,
+      ]
     }
     testID="collapsible-body"
   >
@@ -361,10 +361,10 @@ exports[`Collapsible snapshots default light — expanded + icon + custom chevro
   </View>
   <View
     style={
-      {
-        "height": undefined,
-        "overflow": "hidden",
-      }
+      [
+        null,
+        null,
+      ]
     }
     testID="collapsible-body"
   >

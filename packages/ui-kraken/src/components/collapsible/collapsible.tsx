@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { Text } from "react-native";
@@ -61,10 +61,21 @@ export function Collapsible({
   const [contentHeight, setContentHeight] = useState<number | null>(null);
   const heightValue = useSharedValue(0);
   const rotateValue = useSharedValue(expanded ? 1 : 0);
+  // Track whether we've already handled the first measurement. On the
+  // first sync (contentHeight goes from null → measured), we SNAP the
+  // shared height to the correct value without animating — otherwise
+  // a Collapsible mounted with `expanded=true` would flash empty for
+  // one frame while the animation runs from 0 → measured.
+  const hasMeasuredRef = useRef(false);
 
   useEffect(() => {
     if (animation === "height" && contentHeight != null) {
-      heightValue.value = withTiming(expanded ? contentHeight : 0, { duration });
+      if (!hasMeasuredRef.current) {
+        hasMeasuredRef.current = true;
+        heightValue.value = expanded ? contentHeight : 0;
+      } else {
+        heightValue.value = withTiming(expanded ? contentHeight : 0, { duration });
+      }
     }
     rotateValue.value = withTiming(expanded ? 1 : 0, {
       duration: Math.min(duration, CHEVRON_MAX_DURATION_MS),
@@ -79,9 +90,13 @@ export function Collapsible({
     setContentHeight(event.nativeEvent.layout.height);
   }, []);
 
+  // `overflow` is a static style, not an animated property. Keeping
+  // it inside `useAnimatedStyle` triggers reanimated to re-apply it on
+  // every worklet tick, which can suppress children rendering on
+  // some RN versions. Keep the animated style narrow to `height`
+  // only, and put `overflow: hidden` in the static style array.
   const bodyAnimatedStyle = useAnimatedStyle(() => ({
-    height: contentHeight == null ? undefined : heightValue.value,
-    overflow: "hidden",
+    height: heightValue.value,
   }));
 
   const chevronAnimatedStyle = useAnimatedStyle(() => ({
@@ -136,7 +151,17 @@ export function Collapsible({
           </StyledCollapsibleBody>
         )
       ) : (
-        <Animated.View testID={`${rootId}-body`} style={bodyAnimatedStyle}>
+        <Animated.View
+          testID={`${rootId}-body`}
+          style={[
+            // Before the first onLayout, no height clamp — body renders
+            // at its natural height so the layout system can measure it.
+            // After measurement, the animated height clamps the container
+            // and hides overflow so children don't paint outside the card.
+            contentHeight == null ? null : { overflow: "hidden" },
+            contentHeight == null ? null : bodyAnimatedStyle,
+          ]}
+        >
           <StyledCollapsibleBody
             testID={`${rootId}-body-content`}
             onLayout={handleBodyLayout}

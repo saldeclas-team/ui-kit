@@ -414,13 +414,48 @@ describe("Collapsible", () => {
         nativeEvent: { layout: { height: 80, width: 200, x: 0, y: 0 } },
       });
     });
-    // Height is now clamped by the animated value (starts at 0, animates to 0).
+    // Height is now clamped by the animated value (starts at 0, snaps to 0).
     const body = screen.getByTestId("c-body");
     const styleArray = Array.isArray(body.props.style) ? body.props.style : [body.props.style];
     const merged = Object.assign({}, ...styleArray.filter(Boolean));
     expect(merged.height).toBeDefined();
     expect(merged.overflow).toBe("hidden");
   });
+
+  it.each([
+    ["false → true (expanding)", false, true],
+    ["true → false (collapsing)", true, false],
+  ] as const)(
+    "subsequent expanded toggle after measurement animates via withTiming (%s)",
+    async (_label, initial, next) => {
+      // Covers BOTH branches of the `expanded ? contentHeight : 0`
+      // ternary inside the withTiming call (else branch of the
+      // hasMeasuredRef guard).
+      const { rerender } = await render(
+        <Collapsible title="X" expanded={initial} onExpandedChange={jest.fn()} testID="c">
+          <Text>body</Text>
+        </Collapsible>
+      );
+      const bodyContent = screen.getByTestId("c-body-content");
+      await act(async () => {
+        bodyContent.props.onLayout({
+          nativeEvent: { layout: { height: 80, width: 200, x: 0, y: 0 } },
+        });
+      });
+      await act(async () => {
+        rerender(
+          <Collapsible title="X" expanded={next} onExpandedChange={jest.fn()} testID="c">
+            <Text>body</Text>
+          </Collapsible>
+        );
+      });
+      const body = screen.getByTestId("c-body");
+      const styleArray = Array.isArray(body.props.style) ? body.props.style : [body.props.style];
+      const merged = Object.assign({}, ...styleArray.filter(Boolean));
+      expect(merged.overflow).toBe("hidden");
+      expect(merged.height).toBeDefined();
+    }
+  );
 
   it("flows extra YStack props through the spread", async () => {
     await render(
