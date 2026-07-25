@@ -166,3 +166,6 @@ export type {
 
 export { Collapsible } from "./components";
 export type { CollapsibleProps, CollapsibleAnimation, CollapsibleRadius } from "./components";
+
+export { ExternalLink } from "./components";
+export type { ExternalLinkProps } from "./components";

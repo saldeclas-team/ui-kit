@@ -87,6 +87,10 @@ export default function RootLayout() {
           name="(pages)/components/collapsible"
           options={{ title: "Collapsible", headerBackTitle: "Components" }}
         />
+        <Stack.Screen
+          name="(pages)/components/external-link"
+          options={{ title: "ExternalLink", headerBackTitle: "Components" }}
+        />
       </Stack>
     </UIKitProvider>
   );

@@ -78,3 +78,6 @@ export type {
   CollapsibleRadius,
   CollapsibleColorsInput,
 } from "./collapsible";
+
+export { ExternalLink } from "./external-link";
+export type { ExternalLinkProps, ExternalLinkColorsInput } from "./external-link";

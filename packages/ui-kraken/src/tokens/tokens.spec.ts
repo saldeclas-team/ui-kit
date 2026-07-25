@@ -9,6 +9,7 @@ import {
   mergeInputColors,
   mergeRadioGroupColors,
   mergeCollapsibleColors,
+  mergeExternalLinkColors,
   mergeHintColors,
   mergeHintToneColors,
   mergeMultiSelectColors,
@@ -330,6 +331,20 @@ describe("mergeCollapsibleColors", () => {
     expect(merged.icon).toBe(base.icon);
     expect(merged.bodyBackground).toBe(base.bodyBackground);
     expect(merged.border).toBe(base.border);
+  });
+});
+
+describe("mergeExternalLinkColors", () => {
+  it("returns the base when the override is undefined", () => {
+    const base = DEFAULT_TOKENS.externalLinkColors;
+    expect(mergeExternalLinkColors(base, undefined)).toBe(base);
+  });
+
+  it("keeps missing slots from the base and applies the ones passed", () => {
+    const base = DEFAULT_TOKENS.externalLinkColors;
+    const merged = mergeExternalLinkColors(base, { label: "#7C3AED" });
+    expect(merged.label).toBe("#7C3AED");
+    expect(merged.icon).toBe(base.icon);
   });
 });
 

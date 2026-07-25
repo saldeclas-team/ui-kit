@@ -111,6 +111,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "ExternalLink",
+    description:
+      "Tappable link that opens a URL in the platform browser. Router-agnostic; falls back to Linking.",
+    href: "/components/external-link",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",
