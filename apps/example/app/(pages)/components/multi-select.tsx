@@ -25,6 +25,7 @@ export default function MultiSelectScreen() {
   const [errored, setErrored] = useState<Topic[]>([]);
   const [subsetDisabled, setSubsetDisabled] = useState<Topic[]>(["design"]);
   const [brand, setBrand] = useState<Topic[]>(["design", "product"]);
+  const [longList, setLongList] = useState<string[]>([]);
 
   return (
     <Screen
@@ -95,9 +96,10 @@ export default function MultiSelectScreen() {
       </Section>
 
       <Section title="Long list — wraps to multiple rows">
-        <MultiSelect<string> options={LONG_OPTIONS} value={[]} onChange={() => undefined} />
+        <MultiSelect<string> options={LONG_OPTIONS} value={longList} onChange={setLongList} />
         <Text style={{ color: captionColor, fontSize: 12 }}>
-          Chips wrap when there are too many for a single row.
+          Chips wrap when there are too many for a single row. Tap them — they toggle. Selected: [
+          {longList.join(", ")}]
         </Text>
       </Section>
 
