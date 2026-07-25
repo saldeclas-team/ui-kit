@@ -14,6 +14,7 @@
 import type {
   AlertColors,
   ButtonColors,
+  InputColors,
   RadioGroupColors,
   TextColors,
 } from "../tokens/tokens-types";
@@ -100,6 +101,20 @@ export function flattenRadioGroupColors(colors: RadioGroupColors): Record<string
     if (value == null) continue;
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiRadioGroup${capitalized}`] = value;
+  }
+  return out;
+}
+
+/**
+ * Flatten the `inputColors` slot map into `$uiInput{PascalCase}` Tamagui
+ * tokens. Every slot is required at the schema level so no optional
+ * omission is needed.
+ */
+export function flattenInputColors(colors: InputColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof InputColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiInput${capitalized}`] = colors[slot];
   }
   return out;
 }

@@ -41,6 +41,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Input",
+    description:
+      "Single-line text input with label, helper text, error state, and optional icon slots.",
+    href: "/components/input",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

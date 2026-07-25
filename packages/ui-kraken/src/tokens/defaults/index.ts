@@ -18,6 +18,7 @@ import { DEFAULT_LIGHT_BUTTON_COLORS, DEFAULT_DARK_BUTTON_COLORS } from "./butto
 import { DEFAULT_LIGHT_TEXT_COLORS, DEFAULT_DARK_TEXT_COLORS } from "./text";
 import { DEFAULT_LIGHT_ALERT_COLORS, DEFAULT_DARK_ALERT_COLORS } from "./alert";
 import { DEFAULT_LIGHT_RADIO_GROUP_COLORS, DEFAULT_DARK_RADIO_GROUP_COLORS } from "./radio-group";
+import { DEFAULT_LIGHT_INPUT_COLORS, DEFAULT_DARK_INPUT_COLORS } from "./input";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -28,6 +29,7 @@ export const DEFAULT_TOKENS: Tokens = {
   textColors: DEFAULT_LIGHT_TEXT_COLORS,
   alertColors: DEFAULT_LIGHT_ALERT_COLORS,
   radioGroupColors: DEFAULT_LIGHT_RADIO_GROUP_COLORS,
+  inputColors: DEFAULT_LIGHT_INPUT_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -41,6 +43,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   textColors: DEFAULT_DARK_TEXT_COLORS,
   alertColors: DEFAULT_DARK_ALERT_COLORS,
   radioGroupColors: DEFAULT_DARK_RADIO_GROUP_COLORS,
+  inputColors: DEFAULT_DARK_INPUT_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -65,3 +68,4 @@ export {
   DEFAULT_DARK_RADIO_GROUP_COLORS,
   mergeRadioGroupColors,
 } from "./radio-group";
+export { DEFAULT_LIGHT_INPUT_COLORS, DEFAULT_DARK_INPUT_COLORS, mergeInputColors } from "./input";

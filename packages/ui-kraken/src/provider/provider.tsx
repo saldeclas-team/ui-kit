@@ -9,6 +9,7 @@ import {
   coarseToFineTokens,
   mergeAlertColors,
   mergeButtonColors,
+  mergeInputColors,
   mergeRadioGroupColors,
   mergeTextColors,
 } from "../tokens/tokens";
@@ -34,6 +35,7 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         DEFAULT_TOKENS.radioGroupColors,
         tokens?.radioGroupColors
       ),
+      inputColors: mergeInputColors(DEFAULT_TOKENS.inputColors, tokens?.inputColors),
     };
     const mergedDark = {
       ...DEFAULT_DARK_TOKENS,
@@ -45,6 +47,7 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         DEFAULT_DARK_TOKENS.radioGroupColors,
         dark?.radioGroupColors
       ),
+      inputColors: mergeInputColors(DEFAULT_DARK_TOKENS.inputColors, dark?.inputColors),
     };
     const resolvedLight = coarseToFineTokens(mergedLight);
     const resolvedDark = coarseToFineTokens(mergedDark);

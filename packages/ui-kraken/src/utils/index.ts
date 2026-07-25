@@ -4,4 +4,5 @@ export {
   flattenTextColors,
   flattenAlertColors,
   flattenRadioGroupColors,
+  flattenInputColors,
 } from "./flatten";

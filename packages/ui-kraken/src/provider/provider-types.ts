@@ -6,6 +6,7 @@ import type {
   AlertVariantColors,
   ButtonColors,
   ButtonVariantColors,
+  InputColors,
   RadioGroupColors,
   TextColors,
   ResolvedTokens,
@@ -42,6 +43,13 @@ export type AlertColorsInput = Partial<Record<keyof AlertColors, Partial<AlertVa
 export type RadioGroupColorsInput = Partial<RadioGroupColors>;
 
 /**
+ * Partial override for `inputColors` — consumers only declare the slots
+ * they want to change; the rest fills in from the shipped defaults.
+ * Slot-based (no variants), so the shape mirrors `TextColorsInput`.
+ */
+export type InputColorsInput = Partial<InputColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -50,6 +58,7 @@ export interface TokensInput {
   textColors?: TextColorsInput;
   alertColors?: AlertColorsInput;
   radioGroupColors?: RadioGroupColorsInput;
+  inputColors?: InputColorsInput;
   radius?: number;
   spacing?: number;
 }

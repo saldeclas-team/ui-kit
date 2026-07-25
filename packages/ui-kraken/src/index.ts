@@ -17,6 +17,7 @@ export type {
   TextColorsInput,
   AlertColorsInput,
   RadioGroupColorsInput,
+  InputColorsInput,
 } from "./provider";
 
 // Tokens
@@ -31,6 +32,8 @@ export {
   DEFAULT_DARK_ALERT_COLORS,
   DEFAULT_LIGHT_RADIO_GROUP_COLORS,
   DEFAULT_DARK_RADIO_GROUP_COLORS,
+  DEFAULT_LIGHT_INPUT_COLORS,
+  DEFAULT_DARK_INPUT_COLORS,
   buildConfig,
   coarseToFineTokens,
   mergeButtonColors,
@@ -39,6 +42,7 @@ export {
   mergeAlertColors,
   mergeAlertVariantColors,
   mergeRadioGroupColors,
+  mergeInputColors,
   tint,
 } from "./tokens";
 export type {
@@ -49,6 +53,7 @@ export type {
   AlertColors,
   AlertVariantColors,
   RadioGroupColors,
+  InputColors,
   ResolvedTokens,
   Config,
 } from "./tokens";
@@ -72,3 +77,6 @@ export type { AlertProps, AlertVariant, AlertRadius, AlertVariantColorsInput } f
 
 export { RadioGroup } from "./components";
 export type { RadioGroupProps, RadioOption, RadioOrientation, RadioRadius } from "./components";
+
+export { Input } from "./components";
+export type { InputProps, InputRadius } from "./components";

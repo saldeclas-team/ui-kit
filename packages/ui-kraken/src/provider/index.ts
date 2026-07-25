@@ -9,4 +9,5 @@ export type {
   TextColorsInput,
   AlertColorsInput,
   RadioGroupColorsInput,
+  InputColorsInput,
 } from "./provider-types";

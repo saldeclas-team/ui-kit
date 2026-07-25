@@ -47,6 +47,10 @@ export default function RootLayout() {
           name="(pages)/components/radio-group"
           options={{ title: "RadioGroup", headerBackTitle: "Components" }}
         />
+        <Stack.Screen
+          name="(pages)/components/input"
+          options={{ title: "Input", headerBackTitle: "Components" }}
+        />
       </Stack>
     </UIKitProvider>
   );

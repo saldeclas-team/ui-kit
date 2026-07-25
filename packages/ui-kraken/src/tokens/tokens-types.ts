@@ -98,6 +98,37 @@ export interface AlertColors {
 }
 
 /**
+ * Input color palette. Slot-based (no variants — Input has a single
+ * visual pattern with state-driven surface changes handled by the
+ * component logic itself). 11 slots cover every surface + state
+ * combination the wrapper and inner elements paint.
+ */
+export interface InputColors {
+  /** Wrapper background color in the default and focused states. */
+  background: string;
+  /** Wrapper background color in the disabled state. */
+  backgroundDisabled: string;
+  /** Border color in the default state (unfocused, no error). */
+  border: string;
+  /** Border color when the input has focus. */
+  borderFocused: string;
+  /** Border color when `error` is set. Overrides `borderFocused`. */
+  borderError: string;
+  /** Text color for the value typed in the input. */
+  text: string;
+  /** Text color when `disabled`. */
+  textDisabled: string;
+  /** Placeholder text color. */
+  placeholder: string;
+  /** Bold label text color (rendered above the input). */
+  label: string;
+  /** Muted helper text color (rendered below the input when no error). */
+  helperText: string;
+  /** Error text color (rendered below the input when `error` is set). */
+  errorText: string;
+}
+
+/**
  * RadioGroup color palette. Slot-based (no variants — RadioGroup has a
  * single visual pattern, just different states per option).
  *
@@ -138,6 +169,7 @@ export interface Tokens {
   textColors: TextColors;
   alertColors: AlertColors;
   radioGroupColors: RadioGroupColors;
+  inputColors: InputColors;
   radius: number;
   spacing: number;
 }
@@ -152,6 +184,7 @@ export interface ResolvedTokens {
   textColors: TextColors;
   alertColors: AlertColors;
   radioGroupColors: RadioGroupColors;
+  inputColors: InputColors;
   radius: {
     sm: number;
     md: number;

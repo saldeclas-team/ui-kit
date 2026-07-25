@@ -22,3 +22,6 @@ export type {
   RadioOrientation,
   RadioRadius,
 } from "./radio-group";
+
+export { Input } from "./input";
+export type { InputProps, InputRadius } from "./input";
