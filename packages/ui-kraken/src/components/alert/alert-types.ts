@@ -1,16 +1,17 @@
 import type { ReactNode } from "react";
 import type { GetProps } from "tamagui";
 
+import type { AlertVariantColors } from "../../tokens/tokens-types";
 import type { StyledAlert } from "./alert.styled";
 
 /**
- * Semantic variant. Drives the default color palette (icon + text +
- * background at low opacity), and the a11y announcement priority:
- * `danger` uses `accessibilityRole="alert"` (interrupts), everything
- * else uses `accessibilityRole="status"` (polite).
+ * Semantic variant. Drives the default color palette (background + text +
+ * icon + optional border) and the a11y announcement priority: `danger`
+ * uses `accessibilityLiveRegion="assertive"` (interrupts), everything
+ * else uses `"polite"`.
  *
  * `"danger"` intentionally replaces the more common `"error"` name so
- * the vocabulary matches `KrakenTextColors.danger` across the kit —
+ * the vocabulary matches `TextColors.danger` across the kit —
  * one semantic slot, one name.
  */
 export type AlertVariant = "info" | "success" | "warning" | "danger";
@@ -23,25 +24,16 @@ export type AlertVariant = "info" | "success" | "warning" | "danger";
 export type AlertRadius = number | "none" | "sm" | "md" | "lg" | "pill";
 
 /**
- * Slots that `alertColors` can override per-instance. Every slot
- * defaults to a value derived from the `variant` (which pulls from
- * `KrakenTextColors.<slot>` on the provider). Missing slots on the
- * input object fall through to the variant's defaults — you only
- * override what you want to change.
+ * Per-instance override input for `<Alert>`. Partial of one variant's
+ * slots — the variant is already picked (either via the `variant` prop
+ * or the compound subcomponent like `Alert.Info`), so this only needs
+ * the slots inside that variant, all optional. Missing slots fall
+ * through to the provider-resolved variant palette.
+ *
+ * Provider-level input is `AlertColorsInput` (from the provider barrel),
+ * which is a partial-of-partials over ALL variants.
  */
-export interface AlertColors {
-  /** Fill color of the surface. Default: `textColors.<variant>` at ~10% opacity. */
-  background: string;
-  /** Border color. Default: unset (no border). */
-  border?: string;
-  /** Title + body text color. Default: `textColors.<variant>` at full opacity. */
-  text: string;
-  /** Icon glyph color. Default: `textColors.<variant>` at full opacity. */
-  icon: string;
-}
-
-/** Per-instance override; every field optional. */
-export type AlertColorsInput = Partial<AlertColors>;
+export type AlertVariantColorsInput = Partial<AlertVariantColors>;
 
 /**
  * `AlertProps` re-declares only the props we own or override. Every
@@ -64,11 +56,11 @@ export interface AlertProps extends Omit<GetProps<typeof StyledAlert>, "children
   /** Border radius. Defaults to `"md"`. */
   radius?: AlertRadius;
   /**
-   * Per-instance color override. Missing slots fall through to the
-   * `variant` defaults. Enables brand-color alerts without extending
-   * the provider palette.
+   * Per-instance color override for THIS alert's resolved variant.
+   * Missing slots fall through to the provider-resolved palette. Enables
+   * brand-color alerts without extending the provider palette.
    */
-  alertColors?: AlertColorsInput;
+  alertColors?: AlertVariantColorsInput;
   /**
    * Root testID. Sub-elements derive:
    * `{testID}-title`, `{testID}-body`, `{testID}-icon`.

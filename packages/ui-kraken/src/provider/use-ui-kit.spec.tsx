@@ -9,11 +9,11 @@ function UseUIKitOrThrow() {
 }
 
 describe("useUIKit", () => {
-  it("throws a helpful error when called outside <KrakenProvider>", async () => {
+  it("throws a helpful error when called outside <UIKitProvider>", async () => {
     // React logs the caught render error to console.error — silence it so the
     // test output stays readable.
     const spy = jest.spyOn(console, "error").mockImplementation(() => undefined);
-    await expect(render(<UseUIKitOrThrow />)).rejects.toThrow(/inside <KrakenProvider>/);
+    await expect(render(<UseUIKitOrThrow />)).rejects.toThrow(/inside <UIKitProvider>/);
     spy.mockRestore();
   });
 });

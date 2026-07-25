@@ -40,7 +40,7 @@ Everything below reflects the non-negotiable rules in [`AGENTS.md`](../AGENTS.md
 
 ### Naming
 
-- [ ] Files and folders use **kebab-case** (`kraken-provider.tsx`, `components/button/`).
+- [ ] Files and folders use **kebab-case** (`provider.tsx`, `components/button/`).
 - [ ] React components use **PascalCase**; functions and hooks use **camelCase** (hooks start with `use`); global constants use **SCREAMING_SNAKE_CASE**.
 - [ ] Prop interface named `<ComponentName>Props`.
 - [ ] Callback props start with `on`, local handlers start with `handle`.
@@ -57,7 +57,7 @@ Everything below reflects the non-negotiable rules in [`AGENTS.md`](../AGENTS.md
 
 - [ ] All component styles come from Tamagui `styled()` in a `*.styled.ts` file.
 - [ ] **No `StyleSheet.create()`** in the library (blocked by ESLint).
-- [ ] All colors / spacing / radius reference `$kraken*` theme tokens — no hex literals in `*.styled.ts`.
+- [ ] All colors / spacing / radius reference `$ui*` theme tokens — no hex literals in `*.styled.ts`.
 - [ ] Interactive elements meet 48 × 48 px minimum touch target.
 - [ ] Button-like elements include `pressStyle={{ scale: 0.98, opacity: 0.9 }}`.
 

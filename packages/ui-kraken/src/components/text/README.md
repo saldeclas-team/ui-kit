@@ -46,7 +46,7 @@ Every RN Text prop and every Tamagui style prop flows through the `...rest` spre
 
 ## Color slots
 
-Configured at the provider level via `<KrakenProvider tokens={{ textColors: {...} }}>`. Grouped in three buckets:
+Configured at the provider level via `<UIKitProvider tokens={{ textColors: {...} }}>`. Grouped in three buckets:
 
 **Hierarchy (5)** — content on standard surfaces:
 

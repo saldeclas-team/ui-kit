@@ -18,7 +18,7 @@ jest.mock("@tamagui/config/v4", () => ({
   },
 }));
 
-import { KrakenProvider } from "./provider";
+import { UIKitProvider } from "./provider";
 import { useUIKit } from "./use-ui-kit";
 
 function ReadPrimary() {
@@ -31,21 +31,21 @@ function ReadPrimary() {
   );
 }
 
-describe("KrakenProvider", () => {
+describe("UIKitProvider", () => {
   it("mounts children with default tokens in light mode", async () => {
     await render(
-      <KrakenProvider>
+      <UIKitProvider>
         <Text testID="child">hi</Text>
-      </KrakenProvider>
+      </UIKitProvider>
     );
     expect(screen.getByTestId("child")).toBeTruthy();
   });
 
   it("exposes the default light primary background through useUIKit", async () => {
     await render(
-      <KrakenProvider>
+      <UIKitProvider>
         <ReadPrimary />
-      </KrakenProvider>
+      </UIKitProvider>
     );
     expect(screen.getByTestId("active-theme").props.children).toBe("light");
     // DEFAULT_LIGHT_BUTTON_COLORS.primary.background
@@ -54,18 +54,18 @@ describe("KrakenProvider", () => {
 
   it("exposes partial token overrides through useUIKit", async () => {
     await render(
-      <KrakenProvider tokens={{ buttonColors: { primary: { background: "#FF6B00" } } }}>
+      <UIKitProvider tokens={{ buttonColors: { primary: { background: "#FF6B00" } } }}>
         <ReadPrimary />
-      </KrakenProvider>
+      </UIKitProvider>
     );
     expect(screen.getByTestId("primary-bg").props.children).toBe("#FF6B00");
   });
 
   it("switches to dark tokens when defaultTheme='dark'", async () => {
     await render(
-      <KrakenProvider defaultTheme="dark">
+      <UIKitProvider defaultTheme="dark">
         <ReadPrimary />
-      </KrakenProvider>
+      </UIKitProvider>
     );
     expect(screen.getByTestId("active-theme").props.children).toBe("dark");
     // DEFAULT_DARK_BUTTON_COLORS.primary.background
@@ -74,12 +74,12 @@ describe("KrakenProvider", () => {
 
   it("respects a user-provided dark tokens override", async () => {
     await render(
-      <KrakenProvider
+      <UIKitProvider
         defaultTheme="dark"
         dark={{ buttonColors: { primary: { background: "#111827" } } }}
       >
         <ReadPrimary />
-      </KrakenProvider>
+      </UIKitProvider>
     );
     expect(screen.getByTestId("primary-bg").props.children).toBe("#111827");
   });
@@ -91,9 +91,9 @@ describe("KrakenProvider", () => {
     }
 
     await render(
-      <KrakenProvider tokens={{ textColors: { primary: "#123456" } }}>
+      <UIKitProvider tokens={{ textColors: { primary: "#123456" } }}>
         <ReadTextPrimary />
-      </KrakenProvider>
+      </UIKitProvider>
     );
     expect(screen.getByTestId("text-primary").props.children).toBe("#123456");
   });
@@ -105,9 +105,9 @@ describe("KrakenProvider", () => {
     }
 
     await render(
-      <KrakenProvider tokens={{ textColors: { primary: "#123456" } }}>
+      <UIKitProvider tokens={{ textColors: { primary: "#123456" } }}>
         <ReadTextSecondary />
-      </KrakenProvider>
+      </UIKitProvider>
     );
     // DEFAULT_LIGHT_TEXT_COLORS.secondary
     expect(screen.getByTestId("text-secondary").props.children).toBe("#5B6472");

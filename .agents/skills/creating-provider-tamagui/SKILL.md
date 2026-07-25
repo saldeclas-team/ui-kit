@@ -18,16 +18,16 @@ Related skills (do not mix responsibilities):
 
 ## 1. Where the provider lives
 
-If it is the single top-level provider of the library (`KrakenProvider`):
+If it is the single top-level provider of the library (`UIKitProvider`):
 
 ```
 packages/ui-kraken/src/provider/
-├── kraken-provider.tsx           # the provider component
-├── kraken-provider-context.tsx   # createContext + the Context type
-├── use-kraken.ts                 # hook returning the context (throws when out of tree)
-├── kraken-provider-types.ts      # ProviderProps, ContextValue
-├── kraken-provider.spec.tsx      # unit tests (RTL v14)
-├── use-kraken.spec.ts            # unit tests for the hook
+├── provider.tsx           # the provider component
+├── provider-context.tsx   # createContext + the Context type
+├── use-ui-kit.ts                 # hook returning the context (throws when out of tree)
+├── provider-types.ts      # ProviderProps, ContextValue
+├── provider.spec.tsx      # unit tests (RTL v14)
+├── use-ui-kit.spec.tsx            # unit tests for the hook
 └── index.ts                      # explicit named exports (no `export *`)
 ```
 
@@ -35,8 +35,8 @@ If we ever ship additional providers alongside the root one (e.g. a `ToastProvid
 
 ```
 packages/ui-kraken/src/providers/
-├── kraken/
-│   ├── kraken-provider.tsx
+├── ui-kit/
+│   ├── provider.tsx
 │   ├── ...
 │   └── index.ts
 ├── toast/
@@ -57,7 +57,7 @@ packages/ui-kraken/src/providers/
 Holds the `React.createContext` call and its typed value. Separated from the provider component so tests and hooks can import the context type without pulling the whole provider tree.
 
 ```tsx
-// packages/ui-kraken/src/provider/kraken-provider-context.tsx
+// packages/ui-kraken/src/provider/provider-context.tsx
 import { createContext } from "react";
 import type { ContextValue } from "./provider-types";
 
@@ -71,7 +71,7 @@ export const UIKitContext = createContext<ContextValue | null>(null);
 Types only. No values. No `React.FC`.
 
 ```ts
-// packages/ui-kraken/src/provider/kraken-provider-types.ts
+// packages/ui-kraken/src/provider/provider-types.ts
 import type { ReactNode } from "react";
 import type { Tokens, ResolvedTokens } from "../tokens/tokens-types";
 import type { Config } from "../tokens/tokens";
@@ -93,7 +93,7 @@ export interface ContextValue {
 Wires the props → context value → children. **Keep it under ~60 lines.** If it grows, extract helpers to sibling files.
 
 ```tsx
-// packages/ui-kraken/src/provider/kraken-provider.tsx
+// packages/ui-kraken/src/provider/provider.tsx
 import { useMemo } from "react";
 import { PortalProvider, TamaguiProvider } from "tamagui";
 
@@ -101,7 +101,7 @@ import { DEFAULT_TOKENS, buildConfig, coarseToFineTokens } from "../tokens/token
 import { UIKitContext } from "./provider-context";
 import type { ProviderProps } from "./provider-types";
 
-export function KrakenProvider({ children, tokens, defaultTheme = "light" }: ProviderProps) {
+export function UIKitProvider({ children, tokens, defaultTheme = "light" }: ProviderProps) {
   const contextValue = useMemo(() => {
     const merged = { ...DEFAULT_TOKENS, ...tokens };
     return {
@@ -131,7 +131,7 @@ Notes:
 Every provider ships with a `use*` hook. It throws a helpful error when used outside its provider tree — never returns a fallback silently.
 
 ```ts
-// packages/ui-kraken/src/provider/use-kraken.ts
+// packages/ui-kraken/src/provider/use-ui-kit.ts
 import { useContext } from "react";
 
 import { UIKitContext } from "./provider-context";
@@ -141,7 +141,7 @@ export function useUIKit(): ContextValue {
   const value = useContext(UIKitContext);
   if (value === null) {
     throw new Error(
-      "useUIKit must be called inside <KrakenProvider>. Wrap your app root with KrakenProvider before rendering ui-kraken components."
+      "useUIKit must be called inside <UIKitProvider>. Wrap your app root with UIKitProvider before rendering ui-kraken components."
     );
   }
   return value;
@@ -159,7 +159,7 @@ Cover three things minimum:
 In v14 `render()` returns a `Promise` — always `await` it, then read queries from the `screen` global.
 
 ```tsx
-// packages/ui-kraken/src/provider/kraken-provider.spec.tsx
+// packages/ui-kraken/src/provider/provider.spec.tsx
 import { render, screen } from "@testing-library/react-native";
 import { Text } from "react-native";
 
@@ -176,7 +176,7 @@ jest.mock("@tamagui/config/v4", () => ({
   defaultConfig: { tokens: { color: {}, radius: {}, space: {}, size: {} } },
 }));
 
-import { KrakenProvider } from "./provider";
+import { UIKitProvider } from "./provider";
 import { useUIKit } from "./use-ui-kit";
 
 function ReadPrimary() {
@@ -184,21 +184,21 @@ function ReadPrimary() {
   return <Text testID="primary">{tokens.color.primary9}</Text>;
 }
 
-describe("KrakenProvider", () => {
+describe("UIKitProvider", () => {
   it("mounts children", async () => {
     await render(
-      <KrakenProvider>
+      <UIKitProvider>
         <Text testID="child">hi</Text>
-      </KrakenProvider>
+      </UIKitProvider>
     );
     expect(screen.getByTestId("child")).toBeTruthy();
   });
 
   it("exposes overridden tokens through useUIKit", async () => {
     await render(
-      <KrakenProvider tokens={{ primaryColor: "#FF6B00" }}>
+      <UIKitProvider tokens={{ primaryColor: "#FF6B00" }}>
         <ReadPrimary />
-      </KrakenProvider>
+      </UIKitProvider>
     );
     expect(screen.getByTestId("primary").props.children).toBe("#FF6B00");
   });
@@ -206,21 +206,21 @@ describe("KrakenProvider", () => {
 ```
 
 ```tsx
-// packages/ui-kraken/src/provider/use-kraken.spec.tsx
+// packages/ui-kraken/src/provider/use-ui-kit.spec.tsxx
 import { render } from "@testing-library/react-native";
 import { Text } from "react-native";
 
 import { useUIKit } from "./use-ui-kit";
 
-function UseKrakenOrThrow() {
+function UseUIKitOrThrow() {
   const value = useUIKit();
   return <Text>{value.tokens.color.primary9}</Text>;
 }
 
 describe("useUIKit", () => {
-  it("throws a helpful error when called outside a KrakenProvider", async () => {
+  it("throws a helpful error when called outside a UIKitProvider", async () => {
     const spy = jest.spyOn(console, "error").mockImplementation(() => undefined);
-    await expect(render(<UseKrakenOrThrow />)).rejects.toThrow(/inside <KrakenProvider>/);
+    await expect(render(<UseUIKitOrThrow />)).rejects.toThrow(/inside <UIKitProvider>/);
     spy.mockRestore();
   });
 });
@@ -230,7 +230,7 @@ describe("useUIKit", () => {
 
 ```ts
 // packages/ui-kraken/src/provider/index.ts
-export { KrakenProvider } from "./provider";
+export { UIKitProvider } from "./provider";
 export { useUIKit } from "./use-ui-kit";
 export type { ProviderProps, ContextValue } from "./provider-types";
 ```

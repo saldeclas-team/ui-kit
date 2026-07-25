@@ -20,7 +20,7 @@ export interface ButtonVariantColors {
 /**
  * All Button variant palettes. Every field is required at the provider level
  * so the theme is always fully populated. Consumers who only want to change
- * some values do `<KrakenProvider buttonColors={{ primary: {...} }}>` and the
+ * some values do `<UIKitProvider buttonColors={{ primary: {...} }}>` and the
  * missing variants merge with the defaults (see `mergeButtonColors`).
  */
 export interface ButtonColors {
@@ -64,26 +64,94 @@ export interface TextColors {
 }
 
 /**
- * Coarse token schema exposed to consumers of `<KrakenProvider>`.
- * v0.3 ships Button (`buttonColors`) + Text (`textColors`). Future minor
- * releases will add `cardColors`, `inputColors`, etc. — grouped by component
- * role in the same way.
+ * Color slots for one Alert variant. All four semantic variants (info /
+ * success / warning / danger) fill the same slot set. `background`, `text`,
+ * and `icon` are required; `border` is optional (undefined = no border
+ * renders on the row).
+ *
+ * There is no separate `disabled` slot — Alert is display-only in v1;
+ * disabled state is not a concept. If a consumer needs a muted alert they
+ * pass a per-instance `alertColors` override with lower-contrast values.
+ */
+export interface AlertVariantColors {
+  /** Row background color. */
+  background: string;
+  /** Title + body text color. */
+  text: string;
+  /** Icon glyph color (applied via wrapper `color` prop). */
+  icon: string;
+  /** Optional border color. When set, a 1 px border renders. */
+  border?: string;
+}
+
+/**
+ * All Alert variant palettes. Every field is required at the provider level
+ * so the theme is always fully populated. Consumers who only want to change
+ * some variants do `<UIKitProvider alertColors={{ danger: {...} }}>` and the
+ * missing variants merge with the defaults (see `mergeAlertColors`).
+ */
+export interface AlertColors {
+  info: AlertVariantColors;
+  success: AlertVariantColors;
+  warning: AlertVariantColors;
+  danger: AlertVariantColors;
+}
+
+/**
+ * RadioGroup color palette. Slot-based (no variants — RadioGroup has a
+ * single visual pattern, just different states per option).
+ *
+ * - Selected + unselected borders paint both the outer row card and the
+ *   inner ring around the dot — one color pair covers both surfaces.
+ * - `dot` is the filled inner dot on the currently-selected option.
+ * - `label` is the option label text; `groupLabel` is the bold heading
+ *   above the group (rendered when the `label` prop is passed).
+ * - Backgrounds are optional. Undefined means "transparent row".
+ */
+export interface RadioGroupColors {
+  /** Ring border + row border when the option is selected. */
+  selectedBorder: string;
+  /** Ring border + row border when the option is NOT selected. */
+  unselectedBorder: string;
+  /** Inner filled dot on the selected option. */
+  dot: string;
+  /** Option label text color. */
+  label: string;
+  /** Group heading text color (the `label` prop on `<RadioGroup>`). */
+  groupLabel: string;
+  /** Subtle row background tint when option is selected. Optional. */
+  selectedBackground?: string;
+  /** Row background when option is NOT selected. Optional (transparent). */
+  unselectedBackground?: string;
+}
+
+/**
+ * Coarse token schema exposed to consumers of `<UIKitProvider>`.
+ * Ships Button (`buttonColors`), Text (`textColors`), Alert
+ * (`alertColors`), and RadioGroup (`radioGroupColors`) blocks. Future
+ * minor releases will add `cardColors`, `inputColors`, etc. — grouped by
+ * component role in the same way, one block per component that owns its
+ * color space.
  */
 export interface Tokens {
   buttonColors: ButtonColors;
   textColors: TextColors;
+  alertColors: AlertColors;
+  radioGroupColors: RadioGroupColors;
   radius: number;
   spacing: number;
 }
 
 /**
  * Result of resolving the coarse schema into what components read at runtime.
- * Colors pass through as-is in v0.3; kept as a separate type so we can add
- * derived scales later without breaking the provider contract.
+ * Colors pass through as-is; kept as a separate type so we can add derived
+ * scales later without breaking the provider contract.
  */
 export interface ResolvedTokens {
   buttonColors: ButtonColors;
   textColors: TextColors;
+  alertColors: AlertColors;
+  radioGroupColors: RadioGroupColors;
   radius: {
     sm: number;
     md: number;

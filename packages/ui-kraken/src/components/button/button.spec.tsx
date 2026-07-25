@@ -17,7 +17,7 @@ jest.mock("./button.styled", () => {
   return { StyledButton, StyledButtonLabel };
 });
 
-// Mock useUIKit so Button can run without a KrakenProvider wrapper in tests.
+// Mock useUIKit so Button can run without a UIKitProvider wrapper in tests.
 // The dark-elevation border path is exercised separately in `dark-elevation`
 // tests below by re-mocking the return value.
 const mockUseUIKit: jest.Mock<{ activeTheme: "light" | "dark" }, []> = jest.fn(() => ({

@@ -1,4 +1,4 @@
-export { KrakenProvider } from "./provider";
+export { UIKitProvider } from "./provider";
 export { useUIKit } from "./use-ui-kit";
 export type {
   ProviderProps,
@@ -7,4 +7,6 @@ export type {
   TokensInput,
   ButtonColorsInput,
   TextColorsInput,
+  AlertColorsInput,
+  RadioGroupColorsInput,
 } from "./provider-types";

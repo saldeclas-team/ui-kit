@@ -32,9 +32,9 @@ Living document. Update it as decisions land or shift.
 
 These are called out explicitly so we can debate them when the moment arrives. Do NOT decide them until the linked trigger happens.
 
-### ~~2.1 `KrakenProvider` wrapper vs. exposing `TamaguiProvider` directly~~ — **RESOLVED**
+### ~~2.1 `UIKitProvider` wrapper vs. exposing `TamaguiProvider` directly~~ — **RESOLVED**
 
-**Decision:** ship a thin `KrakenProvider` wrapper (Approach C from the design workflow).
+**Decision:** ship a thin `UIKitProvider` wrapper (Approach C from the design workflow).
 
 The provider mounts `TamaguiProvider` + `PortalProvider` + a small `UIKitContext`. It accepts the coarse token schema natively and derives the full Tamagui config via `buildConfig()` inside `useMemo`. It also exposes `useUIKit()` which returns `{ tokens, tamaguiConfig }` — the raw Tamagui config is intentionally reachable so power users hitting the abstraction ceiling can drop down without ejecting the library.
 
@@ -93,16 +93,16 @@ Current stance: components accept `ReactNode` slots (`leftIcon`, `rightIcon`) �
 
 ### ~~2.5 Portal host / overlay stack~~ — **RESOLVED** (implicitly by §2.1)
 
-`KrakenProvider` mounts `PortalProvider` from Tamagui out of the box, so future `Sheet` / `Dialog` / `Toast` land non-breakingly.
+`UIKitProvider` mounts `PortalProvider` from Tamagui out of the box, so future `Sheet` / `Dialog` / `Toast` land non-breakingly.
 
 ### 2.6 Deferred to later versions
 
 Decided during the v0.2.0 design; documented so we don't relitigate:
 
-- ~~**Dark mode:** v0.2.x will add an optional `dark?: Partial<Tokens>` prop on `KrakenProvider`.~~ **Landed in v0.2.0.** `KrakenProvider` accepts `dark?: TokensInput` and `defaultTheme: "light" | "dark" | "system"`. Ships `DEFAULT_DARK_TOKENS`.
+- ~~**Dark mode:** v0.2.x will add an optional `dark?: Partial<Tokens>` prop on `UIKitProvider`.~~ **Landed in v0.2.0.** `UIKitProvider` accepts `dark?: TokensInput` and `defaultTheme: "light" | "dark" | "system"`. Ships `DEFAULT_DARK_TOKENS`.
 - **Text component + font-family token:** ships with the `Text` component in v0.2.x. v0.2.0 inherits `@tamagui/config/v4`'s default fonts.
 - **`rgb()` / named color inputs:** v0.2.0 accepts hex only (documented in JSDoc). Parser dep deferred until a real consumer asks.
-- **`setTokens` runtime hook:** not shipping. Remount `KrakenProvider` with new props to change theme.
+- **`setTokens` runtime hook:** not shipping. Remount `UIKitProvider` with new props to change theme.
 - **`tamaguiConfig` full-escape-hatch prop:** not shipping. `useUIKit()` covers 90% of escape-hatch use cases already.
 - **Auto-contrast helper:** `pickContrastText()` is NOT auto-applied. Exposed as a utility for consumers who want to opt in.
 
@@ -131,7 +131,7 @@ Locked convention (AGENTS.md): consumers use `react-hook-form` + `zod`. ui-krake
 
 ### v0.1 — first component
 
-- Decide 2.1 (KrakenProvider vs direct) and 2.2 (token schema).
+- Decide 2.1 (UIKitProvider vs direct) and 2.2 (token schema).
 - Ship `Button` with `variant`, `size`, `disabled`, `loading` and per-instance color overrides.
 - Story + unit tests + a11y (accessibilityRole, hitSlop, `accessibilityState`).
 - Update README with the "hello Button" example.

@@ -20,7 +20,7 @@ ui-kit/
 ├── packages/ui-kraken/     # The library published to npm as `ui-kraken`
 │   └── src/
 │       ├── tokens/         # Tokens schema + translator + defaults
-│       ├── provider/       # KrakenProvider + useUIKit
+│       ├── provider/       # UIKitProvider + useUIKit
 │       ├── components/     # Every UI component (button/, card/, ...)
 │       └── index.ts        # Public barrel (explicit named exports)
 ├── apps/example/           # Expo app for showcase + on-device Storybook
@@ -45,9 +45,9 @@ ui-kit/
 
 | Kind                                       | Case                                          | Example                                      |
 | ------------------------------------------ | --------------------------------------------- | -------------------------------------------- |
-| Files                                      | kebab-case                                    | `kraken-provider.tsx`, `use-kraken.ts`       |
+| Files                                      | kebab-case                                    | `provider.tsx`, `use-ui-kit.ts`              |
 | Folders                                    | kebab-case                                    | `components/button/`, `provider/`            |
-| React components                           | PascalCase                                    | `Button`, `KrakenProvider`                   |
+| React components                           | PascalCase                                    | `Button`, `UIKitProvider`                    |
 | Functions / hooks (hooks start with `use`) | camelCase                                     | `buildConfig`, `useUIKit`                    |
 | Global constants                           | SCREAMING_SNAKE_CASE                          | `DEFAULT_TOKENS`                             |
 | Types / interfaces                         | PascalCase                                    | `ButtonProps`, `Tokens`                      |
@@ -61,7 +61,7 @@ Descriptive naming rules:
 - **Callback props start with `on`** — `onPress`, `onLayout`, `onValueChange`.
 - **Local handlers start with `handle`** — `const handlePress = () => ...`, wired as `onPress={handlePress}`.
 - **Avoid abbreviations** unless universal (`props`, `id`, `url`, `api`, `hex`). Prefer `background` over `bg`, `configuration` over `cfg`, `error` over `err`.
-- **Component filename matches the exported component in kebab-case** — `Button` exports from `button.tsx`, `KrakenProvider` from `kraken-provider.tsx`.
+- **Component filename matches the exported component in kebab-case** — `Button` exports from `button.tsx`, `UIKitProvider` from `provider.tsx`.
 
 Filename suffixes that carry meaning:
 
@@ -83,7 +83,7 @@ Filename suffixes that carry meaning:
 
 - Only Tamagui `styled()`. `StyleSheet.create()` from React Native is banned repo-wide (ESLint).
 - Only theme tokens for colors, spacing, radius, typography. No hex literals in `*.styled.ts`.
-- Tokens defined in `packages/ui-kraken/src/tokens/` are prefixed `$kraken*` (e.g. `$krakenPrimary9`, `$uiSpacingMd`) so they never collide with `@tamagui/config/v4` defaults.
+- Tokens defined in `packages/ui-kraken/src/tokens/` are prefixed `$ui*` (e.g. `$uiButtonPrimaryBackground`, `$uiTextPrimary`, `$uiSpacingMd`, `$uiRadiusMd`) so they never collide with `@tamagui/config/v4` defaults.
 - Interactive elements: minimum touch target 48 × 48 px.
 - Press feedback on button-like elements: `pressStyle={{ scale: 0.98, opacity: 0.9 }}`.
 
@@ -95,10 +95,10 @@ Filename suffixes that carry meaning:
 
 ### Color-override model (project convention)
 
-**Tokens are per-component, NOT global.** There is no `primaryColor: string` at the theme root. Instead the provider (`KrakenProvider`) receives one block per component role:
+**Tokens are per-component, NOT global.** There is no `primaryColor: string` at the theme root. Instead the provider (`UIKitProvider`) receives one block per component role:
 
 ```tsx
-<KrakenProvider
+<UIKitProvider
   tokens={{
     buttonColors: {
       primary: { background: "#2563EB", label: "#FFFFFF" },
@@ -114,7 +114,7 @@ Filename suffixes that carry meaning:
   defaultTheme="system"
 >
   <App />
-</KrakenProvider>
+</UIKitProvider>
 ```
 
 Every component gets its own block (`buttonColors`, future `textColors`, `cardColors`, etc.), keyed by the component's variants. The slots inside each variant match the visible surfaces of that component — for Button that's `{ background?, label, border? }`; other components will define their own slot set.
@@ -211,14 +211,14 @@ Every field is optional. Missing slots inherit from the theme. Fallback order at
 
 ## Quick reference — where different things live
 
-| I need to…                                                              | Read this skill                                                                      | Files land in                                                                          |
-| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
-| Build a visual/interactive component (Button, Card, Input)              | [`creating-component-tamagui`](./.agents/skills/creating-component-tamagui/SKILL.md) | `packages/ui-kraken/src/components/<name>/`                                            |
-| Build a React context / provider (KrakenProvider, future ToastProvider) | [`creating-provider-tamagui`](./.agents/skills/creating-provider-tamagui/SKILL.md)   | `packages/ui-kraken/src/provider/` (or `providers/<name>/` once we have more than one) |
-| Name a new git branch                                                   | [`naming-git-branches`](./.agents/skills/naming-git-branches/SKILL.md)               | n/a (git only)                                                                         |
-| Draft the PR title and body after committing                            | [`drafting-pr-descriptions`](./.agents/skills/drafting-pr-descriptions/SKILL.md)     | n/a (chat handoff)                                                                     |
-| Build a token schema / theme value                                      | (skill TBD)                                                                          | `packages/ui-kraken/src/tokens/`                                                       |
-| Build a standalone hook                                                 | (skill TBD)                                                                          | co-located with its consumer, or `packages/ui-kraken/src/hooks/` for shared ones       |
+| I need to…                                                             | Read this skill                                                                      | Files land in                                                                          |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| Build a visual/interactive component (Button, Card, Input)             | [`creating-component-tamagui`](./.agents/skills/creating-component-tamagui/SKILL.md) | `packages/ui-kraken/src/components/<name>/`                                            |
+| Build a React context / provider (UIKitProvider, future ToastProvider) | [`creating-provider-tamagui`](./.agents/skills/creating-provider-tamagui/SKILL.md)   | `packages/ui-kraken/src/provider/` (or `providers/<name>/` once we have more than one) |
+| Name a new git branch                                                  | [`naming-git-branches`](./.agents/skills/naming-git-branches/SKILL.md)               | n/a (git only)                                                                         |
+| Draft the PR title and body after committing                           | [`drafting-pr-descriptions`](./.agents/skills/drafting-pr-descriptions/SKILL.md)     | n/a (chat handoff)                                                                     |
+| Build a token schema / theme value                                     | (skill TBD)                                                                          | `packages/ui-kraken/src/tokens/`                                                       |
+| Build a standalone hook                                                | (skill TBD)                                                                          | co-located with its consumer, or `packages/ui-kraken/src/hooks/` for shared ones       |
 
 Every skill enforces this same file layout for its domain:
 

@@ -251,17 +251,17 @@ Barrel updates:
 
 Tokens layer changes:
 
-- `kraken-tokens-types.ts` — added `TextColors` + slot into `Tokens`
-- `kraken-tokens-derive.ts` — added `DEFAULT_LIGHT_TEXT_COLORS`, `DEFAULT_DARK_TEXT_COLORS`, added `textColors` to `DEFAULT_TOKENS` + `DEFAULT_DARK_TOKENS`, added `mergeTextColors` + `coarseToFineTokens` update to pass `textColors` through
-- `kraken-tokens.ts` — extended `buildConfig` to flatten `textColors` and inject into `light` + `dark` themes
+- `tokens-types.ts` — added `TextColors` + slot into `Tokens`
+- `tokens-derive.ts` — added `DEFAULT_LIGHT_TEXT_COLORS`, `DEFAULT_DARK_TEXT_COLORS`, added `textColors` to `DEFAULT_TOKENS` + `DEFAULT_DARK_TOKENS`, added `mergeTextColors` + `coarseToFineTokens` update to pass `textColors` through
+- `tokens.ts` — extended `buildConfig` to flatten `textColors` and inject into `light` + `dark` themes
 - `tokens/index.ts` — exported new symbols
-- `kraken-tokens.spec.ts` — added tests for `mergeTextColors`, defaults presence, dark != light
+- `tokens.spec.ts` — added tests for `mergeTextColors`, defaults presence, dark != light
 
 Provider changes:
 
-- `kraken-provider-types.ts` — extended `TokensInput` with `textColors?: Partial<TextColors>`
-- `kraken-provider.tsx` — merged textColors overrides same way as buttonColors
-- `kraken-provider.spec.tsx` — added a test that reads a text-color override through `useUIKit()`
+- `provider-types.ts` — extended `TokensInput` with `textColors?: Partial<TextColors>`
+- `provider.tsx` — merged textColors overrides same way as buttonColors
+- `provider.spec.tsx` — added a test that reads a text-color override through `useUIKit()`
 
 Example app changes:
 
@@ -271,7 +271,7 @@ Example app changes:
 
 ## Testing (Jest + RTL v14 + jest-expo)
 
-Mocks `./text.styled` and `../../provider/use-kraken` the same way Button does so the tests run without a live Tamagui/provider tree. 10 specs cover:
+Mocks `./text.styled` and `../../provider/use-ui-kit` the same way Button does so the tests run without a live Tamagui/provider tree. 10 specs cover:
 
 1. Renders `children` with default variant/color (body2 + primary).
 2. Applies each variant to the styled prop (parametrized across all 13).
@@ -348,5 +348,5 @@ Executed in this order on branch `feat/text`:
 ## How to extend
 
 - **New variant** — add an entry to `variants.variant` in `text.styled.ts`, add the type to `TextVariant` in `text-types.ts`, add the compound shortcut in `text.tsx` (register in `Object.assign` map), add a row to the README table, and — if `intensity="strong"` should behave — add an entry to `STRONG_WEIGHT_FOR_VARIANT`.
-- **New color slot** — add to `TextColors` in `kraken-tokens-types.ts`, add defaults to both `DEFAULT_LIGHT_TEXT_COLORS` and `DEFAULT_DARK_TEXT_COLORS` in `kraken-tokens-derive.ts`, verify it flattens correctly through `flattenTextColors` (no change needed if it's a plain string slot), and update the README color-slot section.
-- **Font family** — when adding a `fonts` block to `Tokens`, plumb it into `buildConfig` under `tokens.font` and reference from `text.styled.ts` variants as `fontFamily: "$krakenFont{Role}"`.
+- **New color slot** — add to `TextColors` in `tokens-types.ts`, add defaults to both `DEFAULT_LIGHT_TEXT_COLORS` and `DEFAULT_DARK_TEXT_COLORS` in `tokens-derive.ts`, verify it flattens correctly through `flattenTextColors` (no change needed if it's a plain string slot), and update the README color-slot section.
+- **Font family** — when adding a `fonts` block to `Tokens`, plumb it into `buildConfig` under `tokens.font` and reference from `text.styled.ts` variants as `fontFamily: "$uiFont{Role}"`.

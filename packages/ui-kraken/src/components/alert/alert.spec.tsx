@@ -1,6 +1,8 @@
 import { render, screen } from "@testing-library/react-native";
 import { Text } from "react-native";
 
+import type { AlertColors } from "../../tokens/tokens-types";
+
 // Mock the styled file the same way Button + Text do. The stubs forward
 // every prop to plain RN primitives so the component logic (variant
 // resolution, palette derivation, testID propagation, compound export,
@@ -32,35 +34,32 @@ jest.mock("./alert.styled", () => {
   };
 });
 
-// Mock useUIKit so Alert can run without a KrakenProvider wrapper in
-// tests. The mocked textColors match DEFAULT_LIGHT_TEXT_COLORS so slot
+// Mock useUIKit so Alert can run without a UIKitProvider wrapper in
+// tests. The mocked alertColors match DEFAULT_LIGHT_ALERT_COLORS so slot
 // resolution asserts against a known palette.
+const LIGHT_ALERT_COLORS: AlertColors = {
+  info: { background: "#EFF6FF", text: "#0284C7", icon: "#0284C7" },
+  success: { background: "#F0FDF4", text: "#059669", icon: "#059669" },
+  warning: { background: "#FFFBEB", text: "#D97706", icon: "#D97706" },
+  danger: { background: "#FEF2F2", text: "#DC2626", icon: "#DC2626" },
+};
+
+const DARK_ALERT_COLORS: AlertColors = {
+  info: { background: "#0C4A6E33", text: "#38BDF8", icon: "#38BDF8" },
+  success: { background: "#064E3B33", text: "#34D399", icon: "#34D399" },
+  warning: { background: "#78350F33", text: "#FBBF24", icon: "#FBBF24" },
+  danger: { background: "#7F1D1D33", text: "#F87171", icon: "#F87171" },
+};
+
 type MockUIKit = {
   activeTheme: "light" | "dark";
   tokens: {
-    textColors: Record<string, string>;
+    alertColors: AlertColors;
   };
 };
 const mockUseUIKit = jest.fn<MockUIKit, []>(() => ({
   activeTheme: "light",
-  tokens: {
-    textColors: {
-      primary: "#0B0B0F",
-      secondary: "#5B6472",
-      tertiary: "#9CA3AF",
-      disabled: "#D1D5DB",
-      inverse: "#FFFFFF",
-      interactive: "#2563EB",
-      success: "#059669",
-      warning: "#D97706",
-      danger: "#DC2626",
-      info: "#0284C7",
-      onPrimary: "#FFFFFF",
-      onSecondary: "#FFFFFF",
-      onSuccess: "#FFFFFF",
-      onDanger: "#FFFFFF",
-    },
-  },
+  tokens: { alertColors: LIGHT_ALERT_COLORS },
 }));
 jest.mock("../../provider/use-ui-kit", () => ({
   useUIKit: () => mockUseUIKit(),
@@ -72,24 +71,7 @@ describe("Alert", () => {
   beforeEach(() => {
     mockUseUIKit.mockReturnValue({
       activeTheme: "light",
-      tokens: {
-        textColors: {
-          primary: "#0B0B0F",
-          secondary: "#5B6472",
-          tertiary: "#9CA3AF",
-          disabled: "#D1D5DB",
-          inverse: "#FFFFFF",
-          interactive: "#2563EB",
-          success: "#059669",
-          warning: "#D97706",
-          danger: "#DC2626",
-          info: "#0284C7",
-          onPrimary: "#FFFFFF",
-          onSecondary: "#FFFFFF",
-          onSuccess: "#FFFFFF",
-          onDanger: "#FFFFFF",
-        },
-      },
+      tokens: { alertColors: LIGHT_ALERT_COLORS },
     });
   });
 
@@ -118,7 +100,7 @@ describe("Alert", () => {
     ["success", "#059669"],
     ["warning", "#D97706"],
     ["danger", "#DC2626"],
-  ] as const)("variant=%s maps to textColors slot (%s)", async (variant, expected) => {
+  ] as const)("variant=%s pulls text color from alertColors[%s]", async (variant, expected) => {
     await render(
       <Alert testID={variant} variant={variant}>
         x
@@ -128,11 +110,28 @@ describe("Alert", () => {
   });
 
   it.each([
+    ["info", "#EFF6FF"],
+    ["success", "#F0FDF4"],
+    ["warning", "#FFFBEB"],
+    ["danger", "#FEF2F2"],
+  ] as const)(
+    "variant=%s pulls background color from alertColors[%s]",
+    async (variant, expected) => {
+      await render(
+        <Alert testID={variant} variant={variant}>
+          x
+        </Alert>
+      );
+      expect(screen.getByTestId(variant).props.backgroundColor).toBe(expected);
+    }
+  );
+
+  it.each([
     ["Info", "#0284C7"],
     ["Success", "#059669"],
     ["Warning", "#D97706"],
     ["Danger", "#DC2626"],
-  ] as const)("compound Alert.%s renders with correct color", async (key, expected) => {
+  ] as const)("compound Alert.%s renders with correct text color", async (key, expected) => {
     const Component = Alert[key];
     await render(<Component testID={`c-${key}`}>x</Component>);
     expect(screen.getByTestId(`c-${key}-body`).props.color).toBe(expected);
@@ -211,6 +210,29 @@ describe("Alert", () => {
     expect(root.props.borderWidth).toBe(1);
     expect(screen.getByTestId("a-title").props.color).toBe("#000000");
     expect(screen.getByTestId("a-body").props.color).toBe("#000000");
+  });
+
+  it("provider-level alertColors override propagates through useUIKit", async () => {
+    // Consumer paints their brand: a re-themed danger variant.
+    mockUseUIKit.mockReturnValue({
+      activeTheme: "light",
+      tokens: {
+        alertColors: {
+          ...LIGHT_ALERT_COLORS,
+          danger: { background: "#4A0000", text: "#FFFFFF", icon: "#FFFFFF", border: "#FCA5A5" },
+        },
+      },
+    });
+    await render(
+      <Alert.Danger testID="branded" title="Payment failed">
+        Update your card.
+      </Alert.Danger>
+    );
+    const root = screen.getByTestId("branded");
+    expect(root.props.backgroundColor).toBe("#4A0000");
+    expect(root.props.borderColor).toBe("#FCA5A5");
+    expect(root.props.borderWidth).toBe(1);
+    expect(screen.getByTestId("branded-body").props.color).toBe("#FFFFFF");
   });
 
   it.each(["info", "success", "warning"] as const)(
@@ -298,24 +320,7 @@ describe("Alert", () => {
       async (variant) => {
         mockUseUIKit.mockReturnValue({
           activeTheme: "dark",
-          tokens: {
-            textColors: {
-              primary: "#F5F5F7",
-              secondary: "#9CA3AF",
-              tertiary: "#6B7280",
-              disabled: "#4B5563",
-              inverse: "#0B0B0F",
-              interactive: "#60A5FA",
-              success: "#34D399",
-              warning: "#FBBF24",
-              danger: "#F87171",
-              info: "#38BDF8",
-              onPrimary: "#FFFFFF",
-              onSecondary: "#0B0B0F",
-              onSuccess: "#0B0B0F",
-              onDanger: "#FFFFFF",
-            },
-          },
+          tokens: { alertColors: DARK_ALERT_COLORS },
         });
         await render(
           <Alert variant={variant} title="Dark">

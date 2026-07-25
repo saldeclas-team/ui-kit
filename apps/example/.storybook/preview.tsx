@@ -1,15 +1,15 @@
-// Storybook Web preview — mounts `KrakenProvider` around every story so
+// Storybook Web preview — mounts `UIKitProvider` around every story so
 // tokens, theme, and provider context all resolve, matching the on-device
 // setup in `.rnstorybook/preview.tsx`.
 import type { Preview } from "@storybook/react";
-import { KrakenProvider } from "ui-kraken";
+import { UIKitProvider } from "ui-kraken";
 
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <KrakenProvider defaultTheme="light">
+      <UIKitProvider defaultTheme="light">
         <Story />
-      </KrakenProvider>
+      </UIKitProvider>
     ),
   ],
   parameters: {

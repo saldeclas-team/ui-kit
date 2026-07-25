@@ -5,7 +5,7 @@
 **Implementation notes vs. the plan:**
 
 - The plan estimated 2–3 h; actual work was ~2 h, mostly split between (a) getting `@storybook/react-native-web-vite` to bundle ui-kraken correctly and (b) diagnosing a two-instance React Context bug that surfaced only in the Chromatic browser render (not in the local `storybook build`).
-- **The Context bug** (documented below because it will trip up the next contributor): stories inside `packages/ui-kraken/src/**/*.stories.tsx` import components via relative paths, so their `useUIKit()` reaches the source's `UIKitContext`. Meanwhile `.storybook/preview.tsx` was importing `KrakenProvider` via the package name `"ui-kraken"`, which Vite resolved through the exports map to a DIFFERENT module — hence a second `UIKitContext` instance, hence "useUIKit must be called inside <KrakenProvider>" even though the decorator was wrapping the story. Fixed by adding a `viteFinal.resolve.alias` for `"ui-kraken"` → `packages/ui-kraken/src/index.ts` in `.storybook/main.ts`. One package = one module = one Context.
+- **The Context bug** (documented below because it will trip up the next contributor): stories inside `packages/ui-kraken/src/**/*.stories.tsx` import components via relative paths, so their `useUIKit()` reaches the source's `UIKitContext`. Meanwhile `.storybook/preview.tsx` was importing `UIKitProvider` via the package name `"ui-kraken"`, which Vite resolved through the exports map to a DIFFERENT module — hence a second `UIKitContext` instance, hence "useUIKit must be called inside <UIKitProvider>" even though the decorator was wrapping the story. Fixed by adding a `viteFinal.resolve.alias` for `"ui-kraken"` → `packages/ui-kraken/src/index.ts` in `.storybook/main.ts`. One package = one module = one Context.
 - Framework `@storybook/react-native-web-vite` (Storybook 10 compatible, uses Vite ≥ 5 under the hood, translates RN → RN-Web automatically).
 
 Forward-looking design record. Adds true visual regression testing — every PR gets pixel-diffed against `main` for every Storybook story, and reviewers see a visual review page before approving.
@@ -36,7 +36,7 @@ Storybook React Native (currently the only Storybook we have, running on-device)
 apps/example/.rnstorybook/       # existing — on-device (unchanged)
 apps/example/.storybook/         # NEW — Storybook Web config
   ├── main.ts                    # points at ../src/**/*.stories.tsx (same stories)
-  ├── preview.tsx                # mounts KrakenProvider + Tamagui web config
+  ├── preview.tsx                # mounts UIKitProvider + Tamagui web config
   └── manager.ts                 # (optional) UI theme
 apps/example/storybook-static/   # gitignored — output of `storybook build`
 ```
@@ -142,7 +142,7 @@ Before this PR can be merged and Chromatic can gate anything:
 
 ```
 apps/example/.storybook/main.ts               # NEW — Storybook Web config
-apps/example/.storybook/preview.tsx           # NEW — KrakenProvider wrapper for web
+apps/example/.storybook/preview.tsx           # NEW — UIKitProvider wrapper for web
 apps/example/package.json                     # + 2 scripts (storybook:web, storybook:web:build)
 apps/example/.gitignore                       # + storybook-static/
 .github/workflows/chromatic.yml               # NEW

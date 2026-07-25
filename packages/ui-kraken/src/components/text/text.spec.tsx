@@ -13,7 +13,7 @@ jest.mock("./text.styled", () => {
   return { StyledText };
 });
 
-// Mock useUIKit so Text can run without a KrakenProvider wrapper in tests.
+// Mock useUIKit so Text can run without a UIKitProvider wrapper in tests.
 // Give it the DEFAULT_LIGHT_TEXT_COLORS values so `color="danger"` etc. can
 // be asserted against a known palette.
 const mockUseUIKit = jest.fn(() => ({

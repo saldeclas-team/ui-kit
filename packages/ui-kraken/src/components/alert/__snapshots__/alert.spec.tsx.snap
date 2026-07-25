@@ -47,7 +47,7 @@ exports[`Alert snapshots body only, no title 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#0284C726"
+  backgroundColor="#EFF6FF"
   borderRadius="$uiRadiusMd"
   testID="alert"
 >
@@ -66,7 +66,7 @@ exports[`Alert snapshots radius=24 (raw px) 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#0284C726"
+  backgroundColor="#EFF6FF"
   borderRadius={24}
   testID="alert"
 >
@@ -85,7 +85,7 @@ exports[`Alert snapshots radius=lg 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#0284C726"
+  backgroundColor="#EFF6FF"
   borderRadius="$uiRadiusLg"
   testID="alert"
 >
@@ -105,7 +105,7 @@ exports[`Alert snapshots radius=md 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#0284C726"
+  backgroundColor="#EFF6FF"
   borderRadius="$uiRadiusMd"
   testID="alert"
 >
@@ -125,7 +125,7 @@ exports[`Alert snapshots radius=none 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#0284C726"
+  backgroundColor="#EFF6FF"
   borderRadius={0}
   testID="alert"
 >
@@ -145,7 +145,7 @@ exports[`Alert snapshots radius=pill 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#0284C726"
+  backgroundColor="#EFF6FF"
   borderRadius={9999}
   testID="alert"
 >
@@ -165,7 +165,7 @@ exports[`Alert snapshots radius=sm 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#0284C726"
+  backgroundColor="#EFF6FF"
   borderRadius="$uiRadiusSm"
   testID="alert"
 >
@@ -185,7 +185,7 @@ exports[`Alert snapshots title + body 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#0284C726"
+  backgroundColor="#EFF6FF"
   borderRadius="$uiRadiusMd"
   testID="alert"
 >
@@ -210,7 +210,7 @@ exports[`Alert snapshots variant=danger in dark theme 1`] = `
 <View
   accessibilityLiveRegion="assertive"
   accessibilityRole="alert"
-  backgroundColor="#F8717126"
+  backgroundColor="#7F1D1D33"
   borderRadius="$uiRadiusMd"
   testID="alert"
 >
@@ -235,7 +235,7 @@ exports[`Alert snapshots variant=danger with title + body 1`] = `
 <View
   accessibilityLiveRegion="assertive"
   accessibilityRole="alert"
-  backgroundColor="#DC262626"
+  backgroundColor="#FEF2F2"
   borderRadius="$uiRadiusMd"
   testID="alert"
 >
@@ -260,7 +260,7 @@ exports[`Alert snapshots variant=info in dark theme 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#38BDF826"
+  backgroundColor="#0C4A6E33"
   borderRadius="$uiRadiusMd"
   testID="alert"
 >
@@ -285,7 +285,7 @@ exports[`Alert snapshots variant=info with title + body 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#0284C726"
+  backgroundColor="#EFF6FF"
   borderRadius="$uiRadiusMd"
   testID="alert"
 >
@@ -310,7 +310,7 @@ exports[`Alert snapshots variant=success in dark theme 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#34D39926"
+  backgroundColor="#064E3B33"
   borderRadius="$uiRadiusMd"
   testID="alert"
 >
@@ -335,7 +335,7 @@ exports[`Alert snapshots variant=success with title + body 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#05966926"
+  backgroundColor="#F0FDF4"
   borderRadius="$uiRadiusMd"
   testID="alert"
 >
@@ -360,7 +360,7 @@ exports[`Alert snapshots variant=warning in dark theme 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#FBBF2426"
+  backgroundColor="#78350F33"
   borderRadius="$uiRadiusMd"
   testID="alert"
 >
@@ -385,7 +385,7 @@ exports[`Alert snapshots variant=warning with title + body 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#D9770626"
+  backgroundColor="#FFFBEB"
   borderRadius="$uiRadiusMd"
   testID="alert"
 >
@@ -410,7 +410,7 @@ exports[`Alert snapshots with icon slot 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#0284C726"
+  backgroundColor="#EFF6FF"
   borderRadius="$uiRadiusMd"
   testID="alert"
 >
@@ -445,7 +445,7 @@ exports[`Alert snapshots without icon slot 1`] = `
 <View
   accessibilityLiveRegion="polite"
   accessibilityRole="alert"
-  backgroundColor="#0284C726"
+  backgroundColor="#EFF6FF"
   borderRadius="$uiRadiusMd"
   testID="alert"
 >

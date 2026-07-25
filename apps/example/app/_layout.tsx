@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Stack } from "expo-router";
 import type { ThemeMode } from "ui-kraken";
-import { KrakenProvider } from "ui-kraken";
+import { UIKitProvider } from "ui-kraken";
 
 import { ThemeToggle } from "../src/theme-toggle";
 
@@ -18,7 +18,7 @@ export default function RootLayout() {
   const [themeMode, setThemeMode] = useState<ThemeMode>("system");
 
   return (
-    <KrakenProvider defaultTheme={themeMode}>
+    <UIKitProvider defaultTheme={themeMode}>
       <Stack
         screenOptions={{
           headerShown: !STORYBOOK_ENABLED,
@@ -43,7 +43,11 @@ export default function RootLayout() {
           name="(pages)/components/alert"
           options={{ title: "Alert", headerBackTitle: "Components" }}
         />
+        <Stack.Screen
+          name="(pages)/components/radio-group"
+          options={{ title: "RadioGroup", headerBackTitle: "Components" }}
+        />
       </Stack>
-    </KrakenProvider>
+    </UIKitProvider>
   );
 }

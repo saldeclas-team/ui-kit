@@ -34,6 +34,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "RadioGroup",
+    description:
+      "Single-choice picker — controlled, generic value type, vertical or horizontal layout.",
+    href: "/components/radio-group",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

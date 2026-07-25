@@ -1,12 +1,12 @@
 import {
   DEFAULT_DARK_TOKENS,
   DEFAULT_TOKENS,
-  coarseToFineTokens,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
-  tint,
-} from "./tokens-derive";
+} from "./defaults";
+import { tint } from "../utils/color";
+import { coarseToFineTokens } from "./tokens-derive";
 
 describe("tint", () => {
   it("returns the same color at amount=0", () => {
