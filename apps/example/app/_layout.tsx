@@ -111,6 +111,10 @@ export default function RootLayout() {
               name="(pages)/components/segmented-control"
               options={{ title: "SegmentedControl", headerBackTitle: "Components" }}
             />
+            <Stack.Screen
+              name="(pages)/components/date-picker"
+              options={{ title: "DatePicker", headerBackTitle: "Components" }}
+            />
           </Stack>
         </UIKitProvider>
       </BottomSheetModalProvider>

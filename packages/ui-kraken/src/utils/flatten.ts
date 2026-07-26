@@ -21,6 +21,7 @@ import type {
   InputColors,
   MultiSelectColors,
   RadioGroupColors,
+  DatePickerColors,
   RefreshControlColors,
   SegmentedControlColors,
   SelectBottomSheetColors,
@@ -363,6 +364,21 @@ export function flattenSegmentedControlColors(
   for (const slot of Object.keys(colors) as Array<keyof SegmentedControlColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiSegmentedControl${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `datePickerColors` slot map into
+ * `$uiDatePicker{PascalCase}` Tamagui tokens
+ * (`$uiDatePickerBackground`, `$uiDatePickerBorderFocused`,
+ * `$uiDatePickerAccent`, ...).
+ */
+export function flattenDatePickerColors(colors: DatePickerColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof DatePickerColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiDatePicker${capitalized}`] = colors[slot];
   }
   return out;
 }

@@ -211,3 +211,11 @@ export type {
 
 export { SegmentedControl } from "./components";
 export type { SegmentedControlProps, SegmentedControlOption } from "./components";
+
+export { DatePicker } from "./components";
+export type {
+  DatePickerProps,
+  DatePickerMode,
+  DatePickerRadius,
+  DateTimeStyle,
+} from "./components";

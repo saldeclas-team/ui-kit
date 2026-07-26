@@ -146,6 +146,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "DatePicker",
+    description:
+      "Native date / time / datetime picker via @expo/ui — inline modal on iOS, Material 3 dialog on Android, browser <input> on web.",
+    href: "/components/date-picker",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

@@ -251,6 +251,38 @@ export interface SelectColors {
 }
 
 /**
+ * DatePicker color palette. Slot-based, 13 slots. Groupings:
+ *
+ * - **Trigger chrome (9)**: `background`, `backgroundDisabled`,
+ *   `border`, `borderFocused` (painted while the picker is
+ *   open), `borderError`, `text` (selected date/time), `textDisabled`,
+ *   `placeholder` (empty state), `chevron`.
+ * - **Surrounding labels (3)**: `label`, `helperText`, `errorText`.
+ * - **Native picker tint (1)**: `accent` — passed to `@expo/ui`
+ *   as `accentColor` to tint the highlighted date on both platforms.
+ *
+ * iOS modal chrome (backdrop, sheet background, Done button)
+ * uses hardcoded reasonable defaults for v1 — add slots in a
+ * follow-up if theming demand emerges.
+ */
+export interface DatePickerColors {
+  background: string;
+  backgroundDisabled: string;
+  border: string;
+  borderFocused: string;
+  borderError: string;
+  text: string;
+  textDisabled: string;
+  placeholder: string;
+  chevron: string;
+  label: string;
+  helperText: string;
+  errorText: string;
+  /** Tint applied to the native picker's highlighted date / time. */
+  accent: string;
+}
+
+/**
  * SegmentedControl color palette. Slot-based, 9 slots. Split into
  * shared vs. Android-only chrome:
  *
@@ -577,6 +609,7 @@ export interface Tokens {
   selectNativeColors: SelectNativeColors;
   selectBottomSheetColors: SelectBottomSheetColors;
   segmentedControlColors: SegmentedControlColors;
+  datePickerColors: DatePickerColors;
   radius: number;
   spacing: number;
 }
@@ -606,6 +639,7 @@ export interface ResolvedTokens {
   selectNativeColors: SelectNativeColors;
   selectBottomSheetColors: SelectBottomSheetColors;
   segmentedControlColors: SegmentedControlColors;
+  datePickerColors: DatePickerColors;
   radius: {
     sm: number;
     md: number;

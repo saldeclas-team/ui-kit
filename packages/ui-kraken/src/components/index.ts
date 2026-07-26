@@ -90,6 +90,15 @@ export type {
   SegmentedControlColorsInput,
 } from "./segmented-control";
 
+export { DatePicker } from "./date-picker";
+export type {
+  DatePickerProps,
+  DatePickerMode,
+  DatePickerRadius,
+  DateTimeStyle,
+  DatePickerColorsInput,
+} from "./date-picker";
+
 export { SocialButton } from "./social-button";
 export type {
   SocialButtonProps,

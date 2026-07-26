@@ -57,6 +57,7 @@ import {
   DEFAULT_LIGHT_SEGMENTED_CONTROL_COLORS,
   DEFAULT_DARK_SEGMENTED_CONTROL_COLORS,
 } from "./segmented-control";
+import { DEFAULT_LIGHT_DATE_PICKER_COLORS, DEFAULT_DARK_DATE_PICKER_COLORS } from "./date-picker";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -82,6 +83,7 @@ export const DEFAULT_TOKENS: Tokens = {
   selectNativeColors: DEFAULT_LIGHT_SELECT_NATIVE_COLORS,
   selectBottomSheetColors: DEFAULT_LIGHT_SELECT_BOTTOM_SHEET_COLORS,
   segmentedControlColors: DEFAULT_LIGHT_SEGMENTED_CONTROL_COLORS,
+  datePickerColors: DEFAULT_LIGHT_DATE_PICKER_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -110,6 +112,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   selectNativeColors: DEFAULT_DARK_SELECT_NATIVE_COLORS,
   selectBottomSheetColors: DEFAULT_DARK_SELECT_BOTTOM_SHEET_COLORS,
   segmentedControlColors: DEFAULT_DARK_SEGMENTED_CONTROL_COLORS,
+  datePickerColors: DEFAULT_DARK_DATE_PICKER_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -207,3 +210,8 @@ export {
   DEFAULT_DARK_SEGMENTED_CONTROL_COLORS,
   mergeSegmentedControlColors,
 } from "./segmented-control";
+export {
+  DEFAULT_LIGHT_DATE_PICKER_COLORS,
+  DEFAULT_DARK_DATE_PICKER_COLORS,
+  mergeDatePickerColors,
+} from "./date-picker";

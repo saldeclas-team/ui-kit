@@ -11,6 +11,7 @@ import {
   flattenExternalLinkColors,
   flattenHintColors,
   flattenMultiSelectColors,
+  flattenDatePickerColors,
   flattenRefreshControlColors,
   flattenSegmentedControlColors,
   flattenSelectBottomSheetColors,
@@ -67,6 +68,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
       ...flattenSelectNativeColors(lightResolved.selectNativeColors),
       ...flattenSelectBottomSheetColors(lightResolved.selectBottomSheetColors),
       ...flattenSegmentedControlColors(lightResolved.segmentedControlColors),
+      ...flattenDatePickerColors(lightResolved.datePickerColors),
     },
     radius: {
       ...baseTokens.radius,
@@ -119,6 +121,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenSelectNativeColors(lightResolved.selectNativeColors),
         ...flattenSelectBottomSheetColors(lightResolved.selectBottomSheetColors),
         ...flattenSegmentedControlColors(lightResolved.segmentedControlColors),
+        ...flattenDatePickerColors(lightResolved.datePickerColors),
       },
       dark: {
         ...(baseThemes.dark ?? {}),
@@ -141,6 +144,7 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenSelectNativeColors(darkResolved.selectNativeColors),
         ...flattenSelectBottomSheetColors(darkResolved.selectBottomSheetColors),
         ...flattenSegmentedControlColors(darkResolved.segmentedControlColors),
+        ...flattenDatePickerColors(darkResolved.datePickerColors),
       },
     },
   });
@@ -192,6 +196,8 @@ export {
   DEFAULT_LIGHT_SELECT_BOTTOM_SHEET_COLORS,
   DEFAULT_DARK_SEGMENTED_CONTROL_COLORS,
   DEFAULT_LIGHT_SEGMENTED_CONTROL_COLORS,
+  DEFAULT_DARK_DATE_PICKER_COLORS,
+  DEFAULT_LIGHT_DATE_PICKER_COLORS,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
@@ -215,6 +221,7 @@ export {
   mergeSelectNativeColors,
   mergeSelectBottomSheetColors,
   mergeSegmentedControlColors,
+  mergeDatePickerColors,
 } from "./defaults";
 export { coarseToFineTokens } from "./tokens-derive";
 export { tint } from "../utils/color";
