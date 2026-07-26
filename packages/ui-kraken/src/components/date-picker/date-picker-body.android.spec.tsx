@@ -31,6 +31,7 @@ function makeFakeNativePicker(replacement: Date) {
   };
 }
 
+import { normalizeAndroidPickedDate } from "../../utils/normalize-android-picked-date";
 import { DatePickerBody } from "./date-picker-body.android";
 import type { DatePickerBodyPalette } from "./date-picker-body-types";
 
@@ -92,7 +93,7 @@ describe("DatePickerBody.android (Material 3 native dialog)", () => {
     expect(screen.getByTestId("dp-picker")).toBeTruthy();
   });
 
-  it("fires onChange with the picked date when the native picker reports one", async () => {
+  it("fires onChange with the normalized picked date when the native picker reports one", async () => {
     const onChange = jest.fn();
     await render(
       <DatePickerBody
@@ -114,7 +115,12 @@ describe("DatePickerBody.android (Material 3 native dialog)", () => {
       fireEvent(screen.getByTestId("dp-picker"), "layout", {});
     });
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveBeenCalledWith(REPLACEMENT_DATE);
+    const emitted = onChange.mock.calls[0][0] as Date;
+    // The normalizer reconstructs a local-midnight Date whose Y/M/D
+    // match the UTC Y/M/D of the picker's return value. See the
+    // "normalizeAndroidPickedDate" describe block below for the
+    // full timezone reasoning.
+    expect(emitted).toEqual(normalizeAndroidPickedDate(REPLACEMENT_DATE, "date"));
   });
 
   it("disabled=true swallows the trigger tap — no picker mounts", async () => {
@@ -251,5 +257,46 @@ describe("DatePickerBody.android (Material 3 native dialog)", () => {
     );
     expect(screen.queryByTestId("dp-trigger")).toBeNull();
     expect(screen.queryByTestId("dp-picker")).toBeNull();
+  });
+
+  it("normalizes the UTC-midnight bug end-to-end for `date` mode", async () => {
+    // Simulate the actual @expo/ui bridge output: a Date whose
+    // `.getTime()` is UTC-midnight of the picked day. Before the
+    // fix, this would arrive at onChange unchanged and — when
+    // formatted via Intl.DateTimeFormat in the device TZ — read
+    // as the previous day for any consumer west of UTC.
+    const utcMidnight = new Date(Date.UTC(2027, 6, 2, 0, 0, 0, 0)); // 2027-07-02 UTC midnight
+    mockNativeDateTime.mockReturnValue(makeFakeNativePicker(utcMidnight));
+    const onChange = jest.fn();
+    await render(
+      <DatePickerBody
+        value={null}
+        onChange={onChange}
+        disabled={false}
+        mode="date"
+        appearance="light"
+        chromeColors={CHROME}
+        testID="dp"
+        renderTrigger={(open) => <TriggerStub testID="dp-trigger" onPress={open} />}
+      />
+    );
+    await act(async () => {
+      fireEvent.press(screen.getByTestId("dp-trigger"));
+    });
+    await act(async () => {
+      fireEvent(screen.getByTestId("dp-picker"), "layout", {});
+    });
+    expect(onChange).toHaveBeenCalledTimes(1);
+    const emitted = onChange.mock.calls[0][0] as Date;
+    // The Y/M/D on the emitted Date, read in LOCAL time (which is
+    // what Intl.DateTimeFormat uses for the trigger), must match
+    // the UTC Y/M/D of what the picker sent — i.e. what the user
+    // actually tapped in the Compose calendar.
+    expect(emitted.getFullYear()).toBe(2027);
+    expect(emitted.getMonth()).toBe(6);
+    expect(emitted.getDate()).toBe(2);
+    // Local-midnight (time components zeroed).
+    expect(emitted.getHours()).toBe(0);
+    expect(emitted.getMinutes()).toBe(0);
   });
 });

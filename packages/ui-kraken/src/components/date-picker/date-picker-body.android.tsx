@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 
+import { normalizeAndroidPickedDate } from "../../utils/normalize-android-picked-date";
 import { getExpoUIDateTimePicker } from "./expo-ui-datetime-probe";
 import type { DatePickerBodyProps } from "./date-picker-body-types";
 
@@ -17,6 +18,14 @@ import type { DatePickerBodyProps } from "./date-picker-body-types";
  * dialog instance is created each time — this avoids the
  * dialog-stuck-open state that happens if you toggle `presentation`
  * on a persistent instance.
+ *
+ * The Date returned by `@expo/ui`'s Android bridge is UTC-midnight
+ * of the picked day (a Compose Material 3 quirk that `@expo/ui`
+ * doesn't normalize) — we run every emitted value through
+ * `normalizeAndroidPickedDate` before firing `onChange` so
+ * consumers get a Date whose local calendar day matches what the
+ * user tapped. See `utils/normalize-android-picked-date.ts` for
+ * the full rationale + per-mode behavior.
  */
 export function DatePickerBody({
   value,
@@ -45,10 +54,10 @@ export function DatePickerBody({
 
   const handleValueChange = useCallback(
     (_event: unknown, date: Date | undefined) => {
-      if (date != null) onChange(date);
+      if (date != null) onChange(normalizeAndroidPickedDate(date, mode));
       setOpen(false);
     },
-    [onChange]
+    [onChange, mode]
   );
 
   if (fallback != null) return <>{fallback}</>;
