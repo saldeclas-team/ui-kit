@@ -185,6 +185,16 @@ Brand-tinted palette:
 />
 ```
 
+## Known upstream bug — Android UTC-midnight (mitigated internally)
+
+`@expo/ui/community/datetime-picker` on Android emits a `Date` whose `.getTime()` is UTC-midnight of the picked day (Compose Material 3 contract). Without normalization, in any negative-offset locale (all of the Americas), formatting the returned Date via `Intl.DateTimeFormat` in the device timezone would render as the **previous local day** — e.g. picking July 2 would show "Jul 1" in the trigger.
+
+**Consumers don't need to do anything** — DatePicker's Android body normalizes the returned Date via `normalizeAndroidPickedDate()` before firing `onChange`, so `onChange` always receives a Date whose local calendar day matches what the user tapped. iOS, `mode="time"`, and web are unaffected (bug is Android-specific to `date` / `datetime` modes).
+
+We are **in the process of reporting this upstream** to `expo/expo` — the draft is at [`docs/upstream-issues/expo-ui-android-utc-midnight.md`](../../../../docs/upstream-issues/expo-ui-android-utc-midnight.md) and filing is deferred until ui-kraken v1 ships (Expo's issue template requires a minimal reproducible repo — we'll build one alongside the release announcement). When the upstream fix lands, we'll remove our JS-side workaround.
+
+If you're consuming `@expo/ui/community/datetime-picker` directly (bypassing DatePicker), the same normalization lives at `packages/ui-kraken/src/utils/normalize-android-picked-date.ts` — copy the ~10-line function into your codebase or import from ui-kraken.
+
 ## Accessibility
 
 - Root `<YStack>`: `accessibilityLabel={label}` when set.

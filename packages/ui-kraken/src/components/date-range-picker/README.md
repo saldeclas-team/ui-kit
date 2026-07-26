@@ -183,6 +183,12 @@ Brand-tinted palette:
 />
 ```
 
+## Known upstream bug — Android UTC-midnight (mitigated internally)
+
+Inherited from [`<DatePicker>`](../date-picker/README.md#known-upstream-bug--android-utc-midnight-mitigated-internally): `@expo/ui/community/datetime-picker` on Android emits a Date whose local calendar day is one day before what the user picked (a Compose Material 3 UTC-midnight contract that upstream doesn't normalize). Consumers don't need to do anything — the wrapped DatePickers normalize before firing `onChange`, so both `startDate` and `endDate` reach your `onChange` with the correct local day.
+
+We are in the process of reporting this upstream to `expo/expo` — see [`docs/upstream-issues/expo-ui-android-utc-midnight.md`](../../../../docs/upstream-issues/expo-ui-android-utc-midnight.md) for the draft (deferred until ui-kraken v1). The DatePicker README section has the full explanation.
+
 ## Accessibility
 
 - Root `<YStack>`: `accessibilityLabel={label}` when set.
