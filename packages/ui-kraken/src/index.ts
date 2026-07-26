@@ -219,3 +219,11 @@ export type {
   DatePickerRadius,
   DateTimeStyle,
 } from "./components";
+
+export { DateRangePicker } from "./components";
+export type {
+  DateRangePickerProps,
+  DateRangePickerMode,
+  DateRangePickerOrientation,
+  DateRangePickerRadius,
+} from "./components";

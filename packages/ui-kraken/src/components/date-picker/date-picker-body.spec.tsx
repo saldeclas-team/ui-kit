@@ -5,8 +5,10 @@ import { Pressable, Text } from "react-native";
 // full filename — jest-expo defaults to `.ios.tsx` when you import
 // `./date-picker-body`, but we specifically want the `.tsx`
 // (no-suffix) fallback here.
-const { DatePickerBody } = require("./date-picker-body.tsx");
+import type * as DatePickerBodyModule from "./date-picker-body";
 import type { DatePickerBodyPalette } from "./date-picker-body-types";
+
+const { DatePickerBody } = require("./date-picker-body.tsx") as typeof DatePickerBodyModule;
 
 /**
  * Direct test of the platform-agnostic fallback (`date-picker-body.tsx`).

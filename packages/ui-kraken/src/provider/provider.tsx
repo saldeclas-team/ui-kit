@@ -19,6 +19,7 @@ import {
   mergeSelectBottomSheetColors,
   mergeSegmentedControlColors,
   mergeDatePickerColors,
+  mergeDateRangePickerColors,
   mergeHintColors,
   mergeMultiSelectColors,
   mergeRefreshControlColors,
@@ -96,6 +97,10 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         DEFAULT_TOKENS.datePickerColors,
         tokens?.datePickerColors
       ),
+      dateRangePickerColors: mergeDateRangePickerColors(
+        DEFAULT_TOKENS.dateRangePickerColors,
+        tokens?.dateRangePickerColors
+      ),
     };
     const mergedDark = {
       ...DEFAULT_DARK_TOKENS,
@@ -152,6 +157,10 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
       datePickerColors: mergeDatePickerColors(
         DEFAULT_DARK_TOKENS.datePickerColors,
         dark?.datePickerColors
+      ),
+      dateRangePickerColors: mergeDateRangePickerColors(
+        DEFAULT_DARK_TOKENS.dateRangePickerColors,
+        dark?.dateRangePickerColors
       ),
     };
     const resolvedLight = coarseToFineTokens(mergedLight);

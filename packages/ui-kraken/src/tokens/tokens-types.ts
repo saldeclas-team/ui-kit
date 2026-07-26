@@ -283,6 +283,45 @@ export interface DatePickerColors {
 }
 
 /**
+ * DateRangePicker color palette. Slot-based, 14 slots. Same shape
+ * as `DatePickerColors` (both bounds render identical triggers)
+ * plus one range-specific slot:
+ *
+ * - **Trigger chrome (9)** + **Surrounding labels (3)** + **Native
+ *   picker tint (1)** — identical to `DatePickerColors`. Applied
+ *   uniformly to BOTH the start and end triggers.
+ * - **Range-specific (1)**: `separator` — glyph rendered between
+ *   the two triggers when `orientation="horizontal"` (an arrow,
+ *   dash, etc.). Ignored in the vertical layout.
+ *
+ * Per the "each component owns its color space" rule, this block
+ * is intentionally duplicated from `DatePickerColors` rather than
+ * reused — DateRangePicker's palette can evolve independently
+ * (e.g. adding a separator slot is transparent to DatePicker).
+ */
+export interface DateRangePickerColors {
+  background: string;
+  backgroundDisabled: string;
+  border: string;
+  borderFocused: string;
+  borderError: string;
+  text: string;
+  textDisabled: string;
+  placeholder: string;
+  chevron: string;
+  label: string;
+  helperText: string;
+  errorText: string;
+  /** Tint applied to the native picker's highlighted date / time. */
+  accent: string;
+  /**
+   * Glyph color for the between-triggers separator in horizontal
+   * orientation. No effect when `orientation="vertical"`.
+   */
+  separator: string;
+}
+
+/**
  * SegmentedControl color palette. Slot-based, 9 slots. Split into
  * shared vs. Android-only chrome:
  *
@@ -610,6 +649,7 @@ export interface Tokens {
   selectBottomSheetColors: SelectBottomSheetColors;
   segmentedControlColors: SegmentedControlColors;
   datePickerColors: DatePickerColors;
+  dateRangePickerColors: DateRangePickerColors;
   radius: number;
   spacing: number;
 }
@@ -640,6 +680,7 @@ export interface ResolvedTokens {
   selectBottomSheetColors: SelectBottomSheetColors;
   segmentedControlColors: SegmentedControlColors;
   datePickerColors: DatePickerColors;
+  dateRangePickerColors: DateRangePickerColors;
   radius: {
     sm: number;
     md: number;

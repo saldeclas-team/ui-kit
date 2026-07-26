@@ -1,0 +1,298 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DateRangePicker snapshots both dates set, horizontal 1`] = `
+<View
+  accessibilityLabel="Vacation"
+  testID="date-range-picker"
+>
+  <Text
+    color="#111827"
+    testID="date-range-picker-label"
+  >
+    Vacation
+  </Text>
+  <View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      data-border-color="#D1D5DB"
+      data-disabled={false}
+      data-flex={1}
+      data-label="Start"
+      data-mode="date"
+      data-radius="md"
+      data-value="2027-06-12T05:00:00.000Z"
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="date-range-picker-start"
+    />
+    <Text
+      color="#9CA3AF"
+      testID="date-range-picker-separator"
+    >
+      →
+    </Text>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      data-border-color="#D1D5DB"
+      data-disabled={false}
+      data-flex={1}
+      data-label="End"
+      data-min="2027-06-12T05:00:00.000Z"
+      data-mode="date"
+      data-radius="md"
+      data-value="2027-06-20T05:00:00.000Z"
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="date-range-picker-end"
+    />
+  </View>
+</View>
+`;
+
+exports[`DateRangePicker snapshots default empty state, vertical 1`] = `
+<View
+  accessibilityLabel="Vacation"
+  testID="date-range-picker"
+>
+  <Text
+    color="#111827"
+    testID="date-range-picker-label"
+  >
+    Vacation
+  </Text>
+  <View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      data-border-color="#D1D5DB"
+      data-disabled={false}
+      data-label="Start"
+      data-mode="date"
+      data-radius="md"
+      data-value="null"
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="date-range-picker-start"
+    />
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      data-border-color="#D1D5DB"
+      data-disabled={false}
+      data-label="End"
+      data-mode="date"
+      data-radius="md"
+      data-value="null"
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="date-range-picker-end"
+    />
+  </View>
+  <Text
+    color="#6B7280"
+    testID="date-range-picker-helper-text"
+  >
+    Choose start and end
+  </Text>
+</View>
+`;
+
+exports[`DateRangePicker snapshots error state, vertical 1`] = `
+<View
+  accessibilityLabel="Vacation"
+  testID="date-range-picker"
+>
+  <Text
+    color="#111827"
+    testID="date-range-picker-label"
+  >
+    Vacation
+  </Text>
+  <View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      data-border-color="#DC2626"
+      data-disabled={false}
+      data-label="Start"
+      data-mode="date"
+      data-radius="md"
+      data-value="null"
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="date-range-picker-start"
+    />
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      data-border-color="#DC2626"
+      data-disabled={false}
+      data-label="End"
+      data-mode="date"
+      data-radius="md"
+      data-value="null"
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="date-range-picker-end"
+    />
+  </View>
+  <Text
+    color="#DC2626"
+    testID="date-range-picker-error-text"
+  >
+    Both dates required
+  </Text>
+</View>
+`;

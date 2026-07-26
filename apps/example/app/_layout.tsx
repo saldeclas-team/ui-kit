@@ -115,6 +115,10 @@ export default function RootLayout() {
               name="(pages)/components/date-picker"
               options={{ title: "DatePicker", headerBackTitle: "Components" }}
             />
+            <Stack.Screen
+              name="(pages)/components/date-range-picker"
+              options={{ title: "DateRangePicker", headerBackTitle: "Components" }}
+            />
           </Stack>
         </UIKitProvider>
       </BottomSheetModalProvider>

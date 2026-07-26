@@ -153,6 +153,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "DateRangePicker",
+    description:
+      "Start / end date range with auto-clamping. Composes two DatePickers; vertical or horizontal layout; date + datetime modes.",
+    href: "/components/date-range-picker",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

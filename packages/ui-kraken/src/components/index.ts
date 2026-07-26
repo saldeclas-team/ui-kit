@@ -99,6 +99,15 @@ export type {
   DatePickerColorsInput,
 } from "./date-picker";
 
+export { DateRangePicker } from "./date-range-picker";
+export type {
+  DateRangePickerProps,
+  DateRangePickerMode,
+  DateRangePickerOrientation,
+  DateRangePickerRadius,
+  DateRangePickerColorsInput,
+} from "./date-range-picker";
+
 export { SocialButton } from "./social-button";
 export type {
   SocialButtonProps,

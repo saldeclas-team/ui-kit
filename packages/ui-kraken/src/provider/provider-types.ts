@@ -16,6 +16,7 @@ import type {
   SelectBottomSheetColors,
   SegmentedControlColors,
   DatePickerColors,
+  DateRangePickerColors,
   HintColors,
   HintToneColors,
   MultiSelectColors,
@@ -186,6 +187,13 @@ export type SegmentedControlColorsInput = Partial<SegmentedControlColors>;
 export type DatePickerColorsInput = Partial<DatePickerColors>;
 
 /**
+ * Partial override for `dateRangePickerColors` — 14 slots.
+ * Consumers only declare what they want to change; the rest
+ * fills in from the shipped defaults.
+ */
+export type DateRangePickerColorsInput = Partial<DateRangePickerColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -210,6 +218,7 @@ export interface TokensInput {
   selectBottomSheetColors?: SelectBottomSheetColorsInput;
   segmentedControlColors?: SegmentedControlColorsInput;
   datePickerColors?: DatePickerColorsInput;
+  dateRangePickerColors?: DateRangePickerColorsInput;
   radius?: number;
   spacing?: number;
 }

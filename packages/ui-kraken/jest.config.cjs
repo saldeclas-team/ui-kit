@@ -18,6 +18,10 @@ module.exports = {
     "!src/**/*.stories.tsx",
     "!src/**/*-types.ts",
     "!src/**/*.styled.ts",
+    // Styled files that use the hyphen convention (DatePicker,
+    // DateRangePicker) — same rationale as `.styled.ts`: pure
+    // Tamagui component declarations, no branching to test.
+    "!src/**/*-styled.ts",
   ],
   coverageThreshold: {
     // Realistic thresholds for library code. Branches is intentionally lower
