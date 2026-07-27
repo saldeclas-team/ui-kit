@@ -70,6 +70,10 @@ import {
   DEFAULT_LIGHT_IMAGE_PICKER_SHEET_COLORS,
   DEFAULT_DARK_IMAGE_PICKER_SHEET_COLORS,
 } from "./image-picker-sheet";
+import {
+  DEFAULT_LIGHT_SCREEN_CONTAINER_COLORS,
+  DEFAULT_DARK_SCREEN_CONTAINER_COLORS,
+} from "./screen-container";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -99,6 +103,7 @@ export const DEFAULT_TOKENS: Tokens = {
   dateRangePickerColors: DEFAULT_LIGHT_DATE_RANGE_PICKER_COLORS,
   bottomSheetColors: DEFAULT_LIGHT_BOTTOM_SHEET_COLORS,
   imagePickerSheetColors: DEFAULT_LIGHT_IMAGE_PICKER_SHEET_COLORS,
+  screenContainerColors: DEFAULT_LIGHT_SCREEN_CONTAINER_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -131,6 +136,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   dateRangePickerColors: DEFAULT_DARK_DATE_RANGE_PICKER_COLORS,
   bottomSheetColors: DEFAULT_DARK_BOTTOM_SHEET_COLORS,
   imagePickerSheetColors: DEFAULT_DARK_IMAGE_PICKER_SHEET_COLORS,
+  screenContainerColors: DEFAULT_DARK_SCREEN_CONTAINER_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -248,3 +254,8 @@ export {
   DEFAULT_DARK_IMAGE_PICKER_SHEET_COLORS,
   mergeImagePickerSheetColors,
 } from "./image-picker-sheet";
+export {
+  DEFAULT_LIGHT_SCREEN_CONTAINER_COLORS,
+  DEFAULT_DARK_SCREEN_CONTAINER_COLORS,
+  mergeScreenContainerColors,
+} from "./screen-container";

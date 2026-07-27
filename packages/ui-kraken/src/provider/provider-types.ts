@@ -20,6 +20,7 @@ import type {
   DateRangePickerColors,
   HintColors,
   ImagePickerSheetColors,
+  ScreenContainerColors,
   HintToneColors,
   MultiSelectColors,
   RefreshControlColors,
@@ -210,6 +211,13 @@ export type BottomSheetColorsInput = Partial<BottomSheetColors>;
 export type ImagePickerSheetColorsInput = Partial<ImagePickerSheetColors>;
 
 /**
+ * Partial override for `screenContainerColors` — 3 slots.
+ * Consumers only declare what they want to change; the rest
+ * fills in from the shipped defaults.
+ */
+export type ScreenContainerColorsInput = Partial<ScreenContainerColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -237,6 +245,7 @@ export interface TokensInput {
   dateRangePickerColors?: DateRangePickerColorsInput;
   bottomSheetColors?: BottomSheetColorsInput;
   imagePickerSheetColors?: ImagePickerSheetColorsInput;
+  screenContainerColors?: ScreenContainerColorsInput;
   radius?: number;
   spacing?: number;
 }

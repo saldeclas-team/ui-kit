@@ -243,3 +243,12 @@ export type {
   ImagePickerSheetRadius,
   PickedAsset,
 } from "./components";
+
+export { ScreenContainer } from "./components";
+export type {
+  ScreenContainerProps,
+  ScreenContainerEdge,
+  ScreenContainerKeyboardBehavior,
+  ScreenContainerStatusBarStyle,
+  ScreenContainerScrollProps,
+} from "./components";

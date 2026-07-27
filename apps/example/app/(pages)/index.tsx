@@ -174,6 +174,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "ScreenContainer",
+    description:
+      "Safe-area-aware screen wrapper with themed background, auto status bar, and optional keyboard-avoiding. Every screen's outer layer.",
+    href: "/components/screen-container",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

@@ -22,6 +22,7 @@ import {
   mergeDateRangePickerColors,
   mergeBottomSheetColors,
   mergeImagePickerSheetColors,
+  mergeScreenContainerColors,
   mergeHintColors,
   mergeMultiSelectColors,
   mergeRefreshControlColors,
@@ -111,6 +112,10 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         DEFAULT_TOKENS.imagePickerSheetColors,
         tokens?.imagePickerSheetColors
       ),
+      screenContainerColors: mergeScreenContainerColors(
+        DEFAULT_TOKENS.screenContainerColors,
+        tokens?.screenContainerColors
+      ),
     };
     const mergedDark = {
       ...DEFAULT_DARK_TOKENS,
@@ -179,6 +184,10 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
       imagePickerSheetColors: mergeImagePickerSheetColors(
         DEFAULT_DARK_TOKENS.imagePickerSheetColors,
         dark?.imagePickerSheetColors
+      ),
+      screenContainerColors: mergeScreenContainerColors(
+        DEFAULT_DARK_TOKENS.screenContainerColors,
+        dark?.screenContainerColors
       ),
     };
     const resolvedLight = coarseToFineTokens(mergedLight);

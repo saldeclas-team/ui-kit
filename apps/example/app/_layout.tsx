@@ -127,6 +127,10 @@ export default function RootLayout() {
               name="(pages)/components/image-picker-sheet"
               options={{ title: "ImagePickerSheet", headerBackTitle: "Components" }}
             />
+            <Stack.Screen
+              name="(pages)/components/screen-container"
+              options={{ title: "ScreenContainer", headerBackTitle: "Components" }}
+            />
           </Stack>
         </UIKitProvider>
       </BottomSheetModalProvider>

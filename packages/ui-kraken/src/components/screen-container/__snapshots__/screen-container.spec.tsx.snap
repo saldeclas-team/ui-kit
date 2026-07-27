@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScreenContainer snapshots dark palette + top+left+right edges (no bottom for tab bar layout) 1`] = `
+<View
+  backgroundColor="#0B0B0F"
+  paddingBottom={0}
+  paddingLeft={0}
+  paddingRight={0}
+  paddingTop={50}
+  testID="screen-container"
+>
+  <View
+    backgroundColor="#0B0B0F"
+  >
+    <Text>
+      dark body
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`ScreenContainer snapshots default light + all edges 1`] = `
+<View
+  backgroundColor="#FFFFFF"
+  paddingBottom={34}
+  paddingLeft={0}
+  paddingRight={0}
+  paddingTop={50}
+  testID="screen-container"
+>
+  <View
+    backgroundColor="#FFFFFF"
+  >
+    <Text>
+      hello
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`ScreenContainer snapshots keyboardBehavior='padding' wraps in KeyboardAvoidingView 1`] = `
+<View
+  backgroundColor="#FFFFFF"
+  paddingBottom={34}
+  paddingLeft={0}
+  paddingRight={0}
+  paddingTop={50}
+  testID="screen-container"
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        {
+          "paddingBottom": 0,
+        },
+      ]
+    }
+    testID="screen-container-keyboard-avoiding"
+  >
+    <View
+      backgroundColor="#FFFFFF"
+    >
+      <Text>
+        form
+      </Text>
+    </View>
+  </View>
+</View>
+`;
