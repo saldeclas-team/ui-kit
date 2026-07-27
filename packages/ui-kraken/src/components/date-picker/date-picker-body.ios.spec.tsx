@@ -260,4 +260,49 @@ describe("DatePickerBody.ios (modal + staged value)", () => {
     expect(screen.queryByTestId("dp-trigger")).toBeNull();
     expect(screen.queryByTestId("dp-picker")).toBeNull();
   });
+
+  it("handleValueChange ignores undefined dates from the native picker (defensive branch)", async () => {
+    // Native pickers occasionally emit `undefined` as the date arg
+    // when the user dismisses without picking. `handleValueChange`
+    // guards this and leaves the staged value untouched — the
+    // subsequent Done press commits the unchanged initial value.
+    const onChange = jest.fn();
+    const initial = new Date(Date.UTC(2027, 5, 12));
+    // Craft a fake picker that fires onValueChange with (event, undefined).
+    mockNativeDateTime.mockReturnValue(function FakeUndef(props: {
+      testID?: string;
+      onValueChange?: (event: unknown, date: Date | undefined) => void;
+    }) {
+      const rn = jest.requireActual("react-native");
+      const React = jest.requireActual("react");
+      return React.createElement(rn.Pressable, {
+        testID: props.testID,
+        onPress: () => props.onValueChange?.({}, undefined),
+      });
+    });
+    await render(
+      <DatePickerBody
+        value={initial}
+        onChange={onChange}
+        disabled={false}
+        mode="date"
+        appearance="light"
+        chromeColors={CHROME}
+        testID="dp"
+        renderTrigger={(open) => <TriggerStub testID="dp-trigger" onPress={open} />}
+      />
+    );
+    await act(async () => {
+      fireEvent.press(screen.getByTestId("dp-trigger"));
+    });
+    // Fake picker fires with date=undefined — the setStaged branch
+    // is skipped, so Done still commits the initial staged value.
+    await act(async () => {
+      fireEvent.press(screen.getByTestId("dp-picker"));
+    });
+    await act(async () => {
+      fireEvent.press(screen.getByTestId("dp-done"));
+    });
+    expect(onChange).toHaveBeenCalledWith(initial);
+  });
 });

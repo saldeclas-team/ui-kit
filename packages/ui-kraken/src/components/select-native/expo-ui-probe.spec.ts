@@ -32,4 +32,21 @@ describe("expo-ui-probe", () => {
       expect(probe.getExpoUIPicker()).toBeNull();
     });
   });
+
+  it("returns a non-null MenuView when @expo/ui/community/menu resolves", () => {
+    jest.isolateModules(() => {
+      const probe: typeof ExpoUIProbe = require("./expo-ui-probe");
+      expect(probe.getExpoUIMenuView()).not.toBeNull();
+    });
+  });
+
+  it("returns null MenuView when @expo/ui/community/menu require throws", () => {
+    jest.isolateModules(() => {
+      jest.doMock("@expo/ui/community/menu", () => {
+        throw new Error("Submodule not installed");
+      });
+      const probe: typeof ExpoUIProbe = require("./expo-ui-probe");
+      expect(probe.getExpoUIMenuView()).toBeNull();
+    });
+  });
 });

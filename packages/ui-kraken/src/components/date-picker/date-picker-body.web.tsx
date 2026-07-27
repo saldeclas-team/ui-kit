@@ -1,5 +1,4 @@
 import { useCallback, useRef } from "react";
-import { Platform } from "react-native";
 
 import type { DatePickerBodyProps } from "./date-picker-body-types";
 
@@ -33,30 +32,17 @@ export function DatePickerBody({
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleOpen = useCallback(() => {
-    if (disabled) return;
-    const el = inputRef.current;
-    if (el == null) return;
-    // showPicker() is not on all browsers' typings yet — cast narrowly.
-    const withPicker = el as HTMLInputElement & { showPicker?: () => void };
-    if (typeof withPicker.showPicker === "function") {
-      withPicker.showPicker();
-    } else {
-      el.focus();
-    }
+    openInputPicker(inputRef.current, disabled);
   }, [disabled]);
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      const raw = event.target.value;
-      if (raw === "") return;
-      const parsed = new Date(raw);
-      if (Number.isFinite(parsed.getTime())) onChange(parsed);
+      commitInputChange(event.target.value, onChange);
     },
     [onChange]
   );
 
   if (fallback != null) return <>{fallback}</>;
-  if (Platform.OS !== "web") return null;
 
   const inputType = mode === "time" ? "time" : mode === "datetime" ? "datetime-local" : "date";
   const inputValue = value == null ? "" : toInputValue(value, inputType);
@@ -86,12 +72,46 @@ export function DatePickerBody({
 }
 
 /**
+ * Open the browser's native picker for a hidden `<input>`.
+ * Extracted from the component so the spec can exercise every
+ * branch (disabled swallow, null-ref no-op, `showPicker` vs
+ * `.focus()` fallback) directly — jest-expo doesn't render the
+ * `<input>` host element so we can't reach it via a rendered
+ * ref. `disabled` first so the guard mirrors the callsite.
+ */
+export function openInputPicker(el: HTMLInputElement | null, disabled: boolean): void {
+  if (disabled) return;
+  if (el == null) return;
+  // showPicker() is not on all browsers' typings yet — cast narrowly.
+  const withPicker = el as HTMLInputElement & { showPicker?: () => void };
+  if (typeof withPicker.showPicker === "function") {
+    withPicker.showPicker();
+  } else {
+    el.focus();
+  }
+}
+
+/**
+ * Commit an `<input>` change event to `onChange`, guarding both
+ * empty strings (user cleared the field) and unparseable ISOs.
+ * Extracted for the same reason as `openInputPicker`.
+ */
+export function commitInputChange(raw: string, onChange: (next: Date) => void): void {
+  if (raw === "") return;
+  const parsed = new Date(raw);
+  if (Number.isFinite(parsed.getTime())) onChange(parsed);
+}
+
+/**
  * Format a JS Date into the string shape the given `<input>` type
  * expects (`YYYY-MM-DD` / `HH:MM` / `YYYY-MM-DDTHH:MM`). All
  * values are formatted in the browser's local timezone — mirrors
- * what the user sees in the picker.
+ * what the user sees in the picker. Exported so the spec can
+ * exercise every mode branch directly (the enclosing component
+ * only reaches this via the hidden `<input>`, which jest-expo
+ * doesn't render).
  */
-function toInputValue(date: Date, type: "date" | "time" | "datetime-local"): string {
+export function toInputValue(date: Date, type: "date" | "time" | "datetime-local"): string {
   const pad = (n: number) => String(n).padStart(2, "0");
   const y = date.getFullYear();
   const m = pad(date.getMonth() + 1);
