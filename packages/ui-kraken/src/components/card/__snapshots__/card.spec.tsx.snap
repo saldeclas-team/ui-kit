@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card snapshots compound card (Header + Body + Footer) 1`] = `
+<View
+  backgroundColor="#F9FAFB"
+  testID="card"
+>
+  <View
+    testID="card-header"
+  >
+    <Text>
+      Header title
+    </Text>
+  </View>
+  <View
+    testID="card-body"
+  >
+    <Text>
+      Body copy.
+    </Text>
+  </View>
+  <View
+    testID="card-footer"
+  >
+    <Text>
+      Action
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Card snapshots dark theme × raised 1`] = `
+<View
+  backgroundColor="#111827"
+  testID="card"
+>
+  <Text>
+    Dark raised
+  </Text>
+</View>
+`;
+
+exports[`Card snapshots level=base 1`] = `
+<View
+  backgroundColor="#FFFFFF"
+  testID="card"
+>
+  <Text>
+    level=
+    base
+  </Text>
+</View>
+`;
+
+exports[`Card snapshots level=overlay 1`] = `
+<View
+  backgroundColor="#FFFFFF"
+  testID="card"
+>
+  <Text>
+    level=
+    overlay
+  </Text>
+</View>
+`;
+
+exports[`Card snapshots level=sunken 1`] = `
+<View
+  backgroundColor="#F3F4F6"
+  testID="card"
+>
+  <Text>
+    level=
+    sunken
+  </Text>
+</View>
+`;
+
+exports[`Card snapshots simple card (default level=raised) 1`] = `
+<View
+  backgroundColor="#F9FAFB"
+  borderRadius={12}
+  padding={16}
+  testID="card"
+>
+  <Text>
+    Simple content
+  </Text>
+</View>
+`;

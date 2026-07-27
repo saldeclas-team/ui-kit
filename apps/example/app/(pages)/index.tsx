@@ -62,6 +62,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Card",
+    description:
+      "Rounded, padded, semantically-elevated container on top of Surface. Compound Card + Card.Header + Card.Body + Card.Footer.",
+    href: "/components/card",
+    status: "shipped",
+  },
+  {
     title: "RefreshControl",
     description:
       "Themed pull-to-refresh spinner for ScrollView / FlatList — iOS + Android props wired from one palette.",
