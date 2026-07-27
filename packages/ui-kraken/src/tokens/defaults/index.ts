@@ -66,6 +66,10 @@ import {
   DEFAULT_LIGHT_BOTTOM_SHEET_COLORS,
   DEFAULT_DARK_BOTTOM_SHEET_COLORS,
 } from "./bottom-sheet";
+import {
+  DEFAULT_LIGHT_IMAGE_PICKER_SHEET_COLORS,
+  DEFAULT_DARK_IMAGE_PICKER_SHEET_COLORS,
+} from "./image-picker-sheet";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -94,6 +98,7 @@ export const DEFAULT_TOKENS: Tokens = {
   datePickerColors: DEFAULT_LIGHT_DATE_PICKER_COLORS,
   dateRangePickerColors: DEFAULT_LIGHT_DATE_RANGE_PICKER_COLORS,
   bottomSheetColors: DEFAULT_LIGHT_BOTTOM_SHEET_COLORS,
+  imagePickerSheetColors: DEFAULT_LIGHT_IMAGE_PICKER_SHEET_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -125,6 +130,7 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   datePickerColors: DEFAULT_DARK_DATE_PICKER_COLORS,
   dateRangePickerColors: DEFAULT_DARK_DATE_RANGE_PICKER_COLORS,
   bottomSheetColors: DEFAULT_DARK_BOTTOM_SHEET_COLORS,
+  imagePickerSheetColors: DEFAULT_DARK_IMAGE_PICKER_SHEET_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -237,3 +243,8 @@ export {
   DEFAULT_DARK_BOTTOM_SHEET_COLORS,
   mergeBottomSheetColors,
 } from "./bottom-sheet";
+export {
+  DEFAULT_LIGHT_IMAGE_PICKER_SHEET_COLORS,
+  DEFAULT_DARK_IMAGE_PICKER_SHEET_COLORS,
+  mergeImagePickerSheetColors,
+} from "./image-picker-sheet";

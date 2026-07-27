@@ -117,6 +117,15 @@ export type {
   BottomSheetColorsInput,
 } from "./bottom-sheet";
 
+export { ImagePickerSheet } from "./image-picker-sheet";
+export type {
+  ImagePickerSheetProps,
+  ImagePickerSheetRef,
+  ImagePickerSheetRadius,
+  ImagePickerSheetColorsInput,
+  PickedAsset,
+} from "./image-picker-sheet";
+
 export { SocialButton } from "./social-button";
 export type {
   SocialButtonProps,

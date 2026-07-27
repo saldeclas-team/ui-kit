@@ -24,6 +24,7 @@ import type {
   BottomSheetColors,
   DatePickerColors,
   DateRangePickerColors,
+  ImagePickerSheetColors,
   RefreshControlColors,
   SegmentedControlColors,
   SelectBottomSheetColors,
@@ -412,6 +413,21 @@ export function flattenBottomSheetColors(colors: BottomSheetColors): Record<stri
   for (const slot of Object.keys(colors) as Array<keyof BottomSheetColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiBottomSheet${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `imagePickerSheetColors` slot map into
+ * `$uiImagePickerSheet{PascalCase}` Tamagui tokens.
+ */
+export function flattenImagePickerSheetColors(
+  colors: ImagePickerSheetColors
+): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof ImagePickerSheetColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiImagePickerSheet${capitalized}`] = colors[slot];
   }
   return out;
 }

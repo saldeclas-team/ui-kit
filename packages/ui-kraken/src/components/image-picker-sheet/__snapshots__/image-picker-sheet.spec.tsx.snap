@@ -1,0 +1,279 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ImagePickerSheet snapshots default + peers available 1`] = `
+<View
+  data-bg="#FFFFFF"
+  data-handle="#9CA3AF"
+  testID="image-picker-sheet-sheet"
+>
+  <Text
+    color="#111827"
+    testID="image-picker-sheet-title"
+  >
+    Choose photo
+  </Text>
+  <View>
+    <View
+      accessibilityLabel="Take photo"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="image-picker-sheet-camera"
+    >
+      <View
+        backgroundColor="#FFFFFF"
+      >
+        <Text
+          color="#111827"
+        >
+          Take photo
+        </Text>
+      </View>
+    </View>
+    <View
+      backgroundColor="#E5E7EB"
+    />
+    <View
+      accessibilityLabel="Choose from library"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="image-picker-sheet-gallery"
+    >
+      <View
+        backgroundColor="#FFFFFF"
+      >
+        <Text
+          color="#111827"
+        >
+          Choose from library
+        </Text>
+      </View>
+    </View>
+    <View
+      backgroundColor="#E5E7EB"
+    />
+    <View
+      accessibilityLabel="Cancel"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="image-picker-sheet-cancel"
+    >
+      <View
+        backgroundColor="#FFFFFF"
+      >
+        <Text
+          color="#DC2626"
+        >
+          Cancel
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ImagePickerSheet snapshots missing peer fallback 1`] = `
+<View
+  data-bg="#FFFFFF"
+  data-handle="#9CA3AF"
+  testID="image-picker-sheet-sheet"
+>
+  <Text
+    color="#DC2626"
+    testID="image-picker-sheet-missing-peer"
+  >
+    Install \`expo-image-picker\` to enable ImagePickerSheet.
+  </Text>
+</View>
+`;
+
+exports[`ImagePickerSheet snapshots web layout (no camera row) 1`] = `
+<View
+  data-bg="#FFFFFF"
+  data-handle="#9CA3AF"
+  testID="image-picker-sheet-sheet"
+>
+  <Text
+    color="#111827"
+    testID="image-picker-sheet-title"
+  >
+    Choose photo
+  </Text>
+  <View>
+    <View
+      accessibilityLabel="Choose from library"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="image-picker-sheet-gallery"
+    >
+      <View
+        backgroundColor="#FFFFFF"
+      >
+        <Text
+          color="#111827"
+        >
+          Choose from library
+        </Text>
+      </View>
+    </View>
+    <View
+      backgroundColor="#E5E7EB"
+    />
+    <View
+      accessibilityLabel="Cancel"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="image-picker-sheet-cancel"
+    >
+      <View
+        backgroundColor="#FFFFFF"
+      >
+        <Text
+          color="#DC2626"
+        >
+          Cancel
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

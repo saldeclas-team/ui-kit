@@ -235,3 +235,11 @@ export type {
   BottomSheetRadius,
   BottomSheetSnapPoint,
 } from "./components";
+
+export { ImagePickerSheet } from "./components";
+export type {
+  ImagePickerSheetProps,
+  ImagePickerSheetRef,
+  ImagePickerSheetRadius,
+  PickedAsset,
+} from "./components";

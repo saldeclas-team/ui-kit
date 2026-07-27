@@ -27,4 +27,5 @@ export type {
   DatePickerColorsInput,
   DateRangePickerColorsInput,
   BottomSheetColorsInput,
+  ImagePickerSheetColorsInput,
 } from "./provider-types";

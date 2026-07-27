@@ -30,6 +30,7 @@ export function coarseToFineTokens(tokens: Tokens): ResolvedTokens {
     datePickerColors,
     dateRangePickerColors,
     bottomSheetColors,
+    imagePickerSheetColors,
     radius,
     spacing,
   } = tokens;
@@ -56,6 +57,7 @@ export function coarseToFineTokens(tokens: Tokens): ResolvedTokens {
     datePickerColors,
     dateRangePickerColors,
     bottomSheetColors,
+    imagePickerSheetColors,
     radius: {
       sm: radius * 0.5,
       md: radius,

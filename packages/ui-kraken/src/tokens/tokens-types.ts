@@ -356,6 +356,34 @@ export interface BottomSheetColors {
 }
 
 /**
+ * ImagePickerSheet color palette. Slot-based, 8 slots.
+ *
+ * Split into three groupings:
+ *
+ * - **Sheet chrome (2)**: `sheetBackground`, `sheetHandle` —
+ *   forwarded to the internally composed `<BottomSheet>`. Same
+ *   pattern as `SelectBottomSheetColors` — this component owns
+ *   its own sheet chrome slots and maps them onto BottomSheet's
+ *   smaller palette when it composes.
+ * - **Action rows (5)**: `actionBackground` +
+ *   `actionBackgroundPressed`, `actionText`, `actionIcon`,
+ *   `cancelText` (destructive tone for the Cancel row per iOS
+ *   action-sheet convention), `divider` (thin line between rows).
+ * - **Missing peer (1)**: text color for the "install
+ *   expo-image-picker" fallback hint.
+ */
+export interface ImagePickerSheetColors {
+  sheetBackground: string;
+  sheetHandle: string;
+  actionBackground: string;
+  actionBackgroundPressed: string;
+  actionText: string;
+  actionIcon: string;
+  cancelText: string;
+  divider: string;
+}
+
+/**
  * SegmentedControl color palette. Slot-based, 9 slots. Split into
  * shared vs. Android-only chrome:
  *
@@ -685,6 +713,7 @@ export interface Tokens {
   datePickerColors: DatePickerColors;
   dateRangePickerColors: DateRangePickerColors;
   bottomSheetColors: BottomSheetColors;
+  imagePickerSheetColors: ImagePickerSheetColors;
   radius: number;
   spacing: number;
 }
@@ -717,6 +746,7 @@ export interface ResolvedTokens {
   datePickerColors: DatePickerColors;
   dateRangePickerColors: DateRangePickerColors;
   bottomSheetColors: BottomSheetColors;
+  imagePickerSheetColors: ImagePickerSheetColors;
   radius: {
     sm: number;
     md: number;

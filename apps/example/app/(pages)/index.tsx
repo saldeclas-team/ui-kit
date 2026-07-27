@@ -167,6 +167,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "ImagePickerSheet",
+    description:
+      "Bottom-sheet image picker via expo-image-picker. Camera / gallery / cancel action rows. Ref-controlled, permission-aware.",
+    href: "/components/image-picker-sheet",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",
