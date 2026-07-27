@@ -43,8 +43,9 @@ export interface ButtonColors {
  *   Meaning-carrying slots for links, feedback messages, etc.
  * - **On-* (4)** — `onPrimary`, `onSecondary`, `onSuccess`, `onDanger`. Text
  *   colors used specifically when the text sits on top of a solid brand
- *   surface (e.g. label inside a filled Button, text on a Toast). Auto-contrast
- *   is intentionally NOT applied — consumers pick the right `on-*` explicitly.
+ *   surface (e.g. label inside a filled Button, colored Alert container).
+ *   Auto-contrast is intentionally NOT applied — consumers pick the right
+ *   `on-*` explicitly.
  */
 export interface TextColors {
   primary: string;

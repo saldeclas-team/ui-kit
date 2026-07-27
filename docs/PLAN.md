@@ -93,7 +93,7 @@ Current stance: components accept `ReactNode` slots (`leftIcon`, `rightIcon`) �
 
 ### ~~2.5 Portal host / overlay stack~~ — **RESOLVED** (implicitly by §2.1)
 
-`UIKitProvider` mounts `PortalProvider` from Tamagui out of the box, so future `Sheet` / `Dialog` / `Toast` land non-breakingly.
+`UIKitProvider` mounts `PortalProvider` from Tamagui out of the box, so future `Sheet` / `Dialog` land non-breakingly. (Toast was originally planned here but dropped — see [`COMPONENTS-BATCH-2-PLAN.md`](./COMPONENTS-BATCH-2-PLAN.md) for the rationale.)
 
 ### 2.6 Deferred to later versions
 
@@ -153,7 +153,7 @@ Order TBD; probably:
 - `Badge`
 - `Divider`
 - `Spinner`
-- `Toast` (needs 2.5)
+- ~~`Toast` (needs 2.5)~~ — dropped from scope; use `sonner-native` directly (see [`COMPONENTS-BATCH-2-PLAN.md`](./COMPONENTS-BATCH-2-PLAN.md))
 
 ### v0.4 — overlays
 

@@ -81,7 +81,7 @@ Following the optional-peer pattern from v0.5.0 (`react-native-web`):
 Documented so future contributors know these were considered and deferred, not overlooked:
 
 - **`Icon`** — no internal icon component ships in this batch. Consumers pass icons via `ReactNode` props (same pattern as `Button.leftIcon`, `Alert.icon`). Ships as its own initiative later, once we have consensus on the icon-library approach (SVG glyphs internal vs. `expo-symbols` vs. `lucide-react-native` as optional peer).
-- **`Select`, `SegmentedControl`, `DatePicker`, `DateRangePicker`, `Toast`, `BottomSheet`, `ImagePickerSheet`, `ScreenContainer`** — each brings one or more heavier peer deps (`@expo/ui`, `@gorhom/bottom-sheet`, `@react-native-community/datetimepicker`, `sonner-native`, `expo-image-picker`, `date-fns`, `react-native-safe-area-context`). Deferred to `docs/COMPONENTS-BATCH-2-PLAN.md` (future initiative) so the batch-1 PR stays reviewable and consumers aren't forced to pull deps they don't need for the batch-1 set.
+- **`Select`, `SegmentedControl`, `DatePicker`, `DateRangePicker`, `BottomSheet`, `ImagePickerSheet`, `ScreenContainer`** — each brings one or more heavier peer deps (`@expo/ui`, `@gorhom/bottom-sheet`, `@react-native-community/datetimepicker`, `expo-image-picker`, `react-native-safe-area-context`). Deferred to `docs/COMPONENTS-BATCH-2-PLAN.md` (future initiative) so the batch-1 PR stays reviewable and consumers aren't forced to pull deps they don't need for the batch-1 set. (Toast was originally in this list too but later dropped — see the Batch 2 plan for the rationale.)
 
 ## How to ship
 
@@ -107,5 +107,5 @@ Per component, executed in this order:
 
 Post-launch, the natural next steps:
 
-- **Batch 2** — `docs/COMPONENTS-BATCH-2-PLAN.md` covering `Select`, `SegmentedControl`, `DatePicker`, `Toast`, `BottomSheet`, etc. Each of those brings one or more heavier peer deps, so they belong in their own scoped release.
+- **Batch 2** — `docs/COMPONENTS-BATCH-2-PLAN.md` covering `Select`, `SegmentedControl`, `DatePicker`, `DateRangePicker`, `BottomSheet`, `ImagePickerSheet`, `ScreenContainer`. Each brings one or more heavier peer deps, so they belong in their own scoped release.
 - **Icon component** — separate initiative. Ships once the icon-library approach is decided.

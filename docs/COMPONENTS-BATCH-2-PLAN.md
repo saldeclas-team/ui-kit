@@ -1,6 +1,6 @@
 # Components — Batch 2 migration plan
 
-**Status:** planned for ui-kraken v0.9.0. Continuation of the duna-app → ui-kraken migration; picks up the 8 components that Batch 1 deferred because each brings one or more heavier peer deps.
+**Status:** planned for ui-kraken v0.9.0. Continuation of the duna-app → ui-kraken migration; picks up the 7 components that Batch 1 deferred because each brings one or more heavier peer deps.
 
 Branch: `feat/duna-migration-batch-2`.
 
@@ -10,7 +10,9 @@ Batch 1 (11 pure-UI primitives — Input, CurrencyInput, Surface, RefreshControl
 
 ## Scope
 
-Eight components across three phases. Every component ships with the same recipe as Batch 1: own color block on the token schema (13-step wiring), 100% test coverage, Storybook stories, README, live example page, atomic commit with rich body.
+Seven components across three phases. Every component ships with the same recipe as Batch 1: own color block on the token schema (13-step wiring), 100% test coverage, Storybook stories, README, live example page, atomic commit with rich body.
+
+**Note on Toast**: originally scoped for Phase B, but dropped after review — `sonner-native` already provides a great imperative API + theming, and toasts are cross-cutting infrastructure (mount-once-at-root), not composable UI. Wrapping it in ui-kraken would just add a facade layer with no real UX benefit. Consumers who need toasts install `sonner-native` directly and wire our palette in their `<Toaster />` config; that pattern will be documented in the migration guide.
 
 New for Batch 2: each component carries **at least one peer dependency** — the whole point of deferring these was so consumers who don't need them don't have to install them. Every peer is registered as `optional: true` in `packages/ui-kraken/peerDependenciesMeta`, and the component falls back gracefully (or gates behind a runtime check) when the peer isn't present.
 
@@ -25,19 +27,18 @@ New for Batch 2: each component carries **at least one peer dependency** — the
 | 3   | DatePicker        | Native date picker (iOS spinner / Android calendar). Controlled `Date`.    | `@react-native-community/datetimepicker`                                | [`docs/DATE-PICKER-PLAN.md`](./DATE-PICKER-PLAN.md)                 |   ⏳   |
 | 4   | DateRangePicker   | Two-input range picker built on `DatePicker` (start + end).                | `@react-native-community/datetimepicker` (reused from #3)               | [`docs/DATE-RANGE-PICKER-PLAN.md`](./DATE-RANGE-PICKER-PLAN.md)     |   ⏳   |
 
-### Phase B — Overlays & notifications (3 components)
+### Phase B — Overlays (2 components)
 
-| #   | Component        | 1-line                                                                             | Peer dep(s)                                                          | Plan doc                                                          | Status |
-| --- | ---------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------- | :----: |
-| 5   | Toast            | Transient notification stack. `Toast.show({...})` imperative API + provider mount. | `sonner-native`                                                      | [`docs/TOAST-PLAN.md`](./TOAST-PLAN.md)                           |   ⏳   |
-| 6   | BottomSheet      | Draggable modal panel with snap points. Provider-based portal mount.               | `@gorhom/bottom-sheet` (+ `react-native-gesture-handler` transitive) | [`docs/BOTTOM-SHEET-PLAN.md`](./BOTTOM-SHEET-PLAN.md)             |   ⏳   |
-| 7   | ImagePickerSheet | Bottom sheet that wraps `expo-image-picker` — camera / gallery / cancel actions.   | `expo-image-picker` + `@gorhom/bottom-sheet` (reused from #6)        | [`docs/IMAGE-PICKER-SHEET-PLAN.md`](./IMAGE-PICKER-SHEET-PLAN.md) |   ⏳   |
+| #   | Component        | 1-line                                                                           | Peer dep(s)                                                          | Plan doc                                                          | Status |
+| --- | ---------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ----------------------------------------------------------------- | :----: |
+| 5   | BottomSheet      | Draggable modal panel with snap points. Provider-based portal mount.             | `@gorhom/bottom-sheet` (+ `react-native-gesture-handler` transitive) | [`docs/BOTTOM-SHEET-PLAN.md`](./BOTTOM-SHEET-PLAN.md)             |   ⏳   |
+| 6   | ImagePickerSheet | Bottom sheet that wraps `expo-image-picker` — camera / gallery / cancel actions. | `expo-image-picker` + `@gorhom/bottom-sheet` (reused from #5)        | [`docs/IMAGE-PICKER-SHEET-PLAN.md`](./IMAGE-PICKER-SHEET-PLAN.md) |   ⏳   |
 
 ### Phase C — Layout (1 component)
 
 | #   | Component       | 1-line                                                                                  | Peer dep(s)                      | Plan doc                                                      | Status |
 | --- | --------------- | --------------------------------------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------- | :----: |
-| 8   | ScreenContainer | Safe-area-aware screen wrapper. Optional status-bar color + keyboard-avoiding behavior. | `react-native-safe-area-context` | [`docs/SCREEN-CONTAINER-PLAN.md`](./SCREEN-CONTAINER-PLAN.md) |   ⏳   |
+| 7   | ScreenContainer | Safe-area-aware screen wrapper. Optional status-bar color + keyboard-avoiding behavior. | `react-native-safe-area-context` | [`docs/SCREEN-CONTAINER-PLAN.md`](./SCREEN-CONTAINER-PLAN.md) |   ⏳   |
 
 ---
 
@@ -55,7 +56,6 @@ Every peer dep added by Batch 2 is registered as optional. Consumers who don't u
   "tamagui": ">=1.100.0",
   "@expo/ui": "*",
   "@react-native-community/datetimepicker": "*",
-  "sonner-native": "*",
   "@gorhom/bottom-sheet": "*",
   "expo-image-picker": "*",
   "expo-web-browser": "*",
@@ -65,7 +65,6 @@ Every peer dep added by Batch 2 is registered as optional. Consumers who don't u
   "react-native-web": { "optional": true },
   "@expo/ui": { "optional": true },
   "@react-native-community/datetimepicker": { "optional": true },
-  "sonner-native": { "optional": true },
   "@gorhom/bottom-sheet": { "optional": true },
   "expo-image-picker": { "optional": true },
   "expo-web-browser": { "optional": true },
@@ -77,12 +76,11 @@ Each component uses the try / catch require pattern (same as `ExternalLink` from
 
 ## Provider surface additions
 
-Two of the Batch 2 components need mounts on `UIKitProvider` to work — the imperative `Toast.show(...)` API needs a global stack render, and `BottomSheet` needs a portal host. Neither breaks the existing provider API; both are additive.
+One Batch 2 component needs a mount on `UIKitProvider` to work — `BottomSheet` needs a portal host. This doesn't break the existing provider API; it's additive.
 
-- **`Toast`** — the provider mounts a `<Toaster />` from `sonner-native` at the tree root. A new `<UIKitProvider toaster={{ position: "top", ... }}>` prop controls the mount config.
 - **`BottomSheet`** — the provider mounts `<BottomSheetModalProvider>` at the tree root so `bottomSheetRef.current?.present()` works from anywhere.
 
-Both mounts are conditional on the peer dep being installed (runtime check in the provider). Consumers who don't install `sonner-native` / `@gorhom/bottom-sheet` see no change to the provider — the mount just doesn't render.
+The mount is conditional on the peer dep being installed (runtime check in the provider). Consumers who don't install `@gorhom/bottom-sheet` see no change to the provider — the mount just doesn't render.
 
 ## Wiring recipe (unchanged from Batch 1)
 
