@@ -1,58 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BottomSheet snapshots dark palette + peer available 1`] = `
+exports[`BottomSheet (shell) snapshots dark palette + peer available 1`] = `
 <View
   data-bg="#1C1C1E"
-  data-index={-1}
   data-pan-close={true}
-  data-snap-points="["50%"]"
-  onLayout={[Function]}
-  testID="bottom-sheet-sheet"
+  data-snap-points="["50%","90%"]"
+  testID="bottom-sheet-body"
 >
-  <View
-    style={
-      {
-        "flex": 1,
-      }
-    }
-    testID="bottom-sheet-view"
-  >
-    <Text>
-      Dark body
-    </Text>
-  </View>
+  <Text>
+    Dark body
+  </Text>
 </View>
 `;
 
-exports[`BottomSheet snapshots default light + peer available 1`] = `
+exports[`BottomSheet (shell) snapshots default light + peer available 1`] = `
 <View
   data-bg="#FFFFFF"
-  data-index={-1}
   data-pan-close={true}
-  data-snap-points="["50%"]"
-  onLayout={[Function]}
-  testID="bottom-sheet-sheet"
+  data-snap-points="["50%","90%"]"
+  testID="bottom-sheet-body"
 >
-  <View
-    style={
-      {
-        "flex": 1,
-      }
-    }
-    testID="bottom-sheet-view"
-  >
-    <Text>
-      Sheet body
-    </Text>
-  </View>
+  <Text>
+    Sheet body
+  </Text>
 </View>
 `;
 
-exports[`BottomSheet snapshots missing peer dep fallback 1`] = `
-<Text
-  color="#DC2626"
-  testID="bottom-sheet-missing-peer"
+exports[`BottomSheet (shell) snapshots missing peer dep fallback 1`] = `
+<View
+  testID="bottom-sheet"
 >
-  Install \`@expo/ui\` to enable BottomSheet.
-</Text>
+  <Text
+    color="#DC2626"
+    testID="bottom-sheet-missing-peer"
+  >
+    Install \`@expo/ui\` to enable BottomSheet.
+  </Text>
+</View>
 `;

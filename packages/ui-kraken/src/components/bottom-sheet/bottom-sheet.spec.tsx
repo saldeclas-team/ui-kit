@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react-native";
+import { render, screen } from "@testing-library/react-native";
 import { createRef } from "react";
 
 import type { BottomSheetColors } from "../../tokens/tokens-types";
@@ -27,83 +27,61 @@ jest.mock("./bottom-sheet-styled", () => {
   };
 });
 
-// Fake native BottomSheet — surfaces its own props as data-*
-// attributes on a plain View so tests can assert prop forwarding.
-// Exposes a ref shaped like `@expo/ui`'s so `useImperativeHandle`
-// can forward through our shell.
-const fakeNativeRef = {
+// Toggle-controlled probe mock.
+const mockPeerAvailable = jest.fn(() => true);
+jest.mock("./expo-ui-bottom-sheet-probe", () => ({
+  isBottomSheetAvailable: () => mockPeerAvailable(),
+}));
+
+/**
+ * Fake body that forwards every prop as a data-* attribute + a
+ * ref shaped like `BottomSheetRef`. Lets us assert the shell
+ * correctly resolves palette + defaults + forwards ref methods
+ * without needing to load `@expo/ui` or a real platform body.
+ */
+const mockBodyRef = {
   present: jest.fn(),
   dismiss: jest.fn(),
   snapToIndex: jest.fn(),
-  snapToPosition: jest.fn(),
   expand: jest.fn(),
   collapse: jest.fn(),
-  close: jest.fn(),
-  forceClose: jest.fn(),
 };
-
-const mockPeerAvailable = jest.fn(() => true);
-const mockNativeBottomSheet = jest.fn();
-const mockNativeBottomSheetView = jest.fn();
-
-jest.mock("./expo-ui-bottom-sheet-probe", () => ({
-  isBottomSheetAvailable: () => mockPeerAvailable(),
-  getExpoUIBottomSheet: () => mockNativeBottomSheet(),
-  getExpoUIBottomSheetView: () => mockNativeBottomSheetView(),
-}));
-
-function makeFakeNativeBottomSheet() {
+jest.mock("./bottom-sheet-body", () => {
   const rn = jest.requireActual("react-native");
   const React = jest.requireActual("react");
-  return React.forwardRef(function FakeSheet(
-    props: {
-      testID?: string;
-      snapPoints?: readonly (string | number)[];
-      index?: number;
-      onChange?: (index: number) => void;
-      onDismiss?: () => void;
-      enablePanDownToClose?: boolean;
-      enableDynamicSizing?: boolean;
-      backgroundStyle?: { backgroundColor?: string };
-      children?: React.ReactNode;
-    },
-    ref: React.Ref<unknown>
-  ) {
-    React.useImperativeHandle(ref, () => fakeNativeRef, []);
-    return React.createElement(
-      rn.View,
-      {
-        testID: props.testID,
-        "data-snap-points": JSON.stringify(props.snapPoints),
-        "data-index": props.index,
-        "data-pan-close": props.enablePanDownToClose,
-        "data-dynamic": props.enableDynamicSizing,
-        "data-bg": props.backgroundStyle?.backgroundColor,
-        onLayout: () => {
-          // Simulate a snap change so onChange coverage fires
-          props.onChange?.(0);
-        },
+  return {
+    BottomSheetBody: React.forwardRef(function FakeBody(
+      props: {
+        children?: React.ReactNode;
+        testID?: string;
+        snapPoints?: readonly (string | number)[];
+        enablePanDownToClose?: boolean;
+        enableDynamicSizing?: boolean;
+        chromeColors?: { background: string };
+        fallback?: React.ReactNode;
       },
-      props.children
-    );
-  });
-}
-
-function makeFakeNativeBottomSheetView() {
-  const rn = jest.requireActual("react-native");
-  const React = jest.requireActual("react");
-  return function FakeSheetView(props: {
-    testID?: string;
-    children?: React.ReactNode;
-    style?: unknown;
-  }) {
-    return React.createElement(
-      rn.View,
-      { testID: props.testID, style: props.style },
-      props.children
-    );
+      ref: React.Ref<unknown>
+    ) {
+      React.useImperativeHandle(ref, () => mockBodyRef, []);
+      // When the shell passes a fallback, render it — matches
+      // real body behavior.
+      if (props.fallback != null) {
+        return React.createElement(rn.View, { testID: props.testID }, props.fallback);
+      }
+      return React.createElement(
+        rn.View,
+        {
+          testID: `${props.testID}-body`,
+          "data-snap-points": JSON.stringify(props.snapPoints),
+          "data-pan-close": props.enablePanDownToClose,
+          "data-dynamic": props.enableDynamicSizing,
+          "data-bg": props.chromeColors?.background,
+        },
+        props.children
+      );
+    }),
   };
-}
+});
 
 const LIGHT_COLORS: BottomSheetColors = {
   background: "#FFFFFF",
@@ -135,48 +113,37 @@ jest.mock("../../provider/use-ui-kit", () => ({
   useUIKit: () => mockUseUIKit(),
 }));
 
-jest.mock("../../provider/provider-context", () => {
-  const React = jest.requireActual("react");
-  return {
-    UIKitContext: React.createContext(null),
-  };
-});
-
 import { BottomSheet } from "./bottom-sheet";
 
-describe("BottomSheet", () => {
+describe("BottomSheet (shell)", () => {
   beforeEach(() => {
     mockUseUIKit.mockReturnValue({
       activeTheme: "light",
       tokens: { bottomSheetColors: LIGHT_COLORS },
     });
     mockPeerAvailable.mockReturnValue(true);
-    mockNativeBottomSheet.mockReturnValue(makeFakeNativeBottomSheet());
-    mockNativeBottomSheetView.mockReturnValue(makeFakeNativeBottomSheetView());
-    Object.values(fakeNativeRef).forEach((fn) => (fn as jest.Mock).mockClear());
+    Object.values(mockBodyRef).forEach((fn) => (fn as jest.Mock).mockClear());
   });
 
-  it("renders the native sheet + view with default testID='bottom-sheet' when none passed", async () => {
+  it("renders the body with default testID='bottom-sheet' when none passed", async () => {
     await render(
       <BottomSheet>
         <></>
       </BottomSheet>
     );
-    expect(screen.getByTestId("bottom-sheet-sheet")).toBeTruthy();
-    expect(screen.getByTestId("bottom-sheet-view")).toBeTruthy();
+    expect(screen.getByTestId("bottom-sheet-body")).toBeTruthy();
   });
 
-  it("root testID overrides propagate to sheet + view sub-elements", async () => {
+  it("root testID overrides propagate to the body", async () => {
     await render(
       <BottomSheet testID="dr">
         <></>
       </BottomSheet>
     );
-    expect(screen.getByTestId("dr-sheet")).toBeTruthy();
-    expect(screen.getByTestId("dr-view")).toBeTruthy();
+    expect(screen.getByTestId("dr-body")).toBeTruthy();
   });
 
-  it("renders children inside the native sheet view", async () => {
+  it("renders children through the body", async () => {
     const rn = jest.requireActual("react-native");
     const React = jest.requireActual("react");
     await render(
@@ -187,33 +154,26 @@ describe("BottomSheet", () => {
     expect(screen.getByTestId("dr-child")).toHaveTextContent("hello");
   });
 
-  it("default snapPoints = ['50%'] when consumer omits", async () => {
+  it("default snapPoints = ['50%', '90%'] when consumer omits (Android partial-state fix)", async () => {
     await render(
       <BottomSheet testID="dr">
         <></>
       </BottomSheet>
     );
-    expect(screen.getByTestId("dr-sheet").props["data-snap-points"]).toBe(JSON.stringify(["50%"]));
+    expect(screen.getByTestId("dr-body").props["data-snap-points"]).toBe(
+      JSON.stringify(["50%", "90%"])
+    );
   });
 
-  it("custom snapPoints forward to the native sheet", async () => {
+  it("custom snapPoints forward to the body unchanged", async () => {
     await render(
       <BottomSheet testID="dr" snapPoints={["25%", "50%", "90%"]}>
         <></>
       </BottomSheet>
     );
-    expect(screen.getByTestId("dr-sheet").props["data-snap-points"]).toBe(
+    expect(screen.getByTestId("dr-body").props["data-snap-points"]).toBe(
       JSON.stringify(["25%", "50%", "90%"])
     );
-  });
-
-  it("index defaults to -1 (closed)", async () => {
-    await render(
-      <BottomSheet testID="dr">
-        <></>
-      </BottomSheet>
-    );
-    expect(screen.getByTestId("dr-sheet").props["data-index"]).toBe(-1);
   });
 
   it("enablePanDownToClose defaults to true", async () => {
@@ -222,16 +182,16 @@ describe("BottomSheet", () => {
         <></>
       </BottomSheet>
     );
-    expect(screen.getByTestId("dr-sheet").props["data-pan-close"]).toBe(true);
+    expect(screen.getByTestId("dr-body").props["data-pan-close"]).toBe(true);
   });
 
-  it("enablePanDownToClose={false} disables swipe / backdrop-tap dismissal", async () => {
+  it("enablePanDownToClose={false} forwards to body", async () => {
     await render(
       <BottomSheet testID="dr" enablePanDownToClose={false}>
         <></>
       </BottomSheet>
     );
-    expect(screen.getByTestId("dr-sheet").props["data-pan-close"]).toBe(false);
+    expect(screen.getByTestId("dr-body").props["data-pan-close"]).toBe(false);
   });
 
   it("enableDynamicSizing forwards when set", async () => {
@@ -240,16 +200,16 @@ describe("BottomSheet", () => {
         <></>
       </BottomSheet>
     );
-    expect(screen.getByTestId("dr-sheet").props["data-dynamic"]).toBe(true);
+    expect(screen.getByTestId("dr-body").props["data-dynamic"]).toBe(true);
   });
 
-  it("background style uses palette.background", async () => {
+  it("chromeColors.background uses palette.background from the provider", async () => {
     await render(
       <BottomSheet testID="dr">
         <></>
       </BottomSheet>
     );
-    expect(screen.getByTestId("dr-sheet").props["data-bg"]).toBe(LIGHT_COLORS.background);
+    expect(screen.getByTestId("dr-body").props["data-bg"]).toBe(LIGHT_COLORS.background);
   });
 
   it("per-instance bottomSheetColors override wins over provider palette", async () => {
@@ -258,7 +218,7 @@ describe("BottomSheet", () => {
         <></>
       </BottomSheet>
     );
-    expect(screen.getByTestId("dr-sheet").props["data-bg"]).toBe("#FF00FF");
+    expect(screen.getByTestId("dr-body").props["data-bg"]).toBe("#FF00FF");
   });
 
   it("uses the dark palette when activeTheme='dark'", async () => {
@@ -271,25 +231,10 @@ describe("BottomSheet", () => {
         <></>
       </BottomSheet>
     );
-    expect(screen.getByTestId("dr-sheet").props["data-bg"]).toBe(DARK_COLORS.background);
+    expect(screen.getByTestId("dr-body").props["data-bg"]).toBe(DARK_COLORS.background);
   });
 
-  it("onChange fires with the new snap index from the native sheet", async () => {
-    const onChange = jest.fn();
-    await render(
-      <BottomSheet testID="dr" onChange={onChange}>
-        <></>
-      </BottomSheet>
-    );
-    // Fake native sheet fires onChange(0) on layout.
-    await act(async () => {
-      const el = screen.getByTestId("dr-sheet");
-      el.props.onLayout?.();
-    });
-    expect(onChange).toHaveBeenCalledWith(0);
-  });
-
-  it("ref.present() forwards to native present()", async () => {
+  it("ref.present() forwards through the body's ref", async () => {
     const ref = createRef<BottomSheetRef>();
     await render(
       <BottomSheet ref={ref} testID="dr">
@@ -297,7 +242,7 @@ describe("BottomSheet", () => {
       </BottomSheet>
     );
     ref.current?.present();
-    expect(fakeNativeRef.present).toHaveBeenCalledTimes(1);
+    expect(mockBodyRef.present).toHaveBeenCalledTimes(1);
   });
 
   it("ref.present(index) passes the index through", async () => {
@@ -308,10 +253,10 @@ describe("BottomSheet", () => {
       </BottomSheet>
     );
     ref.current?.present(2);
-    expect(fakeNativeRef.present).toHaveBeenCalledWith(2);
+    expect(mockBodyRef.present).toHaveBeenCalledWith(2);
   });
 
-  it("ref.dismiss() forwards to native dismiss()", async () => {
+  it("ref.dismiss() / snapToIndex() / expand() / collapse() all forward", async () => {
     const ref = createRef<BottomSheetRef>();
     await render(
       <BottomSheet ref={ref} testID="dr">
@@ -319,46 +264,17 @@ describe("BottomSheet", () => {
       </BottomSheet>
     );
     ref.current?.dismiss();
-    expect(fakeNativeRef.dismiss).toHaveBeenCalledTimes(1);
-  });
-
-  it("ref.snapToIndex(n) forwards to native snapToIndex(n)", async () => {
-    const ref = createRef<BottomSheetRef>();
-    await render(
-      <BottomSheet ref={ref} testID="dr">
-        <></>
-      </BottomSheet>
-    );
     ref.current?.snapToIndex(1);
-    expect(fakeNativeRef.snapToIndex).toHaveBeenCalledWith(1);
-  });
-
-  it("ref.expand() forwards to native expand()", async () => {
-    const ref = createRef<BottomSheetRef>();
-    await render(
-      <BottomSheet ref={ref} testID="dr">
-        <></>
-      </BottomSheet>
-    );
     ref.current?.expand();
-    expect(fakeNativeRef.expand).toHaveBeenCalledTimes(1);
-  });
-
-  it("ref.collapse() forwards to native collapse()", async () => {
-    const ref = createRef<BottomSheetRef>();
-    await render(
-      <BottomSheet ref={ref} testID="dr">
-        <></>
-      </BottomSheet>
-    );
     ref.current?.collapse();
-    expect(fakeNativeRef.collapse).toHaveBeenCalledTimes(1);
+    expect(mockBodyRef.dismiss).toHaveBeenCalledTimes(1);
+    expect(mockBodyRef.snapToIndex).toHaveBeenCalledWith(1);
+    expect(mockBodyRef.expand).toHaveBeenCalledTimes(1);
+    expect(mockBodyRef.collapse).toHaveBeenCalledTimes(1);
   });
 
   it("renders the missing-peer hint when @expo/ui isn't available", async () => {
     mockPeerAvailable.mockReturnValue(false);
-    mockNativeBottomSheet.mockReturnValue(null);
-    mockNativeBottomSheetView.mockReturnValue(null);
     await render(
       <BottomSheet testID="dr">
         <></>
@@ -367,22 +283,10 @@ describe("BottomSheet", () => {
     const hint = screen.getByTestId("dr-missing-peer");
     expect(hint).toHaveTextContent(/install .+@expo\/ui/i);
     expect(hint.props.color).toBe(LIGHT_COLORS.missingPeer);
-    expect(screen.queryByTestId("dr-sheet")).toBeNull();
-  });
-
-  it("renders missing-peer hint when isBottomSheetAvailable=true but component getters return null (defensive)", async () => {
-    // Edge case: probe says available but getters return null —
-    // shouldn't happen in practice but the shell should not crash.
-    mockPeerAvailable.mockReturnValue(true);
-    mockNativeBottomSheet.mockReturnValue(null);
-    mockNativeBottomSheetView.mockReturnValue(null);
-    await render(
-      <BottomSheet testID="dr">
-        <></>
-      </BottomSheet>
-    );
-    expect(screen.getByTestId("dr-missing-peer")).toBeTruthy();
-    expect(screen.queryByTestId("dr-sheet")).toBeNull();
+    // Body still renders (with the fallback inside) but the
+    // sheet-only testID is absent since the mock body swaps to
+    // the fallback branch.
+    expect(screen.queryByTestId("dr-body")).toBeNull();
   });
 
   it("radius prop is accepted (currently unused on native — web-only follow-up)", async () => {
@@ -394,7 +298,7 @@ describe("BottomSheet", () => {
         <></>
       </BottomSheet>
     );
-    expect(screen.getByTestId("dr-sheet")).toBeTruthy();
+    expect(screen.getByTestId("dr-body")).toBeTruthy();
   });
 
   describe("snapshots", () => {
@@ -407,8 +311,6 @@ describe("BottomSheet", () => {
 
     it("missing peer dep fallback", async () => {
       mockPeerAvailable.mockReturnValue(false);
-      mockNativeBottomSheet.mockReturnValue(null);
-      mockNativeBottomSheetView.mockReturnValue(null);
       await render(
         <BottomSheet>
           <></>
