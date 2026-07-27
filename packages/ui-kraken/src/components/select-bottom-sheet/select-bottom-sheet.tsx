@@ -1,14 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { TamaguiProvider } from "tamagui";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { ScrollView } from "react-native";
 
 import { useUIKit } from "../../provider/use-ui-kit";
 import { resolveRadius } from "../../utils/radius";
 import { resolvePalette } from "../../utils/resolve-palette";
-import {
-  areBottomSheetPeersAvailable,
-  getGorhomModule,
-  missingBottomSheetPeers,
-} from "./gorhom-probe";
+import { BottomSheet } from "../bottom-sheet";
+import type { BottomSheetRef } from "../bottom-sheet";
+import { isBottomSheetAvailable } from "../bottom-sheet/expo-ui-bottom-sheet-probe";
 import {
   StyledSelectBottomSheet,
   StyledSelectBottomSheetChevron,
@@ -25,11 +23,10 @@ import {
 import type { SelectBottomSheetProps } from "./select-bottom-sheet-types";
 
 /**
- * Single-choice picker rendered as a trigger + draggable bottom
- * sheet. Same controlled shape as [[Select]], but the popup uses
- * `@gorhom/bottom-sheet` — the panel slides up from the bottom
- * of the screen and can be dismissed by dragging down or tapping
- * the backdrop.
+ * Single-choice picker rendered as a trigger + native bottom
+ * sheet. Same controlled shape as [[Select]], but the popup is a
+ * native platform sheet (SwiftUI on iOS, Material 3 on Android,
+ * vaul on web) via our own [[BottomSheet]] wrapper.
  *
  * ```tsx
  * const [country, setCountry] = useState<Country | null>(null);
@@ -41,17 +38,25 @@ import type { SelectBottomSheetProps } from "./select-bottom-sheet-types";
  * />
  * ```
  *
- * Because `@gorhom/bottom-sheet` + `react-native-gesture-handler`
- * are optional peer deps, ui-kraken doesn't fail to import when
- * consumers omit them. Instead the trigger renders a helpful
- * inline "install X, Y" hint so consumers see the problem and
- * can fix it without a crash.
+ * ### Architecture — dogfoods `<BottomSheet>`
  *
- * **Provider requirement**: the consumer must mount
- * `<BottomSheetModalProvider>` (from `@gorhom/bottom-sheet`)
- * somewhere above `<SelectBottomSheet>` in the tree — usually at
- * the app root, next to `<UIKitProvider>`. Without it, the sheet
- * fails to present.
+ * As of ui-kraken v0.9.x this component composes our own
+ * `<BottomSheet>` (which wraps `@expo/ui/community/bottom-sheet`).
+ * That means:
+ *
+ * - **Native affordances** on every platform (SwiftUI sheet /
+ *   Material 3 sheet / vaul drawer).
+ * - **Single peer** — `@expo/ui`, the same one every other
+ *   Batch 2 native component uses. `@gorhom/bottom-sheet` and
+ *   `react-native-gesture-handler` are NO LONGER required at
+ *   runtime.
+ * - **No provider ceremony** — no `<BottomSheetModalProvider>`
+ *   at the app root. `<BottomSheet>` handles context (Tamagui
+ *   re-mount) internally.
+ *
+ * Migrated from raw gorhom in the same PR that shipped the
+ * general-purpose `<BottomSheet>` — see the CHANGELOG entry for
+ * behavioral changes.
  */
 export function SelectBottomSheet<Value extends string = string>({
   options,
@@ -64,96 +69,76 @@ export function SelectBottomSheet<Value extends string = string>({
   sheetTitle,
   disabled = false,
   disabledOptions,
-  snapPoints = ["50%"],
+  // Two-state default (`["50%", "90%"]`) instead of single-snap
+  // `["50%"]` because Android's Material 3 sheet treats a single
+  // snap point as `skipPartiallyExpanded=true` and opens straight
+  // to fully expanded. Passing partial + expanded gives Android a
+  // real partial state to default to; iOS respects both detents.
+  // See BottomSheet's DEFAULT_SNAP_POINTS docstring for detail.
+  snapPoints = ["50%", "90%"],
   radius = "md",
   selectBottomSheetColors,
   testID,
   ...rest
 }: SelectBottomSheetProps<Value>) {
-  const { tokens, tamaguiConfig, activeTheme } = useUIKit();
+  const { tokens } = useUIKit();
   const rootId = testID ?? "select-bottom-sheet";
   const palette = resolvePalette(tokens.selectBottomSheetColors, selectBottomSheetColors);
   const resolvedRadius = resolveRadius(radius);
   const disabledSet = disabledOptions != null ? new Set(disabledOptions) : null;
   const isInvalid = errorText != null && errorText.length > 0;
 
-  const peersAvailable = areBottomSheetPeersAvailable();
-  const missing = missingBottomSheetPeers();
-  const gorhom = getGorhomModule();
-
-  // Ref points at the imperative BottomSheetModal handle. Tracked
-  // as `unknown`-ish here to keep the peer-dep types out of our
-  // public surface — the module namespace is fully wrapped by the
-  // probe.
-  const modalRef = useRef<{
-    present?: () => void;
-    dismiss?: () => void;
-  } | null>(null);
+  const peerAvailable = isBottomSheetAvailable();
+  const sheetRef = useRef<BottomSheetRef>(null);
+  // `open` is trigger-facing state only — controls the chevron
+  // (▲ / ▼) and the focused border color. The actual sheet
+  // open/close is driven imperatively via sheetRef so we avoid
+  // gorhom's old useEffect race conditions.
   const [open, setOpen] = useState(false);
 
-  // Track whether the sheet is currently presented at the gorhom
-  // layer. Kept in sync via the `onChange` callback (-1 = closed,
-  // ≥0 = open at snap point). Prevents double-present() / double-
-  // dismiss() calls, which put gorhom's imperative handle in a
-  // zombie state where subsequent present() calls silently no-op
-  // — the exact failure mode users see as "trigger reacts but no
-  // sheet". Same guard the reference `BottomSheet` component in
-  // duna-app uses.
-  const isPresentedRef = useRef(false);
-
-  // Memoize snapPoints — gorhom compares by reference and re-
-  // creates its animated node whenever the array identity
-  // changes. Passing the default `["50%"]` inline creates a new
-  // array on every render, which breaks the sheet's presentation.
-  const resolvedSnapPoints = useMemo(() => snapPoints, [snapPoints]);
-
   const openSheet = useCallback(() => {
-    if (!peersAvailable) return;
+    if (!peerAvailable || disabled) return;
     setOpen(true);
-  }, [peersAvailable]);
+    sheetRef.current?.present();
+  }, [peerAvailable, disabled]);
+
   const pickOption = useCallback(
     (v: Value) => {
       onChange(v);
       setOpen(false);
+      sheetRef.current?.dismiss();
     },
     [onChange]
   );
 
-  useEffect(() => {
-    if (!peersAvailable) return;
-    if (open && !isPresentedRef.current) {
-      modalRef.current?.present?.();
-    } else if (!open && isPresentedRef.current) {
-      modalRef.current?.dismiss?.();
-    }
-  }, [open, peersAvailable]);
+  const handleDismiss = useCallback(() => setOpen(false), []);
 
-  // Sheet-position change from gorhom. -1 = closed, ≥0 = open.
-  // Keeps `isPresentedRef` truthful so the useEffect can gate
-  // its imperative calls correctly.
-  const handleChange = useCallback((index: number) => {
-    isPresentedRef.current = index >= 0;
-  }, []);
-
-  const handleDismiss = useCallback(() => {
-    isPresentedRef.current = false;
-    setOpen(false);
-  }, []);
+  // Map SelectBottomSheet's palette slots onto the smaller
+  // BottomSheet palette. Only `sheetBackground` / `sheetHandle`
+  // apply — the rest of the SelectBottomSheet palette paints the
+  // trigger + list rows, which we render ourselves inside the
+  // sheet body.
+  const sheetChromeColors = useMemo(
+    () => ({
+      background: palette.sheetBackground,
+      handle: palette.sheetHandle,
+    }),
+    [palette.sheetBackground, palette.sheetHandle]
+  );
 
   const selectedOption = value != null ? (options.find((o) => o.value === value) ?? null) : null;
   const triggerText = selectedOption != null ? selectedOption.label : placeholder;
-  const triggerTextColor = disabled
-    ? palette.textDisabled
-    : selectedOption != null
-      ? palette.text
-      : palette.placeholder;
-  const triggerBorder = disabled
-    ? palette.border
-    : isInvalid
-      ? palette.borderError
-      : open
-        ? palette.borderFocused
-        : palette.border;
+  const triggerTextColor = resolveTriggerTextColor({
+    palette,
+    disabled,
+    hasValue: selectedOption != null,
+  });
+  const triggerBorder = resolveTriggerBorderColor({
+    palette,
+    disabled,
+    isInvalid,
+    open,
+  });
   const triggerBackground = disabled ? palette.backgroundDisabled : palette.background;
 
   return (
@@ -167,15 +152,15 @@ export function SelectBottomSheet<Value extends string = string>({
       <StyledSelectBottomSheetTrigger
         testID={`${rootId}-trigger`}
         onPress={openSheet}
-        disabled={disabled || !peersAvailable}
+        disabled={disabled || !peerAvailable}
         backgroundColor={triggerBackground}
         borderColor={triggerBorder}
         borderRadius={resolvedRadius}
         accessibilityRole="combobox"
         accessibilityLabel={label ?? placeholder}
-        accessibilityState={{ disabled: disabled || !peersAvailable, expanded: open }}
+        accessibilityState={{ disabled: disabled || !peerAvailable, expanded: open }}
       >
-        {peersAvailable ? (
+        {peerAvailable ? (
           <>
             <StyledSelectBottomSheetTriggerText
               testID={`${rootId}-trigger-text`}
@@ -192,92 +177,146 @@ export function SelectBottomSheet<Value extends string = string>({
             testID={`${rootId}-missing-peer`}
             color={palette.errorText}
           >
-            {`Install ${missing.map((m) => `\`${m}\``).join(" + ")} to enable SelectBottomSheet.`}
+            Install `@expo/ui` to enable SelectBottomSheet.
           </StyledSelectBottomSheetMissingPeer>
         )}
       </StyledSelectBottomSheetTrigger>
 
-      {isInvalid ? (
-        <StyledSelectBottomSheetErrorText testID={`${rootId}-error-text`} color={palette.errorText}>
-          {errorText}
-        </StyledSelectBottomSheetErrorText>
-      ) : helperText != null && helperText.length > 0 ? (
-        <StyledSelectBottomSheetHelperText
-          testID={`${rootId}-helper-text`}
-          color={palette.helperText}
-        >
-          {helperText}
-        </StyledSelectBottomSheetHelperText>
-      ) : null}
+      {renderFooter({ isInvalid, errorText, helperText, palette, rootId })}
 
-      {peersAvailable && gorhom != null && (
-        <gorhom.BottomSheetModal
-          ref={modalRef}
+      {peerAvailable && (
+        <BottomSheet
+          ref={sheetRef}
           testID={`${rootId}-sheet`}
-          snapPoints={resolvedSnapPoints}
-          enablePanDownToClose
-          onChange={handleChange}
+          snapPoints={snapPoints}
           onDismiss={handleDismiss}
-          backgroundStyle={{ backgroundColor: palette.sheetBackground }}
-          handleIndicatorStyle={{ backgroundColor: palette.sheetHandle }}
-          backdropComponent={(props: Record<string, unknown>) => (
-            <gorhom.BottomSheetBackdrop
-              {...props}
-              appearsOnIndex={0}
-              disappearsOnIndex={-1}
-              opacity={0.5}
-              pressBehavior="close"
-            />
-          )}
+          bottomSheetColors={sheetChromeColors}
         >
-          <gorhom.BottomSheetView>
-            {/*
-              Gorhom mounts the sheet through a native portal that
-              does NOT preserve React context — the `TamaguiProvider`
-              higher up the tree is invisible to descendants of
-              `BottomSheetView`. Re-mount it here (same config +
-              active theme) so the styled components below can
-              resolve their theme without crashing with "Can't find
-              Tamagui configuration".
-            */}
-            <TamaguiProvider config={tamaguiConfig} defaultTheme={activeTheme}>
-              {sheetTitle != null && sheetTitle.length > 0 && (
-                <StyledSelectBottomSheetTitle
-                  testID={`${rootId}-sheet-title`}
-                  color={palette.label}
+          {sheetTitle != null && sheetTitle.length > 0 && (
+            <StyledSelectBottomSheetTitle testID={`${rootId}-sheet-title`} color={palette.label}>
+              {sheetTitle}
+            </StyledSelectBottomSheetTitle>
+          )}
+          {/*
+            ScrollView wrap so long option lists (e.g. 50+ countries)
+            scroll inside the sheet body instead of overflowing off-
+            screen. `BottomSheetView` from @expo/ui is a plain View
+            with `flex: 1` — it fills the sheet but doesn't scroll.
+            Wrapping in RN's ScrollView lets Android + iOS + web all
+            scroll consistently. `nestedScrollEnabled` handles the
+            Android case where the sheet itself is also draggable —
+            without it, Android hijacks the scroll for drag.
+          */}
+          <ScrollView
+            testID={`${rootId}-sheet-list`}
+            nestedScrollEnabled
+            keyboardShouldPersistTaps="handled"
+            contentContainerStyle={{ paddingBottom: 24 }}
+          >
+            {options.map((item) => {
+              const isSelected = item.value === value;
+              const optionDisabled = disabledSet?.has(item.value) ?? false;
+              return (
+                <StyledSelectBottomSheetOption
+                  key={item.value}
+                  testID={`${rootId}-option-${item.value}`}
+                  onPress={() => pickOption(item.value)}
+                  disabled={optionDisabled}
+                  backgroundColor={isSelected ? palette.optionSelectedBackground : "transparent"}
+                  accessibilityRole="menuitem"
+                  accessibilityState={{ selected: isSelected, disabled: optionDisabled }}
+                  accessibilityLabel={item.label}
                 >
-                  {sheetTitle}
-                </StyledSelectBottomSheetTitle>
-              )}
-              {options.map((item) => {
-                const isSelected = item.value === value;
-                const optionDisabled = disabledSet?.has(item.value) ?? false;
-                return (
-                  <StyledSelectBottomSheetOption
-                    key={item.value}
-                    testID={`${rootId}-option-${item.value}`}
-                    onPress={() => pickOption(item.value)}
-                    disabled={optionDisabled}
-                    backgroundColor={isSelected ? palette.optionSelectedBackground : "transparent"}
-                    accessibilityRole="menuitem"
-                    accessibilityState={{ selected: isSelected, disabled: optionDisabled }}
-                    accessibilityLabel={item.label}
+                  <StyledSelectBottomSheetOptionLabel
+                    testID={`${rootId}-option-${item.value}-label`}
+                    color={palette.text}
                   >
-                    <StyledSelectBottomSheetOptionLabel
-                      testID={`${rootId}-option-${item.value}-label`}
-                      color={palette.text}
-                    >
-                      {item.label}
-                    </StyledSelectBottomSheetOptionLabel>
-                  </StyledSelectBottomSheetOption>
-                );
-              })}
-            </TamaguiProvider>
-          </gorhom.BottomSheetView>
-        </gorhom.BottomSheetModal>
+                    {item.label}
+                  </StyledSelectBottomSheetOptionLabel>
+                </StyledSelectBottomSheetOption>
+              );
+            })}
+          </ScrollView>
+        </BottomSheet>
       )}
     </StyledSelectBottomSheet>
   );
+}
+
+/**
+ * Trigger text color — disabled > empty > filled. Extracted to
+ * avoid nested ternaries in the shell body.
+ */
+function resolveTriggerTextColor({
+  palette,
+  disabled,
+  hasValue,
+}: {
+  palette: { textDisabled: string; text: string; placeholder: string };
+  disabled: boolean;
+  hasValue: boolean;
+}): string {
+  if (disabled) return palette.textDisabled;
+  if (hasValue) return palette.text;
+  return palette.placeholder;
+}
+
+/**
+ * Trigger border color — disabled > invalid > focused > default.
+ * Extracted to avoid nested ternaries in the shell body.
+ */
+function resolveTriggerBorderColor({
+  palette,
+  disabled,
+  isInvalid,
+  open,
+}: {
+  palette: { border: string; borderError: string; borderFocused: string };
+  disabled: boolean;
+  isInvalid: boolean;
+  open: boolean;
+}): string {
+  if (disabled) return palette.border;
+  if (isInvalid) return palette.borderError;
+  if (open) return palette.borderFocused;
+  return palette.border;
+}
+
+/**
+ * Footer row — error takes precedence over helper. Extracted to
+ * keep the JSX flat.
+ */
+function renderFooter({
+  isInvalid,
+  errorText,
+  helperText,
+  palette,
+  rootId,
+}: {
+  isInvalid: boolean;
+  errorText?: string;
+  helperText?: string;
+  palette: { errorText: string; helperText: string };
+  rootId: string;
+}) {
+  if (isInvalid) {
+    return (
+      <StyledSelectBottomSheetErrorText testID={`${rootId}-error-text`} color={palette.errorText}>
+        {errorText}
+      </StyledSelectBottomSheetErrorText>
+    );
+  }
+  if (helperText != null && helperText.length > 0) {
+    return (
+      <StyledSelectBottomSheetHelperText
+        testID={`${rootId}-helper-text`}
+        color={palette.helperText}
+      >
+        {helperText}
+      </StyledSelectBottomSheetHelperText>
+    );
+  }
+  return null;
 }
 
 export type {

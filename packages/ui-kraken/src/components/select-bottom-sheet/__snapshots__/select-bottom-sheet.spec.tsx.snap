@@ -62,11 +62,17 @@ exports[`SelectBottomSheet snapshots dark palette + selected 1`] = `
   <View
     testID="select-bottom-sheet-sheet"
   >
-    <View />
-    <View>
-      <View
-        testID="tamagui-provider-stub"
-      >
+    <RCTScrollView
+      contentContainerStyle={
+        {
+          "paddingBottom": 24,
+        }
+      }
+      keyboardShouldPersistTaps="handled"
+      nestedScrollEnabled={true}
+      testID="select-bottom-sheet-sheet-list"
+    >
+      <View>
         <View
           accessibilityLabel="One"
           accessibilityRole="menuitem"
@@ -194,7 +200,7 @@ exports[`SelectBottomSheet snapshots dark palette + selected 1`] = `
           </Text>
         </View>
       </View>
-    </View>
+    </RCTScrollView>
   </View>
 </View>
 `;
@@ -267,11 +273,17 @@ exports[`SelectBottomSheet snapshots default + selected + errorText 1`] = `
   <View
     testID="select-bottom-sheet-sheet"
   >
-    <View />
-    <View>
-      <View
-        testID="tamagui-provider-stub"
-      >
+    <RCTScrollView
+      contentContainerStyle={
+        {
+          "paddingBottom": 24,
+        }
+      }
+      keyboardShouldPersistTaps="handled"
+      nestedScrollEnabled={true}
+      testID="select-bottom-sheet-sheet-list"
+    >
+      <View>
         <View
           accessibilityLabel="One"
           accessibilityRole="menuitem"
@@ -399,7 +411,7 @@ exports[`SelectBottomSheet snapshots default + selected + errorText 1`] = `
           </Text>
         </View>
       </View>
-    </View>
+    </RCTScrollView>
   </View>
 </View>
 `;
@@ -466,11 +478,17 @@ exports[`SelectBottomSheet snapshots default palette + closed 1`] = `
   <View
     testID="select-bottom-sheet-sheet"
   >
-    <View />
-    <View>
-      <View
-        testID="tamagui-provider-stub"
-      >
+    <RCTScrollView
+      contentContainerStyle={
+        {
+          "paddingBottom": 24,
+        }
+      }
+      keyboardShouldPersistTaps="handled"
+      nestedScrollEnabled={true}
+      testID="select-bottom-sheet-sheet-list"
+    >
+      <View>
         <View
           accessibilityLabel="One"
           accessibilityRole="menuitem"
@@ -598,7 +616,7 @@ exports[`SelectBottomSheet snapshots default palette + closed 1`] = `
           </Text>
         </View>
       </View>
-    </View>
+    </RCTScrollView>
   </View>
 </View>
 `;
@@ -654,7 +672,7 @@ exports[`SelectBottomSheet snapshots missing peer dep fallback 1`] = `
       color="#DC2626"
       testID="select-bottom-sheet-missing-peer"
     >
-      Install \`@gorhom/bottom-sheet\` + \`react-native-gesture-handler\` to enable SelectBottomSheet.
+      Install \`@expo/ui\` to enable SelectBottomSheet.
     </Text>
   </View>
 </View>

@@ -18,6 +18,63 @@ const COUNTRIES = [
 
 type Country = (typeof COUNTRIES)[number]["value"];
 
+// Long list used by the "Long list — scroll test" section to
+// verify the sheet body scrolls when options overflow the snap
+// point height. Fifty US-state entries is enough that even a
+// 90%-expanded sheet on a tall phone can't render them all.
+const US_STATES = [
+  "Alabama",
+  "Alaska",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Colorado",
+  "Connecticut",
+  "Delaware",
+  "Florida",
+  "Georgia",
+  "Hawaii",
+  "Idaho",
+  "Illinois",
+  "Indiana",
+  "Iowa",
+  "Kansas",
+  "Kentucky",
+  "Louisiana",
+  "Maine",
+  "Maryland",
+  "Massachusetts",
+  "Michigan",
+  "Minnesota",
+  "Mississippi",
+  "Missouri",
+  "Montana",
+  "Nebraska",
+  "Nevada",
+  "New Hampshire",
+  "New Jersey",
+  "New Mexico",
+  "New York",
+  "North Carolina",
+  "North Dakota",
+  "Ohio",
+  "Oklahoma",
+  "Oregon",
+  "Pennsylvania",
+  "Rhode Island",
+  "South Carolina",
+  "South Dakota",
+  "Tennessee",
+  "Texas",
+  "Utah",
+  "Vermont",
+  "Virginia",
+  "Washington",
+  "West Virginia",
+  "Wisconsin",
+  "Wyoming",
+].map((name) => ({ value: name.toLowerCase().replace(/\s+/g, "-"), label: name }));
+
 export default function SelectBottomSheetScreen() {
   const { activeTheme } = useUIKit();
   const isDark = activeTheme === "dark";
@@ -32,11 +89,12 @@ export default function SelectBottomSheetScreen() {
   const [subset, setSubset] = useState<Country | null>(null);
   const [brand, setBrand] = useState<Country | null>("es");
   const [pill, setPill] = useState<Country | null>(null);
+  const [longList, setLongList] = useState<string | null>(null);
 
   return (
     <Screen
       title="SelectBottomSheet"
-      subtitle="Single-choice picker with drag-to-dismiss bottom sheet. Peer deps: @gorhom/bottom-sheet + react-native-gesture-handler. Graceful fallback when missing."
+      subtitle="Single-choice picker with drag-to-dismiss bottom sheet. Composes our BottomSheet (native via @expo/ui). Graceful fallback when peer missing."
     >
       <Section title="Basic — no value selected">
         <SelectBottomSheet<Country> options={[...COUNTRIES]} value={basic} onChange={setBasic} />
@@ -137,6 +195,18 @@ export default function SelectBottomSheetScreen() {
           disabled
           label="Read-only"
         />
+      </Section>
+
+      <Section title="Long list — scroll test (50 US states)">
+        <SelectBottomSheet
+          options={US_STATES}
+          value={longList}
+          onChange={setLongList}
+          label="State"
+          sheetTitle="Choose your state"
+          helperText="Drag the sheet up to 90% for full list; scroll inside if it still overflows."
+        />
+        <Text style={{ color: captionColor, fontSize: 12 }}>Selected: {longList ?? "(none)"}</Text>
       </Section>
 
       <View style={{ height: 40 }} />

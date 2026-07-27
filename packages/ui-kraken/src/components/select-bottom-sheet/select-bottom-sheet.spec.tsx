@@ -3,16 +3,16 @@ import { act, fireEvent, render, screen } from "@testing-library/react-native";
 import type { SelectBottomSheetColors } from "../../tokens/tokens-types";
 
 // `tamagui`'s top-level index is ESM-heavy — jest can't parse it out
-// of the box. `SelectBottomSheet` imports `TamaguiProvider` to re-
-// mount the theme context inside gorhom's portal (see the component
-// docstring); we stub that out with a pass-through wrapper here so
-// the spec doesn't try to load the whole Tamagui runtime.
+// of the box. `SelectBottomSheet` no longer re-mounts TamaguiProvider
+// itself (our BottomSheet handles that), but we still stub tamagui
+// to keep the module graph parseable.
 jest.mock("tamagui", () => {
   const rn = jest.requireActual("react-native");
   const React = jest.requireActual("react");
   return {
-    TamaguiProvider: ({ children }: { children?: React.ReactNode }) =>
-      React.createElement(rn.View, { testID: "tamagui-provider-stub" }, children),
+    Text: (props: Record<string, unknown>) => React.createElement(rn.Text, props),
+    YStack: (props: Record<string, unknown>) => React.createElement(rn.View, props),
+    styled: () => () => null,
   };
 });
 
@@ -44,89 +44,85 @@ jest.mock("./select-bottom-sheet.styled", () => {
   };
 });
 
-// Toggle-controlled mock of the peer-dep probe.
-const mockPeersAvailable = jest.fn(() => true);
-const mockMissing = jest.fn<string[], []>(() => []);
-const mockGorhom = jest.fn<
-  {
-    BottomSheetModal: React.ComponentType<Record<string, unknown>>;
-    BottomSheetView: React.ComponentType<Record<string, unknown>>;
-    BottomSheetBackdrop: React.ComponentType<Record<string, unknown>>;
-    BottomSheetModalProvider: React.ComponentType<{ children?: React.ReactNode }>;
-  } | null,
-  []
->(() => null);
-
-jest.mock("./gorhom-probe", () => ({
-  areBottomSheetPeersAvailable: () => mockPeersAvailable(),
-  missingBottomSheetPeers: () => mockMissing(),
-  getGorhomModule: () => mockGorhom(),
+// Toggle-controlled mock of the BottomSheet peer-dep probe (same
+// probe our own <BottomSheet> uses — SelectBottomSheet reads it
+// directly to decide whether to render the trigger or the
+// missing-peer hint).
+const mockPeerAvailable = jest.fn(() => true);
+jest.mock("../bottom-sheet/expo-ui-bottom-sheet-probe", () => ({
+  isBottomSheetAvailable: () => mockPeerAvailable(),
 }));
 
 /**
- * Instrumented fake gorhom module. Exposes captured spies so
- * tests can verify the component actually calls the imperative
- * `present()` / `dismiss()` API when the trigger is pressed —
- * that's the real integration contract, not just "children
- * render inline".
- *
- * The fake also invokes `backdropComponent` and drives
- * `onChange` to simulate the sheet actually opening at snap
- * point 0 whenever `present()` is called — mirroring gorhom's
- * real behavior so `isPresentedRef` in the component stays in
- * sync.
+ * Fake BottomSheet — the same shape our real component exposes
+ * (ref with present/dismiss/etc.). Records present/dismiss calls
+ * for regression tests, and simulates the "sheet opens ⇒
+ * onChange(0) fires" cycle so state-dependent behavior on our
+ * shell (chevron flip, expanded=true) is exercised end-to-end.
  */
-interface FakeGorhomSpies {
+interface FakeBottomSheetSpies {
   present: jest.Mock;
   dismiss: jest.Mock;
-  lastSnapPoints: Array<string | number> | undefined;
+  lastSnapPoints: readonly (string | number)[] | undefined;
+  lastPalette: Record<string, string> | undefined;
 }
 
-function makeFakeGorhom(spies: FakeGorhomSpies) {
+// `mock*`-prefixed so jest.mock()'s hoisting allows access. Shared
+// across every render in the suite so tests can inspect calls.
+const mockSpies: FakeBottomSheetSpies = {
+  present: jest.fn(),
+  dismiss: jest.fn(),
+  lastSnapPoints: undefined,
+  lastPalette: undefined,
+};
+
+jest.mock("../bottom-sheet", () => {
   const rn = jest.requireActual("react-native");
   const React = jest.requireActual("react");
-  return {
-    BottomSheetModal: React.forwardRef(function FakeBottomSheetModal(
-      props: {
-        children?: React.ReactNode;
-        testID?: string;
-        snapPoints?: Array<string | number>;
-        backdropComponent?: (p: Record<string, unknown>) => React.ReactNode;
-        onChange?: (index: number) => void;
-        onDismiss?: () => void;
-      },
-      ref: React.Ref<{ present: () => void; dismiss: () => void }>
-    ) {
-      spies.lastSnapPoints = props.snapPoints;
-      React.useImperativeHandle(
-        ref,
-        () => ({
-          present: () => {
-            spies.present();
-            // Simulate gorhom firing onChange(0) when the
-            // sheet actually mounts to snap point 0.
-            props.onChange?.(0);
-          },
-          dismiss: () => {
-            spies.dismiss();
-            props.onChange?.(-1);
-            props.onDismiss?.();
-          },
-        }),
-        [props]
-      );
-      const backdrop = props.backdropComponent?.({ animatedIndex: 0, animatedPosition: 0 });
-      return React.createElement(rn.View, { testID: props.testID }, backdrop, props.children);
-    }),
-    BottomSheetView: (props: { children?: React.ReactNode }) =>
-      React.createElement(rn.View, {}, props.children),
-    BottomSheetBackdrop: () => React.createElement(rn.View, {}),
-    BottomSheetModalProvider: (props: { children?: React.ReactNode }) =>
-      React.createElement(rn.View, {}, props.children),
-  };
-}
-
-let currentSpies: FakeGorhomSpies;
+  const FakeBottomSheet = React.forwardRef(function FakeBottomSheet(
+    props: {
+      children?: React.ReactNode;
+      testID?: string;
+      snapPoints?: readonly (string | number)[];
+      onChange?: (index: number) => void;
+      onDismiss?: () => void;
+      bottomSheetColors?: Record<string, string>;
+    },
+    ref: React.Ref<{
+      present: (index?: number) => void;
+      dismiss: () => void;
+      snapToIndex: (index: number) => void;
+      expand: () => void;
+      collapse: () => void;
+    }>
+  ) {
+    mockSpies.lastSnapPoints = props.snapPoints;
+    mockSpies.lastPalette = props.bottomSheetColors;
+    React.useImperativeHandle(
+      ref,
+      () => ({
+        present: (index?: number) => {
+          mockSpies.present(index);
+          props.onChange?.(0);
+        },
+        dismiss: () => {
+          mockSpies.dismiss();
+          props.onChange?.(-1);
+          props.onDismiss?.();
+        },
+        snapToIndex: () => {},
+        expand: () => {},
+        collapse: () => {},
+      }),
+      [props]
+    );
+    // Render children inline so tests can assert on the option list
+    // via getByTestId — mirrors the real BottomSheet which mounts
+    // children inside a BottomSheetView.
+    return React.createElement(rn.View, { testID: props.testID }, props.children);
+  });
+  return { BottomSheet: FakeBottomSheet };
+});
 
 const LIGHT_COLORS: SelectBottomSheetColors = {
   background: "#FFFFFF",
@@ -204,14 +200,11 @@ describe("SelectBottomSheet", () => {
       activeTheme: "light",
       tokens: { selectBottomSheetColors: LIGHT_COLORS },
     });
-    mockPeersAvailable.mockReturnValue(true);
-    mockMissing.mockReturnValue([]);
-    currentSpies = {
-      present: jest.fn(),
-      dismiss: jest.fn(),
-      lastSnapPoints: undefined,
-    };
-    mockGorhom.mockReturnValue(makeFakeGorhom(currentSpies));
+    mockPeerAvailable.mockReturnValue(true);
+    mockSpies.present.mockClear();
+    mockSpies.dismiss.mockClear();
+    mockSpies.lastSnapPoints = undefined;
+    mockSpies.lastPalette = undefined;
   });
 
   it("renders the trigger with placeholder when value is null", async () => {
@@ -322,62 +315,16 @@ describe("SelectBottomSheet", () => {
     expect(screen.getByTestId("sb-option-three-label")).toHaveTextContent("Three");
   });
 
-  // Integration contract with the peer-dep — the useEffect MUST
-  // call the ref's imperative `present()` when the trigger is
-  // pressed. Regression guard: without this the sheet trigger
-  // reacts (chevron flips, border focus) but no sheet appears on
-  // device, because the imperative call is what actually mounts
-  // the sheet at the gorhom portal.
-  it("calls the modal ref's present() once when the trigger is pressed", async () => {
+  it("calls BottomSheet ref's present() once when the trigger is pressed", async () => {
     await render(
       <SelectBottomSheet testID="sb" options={[...OPTIONS]} value={null} onChange={jest.fn()} />
     );
-    expect(currentSpies.present).not.toHaveBeenCalled();
+    expect(mockSpies.present).not.toHaveBeenCalled();
     await openSheet();
-    expect(currentSpies.present).toHaveBeenCalledTimes(1);
+    expect(mockSpies.present).toHaveBeenCalledTimes(1);
   });
 
-  it("does NOT call present() twice when a re-render happens while the sheet is already open", async () => {
-    // Regression guard for the zombie-state bug — gorhom silently
-    // no-ops when present() is called on an already-presented
-    // sheet, so any bug that triggers a double-present looks
-    // exactly like "the sheet never opens" on the second tap.
-    const { rerender } = await render(
-      <SelectBottomSheet testID="sb" options={[...OPTIONS]} value={null} onChange={jest.fn()} />
-    );
-    await openSheet();
-    expect(currentSpies.present).toHaveBeenCalledTimes(1);
-    // Re-render with an unrelated prop change; useEffect should
-    // not fire because `open` didn't change.
-    rerender(
-      <SelectBottomSheet
-        testID="sb"
-        options={[...OPTIONS]}
-        value={null}
-        onChange={jest.fn()}
-        label="Country"
-      />
-    );
-    expect(currentSpies.present).toHaveBeenCalledTimes(1);
-  });
-
-  it("calls dismiss() when the sheet fires onDismiss (user drag / backdrop tap)", async () => {
-    // The onChange(-1) callback wired via `handleChange` flips
-    // isPresentedRef back to false; the onDismiss callback flips
-    // `open` back to false so the trigger's expanded state resets.
-    // This is what makes the sheet re-openable after a gesture-
-    // dismiss without needing another render.
-    await render(
-      <SelectBottomSheet testID="sb" options={[...OPTIONS]} value={null} onChange={jest.fn()} />
-    );
-    await openSheet();
-    expect(screen.getByTestId("sb-trigger").props.accessibilityState.expanded).toBe(true);
-    // Second tap should not re-present (isPresentedRef guards it).
-    await openSheet();
-    expect(currentSpies.present).toHaveBeenCalledTimes(1);
-  });
-
-  it("passes the resolved snapPoints array (memoized) to the modal", async () => {
+  it("passes the resolved snapPoints array to the wrapped BottomSheet", async () => {
     await render(
       <SelectBottomSheet
         testID="sb"
@@ -388,15 +335,34 @@ describe("SelectBottomSheet", () => {
       />
     );
     await openSheet();
-    expect(currentSpies.lastSnapPoints).toEqual(["30%"]);
+    expect(mockSpies.lastSnapPoints).toEqual(["30%"]);
   });
 
-  it("defaults snapPoints to ['50%'] when the prop is omitted", async () => {
+  it("defaults snapPoints to ['50%', '90%'] when the prop is omitted (Android partial-state fix)", async () => {
     await render(
       <SelectBottomSheet testID="sb" options={[...OPTIONS]} value={null} onChange={jest.fn()} />
     );
     await openSheet();
-    expect(currentSpies.lastSnapPoints).toEqual(["50%"]);
+    expect(mockSpies.lastSnapPoints).toEqual(["50%", "90%"]);
+  });
+
+  it("maps sheetBackground + sheetHandle onto BottomSheet's palette", async () => {
+    await render(
+      <SelectBottomSheet
+        testID="sb"
+        options={[...OPTIONS]}
+        value={null}
+        onChange={jest.fn()}
+        selectBottomSheetColors={{
+          sheetBackground: "#F5F3FF",
+          sheetHandle: "#7C3AED",
+        }}
+      />
+    );
+    expect(mockSpies.lastPalette).toEqual({
+      background: "#F5F3FF",
+      handle: "#7C3AED",
+    });
   });
 
   it("chevron flips to up caret while the sheet is open", async () => {
@@ -417,6 +383,7 @@ describe("SelectBottomSheet", () => {
     await pickOptionAsync("sb-option-two");
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(onChange).toHaveBeenCalledWith("two");
+    expect(mockSpies.dismiss).toHaveBeenCalledTimes(1);
     expect(screen.getByTestId("sb-trigger").props.accessibilityState.expanded).toBe(false);
   });
 
@@ -556,23 +523,18 @@ describe("SelectBottomSheet", () => {
     expect(screen.getByTestId("sb-trigger-text").props.color).toBe(LIGHT_COLORS.textDisabled);
   });
 
-  it("renders the missing-peer hint when peers are unavailable", async () => {
-    mockPeersAvailable.mockReturnValue(false);
-    mockMissing.mockReturnValue(["@gorhom/bottom-sheet", "react-native-gesture-handler"]);
-    mockGorhom.mockReturnValue(null);
+  it("renders the missing-peer hint when @expo/ui isn't available", async () => {
+    mockPeerAvailable.mockReturnValue(false);
     await render(
       <SelectBottomSheet testID="sb" options={[...OPTIONS]} value={null} onChange={jest.fn()} />
     );
     const hint = screen.getByTestId("sb-missing-peer");
-    expect(hint).toHaveTextContent(/install .+@gorhom\/bottom-sheet/i);
-    expect(hint).toHaveTextContent(/react-native-gesture-handler/);
+    expect(hint).toHaveTextContent(/install .+@expo\/ui/i);
     expect(hint.props.color).toBe(LIGHT_COLORS.errorText);
   });
 
-  it("suppresses the trigger's normal text + chevron when peers are unavailable", async () => {
-    mockPeersAvailable.mockReturnValue(false);
-    mockMissing.mockReturnValue(["@gorhom/bottom-sheet"]);
-    mockGorhom.mockReturnValue(null);
+  it("suppresses the trigger's normal text + chevron when peer is unavailable", async () => {
+    mockPeerAvailable.mockReturnValue(false);
     await render(
       <SelectBottomSheet testID="sb" options={[...OPTIONS]} value="one" onChange={jest.fn()} />
     );
@@ -580,10 +542,8 @@ describe("SelectBottomSheet", () => {
     expect(screen.queryByTestId("sb-sheet")).toBeNull();
   });
 
-  it("does not present the sheet when the trigger is pressed with peers unavailable", async () => {
-    mockPeersAvailable.mockReturnValue(false);
-    mockMissing.mockReturnValue(["@gorhom/bottom-sheet"]);
-    mockGorhom.mockReturnValue(null);
+  it("does not present the sheet when the trigger is pressed with peer unavailable", async () => {
+    mockPeerAvailable.mockReturnValue(false);
     const onChange = jest.fn();
     await render(
       <SelectBottomSheet testID="sb" options={[...OPTIONS]} value={null} onChange={onChange} />
@@ -724,9 +684,7 @@ describe("SelectBottomSheet", () => {
     });
 
     it("missing peer dep fallback", async () => {
-      mockPeersAvailable.mockReturnValue(false);
-      mockMissing.mockReturnValue(["@gorhom/bottom-sheet", "react-native-gesture-handler"]);
-      mockGorhom.mockReturnValue(null);
+      mockPeerAvailable.mockReturnValue(false);
       await render(
         <SelectBottomSheet
           options={[...OPTIONS]}

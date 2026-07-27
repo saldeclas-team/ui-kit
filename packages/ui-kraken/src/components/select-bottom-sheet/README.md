@@ -1,46 +1,28 @@
 # SelectBottomSheet
 
-Single-choice picker rendered as a trigger + draggable bottom sheet. Users tap the trigger to slide up a panel from the bottom of the screen; tapping an option or dragging down dismisses it. Common uses: filter selection on tablet layouts, form pickers where the modal would feel too heavy, action pickers on long-scroll screens.
+Single-choice picker rendered as a trigger + native bottom sheet. Users tap the trigger to slide up a panel from the bottom of the screen; tapping an option or dragging down dismisses it. Common uses: filter selection on tablet layouts, form pickers where the modal would feel too heavy, action pickers on long-scroll screens.
 
 Contrast with the two sibling variants:
 
 - [`Select`](../select/README.md) — pure JS + RN `Modal`. Zero peer deps. Centered card. Cross-platform consistent.
 - [`SelectNative`](../select-native/README.md) — SwiftUI Menu / Compose DropdownMenu via `@expo/ui`. Fully native affordance.
-- **`SelectBottomSheet`** — sheet slides up from the bottom with drag-to-dismiss. Requires `@gorhom/bottom-sheet` + `react-native-gesture-handler`.
+- **`SelectBottomSheet`** — native bottom sheet (SwiftUI on iOS, Material 3 on Android, vaul on web) via [`<BottomSheet>`](../bottom-sheet/README.md). Same `@expo/ui` peer as `SelectNative` / `SegmentedControl` / `DatePicker`.
 
 All three share the same prop shape (options, value, onChange, label, helper/error, per-option disabled) so you can swap between them by changing the import name.
 
-## Peer dependencies — `@gorhom/bottom-sheet` + `react-native-gesture-handler`
+## Peer dependency — `@expo/ui`
 
-SelectBottomSheet requires **both** peer packages to actually render the sheet. Both are registered as **optional** in `ui-kraken`'s `peerDependenciesMeta` — consumers who don't use SelectBottomSheet don't have to install them.
+SelectBottomSheet composes our own [`<BottomSheet>`](../bottom-sheet/README.md) internally, which wraps `@expo/ui/community/bottom-sheet`. Same peer as our other native components — one install unlocks all of them.
 
-**When both installed** (`pnpm add @gorhom/bottom-sheet react-native-gesture-handler`): the trigger opens the native bottom-sheet on press. Wraps [[UIKitProvider]] in the required `BottomSheetModalProvider` at the app root (see "Provider setup" below).
+**Migrated from `@gorhom/bottom-sheet`** as of ui-kraken v0.9.x. Consumers upgrading from earlier versions can uninstall `@gorhom/bottom-sheet` and `react-native-gesture-handler` if no other code depends on them — SelectBottomSheet no longer requires either. See the CHANGELOG for the full migration notes.
 
-**When either is missing**: the trigger renders an inline hint like `"Install \`@gorhom/bottom-sheet\` + \`react-native-gesture-handler\` to enable SelectBottomSheet."`— colored with the`errorText` slot. The trigger is disabled at the accessibility level so screen readers announce it as un-interactive. The app does NOT crash.
+**When `@expo/ui` is installed**: the trigger opens the native bottom-sheet on press. No provider setup required (unlike gorhom, `@expo/ui`'s sheet uses OS-native modal presentation).
 
-The hint dynamically lists only the packages that are actually missing — if you install `@gorhom/bottom-sheet` but forget `react-native-gesture-handler`, the message names just the missing one.
+**When `@expo/ui` is missing**: the trigger renders an inline `"Install \`@expo/ui\` to enable SelectBottomSheet."`hint colored with the`errorText` slot. The trigger is disabled at the accessibility level so screen readers announce it as un-interactive. The app does NOT crash.
 
 ## Provider setup
 
-`@gorhom/bottom-sheet` requires `BottomSheetModalProvider` at the tree root for `modal.present()` to work. Mount it above (or next to) `<UIKitProvider>` in your app root:
-
-```tsx
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { UIKitProvider } from "ui-kraken";
-
-export default function App() {
-  return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <BottomSheetModalProvider>
-        <UIKitProvider>{/* your app */}</UIKitProvider>
-      </BottomSheetModalProvider>
-    </GestureHandlerRootView>
-  );
-}
-```
-
-Without this, `<SelectBottomSheet>` renders (frame + trigger visible), but tapping does not open the sheet — the modal fails silently at the gorhom layer.
+None required. Unlike the previous `@gorhom/bottom-sheet` backend, `@expo/ui/community/bottom-sheet` uses OS-native modal presentation — no `BottomSheetModalProvider` at the app root, no `GestureHandlerRootView`. Just mount `<UIKitProvider>` as usual and `<SelectBottomSheet>` works.
 
 ## Import
 
@@ -50,22 +32,22 @@ import { SelectBottomSheet } from "ui-kraken";
 
 ## Props
 
-| Prop                      | Type                               | Default                 | Description                                                                                                                                                      |
-| ------------------------- | ---------------------------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `options`                 | `SelectBottomSheetOption<Value>[]` | —                       | Options rendered inside the sheet, in array order. Required.                                                                                                     |
-| `value`                   | `Value \| null`                    | —                       | Currently-selected value, or `null` when none. Required (controlled).                                                                                            |
-| `onChange`                | `(value: Value) => void`           | —                       | Fires with the picked value when a sheet row is tapped. Required.                                                                                                |
-| `label`                   | `string`                           | —                       | Optional bold heading above the trigger.                                                                                                                         |
-| `helperText`              | `string`                           | —                       | Muted helper copy below the trigger. Overridden by `errorText`.                                                                                                  |
-| `errorText`               | `string`                           | —                       | Error copy below the trigger. Overrides `helperText`.                                                                                                            |
-| `placeholder`             | `string`                           | `"Select…"`             | Text inside the trigger when `value` is `null`.                                                                                                                  |
-| `sheetTitle`              | `string`                           | —                       | Optional bold title at the top of the sheet, above the option list.                                                                                              |
-| `disabled`                | `boolean`                          | `false`                 | Disable the trigger — sheet will not open.                                                                                                                       |
-| `disabledOptions`         | `Value[]`                          | —                       | Disable a subset of options inside the sheet.                                                                                                                    |
-| `snapPoints`              | `SelectBottomSheetSnapPoint[]`     | `["50%"]`               | Snap points for the sheet. Passed through to `@gorhom/bottom-sheet` — `"85%"` / `300` / etc.                                                                     |
-| `radius`                  | `SelectBottomSheetRadius`          | `"md"`                  | Trigger border radius. `"none" \| "sm" \| "md" \| "lg" \| "pill" \| number`.                                                                                     |
-| `selectBottomSheetColors` | `Partial<SelectBottomSheetColors>` | —                       | Per-instance color override. Missing slots fall through to the provider.                                                                                         |
-| `testID`                  | `string`                           | `"select-bottom-sheet"` | Root testID. Sub-elements derive `-label`, `-trigger`, `-trigger-text`, `-helper-text`, `-error-text`, `-sheet`, `-sheet-title`, `-option-{v}`, `-missing-peer`. |
+| Prop                      | Type                               | Default                 | Description                                                                                                                                                                                                                                                                                               |
+| ------------------------- | ---------------------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `options`                 | `SelectBottomSheetOption<Value>[]` | —                       | Options rendered inside the sheet, in array order. Required.                                                                                                                                                                                                                                              |
+| `value`                   | `Value \| null`                    | —                       | Currently-selected value, or `null` when none. Required (controlled).                                                                                                                                                                                                                                     |
+| `onChange`                | `(value: Value) => void`           | —                       | Fires with the picked value when a sheet row is tapped. Required.                                                                                                                                                                                                                                         |
+| `label`                   | `string`                           | —                       | Optional bold heading above the trigger.                                                                                                                                                                                                                                                                  |
+| `helperText`              | `string`                           | —                       | Muted helper copy below the trigger. Overridden by `errorText`.                                                                                                                                                                                                                                           |
+| `errorText`               | `string`                           | —                       | Error copy below the trigger. Overrides `helperText`.                                                                                                                                                                                                                                                     |
+| `placeholder`             | `string`                           | `"Select…"`             | Text inside the trigger when `value` is `null`.                                                                                                                                                                                                                                                           |
+| `sheetTitle`              | `string`                           | —                       | Optional bold title at the top of the sheet, above the option list.                                                                                                                                                                                                                                       |
+| `disabled`                | `boolean`                          | `false`                 | Disable the trigger — sheet will not open.                                                                                                                                                                                                                                                                |
+| `disabledOptions`         | `Value[]`                          | —                       | Disable a subset of options inside the sheet.                                                                                                                                                                                                                                                             |
+| `snapPoints`              | `SelectBottomSheetSnapPoint[]`     | `["50%", "90%"]`        | Snap points for the sheet. Sheet opens at index 0 (50%), user can drag up to 90%. Two-point default because Android's Material 3 sheet requires ≥2 snap points to respect a partial state — see [`<BottomSheet>`'s "Why two default snap points"](../bottom-sheet/README.md#why-two-default-snap-points). |
+| `radius`                  | `SelectBottomSheetRadius`          | `"md"`                  | Trigger border radius. `"none" \| "sm" \| "md" \| "lg" \| "pill" \| number`.                                                                                                                                                                                                                              |
+| `selectBottomSheetColors` | `Partial<SelectBottomSheetColors>` | —                       | Per-instance color override. Missing slots fall through to the provider.                                                                                                                                                                                                                                  |
+| `testID`                  | `string`                           | `"select-bottom-sheet"` | Root testID. Sub-elements derive `-label`, `-trigger`, `-trigger-text`, `-helper-text`, `-error-text`, `-sheet`, `-sheet-title`, `-option-{v}`, `-missing-peer`.                                                                                                                                          |
 
 Every Tamagui `YStackProps` flows through the spread — `padding`, `margin`, `width`, `borderColor`, `pressStyle`, shorthand aliases, every accessibility prop, etc.
 
@@ -238,9 +220,11 @@ Per-instance brand palette:
 
 ## Platform support
 
-| Platform      | Status                         | Notes                                                                                                                        |
-| ------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| iOS           | ✅ (requires both peers)       | Sheet slides up with native spring physics + backdrop fade.                                                                  |
-| Android       | ✅ (requires both peers)       | Same as iOS. Hardware back button dismisses.                                                                                 |
-| Web           | ⚠️ (via gorhom's web fallback) | `@gorhom/bottom-sheet` on web is limited. Consider using `Select` on web instead if consistent behavior matters.             |
-| Missing peers | ✅ safe fallback               | Trigger renders "Install X, Y" hint colored with the `errorText` slot. The app does NOT crash. Trigger is disabled for a11y. |
+Delegates 100% to [`<BottomSheet>`](../bottom-sheet/README.md) — see its platform support table. Summary:
+
+| Platform         | Status                      | Notes                                                                                                                              |
+| ---------------- | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| iOS              | ✅ (requires `@expo/ui`)    | SwiftUI `sheet` with detents.                                                                                                      |
+| Android          | ✅ (requires `@expo/ui`)    | Material 3 `ModalBottomSheet` (Compose). Max 2 snap states (partial + expanded).                                                   |
+| Web              | ✅ (no extra peer required) | `vaul` drawer (bundled inside `@expo/ui`).                                                                                         |
+| Missing peer dep | ✅ safe fallback            | Trigger renders "Install `@expo/ui`" hint colored with the `errorText` slot. The app does NOT crash. Trigger is disabled for a11y. |

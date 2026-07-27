@@ -134,7 +134,7 @@ const COMPONENTS: ComponentItem[] = [
   {
     title: "SelectBottomSheet",
     description:
-      "Single-choice picker via @gorhom/bottom-sheet — draggable panel with backdrop, graceful peer-dep fallback.",
+      "Single-choice picker with native bottom sheet — composes our BottomSheet (via @expo/ui). Same peer as SelectNative / DatePicker.",
     href: "/components/select-bottom-sheet",
     status: "shipped",
   },
