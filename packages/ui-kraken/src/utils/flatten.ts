@@ -37,6 +37,8 @@ import type {
   DividerColors,
   SpinnerColors,
   AvatarColors,
+  BadgeColors,
+  BadgeToneColors,
   TextColors,
 } from "../tokens/tokens-types";
 
@@ -202,6 +204,22 @@ export function flattenAvatarColors(colors: AvatarColors): Record<string, string
   for (const slot of Object.keys(colors) as Array<keyof AvatarColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiAvatar${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the nested `badgeColors` map (5 tones × 2 slots) into
+ * `$uiBadge{Tone}{Slot}` Tamagui tokens
+ * (`$uiBadgePrimaryBackground`, `$uiBadgePrimaryText`, ...).
+ */
+export function flattenBadgeColors(colors: BadgeColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const tone of Object.keys(colors) as Array<keyof BadgeColors>) {
+    const slots: BadgeToneColors = colors[tone];
+    const capitalized = tone.charAt(0).toUpperCase() + tone.slice(1);
+    out[`uiBadge${capitalized}Background`] = slots.background;
+    out[`uiBadge${capitalized}Text`] = slots.text;
   }
   return out;
 }

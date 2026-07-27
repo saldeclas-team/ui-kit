@@ -80,6 +80,10 @@ export default function RootLayout() {
               options={{ title: "Avatar", headerBackTitle: "Components" }}
             />
             <Stack.Screen
+              name="(pages)/components/badge"
+              options={{ title: "Badge", headerBackTitle: "Components" }}
+            />
+            <Stack.Screen
               name="(pages)/components/refresh-control"
               options={{ title: "RefreshControl", headerBackTitle: "Components" }}
             />

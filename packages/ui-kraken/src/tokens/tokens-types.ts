@@ -198,6 +198,31 @@ export interface AvatarColors {
 }
 
 /**
+ * Color slots for one Badge tone. Both slots required —
+ * `background` fills the pill; `text` paints the label / count.
+ */
+export interface BadgeToneColors {
+  /** Pill fill color. */
+  background: string;
+  /** Text / count / dot color. */
+  text: string;
+}
+
+/**
+ * Full Badge color palette — 5 tones, each with `background` +
+ * `text`. Per-instance overrides target the single tone the
+ * consumer picked (see `mergeBadgeToneColors`); provider-level
+ * overrides can partial-merge across tones (see `mergeBadgeColors`).
+ */
+export interface BadgeColors {
+  neutral: BadgeToneColors;
+  primary: BadgeToneColors;
+  success: BadgeToneColors;
+  warning: BadgeToneColors;
+  danger: BadgeToneColors;
+}
+
+/**
  * Skeleton color palette. 2 slots — the fill at rest (`base`) and the
  * peak of the pulse animation (`highlight`). Both typically alpha-tinted
  * grays that read as "loading" against any surface.
@@ -735,6 +760,7 @@ export interface Tokens {
   dividerColors: DividerColors;
   spinnerColors: SpinnerColors;
   avatarColors: AvatarColors;
+  badgeColors: BadgeColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;
@@ -771,6 +797,7 @@ export interface ResolvedTokens {
   dividerColors: DividerColors;
   spinnerColors: SpinnerColors;
   avatarColors: AvatarColors;
+  badgeColors: BadgeColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;

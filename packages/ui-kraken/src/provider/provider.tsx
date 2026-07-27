@@ -26,6 +26,7 @@ import {
   mergeMultiSelectColors,
   mergeRefreshControlColors,
   mergeAvatarColors,
+  mergeBadgeColors,
   mergeDividerColors,
   mergeSpinnerColors,
   mergeSkeletonColors,
@@ -65,6 +66,7 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
       dividerColors: mergeDividerColors(DEFAULT_TOKENS.dividerColors, tokens?.dividerColors),
       spinnerColors: mergeSpinnerColors(DEFAULT_TOKENS.spinnerColors, tokens?.spinnerColors),
       avatarColors: mergeAvatarColors(DEFAULT_TOKENS.avatarColors, tokens?.avatarColors),
+      badgeColors: mergeBadgeColors(DEFAULT_TOKENS.badgeColors, tokens?.badgeColors),
       refreshControlColors: mergeRefreshControlColors(
         DEFAULT_TOKENS.refreshControlColors,
         tokens?.refreshControlColors
@@ -137,6 +139,7 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
       dividerColors: mergeDividerColors(DEFAULT_DARK_TOKENS.dividerColors, dark?.dividerColors),
       spinnerColors: mergeSpinnerColors(DEFAULT_DARK_TOKENS.spinnerColors, dark?.spinnerColors),
       avatarColors: mergeAvatarColors(DEFAULT_DARK_TOKENS.avatarColors, dark?.avatarColors),
+      badgeColors: mergeBadgeColors(DEFAULT_DARK_TOKENS.badgeColors, dark?.badgeColors),
       refreshControlColors: mergeRefreshControlColors(
         DEFAULT_DARK_TOKENS.refreshControlColors,
         dark?.refreshControlColors

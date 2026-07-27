@@ -90,6 +90,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Badge",
+    description:
+      "Compact pill for counts, status labels, dot indicators. 5 tones (Primary / Success / Warning / Danger / neutral), 2 sizes.",
+    href: "/components/badge",
+    status: "shipped",
+  },
+  {
     title: "RefreshControl",
     description:
       "Themed pull-to-refresh spinner for ScrollView / FlatList — iOS + Android props wired from one palette.",

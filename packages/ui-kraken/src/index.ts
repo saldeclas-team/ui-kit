@@ -23,6 +23,7 @@ export type {
   DividerColorsInput,
   SpinnerColorsInput,
   AvatarColorsInput,
+  BadgeColorsInput,
   RefreshControlColorsInput,
   SkeletonColorsInput,
   HintColorsInput,
@@ -61,6 +62,8 @@ export {
   DEFAULT_DARK_SPINNER_COLORS,
   DEFAULT_LIGHT_AVATAR_COLORS,
   DEFAULT_DARK_AVATAR_COLORS,
+  DEFAULT_LIGHT_BADGE_COLORS,
+  DEFAULT_DARK_BADGE_COLORS,
   DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
   DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   DEFAULT_LIGHT_SKELETON_COLORS,
@@ -99,6 +102,8 @@ export {
   mergeDividerColors,
   mergeSpinnerColors,
   mergeAvatarColors,
+  mergeBadgeColors,
+  mergeBadgeToneColors,
   mergeRefreshControlColors,
   mergeSkeletonColors,
   mergeHintColors,
@@ -129,6 +134,8 @@ export type {
   DividerColors,
   SpinnerColors,
   AvatarColors,
+  BadgeColors,
+  BadgeToneColors,
   RefreshControlColors,
   SkeletonColors,
   HintColors,
@@ -193,6 +200,9 @@ export type { SpinnerProps, SpinnerSize } from "./components";
 
 export { Avatar } from "./components";
 export type { AvatarProps, AvatarShape, AvatarSize } from "./components";
+
+export { Badge } from "./components";
+export type { BadgeProps, BadgeSize, BadgeTone } from "./components";
 
 export { RefreshControl } from "./components";
 export type { RefreshControlProps } from "./components";

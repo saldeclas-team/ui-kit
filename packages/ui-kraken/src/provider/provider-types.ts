@@ -31,6 +31,8 @@ import type {
   DividerColors,
   SpinnerColors,
   AvatarColors,
+  BadgeColors,
+  BadgeToneColors,
   TextColors,
   ResolvedTokens,
 } from "../tokens/tokens-types";
@@ -105,6 +107,14 @@ export type SpinnerColorsInput = Partial<SpinnerColors>;
  * Missing slots fall through to the shipped defaults.
  */
 export type AvatarColorsInput = Partial<AvatarColors>;
+
+/**
+ * Partial override for `badgeColors` — 5 tones × 2 slots. Consumers
+ * can partial-merge across tones (only the tones they want to
+ * change), and within each tone only the slots they need. Same
+ * nested shape as `HintColorsInput`.
+ */
+export type BadgeColorsInput = Partial<Record<keyof BadgeColors, Partial<BadgeToneColors>>>;
 
 /**
  * Partial override for `refreshControlColors` — consumers only
@@ -246,6 +256,7 @@ export interface TokensInput {
   dividerColors?: DividerColorsInput;
   spinnerColors?: SpinnerColorsInput;
   avatarColors?: AvatarColorsInput;
+  badgeColors?: BadgeColorsInput;
   refreshControlColors?: RefreshControlColorsInput;
   skeletonColors?: SkeletonColorsInput;
   hintColors?: HintColorsInput;
