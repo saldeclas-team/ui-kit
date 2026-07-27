@@ -161,6 +161,15 @@ export type { CurrencyInputProps, CurrencyInputRadius } from "./components";
 export { Surface } from "./components";
 export type { SurfaceProps, SurfaceLevel } from "./components";
 
+export { Card } from "./components";
+export type {
+  CardBodyProps,
+  CardFooterProps,
+  CardHeaderProps,
+  CardLevel,
+  CardProps,
+} from "./components";
+
 export { RefreshControl } from "./components";
 export type { RefreshControlProps } from "./components";
 
