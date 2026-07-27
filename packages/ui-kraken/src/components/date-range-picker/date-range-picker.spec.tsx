@@ -44,8 +44,14 @@ jest.mock("./date-range-picker-styled", () => {
  * its own peer + Modal + Reanimated deps that aren't relevant
  * here — the DatePicker spec already covers those paths).
  */
-const mockReplacementStart = new Date(2027, 5, 12);
-const mockReplacementEnd = new Date(2027, 5, 26);
+// Use `Date.UTC(...)` (not `new Date(y, m, d)`) so ISO
+// serialization is deterministic regardless of the test
+// runner's timezone. Snapshots include `data-value` attrs that
+// are `.toISOString()` outputs — local-TZ construction would
+// snapshot different offsets on CI (UTC) vs a dev's laptop
+// (e.g. UTC-5). Applies to every Date literal in this spec.
+const mockReplacementStart = new Date(Date.UTC(2027, 5, 12));
+const mockReplacementEnd = new Date(Date.UTC(2027, 5, 26));
 // Aliases used by test assertions (jest.mock() factories are hoisted
 // so they can only reference `mock*`-prefixed variables).
 const REPLACEMENT_START = mockReplacementStart;
@@ -148,8 +154,8 @@ jest.mock("../../provider/use-ui-kit", () => ({
 
 import { DateRangePicker } from "./date-range-picker";
 
-const START = new Date(2027, 5, 12);
-const END = new Date(2027, 5, 20);
+const START = new Date(Date.UTC(2027, 5, 12));
+const END = new Date(Date.UTC(2027, 5, 20));
 
 describe("DateRangePicker", () => {
   beforeEach(() => {
@@ -229,7 +235,7 @@ describe("DateRangePicker", () => {
     await render(
       <DateRangePicker
         testID="dr"
-        startDate={new Date(2027, 5, 1)}
+        startDate={new Date(Date.UTC(2027, 5, 1))}
         endDate={END}
         onChange={onChange}
       />
@@ -243,11 +249,11 @@ describe("DateRangePicker", () => {
     const onChange = jest.fn();
     // Existing end is BEFORE the fake's REPLACEMENT_START — picking
     // a new start puts start > end → clamp.
-    const earlyEnd = new Date(2027, 0, 10);
+    const earlyEnd = new Date(Date.UTC(2027, 0, 10));
     await render(
       <DateRangePicker
         testID="dr"
-        startDate={new Date(2027, 0, 1)}
+        startDate={new Date(Date.UTC(2027, 0, 1))}
         endDate={earlyEnd}
         onChange={onChange}
       />
@@ -285,7 +291,7 @@ describe("DateRangePicker", () => {
   });
 
   it("end picker's minimumDate falls back to top-level minimumDate when startDate=null", async () => {
-    const rangeMin = new Date(2026, 0, 1);
+    const rangeMin = new Date(Date.UTC(2026, 0, 1));
     await render(
       <DateRangePicker
         testID="dr"
@@ -299,7 +305,7 @@ describe("DateRangePicker", () => {
   });
 
   it("start picker's maximumDate mirrors the top-level maximumDate", async () => {
-    const rangeMax = new Date(2028, 0, 1);
+    const rangeMax = new Date(Date.UTC(2028, 0, 1));
     await render(
       <DateRangePicker
         testID="dr"
