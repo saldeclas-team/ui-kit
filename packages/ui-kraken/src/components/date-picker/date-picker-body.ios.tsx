@@ -88,8 +88,12 @@ export function DatePickerBody({
           }}
         >
           <Pressable
+            testID={`${testID}-modal-content`}
             onPress={() => {
-              /* swallow — inner content shouldn't dismiss */
+              // Empty on purpose — absorbs the press so it doesn't
+              // bubble up to the backdrop Pressable (which would
+              // close the modal). Standard "tap outside to close,
+              // tap inside stays open" pattern.
             }}
           >
             <View
