@@ -323,6 +323,39 @@ export interface DateRangePickerColors {
 }
 
 /**
+ * BottomSheet color palette. Slot-based, 5 slots. Small palette
+ * because `@expo/ui/community/bottom-sheet` renders the native
+ * sheet (SwiftUI sheet on iOS, Material 3 ModalBottomSheet on
+ * Android) which OWNS most of its chrome — handle indicator,
+ * backdrop opacity, corner radius are OS-managed on native. Web
+ * (via vaul) accepts our styles fully.
+ *
+ * Per-slot platform notes:
+ *
+ * - **`background`**: sheet body background. Android accepts
+ *   this via `containerColor` on `ModalBottomSheet`. iOS ignores
+ *   (SwiftUI sheet uses system background — always follows dark
+ *   mode). Web full support.
+ * - **`backdrop`**: scrim behind the sheet. Web only — iOS and
+ *   Android use their OS-native scrim color which is not themable.
+ * - **`handle`**: drag indicator color at the top of the sheet.
+ *   Web only for now; iOS + Android render the OS-standard
+ *   handle (light gray, non-themable).
+ * - **`divider`**: optional divider color between sheet body and
+ *   a consumer-supplied header. Consumers ignore if their layout
+ *   doesn't use a divider.
+ * - **`missingPeer`**: text color for the "install `@expo/ui`"
+ *   fallback hint (rendered when the peer isn't installed).
+ */
+export interface BottomSheetColors {
+  background: string;
+  backdrop: string;
+  handle: string;
+  divider: string;
+  missingPeer: string;
+}
+
+/**
  * SegmentedControl color palette. Slot-based, 9 slots. Split into
  * shared vs. Android-only chrome:
  *
@@ -651,6 +684,7 @@ export interface Tokens {
   segmentedControlColors: SegmentedControlColors;
   datePickerColors: DatePickerColors;
   dateRangePickerColors: DateRangePickerColors;
+  bottomSheetColors: BottomSheetColors;
   radius: number;
   spacing: number;
 }
@@ -682,6 +716,7 @@ export interface ResolvedTokens {
   segmentedControlColors: SegmentedControlColors;
   datePickerColors: DatePickerColors;
   dateRangePickerColors: DateRangePickerColors;
+  bottomSheetColors: BottomSheetColors;
   radius: {
     sm: number;
     md: number;

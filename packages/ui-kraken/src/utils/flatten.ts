@@ -21,6 +21,7 @@ import type {
   InputColors,
   MultiSelectColors,
   RadioGroupColors,
+  BottomSheetColors,
   DatePickerColors,
   DateRangePickerColors,
   RefreshControlColors,
@@ -397,6 +398,20 @@ export function flattenDateRangePickerColors(
   for (const slot of Object.keys(colors) as Array<keyof DateRangePickerColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiDateRangePicker${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `bottomSheetColors` slot map into
+ * `$uiBottomSheet{PascalCase}` Tamagui tokens
+ * (`$uiBottomSheetBackground`, `$uiBottomSheetHandle`, ...).
+ */
+export function flattenBottomSheetColors(colors: BottomSheetColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof BottomSheetColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiBottomSheet${capitalized}`] = colors[slot];
   }
   return out;
 }

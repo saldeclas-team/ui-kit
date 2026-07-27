@@ -24,4 +24,7 @@ export type {
   SelectNativeColorsInput,
   SelectBottomSheetColorsInput,
   SegmentedControlColorsInput,
+  DatePickerColorsInput,
+  DateRangePickerColorsInput,
+  BottomSheetColorsInput,
 } from "./provider-types";

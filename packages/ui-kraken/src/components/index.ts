@@ -108,6 +108,15 @@ export type {
   DateRangePickerColorsInput,
 } from "./date-range-picker";
 
+export { BottomSheet } from "./bottom-sheet";
+export type {
+  BottomSheetProps,
+  BottomSheetRef,
+  BottomSheetRadius,
+  BottomSheetSnapPoint,
+  BottomSheetColorsInput,
+} from "./bottom-sheet";
+
 export { SocialButton } from "./social-button";
 export type {
   SocialButtonProps,

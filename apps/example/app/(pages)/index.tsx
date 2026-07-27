@@ -160,6 +160,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "BottomSheet",
+    description:
+      "Modal bottom sheet via @expo/ui — SwiftUI on iOS, Material 3 on Android, vaul on web. Ref-controlled with snap points.",
+    href: "/components/bottom-sheet",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

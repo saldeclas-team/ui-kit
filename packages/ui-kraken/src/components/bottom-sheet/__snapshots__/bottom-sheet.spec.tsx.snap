@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BottomSheet snapshots dark palette + peer available 1`] = `
+<View
+  data-bg="#1C1C1E"
+  data-index={-1}
+  data-pan-close={true}
+  data-snap-points="["50%"]"
+  onLayout={[Function]}
+  testID="bottom-sheet-sheet"
+>
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+    testID="bottom-sheet-view"
+  >
+    <Text>
+      Dark body
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`BottomSheet snapshots default light + peer available 1`] = `
+<View
+  data-bg="#FFFFFF"
+  data-index={-1}
+  data-pan-close={true}
+  data-snap-points="["50%"]"
+  onLayout={[Function]}
+  testID="bottom-sheet-sheet"
+>
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+    testID="bottom-sheet-view"
+  >
+    <Text>
+      Sheet body
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`BottomSheet snapshots missing peer dep fallback 1`] = `
+<Text
+  color="#DC2626"
+  testID="bottom-sheet-missing-peer"
+>
+  Install \`@expo/ui\` to enable BottomSheet.
+</Text>
+`;

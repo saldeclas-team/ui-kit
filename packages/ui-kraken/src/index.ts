@@ -227,3 +227,11 @@ export type {
   DateRangePickerOrientation,
   DateRangePickerRadius,
 } from "./components";
+
+export { BottomSheet } from "./components";
+export type {
+  BottomSheetProps,
+  BottomSheetRef,
+  BottomSheetRadius,
+  BottomSheetSnapPoint,
+} from "./components";
