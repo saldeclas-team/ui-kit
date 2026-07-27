@@ -22,6 +22,7 @@ export type {
   SurfaceColorsInput,
   DividerColorsInput,
   SpinnerColorsInput,
+  AvatarColorsInput,
   RefreshControlColorsInput,
   SkeletonColorsInput,
   HintColorsInput,
@@ -58,6 +59,8 @@ export {
   DEFAULT_DARK_DIVIDER_COLORS,
   DEFAULT_LIGHT_SPINNER_COLORS,
   DEFAULT_DARK_SPINNER_COLORS,
+  DEFAULT_LIGHT_AVATAR_COLORS,
+  DEFAULT_DARK_AVATAR_COLORS,
   DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
   DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   DEFAULT_LIGHT_SKELETON_COLORS,
@@ -95,6 +98,7 @@ export {
   mergeSurfaceColors,
   mergeDividerColors,
   mergeSpinnerColors,
+  mergeAvatarColors,
   mergeRefreshControlColors,
   mergeSkeletonColors,
   mergeHintColors,
@@ -124,6 +128,7 @@ export type {
   SurfaceColors,
   DividerColors,
   SpinnerColors,
+  AvatarColors,
   RefreshControlColors,
   SkeletonColors,
   HintColors,
@@ -185,6 +190,9 @@ export type { DividerOrientation, DividerProps } from "./components";
 
 export { Spinner } from "./components";
 export type { SpinnerProps, SpinnerSize } from "./components";
+
+export { Avatar } from "./components";
+export type { AvatarProps, AvatarShape, AvatarSize } from "./components";
 
 export { RefreshControl } from "./components";
 export type { RefreshControlProps } from "./components";

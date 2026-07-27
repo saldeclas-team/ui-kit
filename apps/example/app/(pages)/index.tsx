@@ -83,6 +83,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Avatar",
+    description:
+      "Image + initials fallback. 4 sizes, 3 shapes (circle / rounded / square), onError → initials swap.",
+    href: "/components/avatar",
+    status: "shipped",
+  },
+  {
     title: "RefreshControl",
     description:
       "Themed pull-to-refresh spinner for ScrollView / FlatList — iOS + Android props wired from one palette.",

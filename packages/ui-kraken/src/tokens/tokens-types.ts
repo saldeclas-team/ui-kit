@@ -185,6 +185,19 @@ export interface SpinnerColors {
 }
 
 /**
+ * Avatar color palette. 2 slots — the fill background when the
+ * Avatar shows initials + the initials text color. Only read when
+ * the Avatar isn't rendering an actual image (no source, image
+ * failed to load, initials fallback path).
+ */
+export interface AvatarColors {
+  /** Fill background when the Avatar shows initials. */
+  background: string;
+  /** Color of the initials text. */
+  text: string;
+}
+
+/**
  * Skeleton color palette. 2 slots — the fill at rest (`base`) and the
  * peak of the pulse animation (`highlight`). Both typically alpha-tinted
  * grays that read as "loading" against any surface.
@@ -721,6 +734,7 @@ export interface Tokens {
   surfaceColors: SurfaceColors;
   dividerColors: DividerColors;
   spinnerColors: SpinnerColors;
+  avatarColors: AvatarColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;
@@ -756,6 +770,7 @@ export interface ResolvedTokens {
   surfaceColors: SurfaceColors;
   dividerColors: DividerColors;
   spinnerColors: SpinnerColors;
+  avatarColors: AvatarColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;

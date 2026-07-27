@@ -30,6 +30,7 @@ import type {
   SurfaceColors,
   DividerColors,
   SpinnerColors,
+  AvatarColors,
   TextColors,
   ResolvedTokens,
 } from "../tokens/tokens-types";
@@ -98,6 +99,12 @@ export type DividerColorsInput = Partial<DividerColors>;
  * `color` slot they want to change. Single slot.
  */
 export type SpinnerColorsInput = Partial<SpinnerColors>;
+
+/**
+ * Partial override for `avatarColors` — 2 slots (background, text).
+ * Missing slots fall through to the shipped defaults.
+ */
+export type AvatarColorsInput = Partial<AvatarColors>;
 
 /**
  * Partial override for `refreshControlColors` — consumers only
@@ -238,6 +245,7 @@ export interface TokensInput {
   surfaceColors?: SurfaceColorsInput;
   dividerColors?: DividerColorsInput;
   spinnerColors?: SpinnerColorsInput;
+  avatarColors?: AvatarColorsInput;
   refreshControlColors?: RefreshControlColorsInput;
   skeletonColors?: SkeletonColorsInput;
   hintColors?: HintColorsInput;

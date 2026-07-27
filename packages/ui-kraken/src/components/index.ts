@@ -41,6 +41,9 @@ export type { DividerColorsInput, DividerOrientation, DividerProps } from "./div
 export { Spinner } from "./spinner";
 export type { SpinnerColorsInput, SpinnerProps, SpinnerSize } from "./spinner";
 
+export { Avatar } from "./avatar";
+export type { AvatarColorsInput, AvatarProps, AvatarShape, AvatarSize } from "./avatar";
+
 export { RefreshControl } from "./refresh-control";
 export type { RefreshControlProps, RefreshControlColorsInput } from "./refresh-control";
 

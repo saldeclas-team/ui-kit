@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Avatar component snapshots dark × sm × initials 1`] = `
+<View
+  accessibilityLabel="Alexis"
+  accessibilityRole="image"
+  alignItems="center"
+  backgroundColor="#374151"
+  borderRadius={12}
+  height={24}
+  justifyContent="center"
+  overflow="hidden"
+  testID="avatar"
+  width={24}
+>
+  <Text
+    color="#F9FAFB"
+    fontSize={9}
+    fontWeight="600"
+    testID="avatar-initials"
+  >
+    A
+  </Text>
+</View>
+`;
+
+exports[`Avatar component snapshots image (lg, circle) 1`] = `
+<View
+  accessibilityLabel="Avatar"
+  accessibilityRole="image"
+  alignItems="center"
+  backgroundColor="#E5E7EB"
+  borderRadius={28}
+  height={56}
+  justifyContent="center"
+  overflow="hidden"
+  testID="avatar"
+  width={56}
+>
+  <Image
+    onError={[Function]}
+    source={
+      {
+        "uri": "https://example.com/photo.jpg",
+      }
+    }
+    style={
+      {
+        "height": 56,
+        "width": 56,
+      }
+    }
+    testID="avatar-image"
+  />
+</View>
+`;
+
+exports[`Avatar component snapshots initials (md, circle) 1`] = `
+<View
+  accessibilityLabel="Alexis Noriega"
+  accessibilityRole="image"
+  alignItems="center"
+  backgroundColor="#E5E7EB"
+  borderRadius={20}
+  height={40}
+  justifyContent="center"
+  overflow="hidden"
+  testID="avatar"
+  width={40}
+>
+  <Text
+    color="#374151"
+    fontSize={16}
+    fontWeight="600"
+    testID="avatar-initials"
+  >
+    AN
+  </Text>
+</View>
+`;
+
+exports[`Avatar component snapshots rounded × xl 1`] = `
+<View
+  accessibilityLabel="AN"
+  accessibilityRole="image"
+  alignItems="center"
+  backgroundColor="#E5E7EB"
+  borderRadius={8}
+  height={80}
+  justifyContent="center"
+  overflow="hidden"
+  testID="avatar"
+  width={80}
+>
+  <Text
+    color="#374151"
+    fontSize={32}
+    fontWeight="600"
+    testID="avatar-initials"
+  >
+    A
+  </Text>
+</View>
+`;

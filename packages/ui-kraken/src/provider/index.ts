@@ -14,6 +14,7 @@ export type {
   SurfaceColorsInput,
   DividerColorsInput,
   SpinnerColorsInput,
+  AvatarColorsInput,
   RefreshControlColorsInput,
   SkeletonColorsInput,
   HintColorsInput,

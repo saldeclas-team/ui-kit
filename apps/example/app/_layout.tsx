@@ -76,6 +76,10 @@ export default function RootLayout() {
               options={{ title: "Spinner", headerBackTitle: "Components" }}
             />
             <Stack.Screen
+              name="(pages)/components/avatar"
+              options={{ title: "Avatar", headerBackTitle: "Components" }}
+            />
+            <Stack.Screen
               name="(pages)/components/refresh-control"
               options={{ title: "RefreshControl", headerBackTitle: "Components" }}
             />
