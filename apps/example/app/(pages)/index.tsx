@@ -62,6 +62,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Divider",
+    description:
+      "Thin line for visual separation. Horizontal / vertical, adjustable thickness + inset.",
+    href: "/components/divider",
+    status: "shipped",
+  },
+  {
     title: "RefreshControl",
     description:
       "Themed pull-to-refresh spinner for ScrollView / FlatList — iOS + Android props wired from one palette.",

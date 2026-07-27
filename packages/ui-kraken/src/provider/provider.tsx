@@ -25,6 +25,7 @@ import {
   mergeHintColors,
   mergeMultiSelectColors,
   mergeRefreshControlColors,
+  mergeDividerColors,
   mergeSkeletonColors,
   mergeSocialButtonColors,
   mergeStatCardColors,
@@ -59,6 +60,7 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         tokens?.currencyInputColors
       ),
       surfaceColors: mergeSurfaceColors(DEFAULT_TOKENS.surfaceColors, tokens?.surfaceColors),
+      dividerColors: mergeDividerColors(DEFAULT_TOKENS.dividerColors, tokens?.dividerColors),
       refreshControlColors: mergeRefreshControlColors(
         DEFAULT_TOKENS.refreshControlColors,
         tokens?.refreshControlColors
@@ -128,6 +130,7 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         dark?.currencyInputColors
       ),
       surfaceColors: mergeSurfaceColors(DEFAULT_DARK_TOKENS.surfaceColors, dark?.surfaceColors),
+      dividerColors: mergeDividerColors(DEFAULT_DARK_TOKENS.dividerColors, dark?.dividerColors),
       refreshControlColors: mergeRefreshControlColors(
         DEFAULT_DARK_TOKENS.refreshControlColors,
         dark?.refreshControlColors

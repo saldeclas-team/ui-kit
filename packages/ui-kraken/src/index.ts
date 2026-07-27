@@ -20,6 +20,7 @@ export type {
   InputColorsInput,
   CurrencyInputColorsInput,
   SurfaceColorsInput,
+  DividerColorsInput,
   RefreshControlColorsInput,
   SkeletonColorsInput,
   HintColorsInput,
@@ -52,6 +53,8 @@ export {
   DEFAULT_DARK_CURRENCY_INPUT_COLORS,
   DEFAULT_LIGHT_SURFACE_COLORS,
   DEFAULT_DARK_SURFACE_COLORS,
+  DEFAULT_LIGHT_DIVIDER_COLORS,
+  DEFAULT_DARK_DIVIDER_COLORS,
   DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
   DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   DEFAULT_LIGHT_SKELETON_COLORS,
@@ -87,6 +90,7 @@ export {
   mergeInputColors,
   mergeCurrencyInputColors,
   mergeSurfaceColors,
+  mergeDividerColors,
   mergeRefreshControlColors,
   mergeSkeletonColors,
   mergeHintColors,
@@ -114,6 +118,7 @@ export type {
   InputColors,
   CurrencyInputColors,
   SurfaceColors,
+  DividerColors,
   RefreshControlColors,
   SkeletonColors,
   HintColors,
@@ -160,6 +165,9 @@ export type { CurrencyInputProps, CurrencyInputRadius } from "./components";
 
 export { Surface } from "./components";
 export type { SurfaceProps, SurfaceLevel } from "./components";
+
+export { Divider } from "./components";
+export type { DividerOrientation, DividerProps } from "./components";
 
 export { RefreshControl } from "./components";
 export type { RefreshControlProps } from "./components";
