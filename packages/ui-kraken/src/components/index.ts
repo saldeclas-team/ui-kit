@@ -126,16 +126,6 @@ export type {
   PickedAsset,
 } from "./image-picker-sheet";
 
-export { ScreenContainer } from "./screen-container";
-export type {
-  ScreenContainerProps,
-  ScreenContainerEdge,
-  ScreenContainerKeyboardBehavior,
-  ScreenContainerStatusBarStyle,
-  ScreenContainerScrollProps,
-  ScreenContainerColorsInput,
-} from "./screen-container";
-
 export { SocialButton } from "./social-button";
 export type {
   SocialButtonProps,

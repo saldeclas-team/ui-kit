@@ -384,30 +384,6 @@ export interface ImagePickerSheetColors {
 }
 
 /**
- * ScreenContainer color palette. Slot-based, 3 slots. Small
- * palette because ScreenContainer is layout ceremony, not chrome
- * — the only visible surface is the container background.
- *
- * - **`background`** — fills the whole screen (including the
- *   safe-area inset zones, so the color extends behind the
- *   status bar / home indicator instead of leaving them black).
- * - **`statusBarBackground`** — Android status-bar background
- *   applied via `StatusBar.setBackgroundColor()` when the
- *   `statusBarStyle` prop is set. Ignored on iOS (translucent
- *   by default) and web.
- * - **`fallbackPadding`** — reserved token slot for the JS-side
- *   fallback when `react-native-safe-area-context` isn't
- *   installed. Not a color but a documented sentinel that the
- *   fallback exists. See the component doc for the numeric
- *   defaults.
- */
-export interface ScreenContainerColors {
-  background: string;
-  statusBarBackground: string;
-  fallbackPadding: string;
-}
-
-/**
  * SegmentedControl color palette. Slot-based, 9 slots. Split into
  * shared vs. Android-only chrome:
  *
@@ -738,7 +714,6 @@ export interface Tokens {
   dateRangePickerColors: DateRangePickerColors;
   bottomSheetColors: BottomSheetColors;
   imagePickerSheetColors: ImagePickerSheetColors;
-  screenContainerColors: ScreenContainerColors;
   radius: number;
   spacing: number;
 }
@@ -772,7 +747,6 @@ export interface ResolvedTokens {
   dateRangePickerColors: DateRangePickerColors;
   bottomSheetColors: BottomSheetColors;
   imagePickerSheetColors: ImagePickerSheetColors;
-  screenContainerColors: ScreenContainerColors;
   radius: {
     sm: number;
     md: number;

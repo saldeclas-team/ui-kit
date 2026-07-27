@@ -16,7 +16,6 @@ import {
   flattenDateRangePickerColors,
   flattenImagePickerSheetColors,
   flattenRefreshControlColors,
-  flattenScreenContainerColors,
   flattenSegmentedControlColors,
   flattenSelectBottomSheetColors,
   flattenSelectColors,
@@ -76,7 +75,6 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
       ...flattenDateRangePickerColors(lightResolved.dateRangePickerColors),
       ...flattenBottomSheetColors(lightResolved.bottomSheetColors),
       ...flattenImagePickerSheetColors(lightResolved.imagePickerSheetColors),
-      ...flattenScreenContainerColors(lightResolved.screenContainerColors),
     },
     radius: {
       ...baseTokens.radius,
@@ -133,7 +131,6 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenDateRangePickerColors(lightResolved.dateRangePickerColors),
         ...flattenBottomSheetColors(lightResolved.bottomSheetColors),
         ...flattenImagePickerSheetColors(lightResolved.imagePickerSheetColors),
-        ...flattenScreenContainerColors(lightResolved.screenContainerColors),
       },
       dark: {
         ...(baseThemes.dark ?? {}),
@@ -160,7 +157,6 @@ export function buildConfig(light: Tokens = DEFAULT_TOKENS, dark: Tokens = DEFAU
         ...flattenDateRangePickerColors(darkResolved.dateRangePickerColors),
         ...flattenBottomSheetColors(darkResolved.bottomSheetColors),
         ...flattenImagePickerSheetColors(darkResolved.imagePickerSheetColors),
-        ...flattenScreenContainerColors(darkResolved.screenContainerColors),
       },
     },
   });
@@ -220,8 +216,6 @@ export {
   DEFAULT_LIGHT_BOTTOM_SHEET_COLORS,
   DEFAULT_DARK_IMAGE_PICKER_SHEET_COLORS,
   DEFAULT_LIGHT_IMAGE_PICKER_SHEET_COLORS,
-  DEFAULT_DARK_SCREEN_CONTAINER_COLORS,
-  DEFAULT_LIGHT_SCREEN_CONTAINER_COLORS,
   mergeButtonColors,
   mergeButtonVariantColors,
   mergeTextColors,
@@ -249,7 +243,6 @@ export {
   mergeDateRangePickerColors,
   mergeBottomSheetColors,
   mergeImagePickerSheetColors,
-  mergeScreenContainerColors,
 } from "./defaults";
 export { coarseToFineTokens } from "./tokens-derive";
 export { tint } from "../utils/color";

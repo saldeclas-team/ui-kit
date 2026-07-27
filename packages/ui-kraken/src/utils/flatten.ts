@@ -26,7 +26,6 @@ import type {
   DateRangePickerColors,
   ImagePickerSheetColors,
   RefreshControlColors,
-  ScreenContainerColors,
   SegmentedControlColors,
   SelectBottomSheetColors,
   SelectColors,
@@ -429,21 +428,6 @@ export function flattenImagePickerSheetColors(
   for (const slot of Object.keys(colors) as Array<keyof ImagePickerSheetColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiImagePickerSheet${capitalized}`] = colors[slot];
-  }
-  return out;
-}
-
-/**
- * Flatten the `screenContainerColors` slot map into
- * `$uiScreenContainer{PascalCase}` Tamagui tokens.
- */
-export function flattenScreenContainerColors(
-  colors: ScreenContainerColors
-): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const slot of Object.keys(colors) as Array<keyof ScreenContainerColors>) {
-    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
-    out[`uiScreenContainer${capitalized}`] = colors[slot];
   }
   return out;
 }
