@@ -1,5 +1,404 @@
 # ui-kraken
 
+## 0.9.0
+
+### Minor Changes
+
+- 99ede69: Add `BottomSheet` — modal bottom sheet with snap points, backdrop, and swipe-to-dismiss. First component of Batch 2 Phase B (overlays).
+
+  Ref-controlled — the consumer holds a `useRef<BottomSheetRef>()` and calls `ref.current?.present() / dismiss() / snapToIndex() / expand() / collapse()`. Pure shell scope: the consumer puts arbitrary content inside (forms, lists, custom UI); no built-in `<BottomSheet.Header>` / `<BottomSheet.Actions>` helpers.
+
+  ## Backend: `@expo/ui/community/bottom-sheet`
+
+  Uses the native sheet primitive on each platform via the same `@expo/ui` peer we already require for SelectNative / SegmentedControl / DatePicker:
+
+  - **iOS**: SwiftUI `sheet` with detents (the real system sheet).
+  - **Android**: Material 3 `ModalBottomSheet` (Compose).
+  - **Web**: `vaul` drawer with spring-physics gestures (bundled inside `@expo/ui`, no extra peer).
+
+  Chose `@expo/ui/community/bottom-sheet` over raw `@gorhom/bottom-sheet` because:
+
+  1. **Native affordances** — real SwiftUI / Material 3 sheets, not JS simulation.
+  2. **No `react-native-gesture-handler` peer** — removes one peer + one native install for consumers.
+  3. **Same peer as our other native components** — `@expo/ui` is our single umbrella peer for native primitives.
+  4. **Backdrop always present** — better default than gorhom (which had none).
+  5. **Zero extra deps on web** — vaul is bundled.
+
+  Concessions accepted per platform:
+
+  - **Android: only 2 snap states max** (partial ~50% + expanded). Passing 3+ snap points still works but the middle one is ignored on Android. Covers 95% of real-world sheet UX.
+  - **Modal-only presentation** — no inline "persistent peek" sheet (Google Maps style). Aligned with the modal-only scope decision.
+  - **iOS `enablePanDownToClose` ties swipe + backdrop-tap dismissal** — SwiftUI doesn't allow separating them. Native behavior.
+  - **`handleComponent` / `backdropComponent` / `backgroundComponent` not honored on native** — the OS manages them. Web accepts styles fully.
+
+  ## API
+  - **Ref**: `useRef<BottomSheetRef>(null)` with methods `present(index?)`, `dismiss()`, `snapToIndex(index)`, `expand()`, `collapse()`.
+  - **Props**: `snapPoints?: readonly (string | number)[]` (default `["50%"]`), `enablePanDownToClose` (default `true`), `enableDynamicSizing`, `onChange(index)`, `onDismiss()`, `radius` (accepted for API symmetry — currently web-only follow-up), `bottomSheetColors` per-instance palette, `testID`.
+
+  Standard testID surface: `-sheet` (native sheet), `-view` (inner container), `-missing-peer` (fallback).
+
+  ## Palette — 5 slots (each component owns its color space)
+
+  Per the "each component owns its color space" rule, BottomSheet declares its own `BottomSheetColors` block. Small palette because native platforms own most sheet chrome (handle indicator, backdrop opacity, corner radius are OS-managed on iOS + Android; only web accepts them fully):
+
+  - `background` — sheet body. Android via `containerColor`, iOS ignored (SwiftUI system background), web full.
+  - `backdrop` — scrim. Web only; iOS + Android use OS-native scrim.
+  - `handle` — drag indicator. Web only; iOS + Android render OS-standard handle.
+  - `divider` — optional divider color between sheet body and consumer-supplied header.
+  - `missingPeer` — text color for the "install `@expo/ui`" fallback hint.
+
+  ## Provider ceremony
+
+  Re-mounts `<UIKitContext.Provider>` inside the sheet body defensively — `@expo/ui` uses `Host + RNHostView` which should preserve React context inline, but the ceremony is cheap and shields us if a future `@expo/ui` version switches to a native portal. Same pattern as SelectBottomSheet.
+
+  ## Testing (+27 tests, 981 total)
+
+  25 shell tests covering: default testID + custom root, sheet + view sub-elements, children render inside, default + custom snapPoints, index=-1 default, enablePanDownToClose default true + override false, enableDynamicSizing forwards, background from palette, per-instance override wins, dark palette, onChange fires, all 6 ref methods forward correctly, missing-peer hint (both branches: probe false + probe true with null getters), radius accepted, 3 snapshots (default light, missing peer, dark).
+
+  2 probe tests: both branches (peer resolves / peer throws).
+
+  ## Example app
+
+  New `/components/bottom-sheet` route with 6 sections: basic 50% sheet with dismiss counter, multi-snap 25/50/90, form inside sheet, non-dismissible, fit-to-content (enableDynamicSizing), brand-tinted palette.
+
+  ## Not in this PR (deferred)
+
+  SelectBottomSheet (Batch 2 #1b, already shipped) currently uses raw `@gorhom/bottom-sheet`. Migration to `@expo/ui/community/bottom-sheet` is a separate follow-up PR — we validate the new BottomSheet in real device use first. When migrated, we'll remove `@gorhom/bottom-sheet` and `react-native-gesture-handler` from `ui-kraken`'s peer list entirely, consolidating around `@expo/ui` as the single peer for native primitives.
+
+- 4a30838: Add `DatePicker` — native date / time / datetime picker with a Tamagui-styled trigger. Third delivery of Batch 2 Phase A.
+
+  - **iOS**: opens an inline picker inside a modal sheet with a Done button (staged selection — the picker's incremental scrolls don't fire `onChange` on every tick; only Done commits).
+  - **Android**: opens the OS's Material 3 dialog directly via `presentation="dialog"` (native OK/Cancel handled by the OS).
+  - **Web**: renders the browser's built-in `<input type="date" | "time" | "datetime-local">` via `showPicker()` (Chromium/Edge/Firefox) with a `.focus()` fallback on Safari — no JS calendar library.
+
+  ### API
+  - Controlled: `value: Date | null` (null → placeholder) + `onChange: (date: Date) => void`.
+  - **`mode: "date" | "time" | "datetime"`** shipped from v1. Trigger formatting adjusts per mode; default placeholder shifts (`"Select date…"` / `"Select time…"` / `"Select date & time…"`).
+  - Trigger formatting via `Intl.DateTimeFormat` — `dateStyle` (date mode), `timeStyle` (time mode), both (datetime). `locale?: string` + `formatValue?: (date) => string` escape hatch.
+  - `is24Hour?: boolean` — Android-only per `@expo/ui`'s API. iOS follows the device locale's 12h/24h convention.
+  - `label` / `helperText` / `errorText` / `disabled` / `minimumDate` / `maximumDate` — same shape as Input / Select.
+  - `radius?: RadiusValue` — trigger corner shape (default `"md"`).
+  - Standard testID surface: `-trigger`, `-trigger-text`, `-picker`, `-modal` (iOS), `-modal-overlay` (iOS), `-done` (iOS), `-helper-text`, `-error-text`, `-missing-peer`.
+
+  ### Peer
+
+  `@expo/ui` (already an optional peer of `SelectNative` and `SegmentedControl`) — no new peer required. Missing peer → renders "Install `@expo/ui`" hint colored with `errorText`; the app does NOT crash.
+
+  ### Platform split from v0
+
+  Follows the [`native-bridges-platform-split` rule](./.agents/skills/creating-component-tamagui/SKILL.md#35-native-bridges-must-be-platform-split-mandatory) — every platform's native call lives in its own file (`date-picker-body.{ios,android,web,tsx}`) so iOS-only tweaks (modal chrome, Done button, staged value pattern) can't regress the Android dialog and vice versa.
+
+  ### Palette — 13 slots
+
+  Per the "each component owns its color space" rule, DatePicker declares its own `DatePickerColors` block:
+
+  - **Trigger chrome (9)**: `background`, `backgroundDisabled`, `border`, `borderFocused` (reserved), `borderError`, `text`, `textDisabled`, `placeholder`, `chevron`.
+  - **Surrounding labels (3)**: `label`, `helperText`, `errorText`.
+  - **Native picker tint (1)**: `accent` — passed to `@expo/ui` as `accentColor` to tint the highlighted date on both platforms.
+
+  Default light palette mirrors `<Input>` so a DatePicker in the same form column reads flush. Accent defaults to iOS system blue (`#007AFF` / `#0A84FF`).
+
+  ### Testing
+
+  +25 tests (23 shell + 2 probe). Full-shell coverage; snapshots for empty / preselected / error / missing-peer states.
+
+  ### Example app
+
+  New `/components/date-picker` route with 10 sections: basic (date-of-birth with max=today), preselected + custom locale, time mode + `is24Hour`, datetime mode, range constraint (next 30 days), `formatValue` escape hatch, label + helper text, error state, fully disabled, brand-tinted palette.
+
+- 6d7b606: Add `DateRangePicker` — controlled start/end date range picker. Fourth delivery of Batch 2 Phase A, closing the Select + SegmentedControl + DatePicker set.
+
+  Composes two `<DatePicker>` triggers as a pure wrapper — no platform-split at this level because the wrapped DatePickers own the `@expo/ui` bridge, staged iOS modal, Android dialog, and missing-peer fallback. DateRangePicker adds range semantics on top: auto-clamping, shared formatting, single-callback onChange.
+
+  ### API
+  - Controlled: `startDate` / `endDate: Date | null` + `onChange: (start, end) => void`. Single callback fires with the full new range so consumers have one state update site — no separate onStart / onEnd branches.
+  - `mode: "date" | "datetime"` shipped from v1. `"time"` intentionally excluded — a "time range" is rare and not what "date range" implies to consumers. Add in a follow-up if a real use case surfaces.
+  - `orientation: "vertical" | "horizontal"` (default `"vertical"`). Vertical stacks Start above End (best on mobile). Horizontal places triggers side-by-side with `flex: 1` each and a `→` separator glyph (best on tablet).
+  - `startLabel` / `endLabel` (`"Start"` / `"End"` defaults, overridable — e.g. `"Check-in"` / `"Check-out"`).
+  - `startPlaceholder` / `endPlaceholder` — per-trigger placeholder, or fall back to DatePicker's mode-aware defaults.
+  - Standard `label` / `helperText` / `errorText` / `disabled` / `minimumDate` / `maximumDate` / `locale` / `dateStyle` / `timeStyle` / `formatValue` / `is24Hour` / `radius` — all forwarded uniformly to both triggers.
+
+  ### Auto-clamp
+
+  When `startDate` moves past `endDate`, `onChange` fires ONCE with `(newStart, null)` — the end clears rather than jumping to match the new start (which would surprise the user more). The end picker's `minimumDate` is `startDate ?? minimumDate` so the native picker won't offer invalid values in the first place. Belt AND suspenders.
+
+  ### `errorText` UX
+
+  When set, `errorText` overrides `helperText` AND paints BOTH trigger borders red via a per-instance palette override passed down to the wrapped DatePickers. The children never render their own error copy — one shared error line lives on the range container so the invalid state reads as a single field.
+
+  ### Palette — 14 slots (each component owns its color space)
+
+  Per the "each component owns its color space" rule, DateRangePicker declares its own `DateRangePickerColors` block. Duplicates the 13 DatePicker slots (trigger chrome + surrounding labels + accent) applied identically to both bounds, plus one range-specific slot:
+
+  - `separator` — glyph color for the horizontal-layout separator (`→`). No effect in vertical orientation.
+
+  Default light + dark palettes mirror `DatePickerColors` for the trigger chrome so a range picker sitting next to a single-date picker in the same form reads flush.
+
+  ### Peer
+
+  No new peer required — reuses `@expo/ui` (via the shared DatePicker probe). Consumers who already installed for DatePicker / SelectNative / SegmentedControl get DateRangePicker "for free."
+
+  ### Testing (+29 tests, 943 total)
+
+  Shell coverage:
+  - Both triggers render + testID prefixing (`{root}-start` / `{root}-end`).
+  - Default labels (`"Start"` / `"End"`) + custom overrides + empty-string hides.
+  - Custom placeholders forward.
+  - Picking a start: fires `(newStart, existingEnd)` when end ≥ newStart.
+  - Picking a start LATER than end: fires `(newStart, null)` — clamp.
+  - Picking a start with no existing end: no clamp.
+  - Picking an end: fires `(startDate, newEnd)`.
+  - End picker's `minimumDate` = `startDate` (when set), else the top-level `minimumDate`.
+  - Start picker's `maximumDate` mirrors top-level `maximumDate`.
+  - `mode` / `locale` / `dateStyle` / `timeStyle` / `is24Hour` / `formatValue` forward to both.
+  - `errorText` overrides helper AND paints both trigger borders red.
+  - Helper renders when no error. Both empty → nothing renders.
+  - `disabled` propagates to both.
+  - Vertical (default) has no separator.
+  - Horizontal renders separator + `flex: 1` on both pickers.
+  - Per-instance `dateRangePickerColors` override wins.
+  - Dark palette on `activeTheme="dark"`.
+  - Extra `YStackProps` spread through.
+  - Snapshots for default empty vertical + preselected horizontal + error vertical.
+
+  ### Example app
+
+  New `/components/date-range-picker` route with 10 sections: basic vacation, preselected + custom locale, horizontal orientation, datetime mode (reservation), custom labels (hotel check-in/out), range constraint (next 90 days), label + helper text, error state, fully disabled, brand-tinted palette (horizontal).
+
+- d78980f: Add `ImagePickerSheet` — bottom-sheet image picker with camera / gallery / cancel action rows. Second (and last) component of Batch 2 Phase B. Composes our own `<BottomSheet>` for the sheet UI and wraps `expo-image-picker` for the actual picking.
+
+  ## API
+  - Ref-controlled: `useRef<ImagePickerSheetRef>(null)` + `ref.current?.present() / dismiss()`. No baked-in trigger — consumer wires their own button.
+  - Three fixed action rows: **Take photo** (camera), **Choose from library** (gallery), **Cancel**.
+  - Cancel row is styled destructive (`cancelText` slot, typically red) per iOS action-sheet convention.
+  - `onPick(asset | null)` fires with the picked asset OR `null` when the user cancelled INSIDE the OS picker UI. Cancel row taps are silent dismiss — no `onPick` fires.
+  - `onPermissionDenied?(source: "camera" | "library")` fires when a permission grant is denied. Consumer typically toasts a "go to Settings" hint.
+  - Standard `expo-image-picker` options forwarded: `mediaTypes`, `allowsEditing`, `aspect`, `quality`, `videoMaxDuration`.
+  - Custom labels (`cameraLabel`, `galleryLabel`, `cancelLabel`, `sheetTitle`) + optional icon slots (`cameraIcon`, `galleryIcon` — bring your own).
+
+  Standard testID surface: `-sheet`, `-title`, `-camera`, `-gallery`, `-cancel`, `-missing-peer`.
+
+  ## Peer dependencies
+
+  Two optional peers:
+
+  - **`expo-image-picker`** — new to ui-kraken's peer list. Added to `peerDependencies` with `optional: true`. Consumers who don't use ImagePickerSheet don't have to install it.
+  - **`@expo/ui`** — inherited from our BottomSheet dependency (already required by SelectNative / SegmentedControl / DatePicker / BottomSheet).
+
+  Missing either peer → sheet body renders "Install X" hint (dynamic — lists only the packages actually missing). App does NOT crash.
+
+  ## Platform behavior
+  - **iOS + Android**: full support. Camera + gallery via `expo-image-picker`. Permissions requested inline (request-then-launch pattern).
+  - **Web**: library-only. `body.supportsCamera=false` → the camera row is HIDDEN (browsers can't launch a native camera). Gallery uses `<input type="file">` internally via `expo-image-picker`.
+
+  ## Architecture — platform-split per the `native-bridges-platform-split` rule
+
+  Even though iOS + Android bodies are functionally identical today (both call `expo-image-picker` with the same shape), the split is mandatory per the rule for two reasons:
+
+  1. **Bug containment** — if `expo-image-picker` breaks on one platform, the fix lives in that one body.
+  2. **Per-platform backend swap-ability** — we can swap the picker on ONE platform (e.g. to `react-native-image-picker` on Android) without touching the other.
+
+  Web genuinely diverges: no camera + no explicit permission request (browser file picker prompts implicitly).
+
+  File layout: `image-picker-sheet-body.{ios,android,web,tsx}` + shared `image-picker-sheet-body-types.ts` (contract + `PermissionDeniedError` class). Shell owns palette + sheet UI + peer detection + missing-peer fallback + ref forwarding.
+
+  ## Palette — 8 slots (each component owns its color space)
+  - **Sheet chrome (2)**: `sheetBackground`, `sheetHandle` — forwarded to the internally composed `<BottomSheet>` via palette mapping (same pattern as SelectBottomSheet).
+  - **Action rows (5)**: `actionBackground`, `actionBackgroundPressed`, `actionText`, `actionIcon`, `cancelText` (destructive), `divider`.
+  - **Fallback (0)**: reuses `cancelText` for the "install X" hint since it's semantically destructive-toned anyway.
+
+  Default light + dark palettes mirror iOS action-sheet convention (white/gray-900 sheets with red Cancel).
+
+  ## Testing (+57 tests, 1047 total)
+  - 27 shell tests: all three action rows, custom labels, ref methods, permission denial routing, custom options forwarding, peer-missing fallback (three variants: BottomSheet missing / expo-image-picker missing / both missing), web-mode camera row hidden, palette mapping to BottomSheet, dark palette, custom icons, snapshots.
+  - 9 iOS body tests: permission grant → launch → return asset, denial throws PermissionDeniedError, cancel returns null, missing peer returns null. Same for library.
+  - 9 Android body tests: same coverage.
+  - 6 web body tests: `supportsCamera=false`, camera is no-op, library full flow, permission handling for API symmetry.
+  - 3 fallback body tests.
+  - 2 probe tests: both branches.
+
+  ## Example app
+
+  New `/components/image-picker-sheet` route with 6 sections: basic profile photo, square crop avatar (`allowsEditing + aspect=[1,1]`), receipt scanner with custom labels, video picker (`mediaTypes='videos'`), permission denial handling with visible hint, themed palette (brand purple).
+
+  ## Peer dep also added to apps/example
+
+  `expo-image-picker@57.0.6` — required for the device demo to actually open the OS camera / gallery. Consumers of ui-kraken need to add it themselves via `pnpm add expo-image-picker` (or `npx expo install expo-image-picker` for managed workflows).
+
+- fc76de3: Add `SegmentedControl` — horizontal segmented picker for 2-5 short options. Second delivery of Batch 2 Phase A.
+
+  - **iOS**: native `UISegmentedControl` via `@expo/ui/community/segmented-control` (optional peer).
+  - **Android**: Material 3 look implemented in pure JS with `react-native-reanimated` — no additional peer required. Sliding selection pill, ripple, Material 3 role colors, all overridable per-instance.
+  - **Web**: `@expo/ui` Host+Picker fallback.
+
+  ### Platform-split rationale
+
+  The initial cut used `@expo/ui/community/segmented-control` on Android too, but the Compose bridge exposes a hit-testing interop bug: taps on the first 1-2 SegmentedControls of a scrollable Expo Router page pass THROUGH the Compose `Host` and land on adjacent stack screens' RN elements, causing random navigation to unrelated routes. `<View collapsable={false}>` + touch-responder claims did NOT block it.
+
+  The `native-bridges-platform-split` rule (SKILL § 3.5, added last commit) let us swap the buggy bridge for a pure-JS Material 3 implementation on Android without touching iOS. iOS's SwiftUI `UISegmentedControl` doesn't have the interop bug, so it kept the bridge.
+
+  ### API
+  - Generic in the value type (`SegmentedControl<Value extends string = string>`) — same slot as Select / RadioGroup / MultiSelect.
+  - Controlled only: `value: Value`, `onChange: (value: Value) => void`.
+  - `label` / `helperText` / `errorText` / `disabled` — same surrounding-text pattern as Input / Select.
+  - `androidRadius?: RadiusValue` — default `"pill"` matching M3. Prefixed `android` because iOS's native control owns its own shape. Consumers who want a square variant pass `"none"`; medium `"md"`; numeric px value; etc.
+  - No `tintColor` prop — iOS ignores it and on Android the `segmentedControlColors` palette gives finer control anyway.
+
+  ### Palette — 9 slots
+
+  Split into shared vs. Android-only chrome per the "each component owns its color space" rule:
+
+  - **Shared (3)** — `label`, `helperText`, `errorText`. Themable on every platform.
+  - **Android chrome (6)** — `containerBackground`, `containerBorder`, `selectedBackground`, `selectedLabel`, `unselectedLabel`, `ripple`. Used by the pure-JS Android body; ignored on iOS (SwiftUI paints its own chrome). Each slot documented as `[Android only]` in its JSDoc.
+
+  Default light + dark palettes ship Material 3 role colors so consumers who don't override still get the M3 look on Android.
+
+  ### Testing
+
+  +34 tests (24 shell + 8 Android body + 2 probe). Coverage:
+  - `segmented-control.tsx` (shell): 100%
+  - `segmented-control-body.ios.tsx`: 100%
+  - `segmented-control-body.android.tsx`: 100% lines / 100% functions
+  - `expo-ui-segmented-probe.ts`: 100%
+
+  `.web.tsx` and `.tsx` fallback intentionally uncovered (jest-expo resolves `.ios` by default, matching the pattern used by SelectNative).
+
+  ### Shared helper: `resolveRadiusNumeric`
+
+  Added to `utils/radius.ts` — numeric-only variant of `resolveRadius` for components rendering `borderRadius` on plain RN `<Animated.View>` (which doesn't understand Tamagui theme tokens). Extracted from the SegmentedControl shell so it can replace Skeleton's local resolver in a follow-up.
+
+  ### Example app
+
+  New `/components/segmented-control` route with 10 sections: basic (3 options), two options / filter tabs, five options / sort direction, with label + helper text, error state, fully disabled, per-instance palette override, `androidRadius="none"` (square), `androidRadius="md"` (soft rounded), Android brand-tinted chrome.
+
+- db591a9: Add the `Select` family — three sibling single-choice picker components with the same controlled prop shape but different UX backends. First delivery of Batch 2 Phase A.
+
+  - **`Select`** — pure JS + `react-native` `Modal`. Centered card popup, cross-platform consistent, zero peer dependencies. Own `selectColors` block on the token schema (16 slots). Full theming control over trigger + modal chrome + selected-option highlight.
+  - **`SelectNative`** — SwiftUI `Menu` on iOS / Compose `DropdownMenu` on Android via `@expo/ui` (optional peer). Fully-native affordance with platform haptics and chrome. Own `selectNativeColors` block (7 slots — trimmed because the native picker owns its interior chrome). Placeholder-item injection so `value=null` opens reliably on Android.
+  - **`SelectBottomSheet`** — draggable bottom-sheet picker via `@gorhom/bottom-sheet` + `react-native-gesture-handler` (both optional peers). Configurable snap points, optional sheet title, drag-to-dismiss. Own `selectBottomSheetColors` block (15 slots). Requires the consumer to mount `<BottomSheetModalProvider>` at the app root.
+
+  All three components:
+
+  - Are generic in the value type (`SelectNative` accepts `string | number`, the other two accept `string`).
+  - Share the same prop shape (`options`, `value`, `onChange`, `label`, `helperText`, `errorText`, `disabled`, per-option `disabledOptions` where the backend supports it) so consumers can swap between them by changing the import name.
+  - Follow the "each component owns its color space" rule — three separate palette blocks, no shared slots.
+  - Fall back gracefully when their optional peer dep is missing: the frame renders a helpful "install X" hint colored with the `errorText` slot instead of crashing the app. Same pattern as `ExternalLink` from Batch 1.
+
+  New provider-input types alongside the components: `SelectColorsInput`, `SelectNativeColorsInput`, `SelectBottomSheetColorsInput`. Default light + dark palettes shipped for all three blocks. Additive to the existing token schema — no breaking changes.
+
+- 7c53fc1: `SelectNative` now renders **100% native by default** — no wrapper chrome (no background, border, or padding). SwiftUI `Menu` on iOS is just tinted text with a chevron; Compose `DropdownMenu` on Android renders as a bare button. That's the correct native look, and it's now the default.
+
+  Two new opt-in props let consumers turn the frame chrome back on, independently per platform:
+
+  - **`showBorderIOS?: boolean`** — default `false`. Set to `true` to show the wrapper frame (background + border + padding + `minHeight: 48`) on iOS.
+  - **`showBorderAndroid?: boolean`** — default `false`. Same effect on Android. Independent from the iOS flag, so you can enable it only on one platform (Cupertino-clean on iOS + Material-framed on Android, or the reverse).
+
+  The frame keeps a `minHeight: 44` (iOS/Android touch-target minimum) even when chrome is off — otherwise the frame collapses to the native picker's intrinsic ~25 px height and the surrounding label + helper text read as glued to the trigger. The picker centers vertically inside that 44 px box so the visual is "just the native picker" but with proper breathing room.
+
+  Chrome is still forced ON when either of these hold, regardless of the flags:
+
+  - `errorText` is set — the invalid state needs visual framing to read as an error.
+  - The `@expo/ui` peer dep is missing — the "install @expo/ui" fallback hint needs a box to live in.
+
+  **Behavior change**: consumers who were relying on the previous framed-by-default look should add `showBorderIOS showBorderAndroid` to keep the old visual. Bumped as minor because `SelectNative` shipped for the first time in the previous release — no consumer has locked in the old default yet.
+
+- e99d2fd: `SelectNative` — switched the mobile backend from `@expo/ui`'s `Host + Picker` to `MenuView` from `@expo/ui/community/menu`, and split the rendering into platform-specific files.
+
+  ### Bug fixed
+
+  The previous `Host + Picker` combo hit a SwiftUI Menu intrinsic-size measurement race on iOS: a borderless picker rendered OFF-SCREEN inside a scrollable container appeared "raised" (extra invisible whitespace below the trigger) once scrolled into view. Documented as a known bug in the previous release. Root cause was `<Host matchContents>` inheriting SwiftUI Menu's tap-area padding at the wrong measurement pass.
+
+  `MenuView` wraps a **consumer-provided trigger** (in our case a Tamagui `Text` + chevron) instead of rendering both the trigger AND the menu from native side. Because the trigger is a plain RN view, its layout is deterministic — no bridge measurement race, no off-screen "raised" bug. Verified on device: pickers now stay pixel-correctly aligned regardless of whether they're on-screen at mount or scrolled into view.
+
+  ### Platform split
+
+  Rendering now lives in per-platform files, resolved by Metro at bundle time:
+
+  - `native-picker-body.ios.tsx` — SwiftUI `Menu` via `MenuView`.
+  - `native-picker-body.android.tsx` — Jetpack Compose `DropdownMenu` via `MenuView` (same API, works cross-platform).
+  - `native-picker-body.web.tsx` — falls back to `Host + Picker` (MenuView doesn't fire actions on web; the SwiftUI measurement bug doesn't exist on web either).
+  - `native-picker-body.tsx` — default fallback → re-exports `.web`.
+
+  The top-level `select-native.tsx` is the shared shell (palette resolution, chrome opt-in, label / helper / error text, peer-missing fallback). Only the trigger + menu render itself is platform-split. iOS-only tweaks land in `.ios.tsx` and can't regress Android, and vice versa — the pattern the user asked for after we broke Android trying to fix iOS.
+
+  ### Selection UX
+
+  Each `MenuView` action carries a `state: "on" | "off"` — the selected option renders a native checkmark in both SwiftUI Menu and Compose DropdownMenu. Matches iOS system apps' "sort by" / "filter by" menus. No placeholder-item injection needed (`MenuView` doesn't bind to a `selectedValue` prop).
+
+  ### Palette expansion (11 slots, +4 from previous)
+
+  Because we now render our own trigger (Tamagui `Text`), the palette needs trigger-text slots:
+
+  - **New**: `text` (selected value), `textDisabled`, `placeholder`, `chevron`.
+  - **Existing**: `label`, `background`, `backgroundDisabled`, `border`, `borderError`, `helperText`, `errorText`.
+
+  Default light: iOS system blue `#007AFF` for `text` / `placeholder` / `chevron` — matches the previous `Host + Picker` rendering (SwiftUI Menu paints tinted text by default).
+
+  Default dark: lifted `#0A84FF` (Apple's dark-mode system blue variant).
+
+  Consumers who want a design-system-primary tone override `text` / `chevron` on the provider or per-instance.
+
+  ### New peer-dep probe
+
+  `getExpoUIMenuView` added to the probe file. Requires `@expo/ui/community/menu` at runtime — a subpath of the existing `@expo/ui` peer, so no new peer dep. Fails gracefully (returns `null` → shell renders the "install `@expo/ui`" hint) when the community submodule isn't present.
+
+  ### Removed
+
+  The `Known issues` note about the off-screen "raised" picker is removed from the README and plan doc — the bug is gone with the MenuView backend.
+
+### Patch Changes
+
+- 0fbcb75: Fix DatePicker + DateRangePicker off-by-one bug on Android.
+
+  `@expo/ui/community/datetime-picker` on Android emits a Date whose `.getTime()` is UTC-midnight of the picked day (a Compose Material 3 quirk — `DatePickerState.selectedDateMillis` is defined that way, and `@expo/ui`'s Kotlin bridge at `DatePickerView.kt:343` forwards it raw, and its JS side calls `new Date(rawUtcMs)` without normalization). In negative-offset locales (all of the Americas), formatting that Date with `Intl.DateTimeFormat` in the device's ambient TZ renders as the PREVIOUS local day — so picking July 2 in the calendar shows "July 1" in the trigger.
+
+  The community `@react-native-community/datetimepicker` fixes this in Kotlin (`RNMaterialDatePicker.kt:227-238`); `@expo/ui` does not (unfiled upstream at time of writing).
+
+  We now normalize on the JS side in the Android body: reconstruct a Date whose local Y/M/D matches the picked Y/M/D. The transform is a new pure util at `packages/ui-kraken/src/utils/normalize-android-picked-date.ts` — reusable if we add another native date bridge later.
+
+  Per-mode behavior:
+
+  - **`date`**: local-midnight of the same Y/M/D that the user tapped.
+  - **`datetime`**: same Y/M/D + preserved UTC hours/minutes as local hours/minutes (Android currently falls back to date-only per `@expo/ui`'s own contract, so hours/minutes are typically 0 — forward-compat preservation).
+  - **`time`**: unchanged. Compose's `ExpoTimePicker` uses `Calendar.getInstance()` (system TZ) so its emitted Date is already a proper local instant.
+
+  iOS is unaffected — SwiftUI `DatePicker` returns a Date in the ambient TZ. DateRangePicker composes two DatePickers and inherits the fix for free.
+
+  +7 tests (6 normalizer unit tests covering date / datetime / time modes + leap-day + end-of-month + no-mutation + 1 end-to-end simulating the real UTC-midnight bridge output).
+
+- ade8fc8: Migrate `SelectBottomSheet` from raw `@gorhom/bottom-sheet` to our own `<BottomSheet>` (which wraps `@expo/ui/community/bottom-sheet`).
+
+  ## What changed
+  - `SelectBottomSheet` now composes `<BottomSheet>` internally instead of hand-rolling the gorhom modal + backdrop + TamaguiProvider re-mount.
+  - Removed `gorhom-probe.ts` + its spec — replaced by our BottomSheet's `isBottomSheetAvailable` probe.
+  - Simplified state management: dropped the `isPresentedRef` guard, the `open` → gorhom-ref-sync `useEffect`, and the double-present regression tests (those behaviors no longer exist — we use ref-based imperative calls without state syncing).
+  - Missing-peer hint now says "Install `@expo/ui`" instead of the multi-package "Install `@gorhom/bottom-sheet` + `react-native-gesture-handler`" string.
+  - No public API change — same props, same ref shape, same palette (SelectBottomSheet still owns its 15-slot palette; `sheetBackground` and `sheetHandle` slots are now mapped onto BottomSheet's smaller palette when it composes).
+
+  ## Consumer impact
+
+  **Zero code changes required.** Consumers upgrading from earlier versions can uninstall `@gorhom/bottom-sheet` and `react-native-gesture-handler` if no other code depends on them — SelectBottomSheet no longer requires either. If you keep them installed, nothing breaks; they're just unused by ui-kraken.
+
+  **Provider setup simplified.** No more `<BottomSheetModalProvider>` at the app root, no more `<GestureHandlerRootView>` wrapping. `@expo/ui`'s bottom-sheet uses OS-native modal presentation.
+
+  ## Behavioral improvements
+  - **Native affordances** — SwiftUI sheet on iOS, Material 3 sheet on Android, `vaul` drawer on web (instead of gorhom's JS simulation).
+  - **No portal ceremony** — our `<BottomSheet>` handles Tamagui context re-mount internally, so consumers who put Tamagui components inside the sheet body (`<Input>`, `<Button>`, etc.) don't hit the "Can't find Tamagui configuration" error.
+
+  ## Behavioral changes to be aware of
+  - **Android: only 2 snap states** — if you pass `snapPoints={["25%", "50%", "90%"]}`, Android reduces to partial + expanded (middle ignored). Was 3-state under gorhom.
+  - **Backdrop is always present** — gorhom had none by default; we always show one via the native OS scrim.
+  - **iOS `enablePanDownToClose` ties swipe + backdrop-tap** — SwiftUI limitation. Was always separable under gorhom but the default was the same.
+  - **Custom `handleComponent` / `backdropComponent` / `backgroundComponent` no longer honored** — @expo/ui's sheet uses OS-managed chrome on native. Wasn't exposed on SelectBottomSheet's public API anyway (SelectBottomSheet's own props stayed the same); noting for consumers who might have monkey-patched.
+
+  ## Testing
+
+  +7 net tests. Removed 5 gorhom-specific regression tests (double-present, zombie state, backdrop component wiring) that no longer apply. Added 2 tests for the new palette-mapping surface (`sheetBackground` / `sheetHandle` → BottomSheet's `bottomSheetColors`). 976 tests total, all passing.
+
+  ## Peer-dep cleanup — deferred
+
+  `@gorhom/bottom-sheet` and `react-native-gesture-handler` are still declared as optional peers in `ui-kraken`'s `package.json` — no code in ui-kraken requires them anymore, but the declarations are left in place for this PR so consumers upgrading don't get peer-warning spam mid-migration. **Follow-up PR** will remove them from the peer list once we've validated the migration in device use.
+
 ## 0.8.0
 
 ### Minor Changes
