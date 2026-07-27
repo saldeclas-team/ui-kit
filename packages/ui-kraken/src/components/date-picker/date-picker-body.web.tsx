@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 
 import type { DatePickerBodyProps } from "./date-picker-body-types";
 
@@ -35,12 +35,7 @@ export function DatePickerBody({
     openInputPicker(inputRef.current, disabled);
   }, [disabled]);
 
-  const handleChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      commitInputChange(event.target.value, onChange);
-    },
-    [onChange]
-  );
+  const handleChange = useMemo(() => createInputChangeHandler(onChange), [onChange]);
 
   if (fallback != null) return <>{fallback}</>;
 
@@ -100,6 +95,20 @@ export function commitInputChange(raw: string, onChange: (next: Date) => void): 
   if (raw === "") return;
   const parsed = new Date(raw);
   if (Number.isFinite(parsed.getTime())) onChange(parsed);
+}
+
+/**
+ * Build the `onChange` callback the hidden `<input>` receives.
+ * Factored out of the component so the spec can invoke the
+ * returned function directly — jest-expo doesn't render `<input>`,
+ * so we can't dispatch a real `change` event through it. Reference
+ * stability across renders is preserved via `useMemo` at the
+ * callsite.
+ */
+export function createInputChangeHandler(
+  onChange: (next: Date) => void
+): (event: React.ChangeEvent<HTMLInputElement>) => void {
+  return (event) => commitInputChange(event.target.value, onChange);
 }
 
 /**

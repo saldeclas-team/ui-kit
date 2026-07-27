@@ -18,8 +18,13 @@ import TestRenderer, { act } from "react-test-renderer";
 
 import type * as WebBodyModule from "./date-picker-body.web";
 
-const { DatePickerBody, toInputValue, openInputPicker, commitInputChange } =
-  require("./date-picker-body.web.tsx") as typeof WebBodyModule;
+const {
+  DatePickerBody,
+  toInputValue,
+  openInputPicker,
+  commitInputChange,
+  createInputChangeHandler,
+} = require("./date-picker-body.web.tsx") as typeof WebBodyModule;
 
 const CHROME = {
   accent: "#7C3AED",
@@ -238,6 +243,31 @@ describe("commitInputChange — parses valid ISO, guards empty + invalid", () =>
   it("ignores an unparseable string (never fires onChange)", () => {
     const onChange = jest.fn();
     commitInputChange("not-a-date", onChange);
+    expect(onChange).not.toHaveBeenCalled();
+  });
+});
+
+describe("createInputChangeHandler — factory used as the `<input>` onChange", () => {
+  it("returns a callback that forwards event.target.value to commitInputChange", () => {
+    const onChange = jest.fn();
+    const handler = createInputChangeHandler(onChange);
+    handler({ target: { value: "2027-06-12" } } as React.ChangeEvent<HTMLInputElement>);
+    expect(onChange).toHaveBeenCalledTimes(1);
+    const arg = onChange.mock.calls[0][0] as Date;
+    expect(arg).toBeInstanceOf(Date);
+  });
+
+  it("returned callback ignores empty-string events (delegated to commitInputChange guard)", () => {
+    const onChange = jest.fn();
+    const handler = createInputChangeHandler(onChange);
+    handler({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it("returned callback ignores unparseable events (delegated to commitInputChange guard)", () => {
+    const onChange = jest.fn();
+    const handler = createInputChangeHandler(onChange);
+    handler({ target: { value: "not-a-date" } } as React.ChangeEvent<HTMLInputElement>);
     expect(onChange).not.toHaveBeenCalled();
   });
 });

@@ -60,14 +60,20 @@ export const WithError: Story = {
   render: (args) => <ControlledScene {...args} initial="not-an-email" />,
 };
 
+// `leftIcon` / `rightIcon` are React elements; Storybook's arg
+// serializer detects a cycle in React fibers and spams warnings
+// (which then trip LogBox on-device and crash the storybook shell
+// with `UnhandledLinkingContext`). Inject them inside `render`
+// instead of via `args` so they never enter the arg controls
+// surface. Args here stay JSON-serializable.
 export const WithIcons: Story = {
   args: {
     label: "Search",
     placeholder: "Search…",
-    leftIcon: <Glyph>🔍</Glyph>,
-    rightIcon: <Glyph>✕</Glyph>,
   },
-  render: (args) => <ControlledScene {...args} />,
+  render: (args) => (
+    <ControlledScene {...args} leftIcon={<Glyph>🔍</Glyph>} rightIcon={<Glyph>✕</Glyph>} />
+  ),
 };
 
 export const Disabled: Story = {
