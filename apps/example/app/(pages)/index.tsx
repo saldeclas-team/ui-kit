@@ -180,12 +180,6 @@ const COMPONENTS: ComponentItem[] = [
     href: "/components/image-picker-sheet",
     status: "shipped",
   },
-  {
-    title: "Card",
-    description: "Surface primitive with layered background variants.",
-    href: "/components/button",
-    status: "planned",
-  },
 ];
 
 export default function ComponentsHome() {
