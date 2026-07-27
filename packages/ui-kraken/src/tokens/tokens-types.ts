@@ -164,6 +164,16 @@ export interface SurfaceColors {
 }
 
 /**
+ * Divider color palette. Single slot — the line color itself. Kept
+ * as an interface (not a raw `string`) so per-instance overrides
+ * plug into the same merge helper shape every other component uses.
+ */
+export interface DividerColors {
+  /** Background color of the line. */
+  line: string;
+}
+
+/**
  * Skeleton color palette. 2 slots — the fill at rest (`base`) and the
  * peak of the pulse animation (`highlight`). Both typically alpha-tinted
  * grays that read as "loading" against any surface.
@@ -698,6 +708,7 @@ export interface Tokens {
   inputColors: InputColors;
   currencyInputColors: CurrencyInputColors;
   surfaceColors: SurfaceColors;
+  dividerColors: DividerColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;
@@ -731,6 +742,7 @@ export interface ResolvedTokens {
   inputColors: InputColors;
   currencyInputColors: CurrencyInputColors;
   surfaceColors: SurfaceColors;
+  dividerColors: DividerColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;

@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Divider component snapshots dark theme × horizontal 1`] = `
+<View
+  accessibilityRole="none"
+  alignSelf="stretch"
+  backgroundColor="#374151"
+  height={1}
+  testID="divider"
+/>
+`;
+
+exports[`Divider component snapshots horizontal + inset + thick 1`] = `
+<View
+  accessibilityRole="none"
+  alignSelf="stretch"
+  backgroundColor="#E5E7EB"
+  height={4}
+  marginHorizontal={16}
+  testID="divider"
+/>
+`;
+
+exports[`Divider component snapshots horizontal default 1`] = `
+<View
+  accessibilityRole="none"
+  alignSelf="stretch"
+  backgroundColor="#E5E7EB"
+  height={1}
+  testID="divider"
+/>
+`;
+
+exports[`Divider component snapshots vertical default 1`] = `
+<View
+  accessibilityRole="none"
+  alignSelf="stretch"
+  backgroundColor="#E5E7EB"
+  testID="divider"
+  width={1}
+/>
+`;

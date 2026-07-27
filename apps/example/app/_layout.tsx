@@ -68,6 +68,10 @@ export default function RootLayout() {
               options={{ title: "Card", headerBackTitle: "Components" }}
             />
             <Stack.Screen
+              name="(pages)/components/divider"
+              options={{ title: "Divider", headerBackTitle: "Components" }}
+            />
+            <Stack.Screen
               name="(pages)/components/refresh-control"
               options={{ title: "RefreshControl", headerBackTitle: "Components" }}
             />

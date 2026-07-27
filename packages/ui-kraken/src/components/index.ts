@@ -35,6 +35,9 @@ export type { SurfaceProps, SurfaceLevel } from "./surface";
 export { Card } from "./card";
 export type { CardBodyProps, CardFooterProps, CardHeaderProps, CardLevel, CardProps } from "./card";
 
+export { Divider } from "./divider";
+export type { DividerColorsInput, DividerOrientation, DividerProps } from "./divider";
+
 export { RefreshControl } from "./refresh-control";
 export type { RefreshControlProps, RefreshControlColorsInput } from "./refresh-control";
 

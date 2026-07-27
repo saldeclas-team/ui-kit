@@ -28,6 +28,7 @@ import type {
   SocialButtonProviderColors,
   StatCardColors,
   SurfaceColors,
+  DividerColors,
   TextColors,
   ResolvedTokens,
 } from "../tokens/tokens-types";
@@ -83,6 +84,13 @@ export type CurrencyInputColorsInput = Partial<CurrencyInputColors>;
  * defaults. Slot-based, mirrors `TextColorsInput`.
  */
 export type SurfaceColorsInput = Partial<SurfaceColors>;
+
+/**
+ * Partial override for `dividerColors` — consumers only declare the
+ * `line` slot they want to change; missing slots fall through to
+ * the shipped defaults. Single slot.
+ */
+export type DividerColorsInput = Partial<DividerColors>;
 
 /**
  * Partial override for `refreshControlColors` — consumers only
@@ -221,6 +229,7 @@ export interface TokensInput {
   inputColors?: InputColorsInput;
   currencyInputColors?: CurrencyInputColorsInput;
   surfaceColors?: SurfaceColorsInput;
+  dividerColors?: DividerColorsInput;
   refreshControlColors?: RefreshControlColorsInput;
   skeletonColors?: SkeletonColorsInput;
   hintColors?: HintColorsInput;

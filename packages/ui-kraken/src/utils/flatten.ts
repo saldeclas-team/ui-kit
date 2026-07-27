@@ -34,6 +34,7 @@ import type {
   SocialButtonColors,
   StatCardColors,
   SurfaceColors,
+  DividerColors,
   TextColors,
 } from "../tokens/tokens-types";
 
@@ -160,6 +161,19 @@ export function flattenSurfaceColors(colors: SurfaceColors): Record<string, stri
   for (const slot of Object.keys(colors) as Array<keyof SurfaceColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiSurface${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `dividerColors` slot map into `$uiDivider{PascalCase}`
+ * Tamagui tokens (`$uiDividerLine`).
+ */
+export function flattenDividerColors(colors: DividerColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof DividerColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiDivider${capitalized}`] = colors[slot];
   }
   return out;
 }
