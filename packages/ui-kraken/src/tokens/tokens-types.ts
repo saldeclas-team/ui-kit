@@ -174,6 +174,17 @@ export interface DividerColors {
 }
 
 /**
+ * Spinner color palette. Single slot — the ring / dots color the
+ * native ActivityIndicator uses. Kept as an interface so per-
+ * instance overrides use the same merge helper shape every other
+ * component uses.
+ */
+export interface SpinnerColors {
+  /** The spinner's animated color. */
+  color: string;
+}
+
+/**
  * Skeleton color palette. 2 slots — the fill at rest (`base`) and the
  * peak of the pulse animation (`highlight`). Both typically alpha-tinted
  * grays that read as "loading" against any surface.
@@ -709,6 +720,7 @@ export interface Tokens {
   currencyInputColors: CurrencyInputColors;
   surfaceColors: SurfaceColors;
   dividerColors: DividerColors;
+  spinnerColors: SpinnerColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;
@@ -743,6 +755,7 @@ export interface ResolvedTokens {
   currencyInputColors: CurrencyInputColors;
   surfaceColors: SurfaceColors;
   dividerColors: DividerColors;
+  spinnerColors: SpinnerColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;

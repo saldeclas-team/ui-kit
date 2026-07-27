@@ -76,6 +76,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Spinner",
+    description:
+      "Themed activity indicator. Wraps RN ActivityIndicator with palette + size presets (sm / md / lg).",
+    href: "/components/spinner",
+    status: "shipped",
+  },
+  {
     title: "RefreshControl",
     description:
       "Themed pull-to-refresh spinner for ScrollView / FlatList — iOS + Android props wired from one palette.",

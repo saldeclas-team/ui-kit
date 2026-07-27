@@ -29,6 +29,7 @@ import type {
   StatCardColors,
   SurfaceColors,
   DividerColors,
+  SpinnerColors,
   TextColors,
   ResolvedTokens,
 } from "../tokens/tokens-types";
@@ -91,6 +92,12 @@ export type SurfaceColorsInput = Partial<SurfaceColors>;
  * the shipped defaults. Single slot.
  */
 export type DividerColorsInput = Partial<DividerColors>;
+
+/**
+ * Partial override for `spinnerColors` — consumers only declare the
+ * `color` slot they want to change. Single slot.
+ */
+export type SpinnerColorsInput = Partial<SpinnerColors>;
 
 /**
  * Partial override for `refreshControlColors` — consumers only
@@ -230,6 +237,7 @@ export interface TokensInput {
   currencyInputColors?: CurrencyInputColorsInput;
   surfaceColors?: SurfaceColorsInput;
   dividerColors?: DividerColorsInput;
+  spinnerColors?: SpinnerColorsInput;
   refreshControlColors?: RefreshControlColorsInput;
   skeletonColors?: SkeletonColorsInput;
   hintColors?: HintColorsInput;

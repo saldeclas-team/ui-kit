@@ -38,6 +38,9 @@ export type { CardBodyProps, CardFooterProps, CardHeaderProps, CardLevel, CardPr
 export { Divider } from "./divider";
 export type { DividerColorsInput, DividerOrientation, DividerProps } from "./divider";
 
+export { Spinner } from "./spinner";
+export type { SpinnerColorsInput, SpinnerProps, SpinnerSize } from "./spinner";
+
 export { RefreshControl } from "./refresh-control";
 export type { RefreshControlProps, RefreshControlColorsInput } from "./refresh-control";
 

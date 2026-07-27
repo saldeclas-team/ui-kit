@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spinner component snapshots dark theme × large 1`] = `
+<ActivityIndicator
+  accessibilityLabel="Loading"
+  accessibilityRole="progressbar"
+  accessibilityState={
+    {
+      "busy": true,
+    }
+  }
+  animating={true}
+  color="#9CA3AF"
+  size={48}
+  testID="spinner"
+/>
+`;
+
+exports[`Spinner component snapshots default (md) 1`] = `
+<ActivityIndicator
+  accessibilityLabel="Loading"
+  accessibilityRole="progressbar"
+  accessibilityState={
+    {
+      "busy": true,
+    }
+  }
+  animating={true}
+  color="#6B7280"
+  size={32}
+  testID="spinner"
+/>
+`;
+
+exports[`Spinner component snapshots small 1`] = `
+<ActivityIndicator
+  accessibilityLabel="Loading"
+  accessibilityRole="progressbar"
+  accessibilityState={
+    {
+      "busy": true,
+    }
+  }
+  animating={true}
+  color="#6B7280"
+  size={20}
+  testID="spinner"
+/>
+`;

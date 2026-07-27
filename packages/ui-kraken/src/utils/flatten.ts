@@ -35,6 +35,7 @@ import type {
   StatCardColors,
   SurfaceColors,
   DividerColors,
+  SpinnerColors,
   TextColors,
 } from "../tokens/tokens-types";
 
@@ -174,6 +175,19 @@ export function flattenDividerColors(colors: DividerColors): Record<string, stri
   for (const slot of Object.keys(colors) as Array<keyof DividerColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiDivider${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `spinnerColors` slot map into `$uiSpinner{PascalCase}`
+ * Tamagui tokens (`$uiSpinnerColor`).
+ */
+export function flattenSpinnerColors(colors: SpinnerColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SpinnerColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSpinner${capitalized}`] = colors[slot];
   }
   return out;
 }

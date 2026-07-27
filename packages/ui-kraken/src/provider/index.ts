@@ -13,6 +13,7 @@ export type {
   CurrencyInputColorsInput,
   SurfaceColorsInput,
   DividerColorsInput,
+  SpinnerColorsInput,
   RefreshControlColorsInput,
   SkeletonColorsInput,
   HintColorsInput,

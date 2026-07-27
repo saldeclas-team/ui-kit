@@ -21,6 +21,7 @@ export type {
   CurrencyInputColorsInput,
   SurfaceColorsInput,
   DividerColorsInput,
+  SpinnerColorsInput,
   RefreshControlColorsInput,
   SkeletonColorsInput,
   HintColorsInput,
@@ -55,6 +56,8 @@ export {
   DEFAULT_DARK_SURFACE_COLORS,
   DEFAULT_LIGHT_DIVIDER_COLORS,
   DEFAULT_DARK_DIVIDER_COLORS,
+  DEFAULT_LIGHT_SPINNER_COLORS,
+  DEFAULT_DARK_SPINNER_COLORS,
   DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
   DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   DEFAULT_LIGHT_SKELETON_COLORS,
@@ -91,6 +94,7 @@ export {
   mergeCurrencyInputColors,
   mergeSurfaceColors,
   mergeDividerColors,
+  mergeSpinnerColors,
   mergeRefreshControlColors,
   mergeSkeletonColors,
   mergeHintColors,
@@ -119,6 +123,7 @@ export type {
   CurrencyInputColors,
   SurfaceColors,
   DividerColors,
+  SpinnerColors,
   RefreshControlColors,
   SkeletonColors,
   HintColors,
@@ -177,6 +182,9 @@ export type {
 
 export { Divider } from "./components";
 export type { DividerOrientation, DividerProps } from "./components";
+
+export { Spinner } from "./components";
+export type { SpinnerProps, SpinnerSize } from "./components";
 
 export { RefreshControl } from "./components";
 export type { RefreshControlProps } from "./components";
