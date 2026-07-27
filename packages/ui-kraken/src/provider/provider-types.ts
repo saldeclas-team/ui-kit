@@ -11,7 +11,15 @@ import type {
   RadioGroupColors,
   CollapsibleColors,
   ExternalLinkColors,
+  SelectColors,
+  SelectNativeColors,
+  SelectBottomSheetColors,
+  SegmentedControlColors,
+  BottomSheetColors,
+  DatePickerColors,
+  DateRangePickerColors,
   HintColors,
+  ImagePickerSheetColors,
   HintToneColors,
   MultiSelectColors,
   RefreshControlColors,
@@ -140,6 +148,68 @@ export type CollapsibleColorsInput = Partial<CollapsibleColors>;
 export type ExternalLinkColorsInput = Partial<ExternalLinkColors>;
 
 /**
+ * Partial override for `selectColors` — consumers only declare the
+ * slots they want to change; the rest fills in from the shipped
+ * defaults. Slot-based, 16 slots (trigger chrome + label / helper /
+ * error text + modal chrome + option-selected background).
+ */
+export type SelectColorsInput = Partial<SelectColors>;
+
+/**
+ * Partial override for `selectNativeColors` — consumers only
+ * declare the slots they want to change; the rest fills in from
+ * the shipped defaults. Slot-based, 7 slots (label + frame
+ * background/backgroundDisabled/border/borderError + helperText
+ * + errorText). Smaller than `SelectColorsInput` because the
+ * native `@expo/ui` `Picker` owns most of its own chrome.
+ */
+export type SelectNativeColorsInput = Partial<SelectNativeColors>;
+
+/**
+ * Partial override for `selectBottomSheetColors` — consumers only
+ * declare the slots they want to change; the rest fills in from
+ * the shipped defaults. Slot-based, 15 slots (trigger chrome +
+ * label / helper / error text + sheet chrome + option-selected
+ * background).
+ */
+export type SelectBottomSheetColorsInput = Partial<SelectBottomSheetColors>;
+
+/**
+ * Partial override for `segmentedControlColors` — 3 slots.
+ * Consumers only declare what they want to change; the rest
+ * fills in from the shipped defaults.
+ */
+export type SegmentedControlColorsInput = Partial<SegmentedControlColors>;
+
+/**
+ * Partial override for `datePickerColors` — 13 slots. Consumers
+ * only declare what they want to change; the rest fills in from
+ * the shipped defaults.
+ */
+export type DatePickerColorsInput = Partial<DatePickerColors>;
+
+/**
+ * Partial override for `dateRangePickerColors` — 14 slots.
+ * Consumers only declare what they want to change; the rest
+ * fills in from the shipped defaults.
+ */
+export type DateRangePickerColorsInput = Partial<DateRangePickerColors>;
+
+/**
+ * Partial override for `bottomSheetColors` — 5 slots. Consumers
+ * only declare what they want to change; the rest fills in from
+ * the shipped defaults.
+ */
+export type BottomSheetColorsInput = Partial<BottomSheetColors>;
+
+/**
+ * Partial override for `imagePickerSheetColors` — 8 slots.
+ * Consumers only declare what they want to change; the rest
+ * fills in from the shipped defaults.
+ */
+export type ImagePickerSheetColorsInput = Partial<ImagePickerSheetColors>;
+
+/**
  * The input shape accepted by `<UIKitProvider tokens={...}>` — every field
  * is optional so consumers only specify what they want to override.
  */
@@ -159,6 +229,14 @@ export interface TokensInput {
   socialButtonColors?: SocialButtonColorsInput;
   collapsibleColors?: CollapsibleColorsInput;
   externalLinkColors?: ExternalLinkColorsInput;
+  selectColors?: SelectColorsInput;
+  selectNativeColors?: SelectNativeColorsInput;
+  selectBottomSheetColors?: SelectBottomSheetColorsInput;
+  segmentedControlColors?: SegmentedControlColorsInput;
+  datePickerColors?: DatePickerColorsInput;
+  dateRangePickerColors?: DateRangePickerColorsInput;
+  bottomSheetColors?: BottomSheetColorsInput;
+  imagePickerSheetColors?: ImagePickerSheetColorsInput;
   radius?: number;
   spacing?: number;
 }

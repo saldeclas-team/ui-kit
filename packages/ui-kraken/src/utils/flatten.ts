@@ -21,7 +21,15 @@ import type {
   InputColors,
   MultiSelectColors,
   RadioGroupColors,
+  BottomSheetColors,
+  DatePickerColors,
+  DateRangePickerColors,
+  ImagePickerSheetColors,
   RefreshControlColors,
+  SegmentedControlColors,
+  SelectBottomSheetColors,
+  SelectColors,
+  SelectNativeColors,
   SkeletonColors,
   SocialButtonColors,
   StatCardColors,
@@ -296,6 +304,130 @@ export function flattenExternalLinkColors(colors: ExternalLinkColors): Record<st
   for (const slot of Object.keys(colors) as Array<keyof ExternalLinkColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiExternalLink${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `selectColors` slot map into `$uiSelect{PascalCase}`
+ * Tamagui tokens (`$uiSelectBackground`, `$uiSelectBorderFocused`,
+ * `$uiSelectMenuBackground`, ...).
+ */
+export function flattenSelectColors(colors: SelectColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SelectColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSelect${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `selectNativeColors` slot map into
+ * `$uiSelectNative{PascalCase}` Tamagui tokens
+ * (`$uiSelectNativeBackground`, `$uiSelectNativeBorderError`,
+ * `$uiSelectNativeErrorText`, ...).
+ */
+export function flattenSelectNativeColors(colors: SelectNativeColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SelectNativeColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSelectNative${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `selectBottomSheetColors` slot map into
+ * `$uiSelectBottomSheet{PascalCase}` Tamagui tokens
+ * (`$uiSelectBottomSheetBackground`, `$uiSelectBottomSheetSheetHandle`,
+ * ...).
+ */
+export function flattenSelectBottomSheetColors(
+  colors: SelectBottomSheetColors
+): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SelectBottomSheetColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSelectBottomSheet${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `segmentedControlColors` slot map into
+ * `$uiSegmentedControl{PascalCase}` Tamagui tokens
+ * (`$uiSegmentedControlLabel`, `$uiSegmentedControlHelperText`,
+ * `$uiSegmentedControlErrorText`).
+ */
+export function flattenSegmentedControlColors(
+  colors: SegmentedControlColors
+): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SegmentedControlColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSegmentedControl${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `datePickerColors` slot map into
+ * `$uiDatePicker{PascalCase}` Tamagui tokens
+ * (`$uiDatePickerBackground`, `$uiDatePickerBorderFocused`,
+ * `$uiDatePickerAccent`, ...).
+ */
+export function flattenDatePickerColors(colors: DatePickerColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof DatePickerColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiDatePicker${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `dateRangePickerColors` slot map into
+ * `$uiDateRangePicker{PascalCase}` Tamagui tokens
+ * (`$uiDateRangePickerBackground`, `$uiDateRangePickerSeparator`,
+ * `$uiDateRangePickerAccent`, ...).
+ */
+export function flattenDateRangePickerColors(
+  colors: DateRangePickerColors
+): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof DateRangePickerColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiDateRangePicker${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `bottomSheetColors` slot map into
+ * `$uiBottomSheet{PascalCase}` Tamagui tokens
+ * (`$uiBottomSheetBackground`, `$uiBottomSheetHandle`, ...).
+ */
+export function flattenBottomSheetColors(colors: BottomSheetColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof BottomSheetColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiBottomSheet${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `imagePickerSheetColors` slot map into
+ * `$uiImagePickerSheet{PascalCase}` Tamagui tokens.
+ */
+export function flattenImagePickerSheetColors(
+  colors: ImagePickerSheetColors
+): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof ImagePickerSheetColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiImagePickerSheet${capitalized}`] = colors[slot];
   }
   return out;
 }

@@ -297,7 +297,7 @@ Documented so future contributors know these were considered and deliberately de
 
 - **Dismissible / `onClose` prop** — v1 is display-only. A close button + slide-out animation deserves its own PR. Consumer wraps `<Alert>` in a stateful parent to conditionally render.
 - **`action` slot** (e.g. inline "Retry" button) — composable today via `children` (`<Alert><Text>Payment failed. <Button.Ghost>Retry</Button.Ghost></Text></Alert>`). If a first-class `actions` prop turns out to be common, add later.
-- **Auto-dismiss / toast conversion** — separate `Toast` component in a future PR. Alert stays inline.
+- **Auto-dismiss / toast conversion** — consumers who need transient notifications install `sonner-native` directly (ui-kraken does not ship a Toast wrapper; see [`docs/COMPONENTS-BATCH-2-PLAN.md`](./COMPONENTS-BATCH-2-PLAN.md)). Alert stays inline.
 - **`error` variant name** — deliberately `"danger"` for consistency with `TextColors.danger`. Not exposing `"error"` as an alias.
 - **Icon library dependency** — Alert takes `icon?: ReactNode`; consumer brings their own icon system. When ui-kraken eventually ships `Icon`, no Alert change needed.
 - **Fixed-height `size` prop** — Alert is inline content; height is content-driven.

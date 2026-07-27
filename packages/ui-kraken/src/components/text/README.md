@@ -64,7 +64,7 @@ Configured at the provider level via `<UIKitProvider tokens={{ textColors: {...}
 - `danger` — errors, destructive
 - `info` — informational
 
-**On-\* (4)** — text on solid brand surfaces (Button labels, colored Toast, etc.):
+**On-\* (4)** — text on solid brand surfaces (Button labels, colored Hint containers, etc.):
 
 - `onPrimary` — text on brand primary background
 - `onSecondary` — text on brand secondary background

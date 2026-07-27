@@ -41,3 +41,31 @@ export function resolveRadius(radius: RadiusValue | undefined): number | string 
   };
   return map[radius];
 }
+
+/**
+ * Numeric-only variant of `resolveRadius` for components that
+ * pass `borderRadius` to a plain RN `<View>` / `Animated.View` —
+ * those don't understand Tamagui theme tokens (`$uiRadiusMd`
+ * etc.), so the named presets have to resolve to actual numbers
+ * pulled from `useUIKit().tokens.radius`.
+ *
+ * Used by `SegmentedControl`'s Android body (the sliding pill
+ * overlay is a plain `Animated.View`) and `Skeleton` (renders a
+ * bare RN `<View>` for animation cost). Every other radius-
+ * aware component uses `resolveRadius` because Tamagui styled
+ * primitives consume the token strings directly.
+ *
+ * @example
+ * const { tokens } = useUIKit();
+ * const radius = resolveRadiusNumeric(props.radius ?? "pill", tokens.radius);
+ * <Animated.View style={{ borderRadius: radius }} />
+ */
+export function resolveRadiusNumeric(
+  radius: RadiusValue,
+  radiusTokens: { sm: number; md: number; lg: number }
+): number {
+  if (typeof radius === "number") return radius;
+  if (radius === "none") return 0;
+  if (radius === "pill") return 9999;
+  return radiusTokens[radius];
+}

@@ -14,6 +14,14 @@ import {
   mergeRadioGroupColors,
   mergeCollapsibleColors,
   mergeExternalLinkColors,
+  mergeSelectColors,
+  mergeSelectNativeColors,
+  mergeSelectBottomSheetColors,
+  mergeSegmentedControlColors,
+  mergeDatePickerColors,
+  mergeDateRangePickerColors,
+  mergeBottomSheetColors,
+  mergeImagePickerSheetColors,
   mergeHintColors,
   mergeMultiSelectColors,
   mergeRefreshControlColors,
@@ -74,6 +82,35 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         DEFAULT_TOKENS.externalLinkColors,
         tokens?.externalLinkColors
       ),
+      selectColors: mergeSelectColors(DEFAULT_TOKENS.selectColors, tokens?.selectColors),
+      selectNativeColors: mergeSelectNativeColors(
+        DEFAULT_TOKENS.selectNativeColors,
+        tokens?.selectNativeColors
+      ),
+      selectBottomSheetColors: mergeSelectBottomSheetColors(
+        DEFAULT_TOKENS.selectBottomSheetColors,
+        tokens?.selectBottomSheetColors
+      ),
+      segmentedControlColors: mergeSegmentedControlColors(
+        DEFAULT_TOKENS.segmentedControlColors,
+        tokens?.segmentedControlColors
+      ),
+      datePickerColors: mergeDatePickerColors(
+        DEFAULT_TOKENS.datePickerColors,
+        tokens?.datePickerColors
+      ),
+      dateRangePickerColors: mergeDateRangePickerColors(
+        DEFAULT_TOKENS.dateRangePickerColors,
+        tokens?.dateRangePickerColors
+      ),
+      bottomSheetColors: mergeBottomSheetColors(
+        DEFAULT_TOKENS.bottomSheetColors,
+        tokens?.bottomSheetColors
+      ),
+      imagePickerSheetColors: mergeImagePickerSheetColors(
+        DEFAULT_TOKENS.imagePickerSheetColors,
+        tokens?.imagePickerSheetColors
+      ),
     };
     const mergedDark = {
       ...DEFAULT_DARK_TOKENS,
@@ -113,6 +150,35 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
       externalLinkColors: mergeExternalLinkColors(
         DEFAULT_DARK_TOKENS.externalLinkColors,
         dark?.externalLinkColors
+      ),
+      selectColors: mergeSelectColors(DEFAULT_DARK_TOKENS.selectColors, dark?.selectColors),
+      selectNativeColors: mergeSelectNativeColors(
+        DEFAULT_DARK_TOKENS.selectNativeColors,
+        dark?.selectNativeColors
+      ),
+      selectBottomSheetColors: mergeSelectBottomSheetColors(
+        DEFAULT_DARK_TOKENS.selectBottomSheetColors,
+        dark?.selectBottomSheetColors
+      ),
+      segmentedControlColors: mergeSegmentedControlColors(
+        DEFAULT_DARK_TOKENS.segmentedControlColors,
+        dark?.segmentedControlColors
+      ),
+      datePickerColors: mergeDatePickerColors(
+        DEFAULT_DARK_TOKENS.datePickerColors,
+        dark?.datePickerColors
+      ),
+      dateRangePickerColors: mergeDateRangePickerColors(
+        DEFAULT_DARK_TOKENS.dateRangePickerColors,
+        dark?.dateRangePickerColors
+      ),
+      bottomSheetColors: mergeBottomSheetColors(
+        DEFAULT_DARK_TOKENS.bottomSheetColors,
+        dark?.bottomSheetColors
+      ),
+      imagePickerSheetColors: mergeImagePickerSheetColors(
+        DEFAULT_DARK_TOKENS.imagePickerSheetColors,
+        dark?.imagePickerSheetColors
       ),
     };
     const resolvedLight = coarseToFineTokens(mergedLight);

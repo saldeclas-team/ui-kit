@@ -1,0 +1,679 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectBottomSheet snapshots dark palette + selected 1`] = `
+<View
+  testID="select-bottom-sheet"
+>
+  <Text
+    color="#F9FAFB"
+    testID="select-bottom-sheet-label"
+  >
+    Country
+  </Text>
+  <View
+    accessibilityLabel="Country"
+    accessibilityRole="combobox"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": false,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    backgroundColor="#111827"
+    borderColor="#374151"
+    borderRadius="$uiRadiusMd"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="select-bottom-sheet-trigger"
+  >
+    <Text
+      color="#F9FAFB"
+      testID="select-bottom-sheet-trigger-text"
+    >
+      Two
+    </Text>
+    <Text
+      color="#9CA3AF"
+    >
+      ▼
+    </Text>
+  </View>
+  <View
+    testID="select-bottom-sheet-sheet"
+  >
+    <RCTScrollView
+      contentContainerStyle={
+        {
+          "paddingBottom": 24,
+        }
+      }
+      keyboardShouldPersistTaps="handled"
+      nestedScrollEnabled={true}
+      testID="select-bottom-sheet-sheet-list"
+    >
+      <View>
+        <View
+          accessibilityLabel="One"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": false,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          backgroundColor="transparent"
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-bottom-sheet-option-one"
+        >
+          <Text
+            color="#F9FAFB"
+            testID="select-bottom-sheet-option-one-label"
+          >
+            One
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="Two"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": true,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          backgroundColor="rgba(96, 165, 250, 0.16)"
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-bottom-sheet-option-two"
+        >
+          <Text
+            color="#F9FAFB"
+            testID="select-bottom-sheet-option-two-label"
+          >
+            Two
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="Three"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": false,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          backgroundColor="transparent"
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-bottom-sheet-option-three"
+        >
+          <Text
+            color="#F9FAFB"
+            testID="select-bottom-sheet-option-three-label"
+          >
+            Three
+          </Text>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</View>
+`;
+
+exports[`SelectBottomSheet snapshots default + selected + errorText 1`] = `
+<View
+  testID="select-bottom-sheet"
+>
+  <Text
+    color="#111827"
+    testID="select-bottom-sheet-label"
+  >
+    Country
+  </Text>
+  <View
+    accessibilityLabel="Country"
+    accessibilityRole="combobox"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": false,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    backgroundColor="#FFFFFF"
+    borderColor="#DC2626"
+    borderRadius="$uiRadiusMd"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="select-bottom-sheet-trigger"
+  >
+    <Text
+      color="#111827"
+      testID="select-bottom-sheet-trigger-text"
+    >
+      Two
+    </Text>
+    <Text
+      color="#6B7280"
+    >
+      ▼
+    </Text>
+  </View>
+  <Text
+    color="#DC2626"
+    testID="select-bottom-sheet-error-text"
+  >
+    Please pick a country
+  </Text>
+  <View
+    testID="select-bottom-sheet-sheet"
+  >
+    <RCTScrollView
+      contentContainerStyle={
+        {
+          "paddingBottom": 24,
+        }
+      }
+      keyboardShouldPersistTaps="handled"
+      nestedScrollEnabled={true}
+      testID="select-bottom-sheet-sheet-list"
+    >
+      <View>
+        <View
+          accessibilityLabel="One"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": false,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          backgroundColor="transparent"
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-bottom-sheet-option-one"
+        >
+          <Text
+            color="#111827"
+            testID="select-bottom-sheet-option-one-label"
+          >
+            One
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="Two"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": true,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          backgroundColor="#EEF2FF"
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-bottom-sheet-option-two"
+        >
+          <Text
+            color="#111827"
+            testID="select-bottom-sheet-option-two-label"
+          >
+            Two
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="Three"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": false,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          backgroundColor="transparent"
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-bottom-sheet-option-three"
+        >
+          <Text
+            color="#111827"
+            testID="select-bottom-sheet-option-three-label"
+          >
+            Three
+          </Text>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</View>
+`;
+
+exports[`SelectBottomSheet snapshots default palette + closed 1`] = `
+<View
+  testID="select-bottom-sheet"
+>
+  <Text
+    color="#111827"
+    testID="select-bottom-sheet-label"
+  >
+    Country
+  </Text>
+  <View
+    accessibilityLabel="Country"
+    accessibilityRole="combobox"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": false,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="select-bottom-sheet-trigger"
+  >
+    <Text
+      color="#9CA3AF"
+      testID="select-bottom-sheet-trigger-text"
+    >
+      Select…
+    </Text>
+    <Text
+      color="#6B7280"
+    >
+      ▼
+    </Text>
+  </View>
+  <View
+    testID="select-bottom-sheet-sheet"
+  >
+    <RCTScrollView
+      contentContainerStyle={
+        {
+          "paddingBottom": 24,
+        }
+      }
+      keyboardShouldPersistTaps="handled"
+      nestedScrollEnabled={true}
+      testID="select-bottom-sheet-sheet-list"
+    >
+      <View>
+        <View
+          accessibilityLabel="One"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": false,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          backgroundColor="transparent"
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-bottom-sheet-option-one"
+        >
+          <Text
+            color="#111827"
+            testID="select-bottom-sheet-option-one-label"
+          >
+            One
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="Two"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": false,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          backgroundColor="transparent"
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-bottom-sheet-option-two"
+        >
+          <Text
+            color="#111827"
+            testID="select-bottom-sheet-option-two-label"
+          >
+            Two
+          </Text>
+        </View>
+        <View
+          accessibilityLabel="Three"
+          accessibilityRole="menuitem"
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": false,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          backgroundColor="transparent"
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          testID="select-bottom-sheet-option-three"
+        >
+          <Text
+            color="#111827"
+            testID="select-bottom-sheet-option-three-label"
+          >
+            Three
+          </Text>
+        </View>
+      </View>
+    </RCTScrollView>
+  </View>
+</View>
+`;
+
+exports[`SelectBottomSheet snapshots missing peer dep fallback 1`] = `
+<View
+  testID="select-bottom-sheet"
+>
+  <Text
+    color="#111827"
+    testID="select-bottom-sheet-label"
+  >
+    Country
+  </Text>
+  <View
+    accessibilityLabel="Country"
+    accessibilityRole="combobox"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": true,
+        "expanded": false,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    testID="select-bottom-sheet-trigger"
+  >
+    <Text
+      color="#DC2626"
+      testID="select-bottom-sheet-missing-peer"
+    >
+      Install \`@expo/ui\` to enable SelectBottomSheet.
+    </Text>
+  </View>
+</View>
+`;

@@ -43,8 +43,9 @@ export interface ButtonColors {
  *   Meaning-carrying slots for links, feedback messages, etc.
  * - **On-* (4)** — `onPrimary`, `onSecondary`, `onSuccess`, `onDanger`. Text
  *   colors used specifically when the text sits on top of a solid brand
- *   surface (e.g. label inside a filled Button, text on a Toast). Auto-contrast
- *   is intentionally NOT applied — consumers pick the right `on-*` explicitly.
+ *   surface (e.g. label inside a filled Button, colored Alert container).
+ *   Auto-contrast is intentionally NOT applied — consumers pick the right
+ *   `on-*` explicitly.
  */
 export interface TextColors {
   primary: string;
@@ -201,6 +202,306 @@ export interface HintColors {
   success: HintToneColors;
   warning: HintToneColors;
   danger: HintToneColors;
+}
+
+/**
+ * Select color palette. Slot-based, 16 slots. Groupings:
+ *
+ * - Trigger chrome (9): background + backgroundDisabled + border +
+ *   borderFocused (painted while the modal is open) + borderError +
+ *   text + textDisabled + placeholder + chevron.
+ * - Surrounding labels (3): label / helperText / errorText.
+ * - Modal chrome (3): overlayBackground (backdrop) + menuBackground
+ *   (card panel) + menuTitle.
+ * - Options shared (1): optionSelectedBackground (row highlight for
+ *   the currently-selected option).
+ */
+export interface SelectColors {
+  /** Trigger background in default + focused states. */
+  background: string;
+  /** Trigger background when `disabled`. */
+  backgroundDisabled: string;
+  /** Trigger border in default state. */
+  border: string;
+  /** Trigger border while the modal is open. */
+  borderFocused: string;
+  /** Trigger border when `errorText` is set. Overrides borderFocused. */
+  borderError: string;
+  /** Selected-value text color. */
+  text: string;
+  /** Text color when the trigger is `disabled`. */
+  textDisabled: string;
+  /** Placeholder text color (shown when value is null). */
+  placeholder: string;
+  /** Trailing chevron color. */
+  chevron: string;
+  /** Bold label text color (rendered above the trigger). */
+  label: string;
+  /** Muted helper text color (rendered below the trigger when no error). */
+  helperText: string;
+  /** Error text color (rendered below the trigger when `errorText` is set). */
+  errorText: string;
+  /** Backdrop color behind the modal panel. */
+  overlayBackground: string;
+  /** Modal card panel background. */
+  menuBackground: string;
+  /** Optional modal title text color. */
+  menuTitle: string;
+  /** Row highlight for the currently-selected option in the modal list. */
+  optionSelectedBackground: string;
+}
+
+/**
+ * DatePicker color palette. Slot-based, 13 slots. Groupings:
+ *
+ * - **Trigger chrome (9)**: `background`, `backgroundDisabled`,
+ *   `border`, `borderFocused` (painted while the picker is
+ *   open), `borderError`, `text` (selected date/time), `textDisabled`,
+ *   `placeholder` (empty state), `chevron`.
+ * - **Surrounding labels (3)**: `label`, `helperText`, `errorText`.
+ * - **Native picker tint (1)**: `accent` — passed to `@expo/ui`
+ *   as `accentColor` to tint the highlighted date on both platforms.
+ *
+ * iOS modal chrome (backdrop, sheet background, Done button)
+ * uses hardcoded reasonable defaults for v1 — add slots in a
+ * follow-up if theming demand emerges.
+ */
+export interface DatePickerColors {
+  background: string;
+  backgroundDisabled: string;
+  border: string;
+  borderFocused: string;
+  borderError: string;
+  text: string;
+  textDisabled: string;
+  placeholder: string;
+  chevron: string;
+  label: string;
+  helperText: string;
+  errorText: string;
+  /** Tint applied to the native picker's highlighted date / time. */
+  accent: string;
+}
+
+/**
+ * DateRangePicker color palette. Slot-based, 14 slots. Same shape
+ * as `DatePickerColors` (both bounds render identical triggers)
+ * plus one range-specific slot:
+ *
+ * - **Trigger chrome (9)** + **Surrounding labels (3)** + **Native
+ *   picker tint (1)** — identical to `DatePickerColors`. Applied
+ *   uniformly to BOTH the start and end triggers.
+ * - **Range-specific (1)**: `separator` — glyph rendered between
+ *   the two triggers when `orientation="horizontal"` (an arrow,
+ *   dash, etc.). Ignored in the vertical layout.
+ *
+ * Per the "each component owns its color space" rule, this block
+ * is intentionally duplicated from `DatePickerColors` rather than
+ * reused — DateRangePicker's palette can evolve independently
+ * (e.g. adding a separator slot is transparent to DatePicker).
+ */
+export interface DateRangePickerColors {
+  background: string;
+  backgroundDisabled: string;
+  border: string;
+  borderFocused: string;
+  borderError: string;
+  text: string;
+  textDisabled: string;
+  placeholder: string;
+  chevron: string;
+  label: string;
+  helperText: string;
+  errorText: string;
+  /** Tint applied to the native picker's highlighted date / time. */
+  accent: string;
+  /**
+   * Glyph color for the between-triggers separator in horizontal
+   * orientation. No effect when `orientation="vertical"`.
+   */
+  separator: string;
+}
+
+/**
+ * BottomSheet color palette. Slot-based, 5 slots. Small palette
+ * because `@expo/ui/community/bottom-sheet` renders the native
+ * sheet (SwiftUI sheet on iOS, Material 3 ModalBottomSheet on
+ * Android) which OWNS most of its chrome — handle indicator,
+ * backdrop opacity, corner radius are OS-managed on native. Web
+ * (via vaul) accepts our styles fully.
+ *
+ * Per-slot platform notes:
+ *
+ * - **`background`**: sheet body background. Android accepts
+ *   this via `containerColor` on `ModalBottomSheet`. iOS ignores
+ *   (SwiftUI sheet uses system background — always follows dark
+ *   mode). Web full support.
+ * - **`backdrop`**: scrim behind the sheet. Web only — iOS and
+ *   Android use their OS-native scrim color which is not themable.
+ * - **`handle`**: drag indicator color at the top of the sheet.
+ *   Web only for now; iOS + Android render the OS-standard
+ *   handle (light gray, non-themable).
+ * - **`divider`**: optional divider color between sheet body and
+ *   a consumer-supplied header. Consumers ignore if their layout
+ *   doesn't use a divider.
+ * - **`missingPeer`**: text color for the "install `@expo/ui`"
+ *   fallback hint (rendered when the peer isn't installed).
+ */
+export interface BottomSheetColors {
+  background: string;
+  backdrop: string;
+  handle: string;
+  divider: string;
+  missingPeer: string;
+}
+
+/**
+ * ImagePickerSheet color palette. Slot-based, 8 slots.
+ *
+ * Split into three groupings:
+ *
+ * - **Sheet chrome (2)**: `sheetBackground`, `sheetHandle` —
+ *   forwarded to the internally composed `<BottomSheet>`. Same
+ *   pattern as `SelectBottomSheetColors` — this component owns
+ *   its own sheet chrome slots and maps them onto BottomSheet's
+ *   smaller palette when it composes.
+ * - **Action rows (5)**: `actionBackground` +
+ *   `actionBackgroundPressed`, `actionText`, `actionIcon`,
+ *   `cancelText` (destructive tone for the Cancel row per iOS
+ *   action-sheet convention), `divider` (thin line between rows).
+ * - **Missing peer (1)**: text color for the "install
+ *   expo-image-picker" fallback hint.
+ */
+export interface ImagePickerSheetColors {
+  sheetBackground: string;
+  sheetHandle: string;
+  actionBackground: string;
+  actionBackgroundPressed: string;
+  actionText: string;
+  actionIcon: string;
+  cancelText: string;
+  divider: string;
+}
+
+/**
+ * SegmentedControl color palette. Slot-based, 9 slots. Split into
+ * shared vs. Android-only chrome:
+ *
+ * - **Shared (3)**: `label`, `helperText`, `errorText` — the
+ *   text rendered by ui-kraken around the native control.
+ *   Themable on every platform.
+ * - **Android chrome (6)**: `containerBackground`, `containerBorder`,
+ *   `selectedBackground`, `selectedLabel`, `unselectedLabel`,
+ *   `ripple` — used ONLY by the Android body (which is a pure-JS
+ *   Material 3 implementation because @expo/ui's Compose bridge
+ *   has a tap-through interop bug — see plan doc).
+ *
+ * The iOS body uses SwiftUI `UISegmentedControl` and ignores the
+ * Android-only slots (SwiftUI owns its own chrome). Slots are
+ * kept in one block per the "each component owns its color
+ * space" rule — consumers get one predictable override surface.
+ */
+export interface SegmentedControlColors {
+  /** Bold label text color rendered above the control. */
+  label: string;
+  /** Muted helper text color rendered below the control when no error. */
+  helperText: string;
+  /** Error text color rendered below the control when `errorText` is set. Also colors the missing-peer hint. */
+  errorText: string;
+  /** [Android only] Background of the outer pill container. Ignored on iOS. */
+  containerBackground: string;
+  /** [Android only] Border color of the outer pill container. Ignored on iOS. */
+  containerBorder: string;
+  /** [Android only] Fill color of the sliding selection pill. Ignored on iOS. */
+  selectedBackground: string;
+  /** [Android only] Text color for the selected segment. Ignored on iOS. */
+  selectedLabel: string;
+  /** [Android only] Text color for unselected segments. Ignored on iOS. */
+  unselectedLabel: string;
+  /** [Android only] Ripple color for the press feedback overlay. Ignored on iOS. */
+  ripple: string;
+}
+
+/**
+ * SelectBottomSheet color palette. Slot-based, 15 slots. Groupings
+ * mirror [[SelectColors]] except the modal-chrome triplet is
+ * replaced by a sheet-chrome triplet: `sheetBackground` for the
+ * panel, `sheetHandle` for the drag-affordance, `sheetTitle` for
+ * the optional title row.
+ *
+ * - Trigger chrome (9): background + backgroundDisabled + border +
+ *   borderFocused (painted while the sheet is open) + borderError +
+ *   text + textDisabled + placeholder + chevron.
+ * - Surrounding labels (3): label / helperText / errorText.
+ * - Sheet chrome (3): sheetBackground + sheetHandle + sheetTitle.
+ */
+export interface SelectBottomSheetColors {
+  /** Trigger background in default + focused states. */
+  background: string;
+  /** Trigger background when `disabled`. */
+  backgroundDisabled: string;
+  /** Trigger border in default state. */
+  border: string;
+  /** Trigger border while the sheet is open. */
+  borderFocused: string;
+  /** Trigger border when `errorText` is set. Overrides borderFocused. */
+  borderError: string;
+  /** Selected-value text color. */
+  text: string;
+  /** Text color when the trigger is `disabled`. */
+  textDisabled: string;
+  /** Placeholder text color (shown when value is null). */
+  placeholder: string;
+  /** Trailing chevron color. */
+  chevron: string;
+  /** Bold label text color (rendered above the trigger). */
+  label: string;
+  /** Muted helper text color (rendered below the trigger when no error). */
+  helperText: string;
+  /** Error text color (rendered below the trigger when `errorText` is set). */
+  errorText: string;
+  /** Sheet panel background. */
+  sheetBackground: string;
+  /** Drag-handle indicator bar at the top of the sheet. */
+  sheetHandle: string;
+  /** Row highlight for the currently-selected option in the sheet list. */
+  optionSelectedBackground: string;
+}
+
+/**
+ * SelectNative color palette. Slot-based, 11 slots. Smaller than
+ * [[SelectColors]] because the native menu popup (SwiftUI `Menu`
+ * on iOS, Compose `DropdownMenu` on Android) still owns its own
+ * interior chrome — checkmark tint, popup background, row hover.
+ *
+ * We own the wrapper frame + surrounding text + the trigger
+ * itself (we render our own `Text` + chevron inside `MenuView`
+ * so RN layout stays deterministic and doesn't hit the
+ * SwiftUI-Menu measurement race).
+ */
+export interface SelectNativeColors {
+  /** Bold label text color rendered above the trigger frame. */
+  label: string;
+  /** Wrapper frame background in default state. */
+  background: string;
+  /** Wrapper frame background when `disabled`. */
+  backgroundDisabled: string;
+  /** Wrapper frame border in default state. */
+  border: string;
+  /** Wrapper frame border when `errorText` is set. */
+  borderError: string;
+  /** Selected-value text color inside the trigger. */
+  text: string;
+  /** Trigger text color when `disabled`. */
+  textDisabled: string;
+  /** Placeholder text color inside the trigger (when value is null). */
+  placeholder: string;
+  /** Trailing chevron color. */
+  chevron: string;
+  /** Muted helper text color rendered below the frame when no error. */
+  helperText: string;
+  /** Error text color rendered below the frame when `errorText` is set. */
+  errorText: string;
 }
 
 /**
@@ -405,6 +706,14 @@ export interface Tokens {
   socialButtonColors: SocialButtonColors;
   collapsibleColors: CollapsibleColors;
   externalLinkColors: ExternalLinkColors;
+  selectColors: SelectColors;
+  selectNativeColors: SelectNativeColors;
+  selectBottomSheetColors: SelectBottomSheetColors;
+  segmentedControlColors: SegmentedControlColors;
+  datePickerColors: DatePickerColors;
+  dateRangePickerColors: DateRangePickerColors;
+  bottomSheetColors: BottomSheetColors;
+  imagePickerSheetColors: ImagePickerSheetColors;
   radius: number;
   spacing: number;
 }
@@ -430,6 +739,14 @@ export interface ResolvedTokens {
   socialButtonColors: SocialButtonColors;
   collapsibleColors: CollapsibleColors;
   externalLinkColors: ExternalLinkColors;
+  selectColors: SelectColors;
+  selectNativeColors: SelectNativeColors;
+  selectBottomSheetColors: SelectBottomSheetColors;
+  segmentedControlColors: SegmentedControlColors;
+  datePickerColors: DatePickerColors;
+  dateRangePickerColors: DateRangePickerColors;
+  bottomSheetColors: BottomSheetColors;
+  imagePickerSheetColors: ImagePickerSheetColors;
   radius: {
     sm: number;
     md: number;

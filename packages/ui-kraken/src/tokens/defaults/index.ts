@@ -44,6 +44,32 @@ import {
   DEFAULT_LIGHT_EXTERNAL_LINK_COLORS,
   DEFAULT_DARK_EXTERNAL_LINK_COLORS,
 } from "./external-link";
+import { DEFAULT_LIGHT_SELECT_COLORS, DEFAULT_DARK_SELECT_COLORS } from "./select";
+import {
+  DEFAULT_LIGHT_SELECT_NATIVE_COLORS,
+  DEFAULT_DARK_SELECT_NATIVE_COLORS,
+} from "./select-native";
+import {
+  DEFAULT_LIGHT_SELECT_BOTTOM_SHEET_COLORS,
+  DEFAULT_DARK_SELECT_BOTTOM_SHEET_COLORS,
+} from "./select-bottom-sheet";
+import {
+  DEFAULT_LIGHT_SEGMENTED_CONTROL_COLORS,
+  DEFAULT_DARK_SEGMENTED_CONTROL_COLORS,
+} from "./segmented-control";
+import { DEFAULT_LIGHT_DATE_PICKER_COLORS, DEFAULT_DARK_DATE_PICKER_COLORS } from "./date-picker";
+import {
+  DEFAULT_LIGHT_DATE_RANGE_PICKER_COLORS,
+  DEFAULT_DARK_DATE_RANGE_PICKER_COLORS,
+} from "./date-range-picker";
+import {
+  DEFAULT_LIGHT_BOTTOM_SHEET_COLORS,
+  DEFAULT_DARK_BOTTOM_SHEET_COLORS,
+} from "./bottom-sheet";
+import {
+  DEFAULT_LIGHT_IMAGE_PICKER_SHEET_COLORS,
+  DEFAULT_DARK_IMAGE_PICKER_SHEET_COLORS,
+} from "./image-picker-sheet";
 
 /**
  * Fallback tokens when a consumer mounts `<UIKitProvider>` without any
@@ -65,6 +91,14 @@ export const DEFAULT_TOKENS: Tokens = {
   socialButtonColors: DEFAULT_LIGHT_SOCIAL_BUTTON_COLORS,
   collapsibleColors: DEFAULT_LIGHT_COLLAPSIBLE_COLORS,
   externalLinkColors: DEFAULT_LIGHT_EXTERNAL_LINK_COLORS,
+  selectColors: DEFAULT_LIGHT_SELECT_COLORS,
+  selectNativeColors: DEFAULT_LIGHT_SELECT_NATIVE_COLORS,
+  selectBottomSheetColors: DEFAULT_LIGHT_SELECT_BOTTOM_SHEET_COLORS,
+  segmentedControlColors: DEFAULT_LIGHT_SEGMENTED_CONTROL_COLORS,
+  datePickerColors: DEFAULT_LIGHT_DATE_PICKER_COLORS,
+  dateRangePickerColors: DEFAULT_LIGHT_DATE_RANGE_PICKER_COLORS,
+  bottomSheetColors: DEFAULT_LIGHT_BOTTOM_SHEET_COLORS,
+  imagePickerSheetColors: DEFAULT_LIGHT_IMAGE_PICKER_SHEET_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -89,6 +123,14 @@ export const DEFAULT_DARK_TOKENS: Tokens = {
   socialButtonColors: DEFAULT_DARK_SOCIAL_BUTTON_COLORS,
   collapsibleColors: DEFAULT_DARK_COLLAPSIBLE_COLORS,
   externalLinkColors: DEFAULT_DARK_EXTERNAL_LINK_COLORS,
+  selectColors: DEFAULT_DARK_SELECT_COLORS,
+  selectNativeColors: DEFAULT_DARK_SELECT_NATIVE_COLORS,
+  selectBottomSheetColors: DEFAULT_DARK_SELECT_BOTTOM_SHEET_COLORS,
+  segmentedControlColors: DEFAULT_DARK_SEGMENTED_CONTROL_COLORS,
+  datePickerColors: DEFAULT_DARK_DATE_PICKER_COLORS,
+  dateRangePickerColors: DEFAULT_DARK_DATE_RANGE_PICKER_COLORS,
+  bottomSheetColors: DEFAULT_DARK_BOTTOM_SHEET_COLORS,
+  imagePickerSheetColors: DEFAULT_DARK_IMAGE_PICKER_SHEET_COLORS,
   radius: 12,
   spacing: 8,
 };
@@ -166,3 +208,43 @@ export {
   DEFAULT_DARK_EXTERNAL_LINK_COLORS,
   mergeExternalLinkColors,
 } from "./external-link";
+export {
+  DEFAULT_LIGHT_SELECT_COLORS,
+  DEFAULT_DARK_SELECT_COLORS,
+  mergeSelectColors,
+} from "./select";
+export {
+  DEFAULT_LIGHT_SELECT_NATIVE_COLORS,
+  DEFAULT_DARK_SELECT_NATIVE_COLORS,
+  mergeSelectNativeColors,
+} from "./select-native";
+export {
+  DEFAULT_LIGHT_SELECT_BOTTOM_SHEET_COLORS,
+  DEFAULT_DARK_SELECT_BOTTOM_SHEET_COLORS,
+  mergeSelectBottomSheetColors,
+} from "./select-bottom-sheet";
+export {
+  DEFAULT_LIGHT_SEGMENTED_CONTROL_COLORS,
+  DEFAULT_DARK_SEGMENTED_CONTROL_COLORS,
+  mergeSegmentedControlColors,
+} from "./segmented-control";
+export {
+  DEFAULT_LIGHT_DATE_PICKER_COLORS,
+  DEFAULT_DARK_DATE_PICKER_COLORS,
+  mergeDatePickerColors,
+} from "./date-picker";
+export {
+  DEFAULT_LIGHT_DATE_RANGE_PICKER_COLORS,
+  DEFAULT_DARK_DATE_RANGE_PICKER_COLORS,
+  mergeDateRangePickerColors,
+} from "./date-range-picker";
+export {
+  DEFAULT_LIGHT_BOTTOM_SHEET_COLORS,
+  DEFAULT_DARK_BOTTOM_SHEET_COLORS,
+  mergeBottomSheetColors,
+} from "./bottom-sheet";
+export {
+  DEFAULT_LIGHT_IMAGE_PICKER_SHEET_COLORS,
+  DEFAULT_DARK_IMAGE_PICKER_SHEET_COLORS,
+  mergeImagePickerSheetColors,
+} from "./image-picker-sheet";

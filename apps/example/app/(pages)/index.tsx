@@ -118,6 +118,62 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Select",
+    description:
+      "Single-choice picker — trigger + centered modal card, generic value type, zero peer deps.",
+    href: "/components/select",
+    status: "shipped",
+  },
+  {
+    title: "SelectNative",
+    description:
+      "Native single-choice picker via @expo/ui — SwiftUI Menu on iOS, Compose DropdownMenu on Android.",
+    href: "/components/select-native",
+    status: "shipped",
+  },
+  {
+    title: "SelectBottomSheet",
+    description:
+      "Single-choice picker with native bottom sheet — composes our BottomSheet (via @expo/ui). Same peer as SelectNative / DatePicker.",
+    href: "/components/select-bottom-sheet",
+    status: "shipped",
+  },
+  {
+    title: "SegmentedControl",
+    description:
+      "Native horizontal segmented picker via @expo/ui — UISegmentedControl on iOS, Material 3 SegmentedButton on Android.",
+    href: "/components/segmented-control",
+    status: "shipped",
+  },
+  {
+    title: "DatePicker",
+    description:
+      "Native date / time / datetime picker via @expo/ui — inline modal on iOS, Material 3 dialog on Android, browser <input> on web.",
+    href: "/components/date-picker",
+    status: "shipped",
+  },
+  {
+    title: "DateRangePicker",
+    description:
+      "Start / end date range with auto-clamping. Composes two DatePickers; vertical or horizontal layout; date + datetime modes.",
+    href: "/components/date-range-picker",
+    status: "shipped",
+  },
+  {
+    title: "BottomSheet",
+    description:
+      "Modal bottom sheet via @expo/ui — SwiftUI on iOS, Material 3 on Android, vaul on web. Ref-controlled with snap points.",
+    href: "/components/bottom-sheet",
+    status: "shipped",
+  },
+  {
+    title: "ImagePickerSheet",
+    description:
+      "Bottom-sheet image picker via expo-image-picker. Camera / gallery / cancel action rows. Ref-controlled, permission-aware.",
+    href: "/components/image-picker-sheet",
+    status: "shipped",
+  },
+  {
     title: "Card",
     description: "Surface primitive with layered background variants.",
     href: "/components/button",

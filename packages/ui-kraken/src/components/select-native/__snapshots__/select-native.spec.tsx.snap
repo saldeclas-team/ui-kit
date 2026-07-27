@@ -1,0 +1,533 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectNative snapshots dark palette + selected 1`] = `
+<View
+  testID="select-native"
+>
+  <Text
+    color="#F9FAFB"
+    testID="select-native-label"
+  >
+    Country
+  </Text>
+  <View
+    backgroundColor="transparent"
+    borderColor="#374151"
+    borderRadius="$uiRadiusMd"
+    borderWidth={0}
+    disabled={false}
+    minHeight={0}
+    paddingHorizontal={0}
+    paddingVertical={0}
+    testID="select-native-frame"
+  >
+    <View
+      data-menu-title="Country"
+      testID="select-native-menu"
+    >
+      <View
+        accessibilityLabel="Country"
+        accessibilityRole="combobox"
+        accessibilityState={
+          {
+            "disabled": false,
+          }
+        }
+        alignItems="center"
+        flex={1}
+        justifyContent="space-between"
+        testID="select-native-trigger"
+      >
+        <Text
+          color="#0A84FF"
+          flexShrink={1}
+          fontSize={15}
+          fontWeight="500"
+          lineHeight={20}
+          testID="select-native-trigger-text"
+        >
+          Two
+        </Text>
+        <Text
+          color="#0A84FF"
+          fontSize={12}
+          fontWeight="700"
+          lineHeight={16}
+          marginLeft={8}
+        >
+          ▼
+        </Text>
+      </View>
+      <View
+        accessibilityLabel="One"
+        accessibilityRole="menuitem"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="select-native-menu-action-one"
+      />
+      <View
+        accessibilityLabel="Two"
+        accessibilityRole="menuitem"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": true,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="select-native-menu-action-two"
+      />
+      <View
+        accessibilityLabel="Three"
+        accessibilityRole="menuitem"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="select-native-menu-action-three"
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`SelectNative snapshots default palette + peer available + value selected 1`] = `
+<View
+  testID="select-native"
+>
+  <Text
+    color="#111827"
+    testID="select-native-label"
+  >
+    Country
+  </Text>
+  <View
+    backgroundColor="transparent"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    borderWidth={0}
+    disabled={false}
+    minHeight={0}
+    paddingHorizontal={0}
+    paddingVertical={0}
+    testID="select-native-frame"
+  >
+    <View
+      data-menu-title="Country"
+      testID="select-native-menu"
+    >
+      <View
+        accessibilityLabel="Country"
+        accessibilityRole="combobox"
+        accessibilityState={
+          {
+            "disabled": false,
+          }
+        }
+        alignItems="center"
+        flex={1}
+        justifyContent="space-between"
+        testID="select-native-trigger"
+      >
+        <Text
+          color="#007AFF"
+          flexShrink={1}
+          fontSize={15}
+          fontWeight="500"
+          lineHeight={20}
+          testID="select-native-trigger-text"
+        >
+          Two
+        </Text>
+        <Text
+          color="#007AFF"
+          fontSize={12}
+          fontWeight="700"
+          lineHeight={16}
+          marginLeft={8}
+        >
+          ▼
+        </Text>
+      </View>
+      <View
+        accessibilityLabel="One"
+        accessibilityRole="menuitem"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="select-native-menu-action-one"
+      />
+      <View
+        accessibilityLabel="Two"
+        accessibilityRole="menuitem"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": true,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="select-native-menu-action-two"
+      />
+      <View
+        accessibilityLabel="Three"
+        accessibilityRole="menuitem"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="select-native-menu-action-three"
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`SelectNative snapshots errorText state 1`] = `
+<View
+  testID="select-native"
+>
+  <Text
+    color="#111827"
+    testID="select-native-label"
+  >
+    Country
+  </Text>
+  <View
+    backgroundColor="#FFFFFF"
+    borderColor="#DC2626"
+    borderRadius="$uiRadiusMd"
+    borderWidth={1}
+    disabled={false}
+    minHeight={48}
+    paddingHorizontal="$uiSpacingMd"
+    paddingVertical="$uiSpacingSm"
+    testID="select-native-frame"
+  >
+    <View
+      data-menu-title="Country"
+      testID="select-native-menu"
+    >
+      <View
+        accessibilityLabel="Country"
+        accessibilityRole="combobox"
+        accessibilityState={
+          {
+            "disabled": false,
+          }
+        }
+        alignItems="center"
+        flex={1}
+        justifyContent="space-between"
+        testID="select-native-trigger"
+      >
+        <Text
+          color="#007AFF"
+          flexShrink={1}
+          fontSize={15}
+          fontWeight="500"
+          lineHeight={20}
+          testID="select-native-trigger-text"
+        >
+          Select…
+        </Text>
+        <Text
+          color="#007AFF"
+          fontSize={12}
+          fontWeight="700"
+          lineHeight={16}
+          marginLeft={8}
+        >
+          ▼
+        </Text>
+      </View>
+      <View
+        accessibilityLabel="One"
+        accessibilityRole="menuitem"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="select-native-menu-action-one"
+      />
+      <View
+        accessibilityLabel="Two"
+        accessibilityRole="menuitem"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="select-native-menu-action-two"
+      />
+      <View
+        accessibilityLabel="Three"
+        accessibilityRole="menuitem"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        testID="select-native-menu-action-three"
+      />
+    </View>
+  </View>
+  <Text
+    color="#DC2626"
+    testID="select-native-error-text"
+  >
+    Please pick a country
+  </Text>
+</View>
+`;
+
+exports[`SelectNative snapshots missing peer dep fallback 1`] = `
+<View
+  testID="select-native"
+>
+  <Text
+    color="#111827"
+    testID="select-native-label"
+  >
+    Country
+  </Text>
+  <View
+    backgroundColor="#FFFFFF"
+    borderColor="#D1D5DB"
+    borderRadius="$uiRadiusMd"
+    borderWidth={1}
+    disabled={false}
+    minHeight={48}
+    paddingHorizontal="$uiSpacingMd"
+    paddingVertical="$uiSpacingSm"
+    testID="select-native-frame"
+  >
+    <Text
+      color="#DC2626"
+      testID="select-native-missing-peer"
+    >
+      Install \`@expo/ui\` to enable SelectNative.
+    </Text>
+  </View>
+</View>
+`;
