@@ -1,5 +1,270 @@
 # ui-kraken
 
+## 0.10.0
+
+### Minor Changes
+
+- a4096bd: Add `Avatar` — displays a user image with an initials fallback. Two rendering modes coexist: pass `source` for a real image; pass `name` (or explicit `initials`) so ui-kraken computes initials on a colored background. If the image fails to load, the component swaps to initials automatically via `onError`.
+
+  ## API
+  - `<Avatar>` extends `YStack`; every Tamagui layout prop flows through the spread. Own props: `source` (image), `name` (auto-compute initials), `initials` (explicit override, wins over `name`), `size` (`"sm" | "md" | "lg" | "xl" | number`, default `"md"`), `shape` (`"circle" | "rounded" | "square"`, default `"circle"`), `avatarColors` (per-instance palette override), `testID` (default `"avatar"`).
+  - Sizes: sm=24, md=40, lg=56, xl=80. Raw numeric sizes pass through.
+  - Shapes: circle → size/2 radius (perfectly round); rounded → 8; square → 0.
+  - Rendering rules: source + no error → `<Image>`; source + error → initials; no source + initials → initials as-passed; no source + name → computed initials; nothing → empty background.
+  - Initials computation: first letter of first word + first letter of last word, uppercased. Single-word names → first letter only. Empty / whitespace → empty background (no ghost text).
+  - Font size scales with dimension: `fontSize = floor(dimension × 0.4)` so sm has readable text and xl doesn't look empty.
+  - `accessibilityRole="image"` by default; `accessibilityLabel` defaults to `name` (or `"Avatar"` otherwise).
+
+  ## Token schema — own color block
+
+  `avatarColors` — 2 slots: `background` (fill when showing initials) + `text` (initials color). Light `#E5E7EB` bg + `#374151` text (gray-200 / gray-700); dark `#374151` bg + `#F9FAFB` text (inverted for dark mode). Neutral placeholder in both themes.
+
+  Follows the each-component-owns-color-space rule. Full 13-step wiring: types + defaults + flatten (`$uiAvatarBackground`, `$uiAvatarText`) + provider merge + barrels.
+
+  ## Non-goals (documented)
+  - No `status` dot / badge slot — distinct primitive (future `AvatarWithStatus`).
+  - No group / stacked variant — `<AvatarGroup>` is its own component.
+  - No initial-color-from-name-hash — auto-hashing hides the deterministic mapping. Consumers who want per-user tinting pass `avatarColors` explicitly.
+  - No loading skeleton state — consumers wrap in `<Skeleton>` or show `<Spinner>` while data loads.
+
+  ## Testing
+
+  47 component tests + 4 snapshots on `avatar.tsx` + 4 defaults-spec tests. 100% coverage across statements / branches / functions / lines on `avatar.tsx` + `defaults/avatar.ts`. Three exported pure helpers (`computeInitials`, `resolveAvatarSize`, `resolveAvatarBorderRadius`) tested branch-by-branch.
+
+  ## Example app
+
+  New `/components/avatar` route with 5 sections: size showcase (sm / md / lg / xl), shape showcase (circle / rounded / square), image vs initials (with a bad-URL fallback demo), explicit initials (`"?"` + emoji), custom colors inside a Card (composition example with a user-row).
+
+- 6f20976: Add `Badge` — compact pill for notification counts, status labels, and inline indicators. Three rendering modes coexist: text label, numeric count (with `99+` overflow), and dot indicator (status marker for use over `<Avatar>` and similar). Counterpart to `Alert` (banner) and `Hint` (inline paragraph) at the smallest visual weight.
+
+  ## API
+  - `<Badge>` extends `YStack`; every Tamagui layout prop flows through the spread. Own props: `tone` (`"neutral" | "primary" | "success" | "warning" | "danger"`, default `"neutral"`), `size` (`"sm" | "md"`, default `"md"`), `count` (numeric), `maxCount` (default `99`), `dot` (boolean), `children` (text), `badgeColors` (per-instance tone override), `testID` (default `"badge"`).
+  - Mode precedence: `dot` wins over `count` wins over `children`.
+  - Count formatting: `count > maxCount` renders `"{maxCount}+"`. `count === 0` renders `"0"` (no auto-hide — consumers hide externally if desired).
+  - Dot sizes: 8 px (sm) / 10 px (md).
+  - `accessibilityRole="text"` by default. `accessibilityLabel` auto-derives from text/count content; dot mode falls back to `"Indicator"`.
+
+  ## Compound shortcuts
+
+  `Badge.Primary`, `Badge.Success`, `Badge.Warning`, `Badge.Danger` — same shape as `Hint`'s compound API. No `Badge.Neutral` since that's the base default.
+
+  ## Token schema — own color block
+
+  `badgeColors` — 5 tones × 2 slots (`background` + `text`), nested shape matching `HintToneColors`. Each tone uses a pale tinted background + darker semantic-hue text in light mode; deeper tint + lighter tone-hue text in dark mode. Same hue mapping as Hint's soft emphasis so a Badge and a Hint of the same tone read as the same signal at different sizes.
+
+  Follows the each-component-owns-color-space rule. Full 13-step wiring: types + defaults + flatten (`$uiBadge{Tone}{Slot}`) + provider merge + barrels. Two merge helpers exported: `mergeBadgeToneColors` (single-tone, used per-instance) + `mergeBadgeColors` (cross-tone, used provider-side).
+
+  ## Non-goals (documented)
+  - No `outline` / `ghost` emphasis variants — one visual style keeps the tone signal readable.
+  - No `pill` vs `square` shape — always rounded pill.
+  - No `icon` slot — a badge with an icon reads as a chip.
+  - No auto-hide when `count === 0` — zero-count is a valid state.
+  - No `pulse` / `blink` animation — ships with a future `Motion` primitive.
+
+  ## Testing
+
+  56 component tests + 5 snapshots on `badge.tsx` + 8 defaults-spec tests (both merge helpers + all 5 tones' light-vs-dark sanity). 100% coverage across statements / branches / functions / lines on `badge.tsx` + `defaults/badge.ts`. Two exported pure helpers (`formatCount`, `resolveContent`) tested branch-by-branch.
+
+  ## Example app
+
+  New `/components/badge` route with 5 sections: tones (all 5 side-by-side), sizes (sm/md pair + count comparison), count formatting (0/5/42/120 + custom maxCount), dot indicator (with Avatar composition — 3 avatars with status dots), inline in a Card (settings-row example with `Badge.Danger count=12`, `Badge.Success "Active"`, `Badge.Warning "Beta"`).
+
+- 814d031: Add `Card` — rounded, padded, semantically-elevated container that layers on top of `<Surface>`. Compound API (`Card + Card.Header + Card.Body + Card.Footer`) covers the two common layouts; simple `<Card>{content}</Card>` also works without slots. First component post-Batch 2 close-out; sits between the native-bridge batch and a future higher-level composites batch.
+
+  ## API
+  - `<Card>` extends `YStack`; every Tamagui layout prop flows through the spread. Own props: `level` (`"base" | "raised" | "overlay" | "sunken"`, default `"raised"`), `surfaceColors` (per-instance palette override), `testID`.
+  - Compound: `Card.Header` (XStack, `justifyContent="space-between"` for "title + action"), `Card.Body` (YStack, `gap=8`), `Card.Footer` (XStack, `justifyContent="flex-end"`, `gap=8` for buttons). Each slot has its own testID default (`"card-header"` / `"card-body"` / `"card-footer"`) and passes every Tamagui layout prop through.
+  - Defaults: `padding=16`, `borderRadius=12`, `gap=12` on the root. Slots have `padding=0` so they don't stack with the parent's padding.
+  - Simple use: `<Card>{content}</Card>` — Card's gap handles stacking of direct children.
+  - Compound use: `<Card><Card.Header/><Card.Body/><Card.Footer/></Card>` — Card's gap separates the three slots.
+
+  ## Composition — no new tokens
+
+  Card has **no color tokens of its own**. It reads the same `surfaceColors` palette Surface reads and applies the resolved `level` slot as its background color. Consumers who override `surfaceColors` globally (via the provider) or per-instance see both `<Surface>` and `<Card>` change together, by design. If we introduce a Card-owned border / divider color in a future revision, we'll add a `cardColors` block at that point per the each-component-owns-color-space rule; today there's nothing to wire.
+
+  Card does NOT wrap `<Surface>` internally — that would add a wrapper element with no behavioral benefit. Palette resolution is a two-line `useUIKit()` + `resolvePalette()` inline in the component.
+
+  ## Non-goals (documented)
+  - **No shadow / elevation shadow** — same "tint over shadow" direction as Surface.
+  - **No pressable variant** — consumers wrap in `<Pressable>` or use Button chrome.
+  - **No `Card.Media` slot for images** — consumers embed `<Image>` directly.
+  - **No divider between slots** — slot separation via Card's `gap`; visible dividers land with the `Divider` primitive on the v0.3 roadmap.
+  - **No `dense` / `compact` size prop** — padding is a Tamagui pass-through.
+
+  ## Testing
+
+  28 tests, 6 snapshots — 100% coverage on `card.tsx`. Behavioral coverage: simple + compound rendering, sub-slot testID defaults + overrides, level → surfaceColors slot resolution across all 4 levels (light + dark palettes), per-instance + provider-wide palette overrides, Tamagui pass-through props on both the root and each slot, a11y prop pass-through, ref forwarding.
+
+  ## Example app
+
+  New `/components/card` route with 5 sections: simple card, compound (Header + Body + Footer), level showcase (all 4 levels side-by-side), 2-column card grid (`flex: 1`), themed card via per-instance `surfaceColors` override.
+
+- 26a8501: Add `Dialog` — centered overlay panel for confirmations, forms, and detail views. Wraps RN's built-in `<Modal>` with palette + backdrop + compound API. Complements `BottomSheet` (bottom-anchored) for cases where content isn't a sheet metaphor. Named `Dialog` (not `Modal`) to disambiguate from RN's own `Modal` export.
+
+  ## API
+  - `<Dialog visible onClose>` — controlled visibility. Own props: `size` (`"sm" | "md" | "lg" | "full"`, default `"md"`), `animationType` (`"none" | "slide" | "fade"`, default `"fade"`), `dialogColors` (per-instance palette override), `testID` (default `"dialog"`).
+  - Compound: `Dialog.Header` (optional `title` + optional `showCloseButton`), `Dialog.Body` (YStack for main content), `Dialog.Footer` (XStack right-aligned for action buttons). All slots optional — simple `<Dialog>{content}</Dialog>` works.
+  - Sizes: sm=240, md=320, lg=480, full=0 minWidth. All cap `maxWidth: "95%"` so the panel shrinks on narrow screens.
+  - Backdrop tap → `onClose`. Panel tap → no-op (bubble blocker, same pattern as `date-picker-body.ios`'s modal-content Pressable).
+  - Omit `onClose` → must-answer dialog (backdrop tap does nothing).
+  - Close-X button in `Dialog.Header` (when `showCloseButton`) invokes parent's `onClose` via context — no prop-drilling.
+  - `accessibilityLabel="Close dialog"` on backdrop; `accessibilityRole="button"` + `accessibilityLabel="Close"` on the close-X.
+
+  ## Provider re-mount inside Modal
+
+  RN's `<Modal>` renders in a separate view hierarchy that does NOT inherit Tamagui / provider context. `<UIKitContext.Provider>` re-mounts inside the modal so styled children resolve tokens. Same pattern as `SelectBottomSheet` + `SelectNative.ios`.
+
+  ## Token schema — own color block
+
+  `dialogColors` — 4 slots: `backdrop` (overlay), `background` (panel fill), `title` (header text), `body` (default body text). Light `rgba(0,0,0,0.5)` / `#FFFFFF` / `#111827` / `#374151`; dark `rgba(0,0,0,0.7)` / `#1F2937` / `#F9FAFB` / `#D1D5DB`.
+
+  Follows the each-component-owns-color-space rule. Full 13-step wiring: types + defaults + flatten (`$uiDialogBackdrop`, `$uiDialogBackground`, `$uiDialogTitle`, `$uiDialogBody`) + provider merge + barrels.
+
+  ## Non-goals (documented)
+  - No ref-based imperative API — controlled visibility is more predictable, matches every other controlled component.
+  - No bottom-anchored variant — `<BottomSheet>` covers that use case.
+  - No `variant` prop (alert/confirm/prompt) — compound slots + tone-appropriate buttons compose these.
+  - No stacked / nested dialogs — RN Modal doesn't guarantee correct z-index across platforms.
+  - No auto-focus first input — RN's focus management is inconsistent across platforms.
+
+  ## Testing
+
+  39 component tests + 4 snapshots on `dialog.tsx` + 4 defaults-spec tests. 100% coverage across statements / branches / functions / lines on `dialog.tsx` + `defaults/dialog.ts`. One exported pure helper (`resolveDialogMinWidth`) tested branch-by-branch.
+
+  ## Example app
+
+  New `/components/dialog` route with 4 sections: simple confirmation (Delete file? with Cancel + Delete), simple (no compound slots), size showcase (sm/md/lg/full toggle), must-answer (no dismiss — only "Got it" button closes).
+
+- 9595311: Add `Divider` — thin line for visual separation between rows, sections, or slots. Horizontal by default; vertical variant for inline separators (e.g. between two icons in a row). Small layout primitive that unblocks future slot-divider variants in Card, MultiSelect, and any list component that wants visible separators between rows.
+
+  ## API
+  - `<Divider>` extends `YStack`; every Tamagui layout prop flows through the spread. Own props: `orientation` (`"horizontal" | "vertical"`, default `"horizontal"`), `thickness` (px, default `1`), `inset` (px on both ends, default `0`), `dividerColors` (per-instance palette override), `testID` (default `"divider"`).
+  - `alignSelf: "stretch"` on the cross-axis so the line fills its parent without a manual `width: '100%'`.
+  - Horizontal → `height=thickness`, `marginHorizontal=inset`. Vertical → `width=thickness`, `marginVertical=inset`.
+  - `accessibilityRole="none"` by default — a divider is decorative and screen readers skip it. Consumers who use a divider to separate landmark sections override to `"separator"` at the callsite.
+
+  ## Token schema — own color block
+
+  `dividerColors` — 1 slot: `line` (the line's background color). Light default `#E5E7EB` (gray-200), dark default `#374151` (gray-700). Matches Input / Card border tones so a Divider between two Cards reads as native chrome.
+
+  Follows the each-component-owns-color-space rule — Divider has its own block on the token schema. Per-instance override via `dividerColors={{ line: "..." }}`; provider-wide override via the standard `<UIKitProvider overrides={{ light: { dividerColors: ... } }}>` pattern.
+
+  ## Non-goals (documented)
+  - **No `label` / `text` prop for labeled dividers** — a labeled divider is a distinct primitive.
+  - **No `variant` prop (`"solid" | "dashed" | "dotted"`)** — RN doesn't render dashed / dotted borders reliably across platforms.
+  - **No gradient dividers** — ships when we introduce a `LinearGradient` primitive.
+  - **No auto-orientation-detection based on parent (row vs column)** — explicit prop, always.
+
+  ## Testing
+
+  31 tests + 4 snapshots on `divider.tsx` + 4 tests on `defaults/divider.ts` — 100% coverage across statements, branches, functions, lines. Two exported helpers (`orientationSizeProps` / `orientationInsetProps`) are pure and tested directly for every branch.
+
+  ## Example app
+
+  New `/components/divider` route with 5 sections: horizontal default, vertical inline (row of icons), inset (iOS grouped-list look), thick (`thickness={4}`), custom color via per-instance `dividerColors` override.
+
+- 01a55e4: Add `ProgressBar` — determinate progress indicator. Horizontal bar that fills from left to right as `value` progresses from `min` to `max` (0–100 by default). Complements `Spinner` (indeterminate) for cases where completion percentage is known: uploads, downloads, multi-step forms, sync bars.
+
+  ## API
+  - `<ProgressBar>` extends `YStack`; every Tamagui layout prop flows through the spread. Own props: `value` (default `0`), `min` (default `0`), `max` (default `100`), `size` (`"sm" | "md" | "lg" | number`, default `"md"`), `radius` (`"full" | "none"`, default `"full"`), `showValueLabel` (boolean), `label` (string), `progressBarColors` (per-instance palette override), `testID` (default `"progress-bar"`).
+  - Sizes: sm=4, md=8, lg=12 (track height in px). Raw numeric pass-through.
+  - Radius: `full` → pill (`borderRadius = height / 2`); `none` → straight bar.
+  - Value clamping: `value < min` → 0%; `value > max` → 100%; `NaN` → 0%; inverted range (`min > max`) → 0%; zero-width range (`min === max`) → 0%.
+  - Label: `label` wins over `showValueLabel`. Value label renders as rounded `"{percent}%"` above the bar in a `space-between` row. Neither set → no label region.
+  - A11y: `accessibilityRole="progressbar"` + `accessibilityValue={{ min, max, now: clampedValue }}` so screen readers announce native progress. `accessibilityLabel` defaults to `label` (or `"Progress"` otherwise).
+
+  ## Token schema — own color block
+
+  `progressBarColors` — 3 slots: `track` (empty background), `fill` (completed portion), `label` (text color when label is set). Light `#E5E7EB` / `#2563EB` / `#111827` (gray-200 track + blue-600 fill + gray-900 label); dark `#374151` / `#60A5FA` / `#F9FAFB` (inverted).
+
+  Follows the each-component-owns-color-space rule. Full 13-step wiring: types + defaults + flatten (`$uiProgressBarTrack`, `$uiProgressBarFill`, `$uiProgressBarLabel`) + provider merge + barrels.
+
+  ## Non-goals (documented)
+  - No indeterminate mode — use `<Spinner />`.
+  - No animated value transitions — consumers wrap in `<Animated.View>` themselves.
+  - No striped / gradient fill — solid color only.
+  - No vertical orientation — distinct primitive.
+  - No `buffered` slot — media-player concerns are their own component.
+
+  ## Testing
+
+  56 component tests + 4 snapshots on `progress-bar.tsx` + 4 defaults-spec tests. 100% coverage across statements / branches / functions / lines on `progress-bar.tsx` + `defaults/progress-bar.ts`. Three exported pure helpers (`clampValue`, `computePercent`, `resolveTrackHeight`) tested branch-by-branch — including edge cases: NaN, inverted range, zero-width range, over/under-max clamping.
+
+  ## Example app
+
+  New `/components/progress-bar` route with 4 sections: sizes showcase (sm/md/lg at 50%), interactive controlled state (buttons to bump ±10, reset), custom range (file upload example — 650 KB of 1 MB → 63%), custom label + brand-tinted color override.
+
+- 19f2689: Add `Slider` — horizontal draggable range input. Thumb slides along a track from `min` to `max`; value snaps to `step` increments (or floats freely with `step={0}`). Pure JS via RN's `PanResponder` — no native peer.
+
+  The input counterpart to `ProgressBar` (readonly). Volume knobs, price ranges, brightness, opacity — anywhere a consumer picks a continuous or stepped value.
+
+  ## API
+  - `<Slider>` extends `YStack`; every Tamagui layout prop flows through the spread. Own props: `value` (required), `onValueChange` (required, fires per drag frame), `onSlidingComplete` (optional, fires on release), `min` (default `0`), `max` (default `100`), `step` (default `1`, `0` for continuous), `size` (`"sm" | "md" | "lg"`, default `"md"`), `disabled` (default `false`), `sliderColors` (per-instance palette override), `testID` (default `"slider"`).
+  - Sizes: sm = track 4 + thumb 16, md = track 6 + thumb 20 (default), lg = track 8 + thumb 24.
+  - Value is clamped: `< min` → `min`, `> max` → `max`, `NaN` → `min` (defensive).
+  - Step snap: `step=1` rounds to integers; `step=0.5` rounds to halves; `step=0` passes floating-point through.
+  - Disabled: PanResponder rejects the gesture (`onStartShouldSetPanResponder` returns false), thumb dims via opacity, `accessibilityState.disabled=true`.
+
+  ## A11y first-class
+  - `accessibilityRole="adjustable"` — VoiceOver + TalkBack recognize the widget.
+  - `accessibilityValue={{ min, max, now: clampedValue }}` — announced as "50 of 100".
+  - `accessibilityActions={[{ name: "increment" }, { name: "decrement" }]}` — nudges by `step` (or 1 if `step === 0`); clamped at both ends.
+  - `accessibilityLabel` — consumers set per-instance (`"Volume"`, `"Brightness"`).
+
+  ## Token schema — own color block
+
+  `sliderColors` — 3 slots: `track` (unfilled portion), `fill` (filled portion), `thumb` (draggable circle). Track + fill mirror ProgressBar's palette so a Slider and a ProgressBar at the same value read as related.
+
+  Light `#E5E7EB` / `#2563EB` / `#FFFFFF`; dark `#374151` / `#60A5FA` / `#F9FAFB`.
+
+  Follows the each-component-owns-color-space rule. Full 13-step wiring: types + defaults + flatten (`$uiSliderTrack`, `$uiSliderFill`, `$uiSliderThumb`) + provider merge + barrels.
+
+  ## Non-goals (documented)
+  - No range slider (two thumbs) — distinct primitive.
+  - No vertical orientation — rare enough to defer.
+  - No value label bubble that follows the thumb — consumers render their own bound to the same state.
+  - No custom thumb component — consumers who want a shape / image pass a custom background via `sliderColors`.
+  - No haptic feedback — consumers wire `expo-haptics` in `onValueChange` themselves.
+  - No native peer dep (`@react-native-community/slider`) — avoids the dev-client rebuild trap.
+
+  ## Testing
+
+  60 tests + 4 snapshots on `slider.tsx` + 4 defaults-spec tests. `slider.tsx` at 83% lines / 85% branches — the uncovered lines are inside the PanResponder handlers themselves, which jest / RTL can't simulate without RN's `touchBank` gesture state (invoking the handlers directly throws `Cannot read properties of undefined (reading 'touchBank')`). Value transformation coverage is via four exported pure helpers (`clampValue`, `computePercent`, `snapToStep`, `locationToValue`) tested branch-by-branch — including all edge cases: NaN, inverted range, zero-width range, over/under-max clamping, step=0 (continuous), negative step, non-zero-min step base.
+
+  `defaults/slider.ts` at 100% across every metric.
+
+  ## Example app
+
+  New `/components/slider` route with 5 sections: Volume (0-100, step 1), Rating (0-5, step 1), Opacity (0-1, continuous with 3-decimal display), onSlidingComplete-only demo (commit counter increments on release, not per drag frame), Sizes + disabled showcase.
+
+- 066de7d: Add `Spinner` — themed activity indicator wrapping RN's built-in `ActivityIndicator` with palette-resolved color + size presets that read naturally at the callsite. Small building-block primitive for loading states inside Cards, Buttons, list rows, and empty-state screens.
+
+  ## API
+  - `<Spinner>` wraps `ActivityIndicator`; every RN prop except `color` + `size` flows through the spread. Own props: `size` (`"sm" | "md" | "lg" | number | "small" | "large"`, default `"md"`), `spinnerColors` (per-instance palette override), `testID` (default `"spinner"`).
+  - Sizes: `"sm"` → 20px, `"md"` → 32px, `"lg"` → 48px. Raw numeric sizes pass through; RN's `"small"` / `"large"` also supported for consumers who prefer the native defaults.
+  - Defaults: `animating=true`, `accessibilityRole="progressbar"`, `accessibilityLabel="Loading"`, `accessibilityState.busy` reflects `animating`.
+  - Consumer overrides win on every default (`animating={false}`, custom a11y label, etc.).
+
+  ## Token schema — own color block
+
+  `spinnerColors` — 1 slot: `color` (the spinner's animated ring / dots). Light `#6B7280` (gray-500), dark `#9CA3AF` (gray-400) — muted secondary tones that read as "in-progress" without competing with content.
+
+  Follows the each-component-owns-color-space rule. Full 13-step wiring: types + defaults + flatten (`$uiSpinnerColor`) + provider merge + barrels.
+
+  ## Non-goals (documented)
+  - No "dots" / "bars" / other visual variants — the native ActivityIndicator is the standard.
+  - No `label` prop for "Loading..." text — consumers compose the row themselves.
+  - No determinate progress-bar variant — distinct primitive.
+  - No auto-color-from-parent-Button-tone — Buttons that show loading state pass `spinnerColors` explicitly if they need to match their own tint.
+
+  ## Testing
+
+  35 component tests + 3 snapshots on `spinner.tsx` + 4 defaults-spec tests. 100% coverage across statements / branches / functions / lines on `spinner.tsx` + `defaults/spinner.ts`. One exported pure helper (`resolveSpinnerSize`) tested branch-by-branch.
+
+  ## Example app
+
+  New `/components/spinner` route with 4 sections: size showcase (sm / md / lg + `size={64}`), loading-row composition (spinner + text), inside a Card (loading placeholder), custom color + static state (`animating={false}`).
+
 ## 0.9.1
 
 ### Patch Changes
