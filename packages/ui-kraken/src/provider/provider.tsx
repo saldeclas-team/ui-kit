@@ -27,6 +27,7 @@ import {
   mergeRefreshControlColors,
   mergeAvatarColors,
   mergeBadgeColors,
+  mergeDialogColors,
   mergeDividerColors,
   mergeProgressBarColors,
   mergeSpinnerColors,
@@ -72,6 +73,7 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         DEFAULT_TOKENS.progressBarColors,
         tokens?.progressBarColors
       ),
+      dialogColors: mergeDialogColors(DEFAULT_TOKENS.dialogColors, tokens?.dialogColors),
       refreshControlColors: mergeRefreshControlColors(
         DEFAULT_TOKENS.refreshControlColors,
         tokens?.refreshControlColors
@@ -149,6 +151,7 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         DEFAULT_DARK_TOKENS.progressBarColors,
         dark?.progressBarColors
       ),
+      dialogColors: mergeDialogColors(DEFAULT_DARK_TOKENS.dialogColors, dark?.dialogColors),
       refreshControlColors: mergeRefreshControlColors(
         DEFAULT_DARK_TOKENS.refreshControlColors,
         dark?.refreshControlColors

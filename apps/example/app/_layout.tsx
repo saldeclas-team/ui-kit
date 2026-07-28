@@ -88,6 +88,10 @@ export default function RootLayout() {
               options={{ title: "ProgressBar", headerBackTitle: "Components" }}
             />
             <Stack.Screen
+              name="(pages)/components/dialog"
+              options={{ title: "Dialog", headerBackTitle: "Components" }}
+            />
+            <Stack.Screen
               name="(pages)/components/refresh-control"
               options={{ title: "RefreshControl", headerBackTitle: "Components" }}
             />

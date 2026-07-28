@@ -238,6 +238,22 @@ export interface ProgressBarColors {
 }
 
 /**
+ * Dialog color palette. 4 slots — the semi-transparent overlay
+ * (`backdrop`), the panel fill (`background`), the header title
+ * text color (`title`), and the default body text color (`body`).
+ */
+export interface DialogColors {
+  /** Semi-transparent overlay behind the panel. */
+  backdrop: string;
+  /** Panel fill color. */
+  background: string;
+  /** Header title text color. */
+  title: string;
+  /** Default body text color. */
+  body: string;
+}
+
+/**
  * Skeleton color palette. 2 slots — the fill at rest (`base`) and the
  * peak of the pulse animation (`highlight`). Both typically alpha-tinted
  * grays that read as "loading" against any surface.
@@ -777,6 +793,7 @@ export interface Tokens {
   avatarColors: AvatarColors;
   badgeColors: BadgeColors;
   progressBarColors: ProgressBarColors;
+  dialogColors: DialogColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;
@@ -815,6 +832,7 @@ export interface ResolvedTokens {
   avatarColors: AvatarColors;
   badgeColors: BadgeColors;
   progressBarColors: ProgressBarColors;
+  dialogColors: DialogColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;

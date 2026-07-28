@@ -104,6 +104,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Dialog",
+    description:
+      "Centered overlay panel. Wraps RN Modal with palette + backdrop + compound Header/Body/Footer slots.",
+    href: "/components/dialog",
+    status: "shipped",
+  },
+  {
     title: "RefreshControl",
     description:
       "Themed pull-to-refresh spinner for ScrollView / FlatList — iOS + Android props wired from one palette.",

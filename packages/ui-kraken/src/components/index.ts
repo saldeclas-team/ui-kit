@@ -55,6 +55,17 @@ export type {
   ProgressBarSize,
 } from "./progress-bar";
 
+export { Dialog } from "./dialog";
+export type {
+  DialogAnimationType,
+  DialogBodyProps,
+  DialogColorsInput,
+  DialogFooterProps,
+  DialogHeaderProps,
+  DialogProps,
+  DialogSize,
+} from "./dialog";
+
 export { RefreshControl } from "./refresh-control";
 export type { RefreshControlProps, RefreshControlColorsInput } from "./refresh-control";
 

@@ -40,6 +40,7 @@ import type {
   BadgeColors,
   BadgeToneColors,
   ProgressBarColors,
+  DialogColors,
   TextColors,
 } from "../tokens/tokens-types";
 
@@ -235,6 +236,20 @@ export function flattenProgressBarColors(colors: ProgressBarColors): Record<stri
   for (const slot of Object.keys(colors) as Array<keyof ProgressBarColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiProgressBar${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `dialogColors` slot map into `$uiDialog{PascalCase}`
+ * Tamagui tokens (`$uiDialogBackdrop`, `$uiDialogBackground`,
+ * `$uiDialogTitle`, `$uiDialogBody`).
+ */
+export function flattenDialogColors(colors: DialogColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof DialogColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiDialog${capitalized}`] = colors[slot];
   }
   return out;
 }
