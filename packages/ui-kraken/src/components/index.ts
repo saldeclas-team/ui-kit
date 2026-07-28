@@ -47,6 +47,14 @@ export type { AvatarColorsInput, AvatarProps, AvatarShape, AvatarSize } from "./
 export { Badge } from "./badge";
 export type { BadgeColorsInput, BadgeProps, BadgeSize, BadgeTone } from "./badge";
 
+export { ProgressBar } from "./progress-bar";
+export type {
+  ProgressBarColorsInput,
+  ProgressBarProps,
+  ProgressBarRadius,
+  ProgressBarSize,
+} from "./progress-bar";
+
 export { RefreshControl } from "./refresh-control";
 export type { RefreshControlProps, RefreshControlColorsInput } from "./refresh-control";
 

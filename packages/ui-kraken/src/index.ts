@@ -24,6 +24,7 @@ export type {
   SpinnerColorsInput,
   AvatarColorsInput,
   BadgeColorsInput,
+  ProgressBarColorsInput,
   RefreshControlColorsInput,
   SkeletonColorsInput,
   HintColorsInput,
@@ -64,6 +65,8 @@ export {
   DEFAULT_DARK_AVATAR_COLORS,
   DEFAULT_LIGHT_BADGE_COLORS,
   DEFAULT_DARK_BADGE_COLORS,
+  DEFAULT_LIGHT_PROGRESS_BAR_COLORS,
+  DEFAULT_DARK_PROGRESS_BAR_COLORS,
   DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
   DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   DEFAULT_LIGHT_SKELETON_COLORS,
@@ -104,6 +107,7 @@ export {
   mergeAvatarColors,
   mergeBadgeColors,
   mergeBadgeToneColors,
+  mergeProgressBarColors,
   mergeRefreshControlColors,
   mergeSkeletonColors,
   mergeHintColors,
@@ -136,6 +140,7 @@ export type {
   AvatarColors,
   BadgeColors,
   BadgeToneColors,
+  ProgressBarColors,
   RefreshControlColors,
   SkeletonColors,
   HintColors,
@@ -203,6 +208,9 @@ export type { AvatarProps, AvatarShape, AvatarSize } from "./components";
 
 export { Badge } from "./components";
 export type { BadgeProps, BadgeSize, BadgeTone } from "./components";
+
+export { ProgressBar } from "./components";
+export type { ProgressBarProps, ProgressBarRadius, ProgressBarSize } from "./components";
 
 export { RefreshControl } from "./components";
 export type { RefreshControlProps } from "./components";

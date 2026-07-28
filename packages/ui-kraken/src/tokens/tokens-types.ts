@@ -223,6 +223,21 @@ export interface BadgeColors {
 }
 
 /**
+ * ProgressBar color palette. 3 slots — the empty-portion background
+ * (`track`), the completed-portion fill (`fill`), and the label
+ * text color (`label`, only read when `showValueLabel` / `label`
+ * prop is set).
+ */
+export interface ProgressBarColors {
+  /** Background of the empty portion. */
+  track: string;
+  /** Color of the completed portion. */
+  fill: string;
+  /** Color of the label text above the bar. */
+  label: string;
+}
+
+/**
  * Skeleton color palette. 2 slots — the fill at rest (`base`) and the
  * peak of the pulse animation (`highlight`). Both typically alpha-tinted
  * grays that read as "loading" against any surface.
@@ -761,6 +776,7 @@ export interface Tokens {
   spinnerColors: SpinnerColors;
   avatarColors: AvatarColors;
   badgeColors: BadgeColors;
+  progressBarColors: ProgressBarColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;
@@ -798,6 +814,7 @@ export interface ResolvedTokens {
   spinnerColors: SpinnerColors;
   avatarColors: AvatarColors;
   badgeColors: BadgeColors;
+  progressBarColors: ProgressBarColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;

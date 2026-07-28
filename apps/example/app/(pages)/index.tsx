@@ -97,6 +97,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "ProgressBar",
+    description:
+      "Determinate progress indicator. 3 sizes, optional value label, custom min/max range. Complements Spinner.",
+    href: "/components/progress-bar",
+    status: "shipped",
+  },
+  {
     title: "RefreshControl",
     description:
       "Themed pull-to-refresh spinner for ScrollView / FlatList — iOS + Android props wired from one palette.",

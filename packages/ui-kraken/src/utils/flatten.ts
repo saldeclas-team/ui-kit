@@ -39,6 +39,7 @@ import type {
   AvatarColors,
   BadgeColors,
   BadgeToneColors,
+  ProgressBarColors,
   TextColors,
 } from "../tokens/tokens-types";
 
@@ -220,6 +221,20 @@ export function flattenBadgeColors(colors: BadgeColors): Record<string, string> 
     const capitalized = tone.charAt(0).toUpperCase() + tone.slice(1);
     out[`uiBadge${capitalized}Background`] = slots.background;
     out[`uiBadge${capitalized}Text`] = slots.text;
+  }
+  return out;
+}
+
+/**
+ * Flatten the `progressBarColors` slot map into
+ * `$uiProgressBar{PascalCase}` Tamagui tokens
+ * (`$uiProgressBarTrack`, `$uiProgressBarFill`, `$uiProgressBarLabel`).
+ */
+export function flattenProgressBarColors(colors: ProgressBarColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof ProgressBarColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiProgressBar${capitalized}`] = colors[slot];
   }
   return out;
 }

@@ -33,6 +33,7 @@ import type {
   AvatarColors,
   BadgeColors,
   BadgeToneColors,
+  ProgressBarColors,
   TextColors,
   ResolvedTokens,
 } from "../tokens/tokens-types";
@@ -115,6 +116,13 @@ export type AvatarColorsInput = Partial<AvatarColors>;
  * nested shape as `HintColorsInput`.
  */
 export type BadgeColorsInput = Partial<Record<keyof BadgeColors, Partial<BadgeToneColors>>>;
+
+/**
+ * Partial override for `progressBarColors` — 3 slots (`track`,
+ * `fill`, `label`). Missing slots fall through to the shipped
+ * defaults.
+ */
+export type ProgressBarColorsInput = Partial<ProgressBarColors>;
 
 /**
  * Partial override for `refreshControlColors` — consumers only
@@ -257,6 +265,7 @@ export interface TokensInput {
   spinnerColors?: SpinnerColorsInput;
   avatarColors?: AvatarColorsInput;
   badgeColors?: BadgeColorsInput;
+  progressBarColors?: ProgressBarColorsInput;
   refreshControlColors?: RefreshControlColorsInput;
   skeletonColors?: SkeletonColorsInput;
   hintColors?: HintColorsInput;

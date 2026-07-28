@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProgressBar component snapshots 50% with value label (md, full radius) 1`] = `
+<View
+  accessibilityLabel="Progress"
+  accessibilityRole="progressbar"
+  accessibilityValue={
+    {
+      "max": 100,
+      "min": 0,
+      "now": 50,
+    }
+  }
+  testID="progress-bar"
+>
+  <View
+    justifyContent="flex-end"
+    marginBottom={4}
+  >
+    <Text
+      color="#111827"
+      fontSize={12}
+      fontWeight="500"
+      testID="progress-bar-label"
+    >
+      50%
+    </Text>
+  </View>
+  <View
+    backgroundColor="#E5E7EB"
+    borderRadius={4}
+    height={8}
+    overflow="hidden"
+    testID="progress-bar-track"
+  >
+    <View
+      backgroundColor="#2563EB"
+      borderRadius={4}
+      height={8}
+      testID="progress-bar-fill"
+      width="50%"
+    />
+  </View>
+</View>
+`;
+
+exports[`ProgressBar component snapshots 75% with custom label (lg, none radius) 1`] = `
+<View
+  accessibilityLabel="Almost there"
+  accessibilityRole="progressbar"
+  accessibilityValue={
+    {
+      "max": 100,
+      "min": 0,
+      "now": 75,
+    }
+  }
+  testID="progress-bar"
+>
+  <View
+    justifyContent="flex-end"
+    marginBottom={4}
+  >
+    <Text
+      color="#111827"
+      fontSize={12}
+      fontWeight="500"
+      testID="progress-bar-label"
+    >
+      Almost there
+    </Text>
+  </View>
+  <View
+    backgroundColor="#E5E7EB"
+    borderRadius={0}
+    height={12}
+    overflow="hidden"
+    testID="progress-bar-track"
+  >
+    <View
+      backgroundColor="#2563EB"
+      borderRadius={0}
+      height={12}
+      testID="progress-bar-fill"
+      width="75%"
+    />
+  </View>
+</View>
+`;
+
+exports[`ProgressBar component snapshots dark theme × sm × 30% 1`] = `
+<View
+  accessibilityLabel="Progress"
+  accessibilityRole="progressbar"
+  accessibilityValue={
+    {
+      "max": 100,
+      "min": 0,
+      "now": 30,
+    }
+  }
+  testID="progress-bar"
+>
+  <View
+    backgroundColor="#374151"
+    borderRadius={2}
+    height={4}
+    overflow="hidden"
+    testID="progress-bar-track"
+  >
+    <View
+      backgroundColor="#60A5FA"
+      borderRadius={2}
+      height={4}
+      testID="progress-bar-fill"
+      width="30%"
+    />
+  </View>
+</View>
+`;
+
+exports[`ProgressBar component snapshots default (value=0, md, no label) 1`] = `
+<View
+  accessibilityLabel="Progress"
+  accessibilityRole="progressbar"
+  accessibilityValue={
+    {
+      "max": 100,
+      "min": 0,
+      "now": 0,
+    }
+  }
+  testID="progress-bar"
+>
+  <View
+    backgroundColor="#E5E7EB"
+    borderRadius={4}
+    height={8}
+    overflow="hidden"
+    testID="progress-bar-track"
+  >
+    <View
+      backgroundColor="#2563EB"
+      borderRadius={4}
+      height={8}
+      testID="progress-bar-fill"
+      width="0%"
+    />
+  </View>
+</View>
+`;
