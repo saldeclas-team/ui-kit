@@ -35,6 +35,7 @@ import type {
   BadgeToneColors,
   ProgressBarColors,
   DialogColors,
+  SliderColors,
   TextColors,
   ResolvedTokens,
 } from "../tokens/tokens-types";
@@ -131,6 +132,12 @@ export type ProgressBarColorsInput = Partial<ProgressBarColors>;
  * the shipped defaults.
  */
 export type DialogColorsInput = Partial<DialogColors>;
+
+/**
+ * Partial override for `sliderColors` — 3 slots (`track`, `fill`,
+ * `thumb`). Missing slots fall through to the shipped defaults.
+ */
+export type SliderColorsInput = Partial<SliderColors>;
 
 /**
  * Partial override for `refreshControlColors` — consumers only
@@ -275,6 +282,7 @@ export interface TokensInput {
   badgeColors?: BadgeColorsInput;
   progressBarColors?: ProgressBarColorsInput;
   dialogColors?: DialogColorsInput;
+  sliderColors?: SliderColorsInput;
   refreshControlColors?: RefreshControlColorsInput;
   skeletonColors?: SkeletonColorsInput;
   hintColors?: HintColorsInput;

@@ -254,6 +254,20 @@ export interface DialogColors {
 }
 
 /**
+ * Slider color palette. 3 slots — mirrors the track/fill vocabulary
+ * of ProgressBar plus a `thumb` slot for the draggable circle.
+ * A Slider and a ProgressBar at the same value read as related.
+ */
+export interface SliderColors {
+  /** Background of the unfilled portion. */
+  track: string;
+  /** The filled portion from `min` to the current value. */
+  fill: string;
+  /** The draggable circle. */
+  thumb: string;
+}
+
+/**
  * Skeleton color palette. 2 slots — the fill at rest (`base`) and the
  * peak of the pulse animation (`highlight`). Both typically alpha-tinted
  * grays that read as "loading" against any surface.
@@ -794,6 +808,7 @@ export interface Tokens {
   badgeColors: BadgeColors;
   progressBarColors: ProgressBarColors;
   dialogColors: DialogColors;
+  sliderColors: SliderColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;
@@ -833,6 +848,7 @@ export interface ResolvedTokens {
   badgeColors: BadgeColors;
   progressBarColors: ProgressBarColors;
   dialogColors: DialogColors;
+  sliderColors: SliderColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;

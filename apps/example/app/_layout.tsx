@@ -92,6 +92,10 @@ export default function RootLayout() {
               options={{ title: "Dialog", headerBackTitle: "Components" }}
             />
             <Stack.Screen
+              name="(pages)/components/slider"
+              options={{ title: "Slider", headerBackTitle: "Components" }}
+            />
+            <Stack.Screen
               name="(pages)/components/refresh-control"
               options={{ title: "RefreshControl", headerBackTitle: "Components" }}
             />

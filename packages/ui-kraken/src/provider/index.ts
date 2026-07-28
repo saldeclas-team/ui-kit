@@ -18,6 +18,7 @@ export type {
   BadgeColorsInput,
   ProgressBarColorsInput,
   DialogColorsInput,
+  SliderColorsInput,
   RefreshControlColorsInput,
   SkeletonColorsInput,
   HintColorsInput,

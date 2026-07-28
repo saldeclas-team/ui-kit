@@ -111,6 +111,13 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Slider",
+    description:
+      "Horizontal draggable range input. Controlled value, step snap, sm/md/lg sizes, a11y increment/decrement.",
+    href: "/components/slider",
+    status: "shipped",
+  },
+  {
     title: "RefreshControl",
     description:
       "Themed pull-to-refresh spinner for ScrollView / FlatList — iOS + Android props wired from one palette.",

@@ -26,6 +26,7 @@ export type {
   BadgeColorsInput,
   ProgressBarColorsInput,
   DialogColorsInput,
+  SliderColorsInput,
   RefreshControlColorsInput,
   SkeletonColorsInput,
   HintColorsInput,
@@ -70,6 +71,8 @@ export {
   DEFAULT_DARK_PROGRESS_BAR_COLORS,
   DEFAULT_LIGHT_DIALOG_COLORS,
   DEFAULT_DARK_DIALOG_COLORS,
+  DEFAULT_LIGHT_SLIDER_COLORS,
+  DEFAULT_DARK_SLIDER_COLORS,
   DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
   DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   DEFAULT_LIGHT_SKELETON_COLORS,
@@ -112,6 +115,7 @@ export {
   mergeBadgeToneColors,
   mergeProgressBarColors,
   mergeDialogColors,
+  mergeSliderColors,
   mergeRefreshControlColors,
   mergeSkeletonColors,
   mergeHintColors,
@@ -146,6 +150,7 @@ export type {
   BadgeToneColors,
   ProgressBarColors,
   DialogColors,
+  SliderColors,
   RefreshControlColors,
   SkeletonColors,
   HintColors,
@@ -219,6 +224,9 @@ export type { ProgressBarProps, ProgressBarRadius, ProgressBarSize } from "./com
 
 export { Dialog } from "./components";
 export type { DialogAnimationType, DialogProps, DialogSize } from "./components";
+
+export { Slider } from "./components";
+export type { SliderProps, SliderSize } from "./components";
 
 export { RefreshControl } from "./components";
 export type { RefreshControlProps } from "./components";

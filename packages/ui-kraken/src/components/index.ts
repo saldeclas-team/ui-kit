@@ -66,6 +66,9 @@ export type {
   DialogSize,
 } from "./dialog";
 
+export { Slider } from "./slider";
+export type { SliderColorsInput, SliderProps, SliderSize } from "./slider";
+
 export { RefreshControl } from "./refresh-control";
 export type { RefreshControlProps, RefreshControlColorsInput } from "./refresh-control";
 

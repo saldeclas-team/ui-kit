@@ -41,6 +41,7 @@ import type {
   BadgeToneColors,
   ProgressBarColors,
   DialogColors,
+  SliderColors,
   TextColors,
 } from "../tokens/tokens-types";
 
@@ -250,6 +251,20 @@ export function flattenDialogColors(colors: DialogColors): Record<string, string
   for (const slot of Object.keys(colors) as Array<keyof DialogColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiDialog${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `sliderColors` slot map into `$uiSlider{PascalCase}`
+ * Tamagui tokens (`$uiSliderTrack`, `$uiSliderFill`,
+ * `$uiSliderThumb`).
+ */
+export function flattenSliderColors(colors: SliderColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SliderColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSlider${capitalized}`] = colors[slot];
   }
   return out;
 }
