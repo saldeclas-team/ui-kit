@@ -28,6 +28,14 @@ import type {
   SocialButtonProviderColors,
   StatCardColors,
   SurfaceColors,
+  DividerColors,
+  SpinnerColors,
+  AvatarColors,
+  BadgeColors,
+  BadgeToneColors,
+  ProgressBarColors,
+  DialogColors,
+  SliderColors,
   TextColors,
   ResolvedTokens,
 } from "../tokens/tokens-types";
@@ -83,6 +91,53 @@ export type CurrencyInputColorsInput = Partial<CurrencyInputColors>;
  * defaults. Slot-based, mirrors `TextColorsInput`.
  */
 export type SurfaceColorsInput = Partial<SurfaceColors>;
+
+/**
+ * Partial override for `dividerColors` — consumers only declare the
+ * `line` slot they want to change; missing slots fall through to
+ * the shipped defaults. Single slot.
+ */
+export type DividerColorsInput = Partial<DividerColors>;
+
+/**
+ * Partial override for `spinnerColors` — consumers only declare the
+ * `color` slot they want to change. Single slot.
+ */
+export type SpinnerColorsInput = Partial<SpinnerColors>;
+
+/**
+ * Partial override for `avatarColors` — 2 slots (background, text).
+ * Missing slots fall through to the shipped defaults.
+ */
+export type AvatarColorsInput = Partial<AvatarColors>;
+
+/**
+ * Partial override for `badgeColors` — 5 tones × 2 slots. Consumers
+ * can partial-merge across tones (only the tones they want to
+ * change), and within each tone only the slots they need. Same
+ * nested shape as `HintColorsInput`.
+ */
+export type BadgeColorsInput = Partial<Record<keyof BadgeColors, Partial<BadgeToneColors>>>;
+
+/**
+ * Partial override for `progressBarColors` — 3 slots (`track`,
+ * `fill`, `label`). Missing slots fall through to the shipped
+ * defaults.
+ */
+export type ProgressBarColorsInput = Partial<ProgressBarColors>;
+
+/**
+ * Partial override for `dialogColors` — 4 slots (`backdrop`,
+ * `background`, `title`, `body`). Missing slots fall through to
+ * the shipped defaults.
+ */
+export type DialogColorsInput = Partial<DialogColors>;
+
+/**
+ * Partial override for `sliderColors` — 3 slots (`track`, `fill`,
+ * `thumb`). Missing slots fall through to the shipped defaults.
+ */
+export type SliderColorsInput = Partial<SliderColors>;
 
 /**
  * Partial override for `refreshControlColors` — consumers only
@@ -221,6 +276,13 @@ export interface TokensInput {
   inputColors?: InputColorsInput;
   currencyInputColors?: CurrencyInputColorsInput;
   surfaceColors?: SurfaceColorsInput;
+  dividerColors?: DividerColorsInput;
+  spinnerColors?: SpinnerColorsInput;
+  avatarColors?: AvatarColorsInput;
+  badgeColors?: BadgeColorsInput;
+  progressBarColors?: ProgressBarColorsInput;
+  dialogColors?: DialogColorsInput;
+  sliderColors?: SliderColorsInput;
   refreshControlColors?: RefreshControlColorsInput;
   skeletonColors?: SkeletonColorsInput;
   hintColors?: HintColorsInput;

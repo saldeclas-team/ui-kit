@@ -34,6 +34,14 @@ import type {
   SocialButtonColors,
   StatCardColors,
   SurfaceColors,
+  DividerColors,
+  SpinnerColors,
+  AvatarColors,
+  BadgeColors,
+  BadgeToneColors,
+  ProgressBarColors,
+  DialogColors,
+  SliderColors,
   TextColors,
 } from "../tokens/tokens-types";
 
@@ -160,6 +168,103 @@ export function flattenSurfaceColors(colors: SurfaceColors): Record<string, stri
   for (const slot of Object.keys(colors) as Array<keyof SurfaceColors>) {
     const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
     out[`uiSurface${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `dividerColors` slot map into `$uiDivider{PascalCase}`
+ * Tamagui tokens (`$uiDividerLine`).
+ */
+export function flattenDividerColors(colors: DividerColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof DividerColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiDivider${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `spinnerColors` slot map into `$uiSpinner{PascalCase}`
+ * Tamagui tokens (`$uiSpinnerColor`).
+ */
+export function flattenSpinnerColors(colors: SpinnerColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SpinnerColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSpinner${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `avatarColors` slot map into `$uiAvatar{PascalCase}`
+ * Tamagui tokens (`$uiAvatarBackground`, `$uiAvatarText`).
+ */
+export function flattenAvatarColors(colors: AvatarColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof AvatarColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiAvatar${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the nested `badgeColors` map (5 tones × 2 slots) into
+ * `$uiBadge{Tone}{Slot}` Tamagui tokens
+ * (`$uiBadgePrimaryBackground`, `$uiBadgePrimaryText`, ...).
+ */
+export function flattenBadgeColors(colors: BadgeColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const tone of Object.keys(colors) as Array<keyof BadgeColors>) {
+    const slots: BadgeToneColors = colors[tone];
+    const capitalized = tone.charAt(0).toUpperCase() + tone.slice(1);
+    out[`uiBadge${capitalized}Background`] = slots.background;
+    out[`uiBadge${capitalized}Text`] = slots.text;
+  }
+  return out;
+}
+
+/**
+ * Flatten the `progressBarColors` slot map into
+ * `$uiProgressBar{PascalCase}` Tamagui tokens
+ * (`$uiProgressBarTrack`, `$uiProgressBarFill`, `$uiProgressBarLabel`).
+ */
+export function flattenProgressBarColors(colors: ProgressBarColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof ProgressBarColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiProgressBar${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `dialogColors` slot map into `$uiDialog{PascalCase}`
+ * Tamagui tokens (`$uiDialogBackdrop`, `$uiDialogBackground`,
+ * `$uiDialogTitle`, `$uiDialogBody`).
+ */
+export function flattenDialogColors(colors: DialogColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof DialogColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiDialog${capitalized}`] = colors[slot];
+  }
+  return out;
+}
+
+/**
+ * Flatten the `sliderColors` slot map into `$uiSlider{PascalCase}`
+ * Tamagui tokens (`$uiSliderTrack`, `$uiSliderFill`,
+ * `$uiSliderThumb`).
+ */
+export function flattenSliderColors(colors: SliderColors): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const slot of Object.keys(colors) as Array<keyof SliderColors>) {
+    const capitalized = slot.charAt(0).toUpperCase() + slot.slice(1);
+    out[`uiSlider${capitalized}`] = colors[slot];
   }
   return out;
 }

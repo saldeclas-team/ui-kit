@@ -32,6 +32,43 @@ export type { CurrencyInputProps, CurrencyInputRadius } from "./currency-input";
 export { Surface } from "./surface";
 export type { SurfaceProps, SurfaceLevel } from "./surface";
 
+export { Card } from "./card";
+export type { CardBodyProps, CardFooterProps, CardHeaderProps, CardLevel, CardProps } from "./card";
+
+export { Divider } from "./divider";
+export type { DividerColorsInput, DividerOrientation, DividerProps } from "./divider";
+
+export { Spinner } from "./spinner";
+export type { SpinnerColorsInput, SpinnerProps, SpinnerSize } from "./spinner";
+
+export { Avatar } from "./avatar";
+export type { AvatarColorsInput, AvatarProps, AvatarShape, AvatarSize } from "./avatar";
+
+export { Badge } from "./badge";
+export type { BadgeColorsInput, BadgeProps, BadgeSize, BadgeTone } from "./badge";
+
+export { ProgressBar } from "./progress-bar";
+export type {
+  ProgressBarColorsInput,
+  ProgressBarProps,
+  ProgressBarRadius,
+  ProgressBarSize,
+} from "./progress-bar";
+
+export { Dialog } from "./dialog";
+export type {
+  DialogAnimationType,
+  DialogBodyProps,
+  DialogColorsInput,
+  DialogFooterProps,
+  DialogHeaderProps,
+  DialogProps,
+  DialogSize,
+} from "./dialog";
+
+export { Slider } from "./slider";
+export type { SliderColorsInput, SliderProps, SliderSize } from "./slider";
+
 export { RefreshControl } from "./refresh-control";
 export type { RefreshControlProps, RefreshControlColorsInput } from "./refresh-control";
 

@@ -25,6 +25,13 @@ import {
   mergeHintColors,
   mergeMultiSelectColors,
   mergeRefreshControlColors,
+  mergeAvatarColors,
+  mergeBadgeColors,
+  mergeDialogColors,
+  mergeDividerColors,
+  mergeProgressBarColors,
+  mergeSliderColors,
+  mergeSpinnerColors,
   mergeSkeletonColors,
   mergeSocialButtonColors,
   mergeStatCardColors,
@@ -59,6 +66,16 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         tokens?.currencyInputColors
       ),
       surfaceColors: mergeSurfaceColors(DEFAULT_TOKENS.surfaceColors, tokens?.surfaceColors),
+      dividerColors: mergeDividerColors(DEFAULT_TOKENS.dividerColors, tokens?.dividerColors),
+      spinnerColors: mergeSpinnerColors(DEFAULT_TOKENS.spinnerColors, tokens?.spinnerColors),
+      avatarColors: mergeAvatarColors(DEFAULT_TOKENS.avatarColors, tokens?.avatarColors),
+      badgeColors: mergeBadgeColors(DEFAULT_TOKENS.badgeColors, tokens?.badgeColors),
+      progressBarColors: mergeProgressBarColors(
+        DEFAULT_TOKENS.progressBarColors,
+        tokens?.progressBarColors
+      ),
+      dialogColors: mergeDialogColors(DEFAULT_TOKENS.dialogColors, tokens?.dialogColors),
+      sliderColors: mergeSliderColors(DEFAULT_TOKENS.sliderColors, tokens?.sliderColors),
       refreshControlColors: mergeRefreshControlColors(
         DEFAULT_TOKENS.refreshControlColors,
         tokens?.refreshControlColors
@@ -128,6 +145,16 @@ export function UIKitProvider({ children, tokens, dark, defaultTheme = "light" }
         dark?.currencyInputColors
       ),
       surfaceColors: mergeSurfaceColors(DEFAULT_DARK_TOKENS.surfaceColors, dark?.surfaceColors),
+      dividerColors: mergeDividerColors(DEFAULT_DARK_TOKENS.dividerColors, dark?.dividerColors),
+      spinnerColors: mergeSpinnerColors(DEFAULT_DARK_TOKENS.spinnerColors, dark?.spinnerColors),
+      avatarColors: mergeAvatarColors(DEFAULT_DARK_TOKENS.avatarColors, dark?.avatarColors),
+      badgeColors: mergeBadgeColors(DEFAULT_DARK_TOKENS.badgeColors, dark?.badgeColors),
+      progressBarColors: mergeProgressBarColors(
+        DEFAULT_DARK_TOKENS.progressBarColors,
+        dark?.progressBarColors
+      ),
+      dialogColors: mergeDialogColors(DEFAULT_DARK_TOKENS.dialogColors, dark?.dialogColors),
+      sliderColors: mergeSliderColors(DEFAULT_DARK_TOKENS.sliderColors, dark?.sliderColors),
       refreshControlColors: mergeRefreshControlColors(
         DEFAULT_DARK_TOKENS.refreshControlColors,
         dark?.refreshControlColors

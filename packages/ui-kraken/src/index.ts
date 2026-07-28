@@ -20,6 +20,13 @@ export type {
   InputColorsInput,
   CurrencyInputColorsInput,
   SurfaceColorsInput,
+  DividerColorsInput,
+  SpinnerColorsInput,
+  AvatarColorsInput,
+  BadgeColorsInput,
+  ProgressBarColorsInput,
+  DialogColorsInput,
+  SliderColorsInput,
   RefreshControlColorsInput,
   SkeletonColorsInput,
   HintColorsInput,
@@ -52,6 +59,20 @@ export {
   DEFAULT_DARK_CURRENCY_INPUT_COLORS,
   DEFAULT_LIGHT_SURFACE_COLORS,
   DEFAULT_DARK_SURFACE_COLORS,
+  DEFAULT_LIGHT_DIVIDER_COLORS,
+  DEFAULT_DARK_DIVIDER_COLORS,
+  DEFAULT_LIGHT_SPINNER_COLORS,
+  DEFAULT_DARK_SPINNER_COLORS,
+  DEFAULT_LIGHT_AVATAR_COLORS,
+  DEFAULT_DARK_AVATAR_COLORS,
+  DEFAULT_LIGHT_BADGE_COLORS,
+  DEFAULT_DARK_BADGE_COLORS,
+  DEFAULT_LIGHT_PROGRESS_BAR_COLORS,
+  DEFAULT_DARK_PROGRESS_BAR_COLORS,
+  DEFAULT_LIGHT_DIALOG_COLORS,
+  DEFAULT_DARK_DIALOG_COLORS,
+  DEFAULT_LIGHT_SLIDER_COLORS,
+  DEFAULT_DARK_SLIDER_COLORS,
   DEFAULT_LIGHT_REFRESH_CONTROL_COLORS,
   DEFAULT_DARK_REFRESH_CONTROL_COLORS,
   DEFAULT_LIGHT_SKELETON_COLORS,
@@ -87,6 +108,14 @@ export {
   mergeInputColors,
   mergeCurrencyInputColors,
   mergeSurfaceColors,
+  mergeDividerColors,
+  mergeSpinnerColors,
+  mergeAvatarColors,
+  mergeBadgeColors,
+  mergeBadgeToneColors,
+  mergeProgressBarColors,
+  mergeDialogColors,
+  mergeSliderColors,
   mergeRefreshControlColors,
   mergeSkeletonColors,
   mergeHintColors,
@@ -114,6 +143,14 @@ export type {
   InputColors,
   CurrencyInputColors,
   SurfaceColors,
+  DividerColors,
+  SpinnerColors,
+  AvatarColors,
+  BadgeColors,
+  BadgeToneColors,
+  ProgressBarColors,
+  DialogColors,
+  SliderColors,
   RefreshControlColors,
   SkeletonColors,
   HintColors,
@@ -160,6 +197,36 @@ export type { CurrencyInputProps, CurrencyInputRadius } from "./components";
 
 export { Surface } from "./components";
 export type { SurfaceProps, SurfaceLevel } from "./components";
+
+export { Card } from "./components";
+export type {
+  CardBodyProps,
+  CardFooterProps,
+  CardHeaderProps,
+  CardLevel,
+  CardProps,
+} from "./components";
+
+export { Divider } from "./components";
+export type { DividerOrientation, DividerProps } from "./components";
+
+export { Spinner } from "./components";
+export type { SpinnerProps, SpinnerSize } from "./components";
+
+export { Avatar } from "./components";
+export type { AvatarProps, AvatarShape, AvatarSize } from "./components";
+
+export { Badge } from "./components";
+export type { BadgeProps, BadgeSize, BadgeTone } from "./components";
+
+export { ProgressBar } from "./components";
+export type { ProgressBarProps, ProgressBarRadius, ProgressBarSize } from "./components";
+
+export { Dialog } from "./components";
+export type { DialogAnimationType, DialogProps, DialogSize } from "./components";
+
+export { Slider } from "./components";
+export type { SliderProps, SliderSize } from "./components";
 
 export { RefreshControl } from "./components";
 export type { RefreshControlProps } from "./components";

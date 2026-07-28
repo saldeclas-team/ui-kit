@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Badge component snapshots count 5 md primary 1`] = `
+<View
+  accessibilityLabel="5"
+  accessibilityRole="text"
+  alignItems="center"
+  backgroundColor="#DBEAFE"
+  borderRadius={10}
+  justifyContent="center"
+  minHeight={20}
+  paddingHorizontal={8}
+  paddingVertical={3}
+  testID="badge"
+>
+  <Text
+    color="#1E3A8A"
+    fontSize={12}
+    fontWeight="600"
+    testID="badge-text"
+  >
+    5
+  </Text>
+</View>
+`;
+
+exports[`Badge component snapshots count overflow 120→99+ sm danger 1`] = `
+<View
+  accessibilityLabel="99+"
+  accessibilityRole="text"
+  alignItems="center"
+  backgroundColor="#FEE2E2"
+  borderRadius={8}
+  justifyContent="center"
+  minHeight={16}
+  paddingHorizontal={6}
+  paddingVertical={2}
+  testID="badge"
+>
+  <Text
+    color="#991B1B"
+    fontSize={10}
+    fontWeight="600"
+    testID="badge-text"
+  >
+    99+
+  </Text>
+</View>
+`;
+
+exports[`Badge component snapshots dark theme × sm × warning 1`] = `
+<View
+  accessibilityLabel="Pending"
+  accessibilityRole="text"
+  alignItems="center"
+  backgroundColor="#78350F"
+  borderRadius={8}
+  justifyContent="center"
+  minHeight={16}
+  paddingHorizontal={6}
+  paddingVertical={2}
+  testID="badge"
+>
+  <Text
+    color="#FCD34D"
+    fontSize={10}
+    fontWeight="600"
+    testID="badge-text"
+  >
+    Pending
+  </Text>
+</View>
+`;
+
+exports[`Badge component snapshots dot mode md success 1`] = `
+<View
+  accessibilityLabel="Indicator"
+  accessibilityRole="text"
+  backgroundColor="#DCFCE7"
+  borderRadius={5}
+  height={10}
+  testID="badge"
+  width={10}
+/>
+`;
+
+exports[`Badge component snapshots text 'Beta' md neutral 1`] = `
+<View
+  accessibilityLabel="Beta"
+  accessibilityRole="text"
+  alignItems="center"
+  backgroundColor="#F3F4F6"
+  borderRadius={10}
+  justifyContent="center"
+  minHeight={20}
+  paddingHorizontal={8}
+  paddingVertical={3}
+  testID="badge"
+>
+  <Text
+    color="#374151"
+    fontSize={12}
+    fontWeight="600"
+    testID="badge-text"
+  >
+    Beta
+  </Text>
+</View>
+`;

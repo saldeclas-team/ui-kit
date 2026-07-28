@@ -64,6 +64,38 @@ export default function RootLayout() {
               options={{ title: "Surface", headerBackTitle: "Components" }}
             />
             <Stack.Screen
+              name="(pages)/components/card"
+              options={{ title: "Card", headerBackTitle: "Components" }}
+            />
+            <Stack.Screen
+              name="(pages)/components/divider"
+              options={{ title: "Divider", headerBackTitle: "Components" }}
+            />
+            <Stack.Screen
+              name="(pages)/components/spinner"
+              options={{ title: "Spinner", headerBackTitle: "Components" }}
+            />
+            <Stack.Screen
+              name="(pages)/components/avatar"
+              options={{ title: "Avatar", headerBackTitle: "Components" }}
+            />
+            <Stack.Screen
+              name="(pages)/components/badge"
+              options={{ title: "Badge", headerBackTitle: "Components" }}
+            />
+            <Stack.Screen
+              name="(pages)/components/progress-bar"
+              options={{ title: "ProgressBar", headerBackTitle: "Components" }}
+            />
+            <Stack.Screen
+              name="(pages)/components/dialog"
+              options={{ title: "Dialog", headerBackTitle: "Components" }}
+            />
+            <Stack.Screen
+              name="(pages)/components/slider"
+              options={{ title: "Slider", headerBackTitle: "Components" }}
+            />
+            <Stack.Screen
               name="(pages)/components/refresh-control"
               options={{ title: "RefreshControl", headerBackTitle: "Components" }}
             />

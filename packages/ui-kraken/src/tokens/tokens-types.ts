@@ -164,6 +164,110 @@ export interface SurfaceColors {
 }
 
 /**
+ * Divider color palette. Single slot — the line color itself. Kept
+ * as an interface (not a raw `string`) so per-instance overrides
+ * plug into the same merge helper shape every other component uses.
+ */
+export interface DividerColors {
+  /** Background color of the line. */
+  line: string;
+}
+
+/**
+ * Spinner color palette. Single slot — the ring / dots color the
+ * native ActivityIndicator uses. Kept as an interface so per-
+ * instance overrides use the same merge helper shape every other
+ * component uses.
+ */
+export interface SpinnerColors {
+  /** The spinner's animated color. */
+  color: string;
+}
+
+/**
+ * Avatar color palette. 2 slots — the fill background when the
+ * Avatar shows initials + the initials text color. Only read when
+ * the Avatar isn't rendering an actual image (no source, image
+ * failed to load, initials fallback path).
+ */
+export interface AvatarColors {
+  /** Fill background when the Avatar shows initials. */
+  background: string;
+  /** Color of the initials text. */
+  text: string;
+}
+
+/**
+ * Color slots for one Badge tone. Both slots required —
+ * `background` fills the pill; `text` paints the label / count.
+ */
+export interface BadgeToneColors {
+  /** Pill fill color. */
+  background: string;
+  /** Text / count / dot color. */
+  text: string;
+}
+
+/**
+ * Full Badge color palette — 5 tones, each with `background` +
+ * `text`. Per-instance overrides target the single tone the
+ * consumer picked (see `mergeBadgeToneColors`); provider-level
+ * overrides can partial-merge across tones (see `mergeBadgeColors`).
+ */
+export interface BadgeColors {
+  neutral: BadgeToneColors;
+  primary: BadgeToneColors;
+  success: BadgeToneColors;
+  warning: BadgeToneColors;
+  danger: BadgeToneColors;
+}
+
+/**
+ * ProgressBar color palette. 3 slots — the empty-portion background
+ * (`track`), the completed-portion fill (`fill`), and the label
+ * text color (`label`, only read when `showValueLabel` / `label`
+ * prop is set).
+ */
+export interface ProgressBarColors {
+  /** Background of the empty portion. */
+  track: string;
+  /** Color of the completed portion. */
+  fill: string;
+  /** Color of the label text above the bar. */
+  label: string;
+}
+
+/**
+ * Dialog color palette. 4 slots — the semi-transparent overlay
+ * (`backdrop`), the panel fill (`background`), the header title
+ * text color (`title`), and the default body text color (`body`).
+ */
+export interface DialogColors {
+  /** Semi-transparent overlay behind the panel. */
+  backdrop: string;
+  /** Panel fill color. */
+  background: string;
+  /** Header title text color. */
+  title: string;
+  /** Default body text color. */
+  body: string;
+}
+
+/**
+ * Slider color palette. 3 slots — mirrors the track/fill vocabulary
+ * of ProgressBar plus a `thumb` slot for the draggable circle.
+ * A Slider and a ProgressBar at the same value read as related.
+ */
+export interface SliderColors {
+  /** Background of the unfilled portion. */
+  track: string;
+  /** The filled portion from `min` to the current value. */
+  fill: string;
+  /** The draggable circle. */
+  thumb: string;
+}
+
+/**
  * Skeleton color palette. 2 slots — the fill at rest (`base`) and the
  * peak of the pulse animation (`highlight`). Both typically alpha-tinted
  * grays that read as "loading" against any surface.
@@ -698,6 +802,13 @@ export interface Tokens {
   inputColors: InputColors;
   currencyInputColors: CurrencyInputColors;
   surfaceColors: SurfaceColors;
+  dividerColors: DividerColors;
+  spinnerColors: SpinnerColors;
+  avatarColors: AvatarColors;
+  badgeColors: BadgeColors;
+  progressBarColors: ProgressBarColors;
+  dialogColors: DialogColors;
+  sliderColors: SliderColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;
@@ -731,6 +842,13 @@ export interface ResolvedTokens {
   inputColors: InputColors;
   currencyInputColors: CurrencyInputColors;
   surfaceColors: SurfaceColors;
+  dividerColors: DividerColors;
+  spinnerColors: SpinnerColors;
+  avatarColors: AvatarColors;
+  badgeColors: BadgeColors;
+  progressBarColors: ProgressBarColors;
+  dialogColors: DialogColors;
+  sliderColors: SliderColors;
   refreshControlColors: RefreshControlColors;
   skeletonColors: SkeletonColors;
   hintColors: HintColors;

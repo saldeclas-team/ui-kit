@@ -62,6 +62,62 @@ const COMPONENTS: ComponentItem[] = [
     status: "shipped",
   },
   {
+    title: "Card",
+    description:
+      "Rounded, padded, semantically-elevated container on top of Surface. Compound Card + Card.Header + Card.Body + Card.Footer.",
+    href: "/components/card",
+    status: "shipped",
+  },
+  {
+    title: "Divider",
+    description:
+      "Thin line for visual separation. Horizontal / vertical, adjustable thickness + inset.",
+    href: "/components/divider",
+    status: "shipped",
+  },
+  {
+    title: "Spinner",
+    description:
+      "Themed activity indicator. Wraps RN ActivityIndicator with palette + size presets (sm / md / lg).",
+    href: "/components/spinner",
+    status: "shipped",
+  },
+  {
+    title: "Avatar",
+    description:
+      "Image + initials fallback. 4 sizes, 3 shapes (circle / rounded / square), onError → initials swap.",
+    href: "/components/avatar",
+    status: "shipped",
+  },
+  {
+    title: "Badge",
+    description:
+      "Compact pill for counts, status labels, dot indicators. 5 tones (Primary / Success / Warning / Danger / neutral), 2 sizes.",
+    href: "/components/badge",
+    status: "shipped",
+  },
+  {
+    title: "ProgressBar",
+    description:
+      "Determinate progress indicator. 3 sizes, optional value label, custom min/max range. Complements Spinner.",
+    href: "/components/progress-bar",
+    status: "shipped",
+  },
+  {
+    title: "Dialog",
+    description:
+      "Centered overlay panel. Wraps RN Modal with palette + backdrop + compound Header/Body/Footer slots.",
+    href: "/components/dialog",
+    status: "shipped",
+  },
+  {
+    title: "Slider",
+    description:
+      "Horizontal draggable range input. Controlled value, step snap, sm/md/lg sizes, a11y increment/decrement.",
+    href: "/components/slider",
+    status: "shipped",
+  },
+  {
     title: "RefreshControl",
     description:
       "Themed pull-to-refresh spinner for ScrollView / FlatList — iOS + Android props wired from one palette.",
@@ -172,12 +228,6 @@ const COMPONENTS: ComponentItem[] = [
       "Bottom-sheet image picker via expo-image-picker. Camera / gallery / cancel action rows. Ref-controlled, permission-aware.",
     href: "/components/image-picker-sheet",
     status: "shipped",
-  },
-  {
-    title: "Card",
-    description: "Surface primitive with layered background variants.",
-    href: "/components/button",
-    status: "planned",
   },
 ];
 
