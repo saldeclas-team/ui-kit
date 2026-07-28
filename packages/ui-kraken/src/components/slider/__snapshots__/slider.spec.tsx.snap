@@ -35,17 +35,10 @@ exports[`Slider component snapshots dark theme × md 1`] = `
   <View
     onLayout={[Function]}
     onMoveShouldSetResponder={[Function]}
-    onMoveShouldSetResponderCapture={[Function]}
-    onResponderEnd={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
-    onResponderReject={[Function]}
     onResponderRelease={[Function]}
-    onResponderStart={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
-    onStartShouldSetResponderCapture={[Function]}
     style={
       {
         "backgroundColor": "#374151",
@@ -121,17 +114,10 @@ exports[`Slider component snapshots default (md, value=50) 1`] = `
   <View
     onLayout={[Function]}
     onMoveShouldSetResponder={[Function]}
-    onMoveShouldSetResponderCapture={[Function]}
-    onResponderEnd={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
-    onResponderReject={[Function]}
     onResponderRelease={[Function]}
-    onResponderStart={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
-    onStartShouldSetResponderCapture={[Function]}
     style={
       {
         "backgroundColor": "#E5E7EB",
@@ -207,17 +193,10 @@ exports[`Slider component snapshots large size disabled 1`] = `
   <View
     onLayout={[Function]}
     onMoveShouldSetResponder={[Function]}
-    onMoveShouldSetResponderCapture={[Function]}
-    onResponderEnd={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
-    onResponderReject={[Function]}
     onResponderRelease={[Function]}
-    onResponderStart={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
-    onStartShouldSetResponderCapture={[Function]}
     style={
       {
         "backgroundColor": "#E5E7EB",
@@ -293,17 +272,10 @@ exports[`Slider component snapshots small size at 25% 1`] = `
   <View
     onLayout={[Function]}
     onMoveShouldSetResponder={[Function]}
-    onMoveShouldSetResponderCapture={[Function]}
-    onResponderEnd={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
-    onResponderReject={[Function]}
     onResponderRelease={[Function]}
-    onResponderStart={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
-    onStartShouldSetResponderCapture={[Function]}
     style={
       {
         "backgroundColor": "#E5E7EB",

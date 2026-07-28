@@ -16,6 +16,38 @@ jest.mock("tamagui", () => {
   return { YStack: box };
 });
 
+// Mock `PanResponder.create` so it returns the raw config handlers
+// as-is (with the RN prop-name rename `onPanResponderX` →
+// `onResponderX`) instead of RN's wrapped versions that need
+// `touchBank` gesture state. Lets us invoke the handlers directly
+// via `track.props.onResponderGrant({...})` with a plain event
+// shape our config expects.
+//
+// Mock the deep PanResponder submodule (NOT the top-level
+// react-native barrel) — `jest.requireActual("react-native")`
+// pulls in TurboModuleRegistry and crashes jest-expo. The
+// submodule path is stable across RN versions.
+jest.mock("react-native/Libraries/Interaction/PanResponder", () => ({
+  __esModule: true,
+  default: {
+    create: (config: {
+      onStartShouldSetPanResponder?: (event: unknown) => boolean;
+      onMoveShouldSetPanResponder?: (event: unknown) => boolean;
+      onPanResponderGrant?: (event: unknown) => void;
+      onPanResponderMove?: (event: unknown, gesture: unknown) => void;
+      onPanResponderRelease?: (event: unknown, gesture: unknown) => void;
+    }) => ({
+      panHandlers: {
+        onStartShouldSetResponder: config.onStartShouldSetPanResponder,
+        onMoveShouldSetResponder: config.onMoveShouldSetPanResponder,
+        onResponderGrant: config.onPanResponderGrant,
+        onResponderMove: config.onPanResponderMove,
+        onResponderRelease: config.onPanResponderRelease,
+      },
+    }),
+  },
+}));
+
 const LIGHT_SLIDER_COLORS: SliderColors = {
   track: "#E5E7EB",
   fill: "#2563EB",
@@ -140,15 +172,14 @@ describe("Slider component", () => {
     });
   });
 
-  describe("PanResponder wiring (smoke)", () => {
-    // PanResponder's internal gesture state (`touchBank`,
-    // `touchHistory`) can't be simulated with jest's fireEvent —
-    // touching those handlers directly crashes with
-    // "Cannot read properties of undefined (reading 'touchBank')".
-    // Coverage of the value transformation is via the exported
-    // `locationToValue` helper below; here we just smoke-test that
-    // PanResponder attached the handler map to the track.
-    it("track view exposes the four PanResponder handlers", async () => {
+  describe("PanResponder drag lifecycle", () => {
+    // PanResponder is mocked at the top of this file so the
+    // handlers we set on `PanResponder.create({...})` are passed
+    // through as-is (renamed to the responder-prop names RN uses).
+    // Lets us invoke them directly with a plain event shape and
+    // assert onValueChange / onSlidingComplete fire.
+
+    it("track exposes the responder handlers", async () => {
       await render(<Slider testID="s" value={0} onValueChange={jest.fn()} />);
       const track = screen.getByTestId("s-track");
       expect(typeof track.props.onStartShouldSetResponder).toBe("function");
@@ -158,7 +189,7 @@ describe("Slider component", () => {
       expect(typeof track.props.onResponderRelease).toBe("function");
     });
 
-    it("disabled=true → onStartShouldSetResponder returns false", async () => {
+    it("disabled=true → both should-set-responder return false", async () => {
       await render(<Slider testID="s" value={0} onValueChange={jest.fn()} disabled />);
       const track = screen.getByTestId("s-track");
       expect(track.props.onStartShouldSetResponder()).toBe(false);
@@ -170,6 +201,104 @@ describe("Slider component", () => {
       const track = screen.getByTestId("s-track");
       expect(track.props.onStartShouldSetResponder()).toBe(true);
       expect(track.props.onMoveShouldSetResponder()).toBe(true);
+    });
+
+    it("grant at locationX=100 on a 200-wide track → onValueChange(50)", async () => {
+      const onValueChange = jest.fn();
+      await render(<Slider testID="s" value={0} onValueChange={onValueChange} />);
+      await simulateTrackLayout("s", 200);
+      await act(async () => {
+        screen.getByTestId("s-track").props.onResponderGrant({
+          nativeEvent: { locationX: 100 },
+        });
+      });
+      expect(onValueChange).toHaveBeenCalledWith(50);
+    });
+
+    it("grant + move with dx=50 → onValueChange fires with the resulting snapped value", async () => {
+      const onValueChange = jest.fn();
+      await render(<Slider testID="s" value={0} onValueChange={onValueChange} step={10} />);
+      await simulateTrackLayout("s", 200);
+      const track = screen.getByTestId("s-track");
+      await act(async () => {
+        track.props.onResponderGrant({ nativeEvent: { locationX: 0 } });
+      });
+      onValueChange.mockClear();
+      await act(async () => {
+        track.props.onResponderMove({}, { dx: 100 });
+      });
+      // 0 + 100 = 100 of 200 → 50% → snap to 10s → 50.
+      expect(onValueChange).toHaveBeenCalledWith(50);
+    });
+
+    it("grant + release fires onSlidingComplete with final value", async () => {
+      const onValueChange = jest.fn();
+      const onSlidingComplete = jest.fn();
+      await render(
+        <Slider
+          testID="s"
+          value={0}
+          onValueChange={onValueChange}
+          onSlidingComplete={onSlidingComplete}
+        />
+      );
+      await simulateTrackLayout("s", 200);
+      const track = screen.getByTestId("s-track");
+      await act(async () => {
+        track.props.onResponderGrant({ nativeEvent: { locationX: 50 } });
+        track.props.onResponderRelease({}, { dx: 50 });
+      });
+      // Final locationX = 50 + 50 = 100 of 200 → 50.
+      expect(onSlidingComplete).toHaveBeenCalledWith(50);
+    });
+
+    it("disabled=true bails inside grant / move / release (no callbacks fire)", async () => {
+      const onValueChange = jest.fn();
+      const onSlidingComplete = jest.fn();
+      await render(
+        <Slider
+          testID="s"
+          value={0}
+          onValueChange={onValueChange}
+          onSlidingComplete={onSlidingComplete}
+          disabled
+        />
+      );
+      await simulateTrackLayout("s", 200);
+      const track = screen.getByTestId("s-track");
+      await act(async () => {
+        track.props.onResponderGrant({ nativeEvent: { locationX: 100 } });
+        track.props.onResponderMove({}, { dx: 50 });
+        track.props.onResponderRelease({}, { dx: 50 });
+      });
+      expect(onValueChange).not.toHaveBeenCalled();
+      expect(onSlidingComplete).not.toHaveBeenCalled();
+    });
+
+    it("gesture on a 0-width track (before onLayout) falls back to current clamped value", async () => {
+      const onValueChange = jest.fn();
+      await render(<Slider testID="s" value={30} onValueChange={onValueChange} />);
+      // No simulateTrackLayout — trackWidth stays 0.
+      await act(async () => {
+        screen.getByTestId("s-track").props.onResponderGrant({
+          nativeEvent: { locationX: 50 },
+        });
+      });
+      // trackWidth <= 0 → locationToValue returns clamped currentValue (30).
+      expect(onValueChange).toHaveBeenCalledWith(30);
+    });
+
+    it("release with no onSlidingComplete prop is a no-op (doesn't crash)", async () => {
+      const onValueChange = jest.fn();
+      await render(<Slider testID="s" value={0} onValueChange={onValueChange} />);
+      await simulateTrackLayout("s", 200);
+      const track = screen.getByTestId("s-track");
+      await act(async () => {
+        track.props.onResponderGrant({ nativeEvent: { locationX: 100 } });
+        track.props.onResponderRelease({}, { dx: 0 });
+      });
+      // onValueChange fired on grant; no crash from missing onSlidingComplete.
+      expect(onValueChange).toHaveBeenCalledWith(50);
     });
   });
 
