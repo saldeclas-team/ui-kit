@@ -116,7 +116,7 @@
     "react-native": "0.86.0",
     "react-native-reanimated": "^4.5.3",
     "react-test-renderer": "19.2.3",
-    "tamagui": "^2.5.1",
+    "tamagui": "^2.6.0",
     "tsup": "^8.5.1",
     "typescript": "~6.0.3"
   },
