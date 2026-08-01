@@ -22,7 +22,7 @@
     "@gorhom/bottom-sheet": "^5.2.14",
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@tamagui/config": "^2.5.1",
-    "@tamagui/core": "^2.5.1",
+    "@tamagui/core": "^2.6.0",
     "expo": "~57.0.8",
     "expo-constants": "~57.0.7",
     "expo-device": "~57.0.1",
