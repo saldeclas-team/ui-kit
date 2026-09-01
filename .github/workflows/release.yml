@@ -75,7 +75,7 @@ jobs:
       # packages/ui-kraken/package.json, so `changeset publish` picks it up
       # without any extra CLI flag.
       - name: Create Release PR or publish
-        uses: changesets/action@v1
+        uses: changesets/action@v2
         with:
           publish: pnpm release
           version: pnpm changeset version
